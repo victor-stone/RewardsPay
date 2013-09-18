@@ -1,23 +1,23 @@
 //
-//  APViewController.m
+//  APSettingsViewController.m
 //  ArgoPay
 //
 //  Created by victor on 9/17/13.
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 
-#import "APViewController.h"
+#import "APSettingsViewController.h"
 
-@interface APViewController ()
+@interface APSettingsViewController ()
 
 @end
 
-@implementation APViewController
+@implementation APSettingsViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning

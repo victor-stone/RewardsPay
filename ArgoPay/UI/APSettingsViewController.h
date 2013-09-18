@@ -1,13 +1,13 @@
 //
-//  APViewController.h
+//  APSettingsViewController.h
 //  ArgoPay
 //
 //  Created by victor on 9/17/13.
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "VSSettings.h"
 
-@interface APViewController : UIViewController
+@interface APSettingsViewController : VSSettingsExtensions
 
 @end

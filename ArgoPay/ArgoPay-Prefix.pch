@@ -11,4 +11,25 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+
+#define VS_CONNECTIVITY_HOST_NAME "argopay.com"
+#define _AFNETWORKING_PIN_SSL_CERTIFICATES_ 1
+
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+
+#import "BKGlobals.h"
+#import "NSArray+BlocksKit.h"
+#import "NSDictionary+BlocksKit.h"
+#import "NSIndexSet+BlocksKit.h"
+#import "NSObject+AssociatedObjects.h"
+#import "NSObject+BlockObservation.h"
+#import "NSObject+BlocksKit.h"
+#import "NSSet+BlocksKit.h"
+#import "NSTimer+BlocksKit.h"
+#import "UIGestureRecognizer+BlocksKit.h"
+
+#import "NSObject+VSBroadcasting.h"
+
+#import "UIViewController+ArgoPay.h"
 #endif
