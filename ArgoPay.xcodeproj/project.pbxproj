@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		571D75C717EB3D0A00F0B869 /* kImageTransactionBottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 571D75C417EB3D0A00F0B869 /* kImageTransactionBottom.png */; };
+		571D75C817EB3D0A00F0B869 /* kImageTransactionExpander.png in Resources */ = {isa = PBXBuildFile; fileRef = 571D75C517EB3D0A00F0B869 /* kImageTransactionExpander.png */; };
+		571D75C917EB3D0A00F0B869 /* kImageTransactionTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 571D75C617EB3D0A00F0B869 /* kImageTransactionTop.png */; };
 		57A223E317E90626000B52E9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A223E217E90626000B52E9 /* UIKit.framework */; };
 		57A223E517E90626000B52E9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A223E417E90626000B52E9 /* Foundation.framework */; };
 		57A223E717E90626000B52E9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A223E617E90626000B52E9 /* CoreGraphics.framework */; };
@@ -57,7 +60,6 @@
 		57A2248217E90F47000B52E9 /* APScanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A2247B17E90F47000B52E9 /* APScanView.m */; };
 		57A2248317E90F47000B52E9 /* UIViewController+ArgoPay.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A2247D17E90F47000B52E9 /* UIViewController+ArgoPay.m */; };
 		57A2248617E90FF3000B52E9 /* APStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A2248517E90FF3000B52E9 /* APStrings.m */; };
-		57A224A017E913B3000B52E9 /* AcceptScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 57A2248817E913B3000B52E9 /* AcceptScreen.png */; };
 		57A224A117E913B3000B52E9 /* kImageAccount.png in Resources */ = {isa = PBXBuildFile; fileRef = 57A2248917E913B3000B52E9 /* kImageAccount.png */; };
 		57A224A217E913B3000B52E9 /* kImageAlert.png in Resources */ = {isa = PBXBuildFile; fileRef = 57A2248A17E913B3000B52E9 /* kImageAlert.png */; };
 		57A224A317E913B3000B52E9 /* kImageBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 57A2248B17E913B3000B52E9 /* kImageBack.png */; };
@@ -104,9 +106,31 @@
 		57E7B84117EA042B00205BCB /* VSPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E7B84017EA042B00205BCB /* VSPopup.m */; };
 		57E7B84317EA044600205BCB /* kImagePopupBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 57E7B84217EA044600205BCB /* kImagePopupBG.png */; };
 		57E7B84617EA1BA400205BCB /* APPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E7B84517EA1BA400205BCB /* APPopup.m */; };
+		57E7B84D17EA5C0000205BCB /* APTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E7B84C17EA5C0000205BCB /* APTransaction.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		571D75C417EB3D0A00F0B869 /* kImageTransactionBottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageTransactionBottom.png; sourceTree = "<group>"; };
+		571D75C517EB3D0A00F0B869 /* kImageTransactionExpander.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageTransactionExpander.png; sourceTree = "<group>"; };
+		571D75C617EB3D0A00F0B869 /* kImageTransactionTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageTransactionTop.png; sourceTree = "<group>"; };
+		571D75CC17EB46E700F0B869 /* accepts-button var-2.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "accepts-button var-2.psd"; sourceTree = "<group>"; };
+		571D75CD17EB46E700F0B869 /* error-button var-2.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "error-button var-2.psd"; sourceTree = "<group>"; };
+		571D75CE17EB46E700F0B869 /* help-current-2.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "help-current-2.psd"; sourceTree = "<group>"; };
+		571D75CF17EB46E700F0B869 /* help-non pressed-2.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "help-non pressed-2.psd"; sourceTree = "<group>"; };
+		571D75D017EB46E700F0B869 /* help-pressed-2.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "help-pressed-2.psd"; sourceTree = "<group>"; };
+		571D75D117EB46E700F0B869 /* home-262626-non pressed buttons.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "home-262626-non pressed buttons.psd"; sourceTree = "<group>"; };
+		571D75D217EB46E700F0B869 /* home-262626-pressed buttons.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "home-262626-pressed buttons.psd"; sourceTree = "<group>"; };
+		571D75D317EB46E700F0B869 /* places-button var-2.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "places-button var-2.psd"; sourceTree = "<group>"; };
+		571D75D417EB46E700F0B869 /* sign in.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "sign in.psd"; sourceTree = "<group>"; };
+		571D75D517EB46E700F0B869 /* sign up.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = "sign up.psd"; sourceTree = "<group>"; };
+		571D75D617EB46E700F0B869 /* transaction.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = transaction.psd; sourceTree = "<group>"; };
+		571D75D717EB46E700F0B869 /* welcome.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = welcome.psd; sourceTree = "<group>"; };
+		571D75D917EB46E700F0B869 /* ArgoPay UX note 091113.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ArgoPay UX note 091113.docx"; sourceTree = "<group>"; };
+		571D75DA17EB46E700F0B869 /* credit product - Account Activation.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "credit product - Account Activation.pdf"; sourceTree = "<group>"; };
+		571D75DB17EB46E700F0B869 /* credit product - Manage Account.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "credit product - Manage Account.pdf"; sourceTree = "<group>"; };
+		571D75DD17EB46E700F0B869 /* ArgoPay-Fig1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ArgoPay-Fig1.jpg"; sourceTree = "<group>"; };
+		571D75DE17EB46E700F0B869 /* ArgoPay-Fig2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ArgoPay-Fig2.jpg"; sourceTree = "<group>"; };
+		571D75DF17EB46E700F0B869 /* scope.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = scope.pdf; sourceTree = "<group>"; };
 		57A223DF17E90626000B52E9 /* ArgoPay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArgoPay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57A223E217E90626000B52E9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		57A223E417E90626000B52E9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -202,7 +226,6 @@
 		57A2247D17E90F47000B52E9 /* UIViewController+ArgoPay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ArgoPay.m"; sourceTree = "<group>"; };
 		57A2248417E90FF3000B52E9 /* APStrings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APStrings.h; sourceTree = "<group>"; };
 		57A2248517E90FF3000B52E9 /* APStrings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APStrings.m; sourceTree = "<group>"; };
-		57A2248817E913B3000B52E9 /* AcceptScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AcceptScreen.png; sourceTree = "<group>"; };
 		57A2248917E913B3000B52E9 /* kImageAccount.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageAccount.png; sourceTree = "<group>"; };
 		57A2248A17E913B3000B52E9 /* kImageAlert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageAlert.png; sourceTree = "<group>"; };
 		57A2248B17E913B3000B52E9 /* kImageBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageBack.png; sourceTree = "<group>"; };
@@ -275,6 +298,8 @@
 		57E7B84217EA044600205BCB /* kImagePopupBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImagePopupBG.png; sourceTree = "<group>"; };
 		57E7B84417EA1BA400205BCB /* APPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPopup.h; sourceTree = "<group>"; };
 		57E7B84517EA1BA400205BCB /* APPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPopup.m; sourceTree = "<group>"; };
+		57E7B84B17EA5C0000205BCB /* APTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APTransaction.h; sourceTree = "<group>"; };
+		57E7B84C17EA5C0000205BCB /* APTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APTransaction.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -301,11 +326,62 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		571D75CA17EB46E700F0B869 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				571D75CB17EB46E700F0B869 /* artist_psd */,
+				571D75D817EB46E700F0B869 /* specs */,
+				571D75DC17EB46E700F0B869 /* work_scope */,
+			);
+			name = Documentation;
+			path = docs;
+			sourceTree = "<group>";
+		};
+		571D75CB17EB46E700F0B869 /* artist_psd */ = {
+			isa = PBXGroup;
+			children = (
+				571D75CC17EB46E700F0B869 /* accepts-button var-2.psd */,
+				571D75CD17EB46E700F0B869 /* error-button var-2.psd */,
+				571D75CE17EB46E700F0B869 /* help-current-2.psd */,
+				571D75CF17EB46E700F0B869 /* help-non pressed-2.psd */,
+				571D75D017EB46E700F0B869 /* help-pressed-2.psd */,
+				571D75D117EB46E700F0B869 /* home-262626-non pressed buttons.psd */,
+				571D75D217EB46E700F0B869 /* home-262626-pressed buttons.psd */,
+				571D75D317EB46E700F0B869 /* places-button var-2.psd */,
+				571D75D417EB46E700F0B869 /* sign in.psd */,
+				571D75D517EB46E700F0B869 /* sign up.psd */,
+				571D75D617EB46E700F0B869 /* transaction.psd */,
+				571D75D717EB46E700F0B869 /* welcome.psd */,
+			);
+			path = artist_psd;
+			sourceTree = "<group>";
+		};
+		571D75D817EB46E700F0B869 /* specs */ = {
+			isa = PBXGroup;
+			children = (
+				571D75D917EB46E700F0B869 /* ArgoPay UX note 091113.docx */,
+				571D75DA17EB46E700F0B869 /* credit product - Account Activation.pdf */,
+				571D75DB17EB46E700F0B869 /* credit product - Manage Account.pdf */,
+			);
+			path = specs;
+			sourceTree = "<group>";
+		};
+		571D75DC17EB46E700F0B869 /* work_scope */ = {
+			isa = PBXGroup;
+			children = (
+				571D75DD17EB46E700F0B869 /* ArgoPay-Fig1.jpg */,
+				571D75DE17EB46E700F0B869 /* ArgoPay-Fig2.jpg */,
+				571D75DF17EB46E700F0B869 /* scope.pdf */,
+			);
+			path = work_scope;
+			sourceTree = "<group>";
+		};
 		57A223D617E90626000B52E9 = {
 			isa = PBXGroup;
 			children = (
 				57A223E817E90626000B52E9 /* ArgoPay */,
 				57A223E117E90626000B52E9 /* Frameworks */,
+				571D75CA17EB46E700F0B869 /* Documentation */,
 				57A223E017E90626000B52E9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -344,6 +420,7 @@
 				57A223F217E90626000B52E9 /* APAppDelegate.m */,
 				57A2248417E90FF3000B52E9 /* APStrings.h */,
 				57A2248517E90FF3000B52E9 /* APStrings.m */,
+				57E7B84A17EA5C0000205BCB /* Model */,
 				57A2247317E90F47000B52E9 /* UI */,
 				57A2240517E90F27000B52E9 /* Vendor */,
 				57A2248717E913B3000B52E9 /* glyphs */,
@@ -533,7 +610,6 @@
 		57A2248717E913B3000B52E9 /* glyphs */ = {
 			isa = PBXGroup;
 			children = (
-				57A2248817E913B3000B52E9 /* AcceptScreen.png */,
 				57A2248917E913B3000B52E9 /* kImageAccount.png */,
 				57A2248A17E913B3000B52E9 /* kImageAlert.png */,
 				57A2248B17E913B3000B52E9 /* kImageBack.png */,
@@ -558,6 +634,9 @@
 				57A2249D17E913B3000B52E9 /* kImageQR@2x.png */,
 				57A2249E17E913B3000B52E9 /* kImageRewards.png */,
 				57A2249F17E913B3000B52E9 /* kImageSettings.png */,
+				571D75C417EB3D0A00F0B869 /* kImageTransactionBottom.png */,
+				571D75C517EB3D0A00F0B869 /* kImageTransactionExpander.png */,
+				571D75C617EB3D0A00F0B869 /* kImageTransactionTop.png */,
 			);
 			path = glyphs;
 			sourceTree = "<group>";
@@ -635,6 +714,15 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
+		57E7B84A17EA5C0000205BCB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				57E7B84B17EA5C0000205BCB /* APTransaction.h */,
+				57E7B84C17EA5C0000205BCB /* APTransaction.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -692,7 +780,6 @@
 				57A223F717E90626000B52E9 /* Default@2x.png in Resources */,
 				57A223F917E90626000B52E9 /* Default-568h@2x.png in Resources */,
 				57A223FC17E90626000B52E9 /* MainStoryboard.storyboard in Resources */,
-				57A224A017E913B3000B52E9 /* AcceptScreen.png in Resources */,
 				57A224A117E913B3000B52E9 /* kImageAccount.png in Resources */,
 				57A224A217E913B3000B52E9 /* kImageAlert.png in Resources */,
 				57A224A317E913B3000B52E9 /* kImageBack.png in Resources */,
@@ -723,6 +810,9 @@
 				57A224F517E951A5000B52E9 /* InAppSettings.bundle in Resources */,
 				57E7B83517E9F01000205BCB /* about.html in Resources */,
 				57E7B84317EA044600205BCB /* kImagePopupBG.png in Resources */,
+				571D75C717EB3D0A00F0B869 /* kImageTransactionBottom.png in Resources */,
+				571D75C817EB3D0A00F0B869 /* kImageTransactionExpander.png in Resources */,
+				571D75C917EB3D0A00F0B869 /* kImageTransactionTop.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -781,6 +871,7 @@
 				57E7B83B17E9FCE900205BCB /* APTranasctionViewController.m in Sources */,
 				57E7B84117EA042B00205BCB /* VSPopup.m in Sources */,
 				57E7B84617EA1BA400205BCB /* APPopup.m in Sources */,
+				57E7B84D17EA5C0000205BCB /* APTransaction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,0 +1,30 @@
+//
+//  APTransactionResult.h
+//  ArgoPayMobile
+//
+//  Created by victor on 9/17/13.
+//  Copyright (c) 2013 ArgoPay. All rights reserved.
+//
+
+@class APScanResult;
+
+@interface APTransaction : NSObject
+@property (nonatomic,strong) NSString * merchantName;
+@property (nonatomic,strong) NSString * merchantItem;
+@property (nonatomic,strong) NSNumber * grandTotal;
+@end
+
+typedef enum _APTranasctionRequestState {
+    kTransactionStateUnknown = 0,
+    kTransactionStateAccepted,
+    kTransactionStateCancelled
+} APTransactionRequestState;
+
+@interface APTransactionRequest : NSObject
+@property (nonatomic,strong) APTransaction * transaction;
+@property (nonatomic,readonly) APTransactionRequestState state;
+
+-(id)initWithScanResult:(APScanResult *)scanResult;
+-(void)accept;
+-(void)cancel;
+@end

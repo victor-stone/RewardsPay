@@ -1,5 +1,5 @@
 //
-//  APNotifications.m
+//  APStrings.h
 //  ArgoPayMobile
 //
 //  Created by victor on 9/17/13.

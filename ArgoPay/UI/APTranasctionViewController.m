@@ -6,14 +6,14 @@
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 
-#import "APTranasctionViewController.h"
+#import "APStrings.h"
 #import "APPopup.h"
+#import "APTranasctionViewController.h"
+#import "APTransaction.h"
 
-@interface APTranasctionViewController ()
-
-@end
-
-@implementation APTranasctionViewController
+@implementation APTranasctionViewController {
+    APTransactionRequest * _transactionRequest;
+}
 
 - (void)viewDidLoad
 {
@@ -22,16 +22,37 @@
     APPopup * popup = [APPopup popupWithParent:self.view
                                           text:@"Contacting ArgoPay Server"
                                          flags:kPopupActivity];
+
+    [self registerForBroadcast:kNotifyTransactionResult
+                         block:^(APTranasctionViewController *me,
+                                 APTransactionRequest *request) {
+                             APTransaction * result = request.transaction;
+                             me->_merchantItem.text = result.merchantItem;
+                             me->_merchantName.text = result.merchantName;
+                             me->_grandTotal.text = [NSString stringWithFormat:@"$%.2f", [result.grandTotal floatValue]];
+                             [popup dismiss];
+                         }];
     
-    [NSObject performBlock:^{
-        [popup dismiss];
-    } afterDelay:3.5];
+    [self registerForBroadcast:kNotifyTransactionComplete
+                         block:^(APTranasctionViewController *me,
+                                 APTransactionRequest *request) {
+                             [NSObject performBlock:^{
+                                 [me dismissViewControllerAnimated:YES completion:nil];
+                             } afterDelay:0.2];
+                         }];
+    
+    _transactionRequest = [[APTransactionRequest alloc] initWithScanResult:self.scanResult];
+
 }
 
-- (void)didReceiveMemoryWarning
+- (IBAction)cancelPayment:(id)sender
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [_transactionRequest cancel];
+}
+
+- (IBAction)approvePayment:(id)sender
+{
+    [_transactionRequest accept];
 }
 
 @end

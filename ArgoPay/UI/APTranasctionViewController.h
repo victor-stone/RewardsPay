@@ -13,5 +13,8 @@
 @interface APTranasctionViewController : UIViewController
 
 @property (nonatomic,strong) APScanResult * scanResult;
+@property (weak, nonatomic) IBOutlet UILabel *grandTotal;
+@property (weak, nonatomic) IBOutlet UILabel *merchantItem;
+@property (weak, nonatomic) IBOutlet UILabel *merchantName;
 
 @end

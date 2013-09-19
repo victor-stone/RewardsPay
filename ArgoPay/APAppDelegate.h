@@ -13,6 +13,15 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
+/**
+ *  Maintains the current state of the network connectivity.
+ *
+ *  It is the payload to the kVSNotificationConnectionTypeChanged broadcast event.
+ *
+ *  @warning This property is volatile, it is completely refereshed each time the app
+ *           comes into the foreground and activates. Do NOT hold a reference to it.
+ *
+ */
 @property (strong, nonatomic) VSConnectivity *connectivity;
 
 @end

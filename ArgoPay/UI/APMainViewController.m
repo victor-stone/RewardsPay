@@ -9,7 +9,7 @@
 #import "APScanView.h"
 #import "APStrings.h"
 #import "APPopup.h"
-
+#import "APTransaction.h"
 #import "APTranasctionViewController.h"
 
 #pragma mark - Local Interfaces
@@ -90,8 +90,9 @@
 
 -(void)registerForEvents
 {
-    [self registerForBroadcast:kNotifyScanComplete block:^(APMainViewController *me, APScanResult *result) {
-
+    [self registerForBroadcast:kNotifyScanComplete
+                         block:^(APMainViewController *me, APScanResult *result)
+    {
         if( result == AP_EMPTY_SCAN_RESULT )
         {
             [APPopup msgWithParent:self.view text:@"QR Code scan was cancelled"];
@@ -105,11 +106,17 @@
             } afterDelay:0.3];
         }
     }];
-    
-    [self registerForBroadcast:kNotifyPaymentSucceeded block:^(APMainViewController *me, id payload) {
-        [UIView animateWithDuration:0.4 animations:^{
-            _messagePopup.alpha = 1.0;
-        }];
+
+    [self registerForBroadcast:kNotifyTransactionComplete
+                         block:^(APMainViewController *me,
+                                 APTransactionRequest *request)
+    {
+        NSString * msg = nil;
+        if( request.state == kTransactionStateCancelled )
+            msg = @"Transaction Canelled";
+        else if( request.state == kTransactionStateAccepted )
+            msg = @"Transaction Accepted! Thanks for using ArgoPay!";
+        [APPopup msgWithParent:me.view text:msg];
     }];
     
 }

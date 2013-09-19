@@ -10,9 +10,12 @@
 #define APKEYEDSTRING(key) extern NSString * key;
 #endif
 
+
 APKEYEDSTRING(kNotifyRequestScanner)
 APKEYEDSTRING(kNotifyScanComplete)
-APKEYEDSTRING(kNotifyPaymentSucceeded)
+APKEYEDSTRING(kNotifyTransactionRequest)
+APKEYEDSTRING(kNotifyTransactionResult)
+APKEYEDSTRING(kNotifyTransactionComplete)
 
 
 APKEYEDSTRING(kSettingUserLoginName)
