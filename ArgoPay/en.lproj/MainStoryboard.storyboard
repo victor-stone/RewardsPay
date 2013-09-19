@@ -408,10 +408,10 @@
             </objects>
             <point key="canvasLocation" x="1455" y="-500"/>
         </scene>
-        <!--Settings Extensions - Settings-->
+        <!--Settings View Controller - Settings-->
         <scene sceneID="oKx-bA-Tiz">
             <objects>
-                <tableViewController id="1B1-C9-Iyx" customClass="VSSettingsExtensions" sceneMemberID="viewController">
+                <tableViewController id="1B1-C9-Iyx" customClass="APSettingsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="9Q4-Vq-ROz">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -527,7 +527,13 @@
                             <outlet property="delegate" destination="1B1-C9-Iyx" id="KEI-NR-bV8"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Settings" id="Pi9-uo-vlf"/>
+                    <navigationItem key="navigationItem" title="Settings" id="Pi9-uo-vlf">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="M9w-CK-J3F">
+                            <connections>
+                                <action selector="done:" destination="1B1-C9-Iyx" id="KUf-Ep-Yvx"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pbi-9T-wva" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -750,6 +756,113 @@
         <image name="kImageTransactionExpander.png" width="387" height="20"/>
         <image name="kImageTransactionTop.png" width="387" height="307"/>
     </resources>
+    <classes>
+        <class className="APAccountViewController" superclassName="APMenuBaseController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APAccountViewController.h"/>
+        </class>
+        <class className="APHistoryViewController" superclassName="APMenuBaseController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APHistoryViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
+            </relationships>
+        </class>
+        <class className="APLocationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APLocationViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="argoNavBar" candidateClass="UINavigationBar"/>
+            </relationships>
+        </class>
+        <class className="APMainViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APMainViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="blackTapNavBackground" candidateClass="UIView"/>
+                <relationship kind="outlet" name="messagePopup" candidateClass="UIView"/>
+                <relationship kind="outlet" name="messageText" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="messageTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="tabNavigator" candidateClass="APTabNavigator"/>
+            </relationships>
+        </class>
+        <class className="APMenuBaseController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APMenuBaseController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
+            </relationships>
+        </class>
+        <class className="APMenuCell" superclassName="UICollectionViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APMenuCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="title" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="APMenuViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APMenuViewController.h"/>
+        </class>
+        <class className="APOffersViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APOffersViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="argoNavBar" candidateClass="UINavigationBar"/>
+            </relationships>
+        </class>
+        <class className="APRewardsViewController" superclassName="APMenuBaseController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APRewardsViewController.h"/>
+        </class>
+        <class className="APSettingsViewController" superclassName="VSSettingsExtensions">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APSettingsViewController.h"/>
+        </class>
+        <class className="APTab" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APTab.h"/>
+            <relationships>
+                <relationship kind="outlet" name="image" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="label" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="APTabNavigator" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APTabNavigator.h"/>
+            <relationships>
+                <relationship kind="outlet" name="location" candidateClass="APTab"/>
+                <relationship kind="outlet" name="offers" candidateClass="APTab"/>
+                <relationship kind="outlet" name="scan" candidateClass="APTab"/>
+            </relationships>
+        </class>
+        <class className="APTranasctionViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APTranasctionViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="approvePayment:"/>
+                <relationship kind="action" name="cancelPayment:"/>
+                <relationship kind="outlet" name="grandTotal" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="merchantItem" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="merchantName" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="IASKAppSettingsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/IASKAppSettingsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="delegate"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="UICollectionReusableView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
+        </class>
+        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
+        </class>
+        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+        <class className="UICollectionViewLayout" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
+        </class>
+        <class className="VSSettingsExtensions" superclassName="IASKAppSettingsViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VSSettingsExtensions.h"/>
+            <relationships>
+                <relationship kind="action" name="done:"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -6,9 +6,10 @@
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 
+#import "APRemotableObject.h"
 @class APScanResult;
 
-@interface APTransaction : NSObject
+@interface APTransaction : APRemotableObject
 @property (nonatomic,strong) NSString * merchantName;
 @property (nonatomic,strong) NSString * merchantItem;
 @property (nonatomic,strong) NSNumber * grandTotal;

@@ -42,7 +42,7 @@ APScanResult * AP_EMPTY_SCAN_RESULT;
     return self;
 }
 
--(void)request:(UIViewController *)caller
+-(UIViewController *)request:(UIViewController *)caller
 {
     ZBarReaderViewController *reader = [ZBarReaderViewController new];
     reader.readerDelegate = self;
@@ -53,10 +53,7 @@ APScanResult * AP_EMPTY_SCAN_RESULT;
                           config: ZBAR_CFG_ENABLE
                               to: 1];
     reader.readerView.zoom = 1.0;
-    BOOL animated = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingSlidingCameraView];
-    [caller presentViewController:reader animated:animated completion:^{
-        _reader = reader;
-    }];
+    return reader;
 }
 
 - (void) imagePickerController: (UIImagePickerController*) reader
@@ -77,10 +74,6 @@ APScanResult * AP_EMPTY_SCAN_RESULT;
         AP_EMPTY_SCAN_RESULT = [APScanResult new];
         
     [self broadcast:kNotifyScanComplete payload:result ?: AP_EMPTY_SCAN_RESULT];
-    BOOL animated = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingSlidingCameraView];
-    [_reader dismissViewControllerAnimated:animated completion:^{
-        _reader = nil;
-    }];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker

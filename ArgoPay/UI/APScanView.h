@@ -19,12 +19,5 @@ extern APScanResult *AP_EMPTY_SCAN_RESULT;
 #endif
 
 @interface APScanRequestWatcher : NSObject<ZBarReaderDelegate>
-
-@end
-
-@interface APScanViewController : UIViewController
-
-@property (nonatomic) bool enabled;
-
-@property (weak,nonatomic) UIViewController *homeController;
+-(UIViewController *)request:(UIViewController *)caller;
 @end

@@ -7,17 +7,28 @@
 //
 
 #import "APSettingsViewController.h"
+#import "APStrings.h"
 
 @interface APSettingsViewController ()
 
 @end
 
 @implementation APSettingsViewController
+- (IBAction)done:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    if( self.navigationController.topViewController == self )
+    {
+        UIBarButtonItem * bbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                                          target:self
+                                                                                          action:@selector(done:)];
+        self.navigationItem.leftBarButtonItem  = bbi;
+    }
 }
 
 - (void)didReceiveMemoryWarning

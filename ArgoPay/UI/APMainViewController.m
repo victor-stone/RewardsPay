@@ -71,10 +71,14 @@
 
 #pragma mark - Main View Controller
 
+typedef void (^APScannerDoneBlock)(APMainViewController *);
+
+
 @implementation APMainViewController {
     __weak APTab *_currentTab;
     NSString * _lastNavTab;
     APScanRequestWatcher * _scanWatcher;
+    UIViewController * _scanner;
 }
 
 - (void)viewDidLoad
@@ -93,18 +97,20 @@
     [self registerForBroadcast:kNotifyScanComplete
                          block:^(APMainViewController *me, APScanResult *result)
     {
-        if( result == AP_EMPTY_SCAN_RESULT )
-        {
-            [APPopup msgWithParent:self.view text:@"QR Code scan was cancelled"];
-        }
-        else
-        {
-            APTranasctionViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:kViewTransaction];
-            vc.scanResult = result;
-            [NSObject performBlock:^{
-                [self presentViewController:vc animated:YES completion:nil];
-            } afterDelay:0.3];
-        }
+        [me toggleScanner:^(APMainViewController *me) {
+            if( result == AP_EMPTY_SCAN_RESULT )
+            {
+                [APPopup msgWithParent:me.view text:@"QR Code scan was cancelled"];
+            }
+            else
+            {
+                APTranasctionViewController * vc = [me.storyboard instantiateViewControllerWithIdentifier:kViewTransaction];
+                vc.scanResult = result;
+                [NSObject performBlock:^{
+                    [me presentViewController:vc animated:YES completion:nil];
+                } afterDelay:0.3];
+            }
+        }];
     }];
 
     [self registerForBroadcast:kNotifyTransactionComplete
@@ -120,9 +126,41 @@
     }];
     
 }
--(void)toggleScanner
+-(void)toggleScanner:(APScannerDoneBlock)block
 {
-    [self broadcast:kNotifyRequestScanner payload:self];
+    if( _scanner )
+    {
+        CGRect rc = self.view.frame;
+        rc.origin.y = rc.size.height;
+        CGFloat duration = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingSlidingCameraView] ? 0.5 : 0.0;
+        [UIView animateWithDuration:duration animations:^{
+            _scanner.view.frame = rc;
+        } completion:^(BOOL finished) {
+            [_scanner.view removeFromSuperview];
+            [_scanner willMoveToParentViewController:nil];
+            [_scanner removeFromParentViewController];
+            _scanner = nil;
+            if( block )
+                block(self);
+        }];
+    }
+    else
+    {
+        _scanner = [_scanWatcher request:self];
+        [_scanner willMoveToParentViewController:self];
+        [self addChildViewController:_scanner];
+        UIView * scannerView = _scanner.view;
+        CGRect rc = self.view.frame;
+        CGRect targetRC = rc;
+        targetRC.origin.y = 0;
+        rc.origin.y = rc.size.height;
+        scannerView.frame = rc;
+        [self.view insertSubview:scannerView belowSubview:_tabNavigator];
+        CGFloat duration = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingSlidingCameraView] ? 0.5 : 0.0;
+        [UIView animateWithDuration:duration animations:^{
+            scannerView.frame = targetRC;
+        }];
+    }
 }
 
 -(void)slideInView:(NSString *)vcName
@@ -150,10 +188,13 @@
 {
     if( [vcName isEqualToString:kViewScanner] )
     {
-        [self toggleScanner];
+        [self toggleScanner:nil];
     }
     else
     {
+        if( _scanner )
+            [self toggleScanner:nil];
+        
         if( _lastNavTab == vcName )
             return;
         
