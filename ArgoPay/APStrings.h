@@ -19,8 +19,12 @@ APKEYEDSTRING(kNotifyRewardStatusChange)
 
 APKEYEDSTRING(kSettingUserLoginName)
 APKEYEDSTRING(kSettingUserLoginPassword)
-APKEYEDSTRING(kSettingDebug)
 APKEYEDSTRING(kSettingSlidingCameraView)
+
+APKEYEDSTRING(kSettingDebug)
+APKEYEDSTRING(kSettingDebugNetworkStubbed)
+APKEYEDSTRING(kSettingDebugNetworkDelay)
+APKEYEDSTRING(kSettingDebugRejectLogin)
 
 APKEYEDSTRING(kViewOffers)
 APKEYEDSTRING(kViewScanner)

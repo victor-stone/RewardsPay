@@ -16,5 +16,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *grandTotal;
 @property (weak, nonatomic) IBOutlet UILabel *merchantItem;
 @property (weak, nonatomic) IBOutlet UILabel *merchantName;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 
 @end

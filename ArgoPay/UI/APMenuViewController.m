@@ -9,6 +9,8 @@
 #import "APStrings.h"
 #import "APReward.h"
 #import "APMerchant.h"
+#import "APRemoteAPI.h"
+#import "APPopup.h"
 
 @interface APMenuBaseController : UIViewController
 @property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
@@ -70,27 +72,42 @@ APLOGRELEASE
 
 @implementation APRewardsViewController {
     NSArray * _rewards;
+
 }
 
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    _rewards = [APReward rewardsForAccount];
     
     [self registerForBroadcast:kNotifyRewardStatusChange
                          block:^(APRewardsViewController *me, APReward *reward)
     {
         NSInteger counter = 0;
-        for( APReward *test in me->_rewards )
+        APReward * test = nil;
+        for( test in me->_rewards )
         {
             if( [test.key isEqual:reward.key] )
                 break;
             ++counter;
         }
-         @synchronized(me) {
-             [me->_rewardsTable reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:counter inSection:0]]
-                                      withRowAnimation:UITableViewRowAnimationFade];
-         }
+        if( test )
+        {
+            @synchronized(me) {
+                [me->_rewardsTable reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:counter inSection:0]]
+                                         withRowAnimation:UITableViewRowAnimationFade];
+            }
+        }
+    }];
+    
+    APPopup * _popup = [APPopup popupWithParent:self.view
+                                          text:@"Contacting ArgoPay Server"
+                                         flags:kPopupActivity];
+    
+    APRemoteAPI *api = [APRemoteAPI sharedInstance];
+    [api getRewards:^(id data) {
+        _rewards = data;
+        [_rewardsTable reloadData];
+        [_popup dismiss];
     }];
 }
 
@@ -114,6 +131,7 @@ APLOGRELEASE
     cell.merchantName.text = reward.merchant.name;
     cell.points.text = [NSString stringWithFormat:@"%d",[reward.points intValue]];
     cell.value.text = [NSString stringWithFormat:@"$%.0f", [reward.credit floatValue]];
+    [cell.logo setImage:reward.merchant.logoImg];
     if( reward.status == kRewardStatusRedeemable )
     {
         cell.status.hidden = YES;

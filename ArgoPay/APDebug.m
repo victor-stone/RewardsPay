@@ -23,4 +23,20 @@ void APDebug(NSString *key,NSString *format,...)
     }
 }
 
+void APDebugDumpView(UIView *view)
+{
+    if( APENABLED(kDebugViews) )
+    {
+        static void (^dump)(UIView *,NSString *) = nil;
+        
+        dump = ^(UIView *view, NSString *indent)
+        {
+            APDebug(kDebugFire, @"%@%@", indent, view);
+            for( UIView * child in view.subviews )
+                dump( child, [NSString stringWithFormat:@"%@    ",indent]);
+        };
+        dump(view,@"");
+        dump = nil;
+    }
+}
 #endif

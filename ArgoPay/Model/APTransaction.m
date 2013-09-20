@@ -8,6 +8,7 @@
 
 #import "APTransaction.h"
 #import "APStrings.h"
+#import "APRemoteAPI.h"
 
 @implementation APTransaction
 @end
@@ -21,14 +22,11 @@ APLOGRELEASE
     if( (self = [super init]) == nil )
         return nil;
     
-    [NSObject performBlock:^{
-        APTransaction * result = [[APTransaction alloc] init];
-        result.merchantItem = @"Happy Oranges by the Side of the Freeway";
-        result.merchantName = @"Happy Time Fruit Co.";
-        result.grandTotal = @(29.99);
-        _transaction = result;
+    APRemoteAPI * api = [APRemoteAPI sharedInstance];
+    [api requestTransaction:scanResult block:^(id data) {
+        _transaction = data;
         [self broadcast:kNotifyTransactionResult payload:self];
-    } afterDelay:2.5];
+    }];
     _state = kTransactionStateUnknown;
     return self;
 }

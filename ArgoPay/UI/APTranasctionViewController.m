@@ -10,6 +10,7 @@
 #import "APPopup.h"
 #import "APTranasctionViewController.h"
 #import "APTransaction.h"
+#import "APMerchant.h"
 
 @implementation APTranasctionViewController {
     APTransactionRequest * _transactionRequest;
@@ -21,7 +22,7 @@ APLOGRELEASE
 {
     [super viewDidLoad];
     
-    APPopup * popup = [APPopup popupWithParent:self.view
+    __block APPopup * popup = [APPopup popupWithParent:self.view
                                           text:@"Contacting ArgoPay Server"
                                          flags:kPopupActivity];
 
@@ -30,9 +31,10 @@ APLOGRELEASE
                                  APTransactionRequest *request) {
                              APTransaction * result = request.transaction;
                              me->_merchantItem.text = result.merchantItem;
-                             me->_merchantName.text = result.merchantName;
+                             me->_merchantName.text = result.merchant.name;
                              me->_grandTotal.text = [NSString stringWithFormat:@"$%.2f", [result.grandTotal floatValue]];
                              [popup dismiss];
+                             popup = nil;
                          }];
     
     [self registerForBroadcast:kNotifyTransactionComplete
@@ -44,7 +46,7 @@ APLOGRELEASE
                          }];
     
     _transactionRequest = [[APTransactionRequest alloc] initWithScanResult:self.scanResult];
-
+    
 }
 
 - (IBAction)cancelPayment:(id)sender

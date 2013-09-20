@@ -10,7 +10,7 @@
 
 @interface APMerchant : APRemotableObject
 
-@property (nonatomic,strong) UIImage *logo;
+@property (nonatomic,strong) UIImage *logoImg;
 @property (nonatomic,strong) UIImage *streetImage;
 @property (nonatomic,strong) NSString *name;
 @property (nonatomic,strong) NSString *address;

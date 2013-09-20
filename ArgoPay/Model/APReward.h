@@ -26,7 +26,5 @@ typedef enum _APRewardStatus {
 
 -(void)redeem;
 
-+(id)rewardsForAccount;
-
 @end
 

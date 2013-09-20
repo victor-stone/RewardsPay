@@ -11,11 +11,6 @@
 
 @implementation APReward
 
-+(id)rewardsForAccount
-{
-    return nil;
-}
-
 -(void)setStatus:(APRewardStatus)status
 {
     _status = status;

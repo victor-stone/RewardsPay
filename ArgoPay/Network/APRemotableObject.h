@@ -7,5 +7,8 @@
 //
 
 @interface APRemotableObject : NSObject
+
+-(id)initWithDictionary:(NSDictionary *)values;
+
 @property (nonatomic,strong) NSNumber * key;
 @end

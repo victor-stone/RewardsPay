@@ -9,10 +9,14 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "VSPopup.h"
+#import "APDebug.h" // AP additions...
+#import "APStrings.h"
 
 NSString * kVSNotificationPopupDismissed = @"kVSNotificationPopupDismissed";
 
 @implementation VSPopup
+
+APLOGRELEASE
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -104,11 +108,11 @@ NSString * kVSNotificationPopupDismissed = @"kVSNotificationPopupDismissed";
     
     [self insertSubview:imgView atIndex:0];
     
-    [parent addSubview:self];
-    
-    if( (flags & kPopupNoAutoShow) == 0 )
-        [self present];
-
+        [parent addSubview:self];
+        
+        if( (flags & kPopupNoAutoShow) == 0 )
+            [self present];
+        
     return self;
 }
 

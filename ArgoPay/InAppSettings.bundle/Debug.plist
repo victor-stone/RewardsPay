@@ -8,6 +8,57 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
             <key>Title</key>
+            <string>Simulations</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>DefaultValue</key>
+			<string>YES</string>
+			<key>Key</key>
+			<string>kSettingDebugNetworkStubbed</string>
+			<key>Title</key>
+			<string>Stub Network</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Key</key>
+			<string>kSettingDebugNetworkDelay</string>
+			<key>Title</key>
+			<string>Network Delay</string>
+			<key>Titles</key>
+			<array>
+				<string>0.5 seconds</string>
+                <string>1.0 seconds</string>
+				<string>1.5 seconds</string>
+                <string>2.5 seconds</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>0.5</string>
+				<string>1</string>
+                <string>1.5</string>
+                <string>2.5</string>
+			</array>
+			<key>DefaultValue</key>
+			<string>1.5</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>DefaultValue</key>
+			<string>YES</string>
+			<key>Key</key>
+			<string>kSettingDebugRejectLogin</string>
+			<key>Title</key>
+			<string>Reject Log In</string>
+		</dict>
+        
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+            <key>Title</key>
             <string>Logging</string>
 		</dict>
 		<dict>

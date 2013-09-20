@@ -8,9 +8,10 @@
 
 #import "APRemotableObject.h"
 @class APScanResult;
+@class APMerchant;
 
 @interface APTransaction : APRemotableObject
-@property (nonatomic,strong) NSString * merchantName;
+@property (nonatomic,strong) APMerchant *merchant;
 @property (nonatomic,strong) NSString * merchantItem;
 @property (nonatomic,strong) NSNumber * grandTotal;
 @end

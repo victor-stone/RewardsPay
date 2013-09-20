@@ -8,10 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void (^APRemoteAPIRequestBlock)(id data);
+
+@class APScanResult;
+
 @interface APRemoteAPI : NSObject
 
 +(id)sharedInstance;
 
--(NSArray *)getRewards;
+-(void)getRewards:(APRemoteAPIRequestBlock)block;
+-(void)getMerchantImage:(NSString *)name block:(APRemoteAPIRequestBlock)block;
+-(void)requestTransaction:(APScanResult *)scanResult block:(APRemoteAPIRequestBlock)block;
 
 @end
