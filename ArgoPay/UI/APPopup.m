@@ -11,6 +11,8 @@
 
 @implementation APPopup
 
+APLOGRELEASE
+
 +(id)popupWithParent:(UIView *)parent text:(NSString *)text flags:(VSPopupFlags)flags
 {
     UIImage * bg = [[UIImage imageNamed:kImagePopupBG]

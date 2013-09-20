@@ -9,10 +9,6 @@
 #import "APOffersViewController.h"
 #import "APStrings.h"
 
-@interface APOffersViewController ()
-
-@end
-
 @implementation APOffersViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -23,6 +19,8 @@
     }
     return self;
 }
+
+APLOGRELEASE
 
 - (void)viewDidLoad
 {

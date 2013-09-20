@@ -24,6 +24,8 @@
     return self;
 }
 
+APLOGRELEASE
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

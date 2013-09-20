@@ -7,12 +7,16 @@
 //
 
 #import "APStrings.h"
+#import "APReward.h"
+#import "APMerchant.h"
 
 @interface APMenuBaseController : UIViewController
 @property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
 @end
 
 @implementation APMenuBaseController
+
+APLOGRELEASE
 
 -(void)viewDidLoad
 {
@@ -46,11 +50,103 @@
 
 @end
 
-@interface APRewardsViewController : APMenuBaseController
-
+@interface APRewardsCell : UITableViewCell
+@property (weak,nonatomic) IBOutlet UIImageView *logo;
+@property (weak,nonatomic) IBOutlet UILabel *merchantName;
+@property (weak,nonatomic) IBOutlet UILabel *points;
+@property (weak,nonatomic) IBOutlet UILabel *value;
+@property (weak, nonatomic) IBOutlet UIButton *redeemButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activity;
+@property (weak,nonatomic) IBOutlet UILabel *status;
 @end
 
-@implementation APRewardsViewController
+@implementation APRewardsCell
+@end
+
+
+@interface APRewardsViewController : APMenuBaseController<UITableViewDataSource,UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UITableView *rewardsTable;
+@end
+
+@implementation APRewardsViewController {
+    NSArray * _rewards;
+}
+
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    _rewards = [APReward rewardsForAccount];
+    
+    [self registerForBroadcast:kNotifyRewardStatusChange
+                         block:^(APRewardsViewController *me, APReward *reward)
+    {
+        NSInteger counter = 0;
+        for( APReward *test in me->_rewards )
+        {
+            if( [test.key isEqual:reward.key] )
+                break;
+            ++counter;
+        }
+         @synchronized(me) {
+             [me->_rewardsTable reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:counter inSection:0]]
+                                      withRowAnimation:UITableViewRowAnimationFade];
+         }
+    }];
+}
+
+-(void)redeemReward:(UIButton *)button
+{
+    APReward * reward = _rewards[button.tag];
+    [reward redeem];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [_rewards count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    APRewardsCell * cell = [tableView dequeueReusableCellWithIdentifier:kCellIDReward forIndexPath:indexPath];
+    APReward * reward = _rewards[indexPath.row];
+    
+    cell.merchantName.text = reward.merchant.name;
+    cell.points.text = [NSString stringWithFormat:@"%d",[reward.points intValue]];
+    cell.value.text = [NSString stringWithFormat:@"$%.0f", [reward.credit floatValue]];
+    if( reward.status == kRewardStatusRedeemable )
+    {
+        cell.status.hidden = YES;
+        cell.activity.hidden = YES;
+        [cell.activity stopAnimating];
+        cell.redeemButton.hidden = NO;
+        cell.redeemButton.tag = indexPath.row;
+        [cell.redeemButton addTarget:self action:@selector(redeemReward:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    else if( reward.status == kRewardStatusReadyToUse )
+    {
+        cell.status.hidden = NO;
+        cell.activity.hidden = YES;
+        [cell.activity stopAnimating];
+        cell.redeemButton.hidden = YES;
+    }
+    else if( reward.status == kRewardStatusSeekingRedemption )
+    {
+        cell.status.hidden = YES;
+        cell.redeemButton.hidden = YES;
+        cell.activity.hidden = NO;
+        [cell.activity startAnimating];
+    }
+    else
+    {
+        cell.redeemButton.hidden = YES;
+        cell.status.hidden = NO;
+        cell.activity.hidden = YES;
+        [cell.activity stopAnimating];        
+    }
+    return cell;
+}
+
 @end
 
 
@@ -103,6 +199,8 @@ static NSArray *menuItems()
 }
 
 @implementation APMenuViewController
+
+APLOGRELEASE
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {

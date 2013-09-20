@@ -19,12 +19,9 @@
 @interface APMainViewController : UIViewController
 @property (weak, nonatomic) IBOutlet APTabNavigator *tabNavigator;
 @property (weak, nonatomic) IBOutlet UIView *blackTapNavBackground;
+@property (weak, nonatomic) IBOutlet UIView *embeddingContainer;
 
 -(void)navigateTo:(NSString *)vcName;
-@property (weak, nonatomic) IBOutlet UIView *messagePopup;
-@property (weak, nonatomic) IBOutlet UILabel *messageTitle;
-@property (weak, nonatomic) IBOutlet UILabel *messageText;
-
 @end
 
 @interface APTab : UIView
@@ -76,7 +73,10 @@ typedef void (^APScannerDoneBlock)(APMainViewController *);
 
 @implementation APMainViewController {
     __weak APTab *_currentTab;
+    
     NSString * _lastNavTab;
+    UIViewController * _currentEmbeddedVC;
+    
     APScanRequestWatcher * _scanWatcher;
     UIViewController * _scanner;
 }
@@ -86,10 +86,7 @@ typedef void (^APScannerDoneBlock)(APMainViewController *);
     [super viewDidLoad];
 	[_tabNavigator wireUp:self];
     _lastNavTab = _tabNavigator.offers.vcNav;
-    _messagePopup.alpha = 0.0;
-    [self registerForEvents];
-    _scanWatcher = [APScanRequestWatcher new];
-    
+    [self registerForEvents];    
 }
 
 -(void)registerForEvents
@@ -140,12 +137,14 @@ typedef void (^APScannerDoneBlock)(APMainViewController *);
             [_scanner willMoveToParentViewController:nil];
             [_scanner removeFromParentViewController];
             _scanner = nil;
+            _scanWatcher = nil;
             if( block )
                 block(self);
         }];
     }
     else
     {
+        _scanWatcher = [APScanRequestWatcher new];
         _scanner = [_scanWatcher request:self];
         [_scanner willMoveToParentViewController:self];
         [self addChildViewController:_scanner];
@@ -166,22 +165,46 @@ typedef void (^APScannerDoneBlock)(APMainViewController *);
 -(void)slideInView:(NSString *)vcName
 {
     UIViewController * dest = [self.storyboard instantiateViewControllerWithIdentifier:vcName];
-    UIViewController * src = self.childViewControllers[0];
-    CGRect rc = src.view.bounds;
-    [dest willMoveToParentViewController:nil];
-    [dest removeFromParentViewController];
+    UIViewController * src = self;
+    CGRect rc = _embeddingContainer.bounds;
+    
+    [_currentEmbeddedVC willMoveToParentViewController:nil];
+    [_currentEmbeddedVC removeFromParentViewController];
+    
+    [dest willMoveToParentViewController:src];
     [src addChildViewController:dest];
-    [src.view addSubview:dest.view];
-    rc.size.height -= 44;
+    UIView * newView = dest.view;
+
+//   rc.size.height -= 44;
     CGRect targetRC = rc;
     rc.origin.x = rc.size.width;
-    dest.view.frame = rc;
+    newView.frame = rc;
+    [_embeddingContainer addSubview:newView];
+    
     [dest didMoveToParentViewController:src];
     [UIView animateWithDuration:0.5 animations:^{
         dest.view.frame = targetRC;
     }];
     
+    _currentEmbeddedVC = dest;
+    
     _lastNavTab = vcName;
+    
+#ifdef DEBUG
+    if( APENABLED(kDebugViews) )
+    {
+        APDebug(kDebugFire, @"Children -------------");
+        
+        for( UIViewController * vc in self.childViewControllers )
+        {
+            APDebug(kDebugFire, @"Child vc: %@", vc);
+            for( UIViewController * gvc in vc.childViewControllers )
+            {
+                APDebug(kDebugFire, @"GrandChild vc: %@", gvc);
+            }
+        }
+    }
+#endif
 }
 
 -(void)navigateTo:(NSString *)vcName
@@ -218,6 +241,10 @@ typedef void (^APScannerDoneBlock)(APMainViewController *);
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    if( [segue.identifier isEqualToString:kSegueMainEmbedding] )
+    {
+        _currentEmbeddedVC = segue.destinationViewController;
+    }
 }
 
 @end

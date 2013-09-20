@@ -13,14 +13,18 @@
 typedef enum _APRewardStatus {
     kRewardStatusUnknown,
     kRewardStatusRedeemable,
-    kRewardStatusReadyToUse
+    kRewardStatusReadyToUse,
+    kRewardStatusSeekingRedemption
 } APRewardStatus;
 
 @interface APReward : APRemotableObject
+
 @property (nonatomic,strong) APMerchant    * merchant;
 @property (nonatomic,strong) NSNumber      * points;
 @property (nonatomic,strong) NSNumber      * credit;
 @property (nonatomic)        APRewardStatus  status;
+
+-(void)redeem;
 
 +(id)rewardsForAccount;
 

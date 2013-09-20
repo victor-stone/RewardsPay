@@ -14,6 +14,8 @@
 
 @implementation APTransactionRequest
 
+APLOGRELEASE
+
 -(id)initWithScanResult:(APScanResult *)scanResult
 {
     if( (self = [super init]) == nil )

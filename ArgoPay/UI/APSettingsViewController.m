@@ -28,6 +28,10 @@
                                                                                           target:self
                                                                                           action:@selector(done:)];
         self.navigationItem.leftBarButtonItem  = bbi;
+
+#ifndef DEBUG
+        [self setHiddenKeys:[NSSet setWithArray:@[kSettingDebug]] animated:NO];
+#endif
     }
 }
 

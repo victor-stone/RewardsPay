@@ -10,17 +10,16 @@
 #define APKEYEDSTRING(key) extern NSString * key;
 #endif
 
-
 APKEYEDSTRING(kNotifyRequestScanner)
 APKEYEDSTRING(kNotifyScanComplete)
 APKEYEDSTRING(kNotifyTransactionRequest)
 APKEYEDSTRING(kNotifyTransactionResult)
 APKEYEDSTRING(kNotifyTransactionComplete)
-
+APKEYEDSTRING(kNotifyRewardStatusChange)
 
 APKEYEDSTRING(kSettingUserLoginName)
 APKEYEDSTRING(kSettingUserLoginPassword)
-
+APKEYEDSTRING(kSettingDebug)
 APKEYEDSTRING(kSettingSlidingCameraView)
 
 APKEYEDSTRING(kViewOffers)
@@ -33,9 +32,10 @@ APKEYEDSTRING(kViewHome)
 APKEYEDSTRING(kViewSettings)
 APKEYEDSTRING(kViewAccount)
 
-APKEYEDSTRING(kSegueScannerEmbed)
+APKEYEDSTRING(kSegueMainEmbedding)
 
 APKEYEDSTRING(kCellIDMenu)
+APKEYEDSTRING(kCellIDReward)
 
 APKEYEDSTRING(kImageAccount)
 APKEYEDSTRING(kImageAlert)
@@ -55,3 +55,8 @@ APKEYEDSTRING(kImageProfile)
 APKEYEDSTRING(kImageQR)
 APKEYEDSTRING(kImageRewards)
 APKEYEDSTRING(kImageSettings)
+
+APKEYEDSTRING(kDebugFire)
+APKEYEDSTRING(kDebugLifetime)
+APKEYEDSTRING(kDebugNetwork)
+APKEYEDSTRING(kDebugViews)

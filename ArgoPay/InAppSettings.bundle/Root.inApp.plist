@@ -68,6 +68,22 @@
 			<key>IASKTextAlignment</key>
 			<string>IASKUITextAlignmentCenter</string>
 		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+			<key>File</key>
+			<string>Debug</string>
+			<key>Title</key>
+			<string>Debug</string>
+            <key>Key</key>
+            <string>kSettingDebug</string>
+			<key>IASKTextAlignment</key>
+			<string>IASKUITextAlignmentCenter</string>
+		</dict>
 	</array>
 	<key>StringsTable</key>
 	<string>Root</string>

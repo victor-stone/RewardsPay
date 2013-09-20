@@ -7,6 +7,7 @@
 //
 
 #import "APReward.h"
+#import "APStrings.h"
 
 @implementation APReward
 
@@ -15,4 +16,14 @@
     return nil;
 }
 
+-(void)setStatus:(APRewardStatus)status
+{
+    _status = status;
+    [self broadcast:kNotifyRewardStatusChange payload:self];
+}
+
+-(void)redeem
+{
+    
+}
 @end

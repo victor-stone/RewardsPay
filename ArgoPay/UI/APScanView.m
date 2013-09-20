@@ -42,9 +42,12 @@ APScanResult * AP_EMPTY_SCAN_RESULT;
     return self;
 }
 
+APLOGRELEASE
+
 -(UIViewController *)request:(UIViewController *)caller
 {
     ZBarReaderViewController *reader = [ZBarReaderViewController new];
+    reader.wantsFullScreenLayout = NO;
     reader.readerDelegate = self;
     [reader.scanner setSymbology: 0
                           config: ZBAR_CFG_ENABLE
@@ -52,7 +55,7 @@ APScanResult * AP_EMPTY_SCAN_RESULT;
     [reader.scanner setSymbology: ZBAR_QRCODE
                           config: ZBAR_CFG_ENABLE
                               to: 1];
-    reader.readerView.zoom = 1.0;
+    reader.readerView.zoom = 0.8;
     return reader;
 }
 

@@ -15,6 +15,8 @@
     APTransactionRequest * _transactionRequest;
 }
 
+APLOGRELEASE
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

@@ -7,5 +7,5 @@
 //
 
 @interface APRemotableObject : NSObject
-
+@property (nonatomic,strong) NSNumber * key;
 @end

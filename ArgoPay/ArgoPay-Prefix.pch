@@ -18,6 +18,8 @@
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 
+#import "APDebug.h"
+
 #import "BKGlobals.h"
 #import "NSArray+BlocksKit.h"
 #import "NSDictionary+BlocksKit.h"
