@@ -29,11 +29,19 @@ APLOGRELEASE
     [self registerForBroadcast:kNotifyTransactionResult
                          block:^(APTranasctionViewController *me,
                                  APTransactionRequest *request) {
-                             APTransaction * result = request.transaction;
-                             me->_merchantItem.text = result.merchantItem;
-                             me->_merchantName.text = result.merchant.name;
-                             me->_grandTotal.text = [NSString stringWithFormat:@"$%.2f", [result.grandTotal floatValue]];
-                             [popup dismiss];
+                             if( request.requestError )
+                             {
+                                 [popup dismiss];
+                                 [self showError:request.requestError];
+                             }
+                             else
+                             {
+                                 APTransaction * result = request.transaction;
+                                 me->_merchantItem.text = result.merchantItem;
+                                 me->_merchantName.text = result.merchant.name;
+                                 me->_grandTotal.text = [NSString stringWithFormat:@"$%.2f", [result.grandTotal floatValue]];
+                                 [popup dismiss];
+                             }
                              popup = nil;
                          }];
     

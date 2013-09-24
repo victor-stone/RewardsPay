@@ -22,6 +22,10 @@
 		5793E3EA17EB7FBF004B0838 /* APReward.m in Sources */ = {isa = PBXBuildFile; fileRef = 5793E3E917EB7FBF004B0838 /* APReward.m */; };
 		5793E3EC17EBBE23004B0838 /* kImageRewardsTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 5793E3EB17EBBE23004B0838 /* kImageRewardsTop.png */; };
 		5793E3EE17EBC38A004B0838 /* kImageButtonBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5793E3ED17EBC38A004B0838 /* kImageButtonBg.png */; };
+		579E4E2317EFDB1D00D03437 /* APError.m in Sources */ = {isa = PBXBuildFile; fileRef = 579E4E2217EFDB1D00D03437 /* APError.m */; };
+		579E4E2617F0C6B900D03437 /* kImageErrorBalloon.png in Resources */ = {isa = PBXBuildFile; fileRef = 579E4E2417F0C6B900D03437 /* kImageErrorBalloon.png */; };
+		579E4E2717F0C6B900D03437 /* kImageErrorBang.png in Resources */ = {isa = PBXBuildFile; fileRef = 579E4E2517F0C6B900D03437 /* kImageErrorBang.png */; };
+		579E4E2A17F143A400D03437 /* APErrorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 579E4E2917F143A400D03437 /* APErrorViewController.m */; };
 		57A223E317E90626000B52E9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A223E217E90626000B52E9 /* UIKit.framework */; };
 		57A223E517E90626000B52E9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A223E417E90626000B52E9 /* Foundation.framework */; };
 		57A223E717E90626000B52E9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57A223E617E90626000B52E9 /* CoreGraphics.framework */; };
@@ -112,6 +116,11 @@
 		57A224F017E92D1A000B52E9 /* VSSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A224EF17E92D1A000B52E9 /* VSSettings.m */; };
 		57A224F317E95154000B52E9 /* APSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A224F217E95153000B52E9 /* APSettingsViewController.m */; };
 		57A224F517E951A5000B52E9 /* InAppSettings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 57A224F417E951A5000B52E9 /* InAppSettings.bundle */; };
+		57E08D0A17EF68AD00E22B1A /* reward_redemption.js in Resources */ = {isa = PBXBuildFile; fileRef = 57E08D0917EF68AD00E22B1A /* reward_redemption.js */; };
+		57E08D0C17EF77E400E22B1A /* kImageMerchantTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 57E08D0B17EF77E400E22B1A /* kImageMerchantTop.png */; };
+		57E08D0F17EF7FAF00E22B1A /* APMerchantDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E08D0E17EF7FAF00E22B1A /* APMerchantDetailViewController.m */; };
+		57E08D1217EF896700E22B1A /* APAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E08D1117EF896700E22B1A /* APAccount.m */; };
+		57E08D1417EF8B2900E22B1A /* merchant_points.js in Resources */ = {isa = PBXBuildFile; fileRef = 57E08D1317EF8B2900E22B1A /* merchant_points.js */; };
 		57E7B83517E9F01000205BCB /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = 57E7B83417E9F01000205BCB /* about.html */; };
 		57E7B83717E9F9C400205BCB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57E7B83617E9F9C300205BCB /* QuartzCore.framework */; };
 		57E7B83B17E9FCE900205BCB /* APTranasctionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E7B83A17E9FCE900205BCB /* APTranasctionViewController.m */; };
@@ -162,6 +171,11 @@
 		5793E3E917EB7FBF004B0838 /* APReward.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APReward.m; sourceTree = "<group>"; };
 		5793E3EB17EBBE23004B0838 /* kImageRewardsTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageRewardsTop.png; sourceTree = "<group>"; };
 		5793E3ED17EBC38A004B0838 /* kImageButtonBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageButtonBg.png; sourceTree = "<group>"; };
+		579E4E2117EFDB1D00D03437 /* APError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APError.h; sourceTree = "<group>"; };
+		579E4E2217EFDB1D00D03437 /* APError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APError.m; sourceTree = "<group>"; };
+		579E4E2417F0C6B900D03437 /* kImageErrorBalloon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageErrorBalloon.png; sourceTree = "<group>"; };
+		579E4E2517F0C6B900D03437 /* kImageErrorBang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageErrorBang.png; sourceTree = "<group>"; };
+		579E4E2917F143A400D03437 /* APErrorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APErrorViewController.m; sourceTree = "<group>"; };
 		57A223DF17E90626000B52E9 /* ArgoPay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArgoPay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57A223E217E90626000B52E9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		57A223E417E90626000B52E9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -320,6 +334,12 @@
 		57A224F117E95153000B52E9 /* APSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APSettingsViewController.h; sourceTree = "<group>"; };
 		57A224F217E95153000B52E9 /* APSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APSettingsViewController.m; sourceTree = "<group>"; };
 		57A224F417E951A5000B52E9 /* InAppSettings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = InAppSettings.bundle; sourceTree = "<group>"; };
+		57E08D0917EF68AD00E22B1A /* reward_redemption.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = reward_redemption.js; sourceTree = "<group>"; };
+		57E08D0B17EF77E400E22B1A /* kImageMerchantTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageMerchantTop.png; sourceTree = "<group>"; };
+		57E08D0E17EF7FAF00E22B1A /* APMerchantDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMerchantDetailViewController.m; sourceTree = "<group>"; };
+		57E08D1017EF896700E22B1A /* APAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APAccount.h; sourceTree = "<group>"; };
+		57E08D1117EF896700E22B1A /* APAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APAccount.m; sourceTree = "<group>"; };
+		57E08D1317EF8B2900E22B1A /* merchant_points.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = merchant_points.js; sourceTree = "<group>"; };
 		57E7B83417E9F01000205BCB /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
 		57E7B83617E9F9C300205BCB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		57E7B83917E9FCE900205BCB /* APTranasctionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APTranasctionViewController.h; sourceTree = "<group>"; };
@@ -414,6 +434,8 @@
 				5793E3DF17EB7CC7004B0838 /* qrcode.17094104.png */,
 				5793E3E017EB7CC7004B0838 /* qrcode.17094497.png */,
 				574B2DF617ECB1AF008E17EE /* rewards.js */,
+				57E08D1317EF8B2900E22B1A /* merchant_points.js */,
+				57E08D0917EF68AD00E22B1A /* reward_redemption.js */,
 				574B2DFB17ECDC2D008E17EE /* transaction.js */,
 			);
 			path = Testing;
@@ -478,9 +500,11 @@
 				57A2248517E90FF3000B52E9 /* APStrings.m */,
 				574B2DF317ECA097008E17EE /* APDebug.h */,
 				574B2DF417ECA097008E17EE /* APDebug.m */,
+				579E4E2117EFDB1D00D03437 /* APError.h */,
+				579E4E2217EFDB1D00D03437 /* APError.m */,
 				57E7B84A17EA5C0000205BCB /* Model */,
-				57A2247317E90F47000B52E9 /* UI */,
 				5793E3E117EB7E98004B0838 /* Network */,
+				57A2247317E90F47000B52E9 /* UI */,
 				57A2240517E90F27000B52E9 /* Vendor */,
 				57A2248717E913B3000B52E9 /* glyphs */,
 				57A223E917E90626000B52E9 /* Supporting Files */,
@@ -654,6 +678,7 @@
 				57A2247517E90F47000B52E9 /* APLocationViewController.h */,
 				57A2247617E90F47000B52E9 /* APLocationViewController.m */,
 				57A2247817E90F47000B52E9 /* APOffersViewController.h */,
+				57E08D0E17EF7FAF00E22B1A /* APMerchantDetailViewController.m */,
 				57A2247917E90F47000B52E9 /* APOffersViewController.m */,
 				57A2247A17E90F47000B52E9 /* APScanView.h */,
 				57A2247B17E90F47000B52E9 /* APScanView.m */,
@@ -663,6 +688,7 @@
 				57E7B83A17E9FCE900205BCB /* APTranasctionViewController.m */,
 				57E7B84417EA1BA400205BCB /* APPopup.h */,
 				57E7B84517EA1BA400205BCB /* APPopup.m */,
+				579E4E2917F143A400D03437 /* APErrorViewController.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -678,6 +704,8 @@
 				57A2248E17E913B3000B52E9 /* kImageBanner.png */,
 				57A2248F17E913B3000B52E9 /* kImageBanner@2x.png */,
 				5793E3ED17EBC38A004B0838 /* kImageButtonBg.png */,
+				579E4E2417F0C6B900D03437 /* kImageErrorBalloon.png */,
+				579E4E2517F0C6B900D03437 /* kImageErrorBang.png */,
 				57A2249017E913B3000B52E9 /* kImageFavorite.png */,
 				57A2249117E913B3000B52E9 /* kImageHelp.png */,
 				57A2249217E913B3000B52E9 /* kImageHistory.png */,
@@ -687,6 +715,7 @@
 				57A2249617E913B3000B52E9 /* kImageLocation@2x.png */,
 				57A2249717E913B3000B52E9 /* kImageLocationCircle.png */,
 				57A2249817E913B3000B52E9 /* kImageLogout.png */,
+				57E08D0B17EF77E400E22B1A /* kImageMerchantTop.png */,
 				57A2249917E913B3000B52E9 /* kImageOffers.png */,
 				57A2249A17E913B3000B52E9 /* kImageOffers@2x.png */,
 				57E7B84217EA044600205BCB /* kImagePopupBG.png */,
@@ -785,6 +814,8 @@
 				5793E3E617EB7F24004B0838 /* APMerchant.m */,
 				5793E3E817EB7FBF004B0838 /* APReward.h */,
 				5793E3E917EB7FBF004B0838 /* APReward.m */,
+				57E08D1017EF896700E22B1A /* APAccount.h */,
+				57E08D1117EF896700E22B1A /* APAccount.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -842,6 +873,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				574B2DFA17ECBAA5008E17EE /* rewards.js in Resources */,
+				57E08D1417EF8B2900E22B1A /* merchant_points.js in Resources */,
+				57E08D0A17EF68AD00E22B1A /* reward_redemption.js in Resources */,
 				574B2DFC17ECDC2D008E17EE /* transaction.js in Resources */,
 				57A223ED17E90626000B52E9 /* InfoPlist.strings in Resources */,
 				57A223F517E90626000B52E9 /* Default.png in Resources */,
@@ -886,6 +919,9 @@
 				5793E3EC17EBBE23004B0838 /* kImageRewardsTop.png in Resources */,
 				5793E3EE17EBC38A004B0838 /* kImageButtonBg.png in Resources */,
 				574B2DF917ECB7EB008E17EE /* merchantlogo.jpg in Resources */,
+				57E08D0C17EF77E400E22B1A /* kImageMerchantTop.png in Resources */,
+				579E4E2617F0C6B900D03437 /* kImageErrorBalloon.png in Resources */,
+				579E4E2717F0C6B900D03437 /* kImageErrorBang.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -950,6 +986,10 @@
 				5793E3EA17EB7FBF004B0838 /* APReward.m in Sources */,
 				574B2DF217EC9BEF008E17EE /* APRemoteAPI.m in Sources */,
 				574B2DF517ECA097008E17EE /* APDebug.m in Sources */,
+				57E08D0F17EF7FAF00E22B1A /* APMerchantDetailViewController.m in Sources */,
+				57E08D1217EF896700E22B1A /* APAccount.m in Sources */,
+				579E4E2317EFDB1D00D03437 /* APError.m in Sources */,
+				579E4E2A17F143A400D03437 /* APErrorViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

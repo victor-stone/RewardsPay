@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 
+#import "APRemoteAPI.h"
+
 @interface APRemotableObject : NSObject
 
 -(id)initWithDictionary:(NSDictionary *)values;

@@ -8,9 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^APRemoteAPIRequestBlock)(id data);
+typedef void (^APRemoteAPIRequestBlock)(id data, NSError *err);
 
 @class APScanResult;
+@class APReward;
+@class APMerchant;
+@class APMerchantPoints;
 
 @interface APRemoteAPI : NSObject
 
@@ -19,5 +22,8 @@ typedef void (^APRemoteAPIRequestBlock)(id data);
 -(void)getRewards:(APRemoteAPIRequestBlock)block;
 -(void)getMerchantImage:(NSString *)name block:(APRemoteAPIRequestBlock)block;
 -(void)requestTransaction:(APScanResult *)scanResult block:(APRemoteAPIRequestBlock)block;
+-(void)redeemArgoPoints:(APReward *)reward block:(APRemoteAPIRequestBlock)block;
+-(void)getMerchantPoints:(APMerchant *)merchant block:(APRemoteAPIRequestBlock)block;
+-(void)redeemMerchantPoints:(APMerchantPoints *)points block:(APRemoteAPIRequestBlock)block;
 
 @end

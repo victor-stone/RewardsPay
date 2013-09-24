@@ -22,7 +22,8 @@ typedef struct _APRemoteTypeMapping {
 static APRemoteTypeMapping _typeMapping[] = {
     { "merchant", "APMerchant" },
     { "reward",   "APReward" },
-    { "transaction", "APTransaction" }
+    { "transaction", "APTransaction" },
+    { "merchantPoints", "APMerchantPoints" }
 };
 
 static const char kNumRemoteMappings = (sizeof(_typeMapping)/sizeof(_typeMapping[0]));
@@ -31,15 +32,24 @@ static const char kNumRemoteMappings = (sizeof(_typeMapping)/sizeof(_typeMapping
 
 static void * kRemoteAPIInitializeToken = &kRemoteAPIInitializeToken;
 
-static APRemoteAPI * _shared;
+static APRemoteAPI * _sharedRemoteAPI;
 
 +(id)sharedInstance
 {
     @synchronized(self) {
-        if( !_shared )
-            _shared = [[APRemoteAPI alloc] initWithToken:kRemoteAPIInitializeToken];
+        if( !_sharedRemoteAPI )
+            _sharedRemoteAPI = [[APRemoteAPI alloc] initWithToken:kRemoteAPIInitializeToken];
     }
-    return _shared;
+    return _sharedRemoteAPI;
+}
+
+-(NSString *)baseURL
+{
+#ifdef DEBUG
+    return @"http://requestb.in/ytib2eyt";
+#else
+    return nil;
+#endif
 }
 
 -(id)init
@@ -62,18 +72,17 @@ static APRemoteAPI * _shared;
 
 -(void)requestDataFromServer:(NSString *)requestString block:(APRemoteAPIRequestBlock)block
 {
-    void (^receivedData)(id) = ^(id data) {
-        id jsonObj = nil;
-        NSError * err = nil;
-        jsonObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
-        // TODO: robustisize error handling
-        if(!jsonObj || err)
+    void (^receivedData)(id,NSError *) = ^(id data, NSError *err) {
+        NSDictionary * argoObjects = nil;
+        if( !err )
         {
-            NSLog(@"Error: %@", [err localizedDescription]);
-            exit(-1);
+            id jsonObj = nil;
+            err = nil;
+            jsonObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
+            if( jsonObj && !err )
+                argoObjects = [self convertJSONDictionaryToArgoObjects:jsonObj];
         }
-        NSDictionary * argoObjects = [self convertJSONDictionaryToArgoObjects:jsonObj];        
-        block(argoObjects);
+        block(argoObjects,err);
     };
     
     NSData * data = nil;
@@ -83,20 +92,49 @@ static APRemoteAPI * _shared;
         NSString * path = [[NSBundle mainBundle] pathForResource:requestString ofType:@"js"];
         data = [NSData dataWithContentsOfFile:path];
         CGFloat delay = [[NSUserDefaults standardUserDefaults] floatForKey:kSettingDebugNetworkDelay];
+        NSError * error = nil;
+        if( [[NSUserDefaults standardUserDefaults] boolForKey:kSettingDebugNetworkSimulatedFail] )
+            error = [NSError errorWithDomain:kAPErrorDomain code:0x100 userInfo:@{
+                   NSLocalizedDescriptionKey: @"Some kind of (fake) network error"}];
         [NSObject performBlock:^{
-            receivedData(data);
+            receivedData(data,error);
         } afterDelay:delay];
     }
     else
     {
 #endif
 
-
+        // real network code goes here
+        
 #ifdef DEBUG
     }
 #endif
 }
 
+-(void)requestImageFromServer:(NSString *)filename block:(APRemoteAPIRequestBlock)block
+{
+#ifdef DEBUG
+    if( APENABLED(kSettingDebugNetworkStubbed) )
+    {
+        CGFloat delay = [[NSUserDefaults standardUserDefaults] floatForKey:kSettingDebugNetworkDelay];
+        [NSObject performBlock:^{
+            NSError * error = nil;
+            if( [[NSUserDefaults standardUserDefaults] boolForKey:kSettingDebugNetworkSimulatedFail] )
+                error = [NSError errorWithDomain:kAPErrorDomain code:0x100 userInfo:@{}];
+            block( [UIImage imageNamed:filename], error );
+        } afterDelay:delay];
+    }
+    else
+    {
+#endif
+        
+        // real network code goes here
+        
+#ifdef DEBUG
+    }
+#endif
+    
+}
 -(id)convertJSONDictionaryToArgoObjects:(NSDictionary *)dictionary
 {
     static NSMutableDictionary * typeMap = nil;
@@ -134,9 +172,9 @@ static APRemoteAPI * _shared;
 {
     for( APMerchant * merchant in merchants )
     {
-        [self getMerchantImage:[merchant valueForKey:@"logo"] block:^(id data) {
+        [self getMerchantImage:[merchant valueForKey:@"logo"] block:[^(id data) {
             merchant.logoImg = data;
-        }];
+        } copy]];
     }
     
     for( APRemotableObject * obj in other )
@@ -146,54 +184,98 @@ static APRemoteAPI * _shared;
         {
             if( [merchant.key isEqual:merchantID] )
             {
-                [other setValue:merchant forKey:@"merchant"];
+                [obj setValue:merchant forKey:@"merchant"];
                 break;
             }
         }
     }
 }
 
--(void)getRewards:(APRemoteAPIRequestBlock)block
-{
-    // TODO: generalize fixups away from here
-    
-    [self requestDataFromServer:@"rewards" block:^(id data) {
-    
-        NSDictionary * dictionary = data;
-        NSArray * merchants = dictionary[@"merchant"];
-        NSArray * rewards = dictionary[@"reward"];
-        [self fixupMerchants:merchants otherStuff:rewards];
-        block(rewards);
-    }];
-    
-}
-
 -(void)requestTransaction:(APScanResult *)scanResult block:(APRemoteAPIRequestBlock)block
 {
-    [self requestDataFromServer:@"transaction" block:^(id data) {        
-        NSDictionary * dictionary = data;
-        NSArray * merchants = dictionary[@"merchant"];
-        NSArray * transArray = dictionary[@"transaction"];
-        [self fixupMerchants:merchants otherStuff:transArray];
-        block(transArray[0]);
+    [self requestDataFromServer:@"transaction" block:^(id data, NSError *err) {
+        if( !err )
+        {
+            NSDictionary * dictionary = data;
+            NSArray * merchants = dictionary[@"merchant"];
+            NSArray * transArray = dictionary[@"transaction"];
+            [self fixupMerchants:merchants otherStuff:transArray];
+            data = transArray[0];
+        }
+        block(data,err);
     }];
 }
 
--(void)getMerchantImage:(NSString *)name block:(APRemoteAPIRequestBlock)block;
+-(void)getMerchantImage:(NSString *)name block:(APRemoteAPIRequestBlock)block
 {
+    
 #ifdef DEBUG
     if( APENABLED(kSettingDebugNetworkStubbed) )
     {
-        block( [UIImage imageNamed:@"merchantlogo.jpg"] );
-    }
-    else
-    {
-#endif
-        
-        
-#ifdef DEBUG
+        name = @"merchantlogo.jpg";
     }
 #endif
+    
+    [self requestImageFromServer:name block:block];
+}
+
+-(void)getRewards:(APRemoteAPIRequestBlock)block
+{
+    [self getRewardsCmd:@"rewards" block:block];
+}
+
+-(void)getRewardsCmd:(NSString *)cmd block:(APRemoteAPIRequestBlock)block
+{
+    // TODO: generalize fixups away from here
+    
+    [self requestDataFromServer:cmd block:^(id data,NSError *err) {
+        if( !err )
+        {
+            NSDictionary * dictionary = data;
+            NSArray * merchants = dictionary[@"merchant"];
+            NSArray * rewards = dictionary[@"reward"];
+            [self fixupMerchants:merchants otherStuff:rewards];
+            data = rewards;
+        }
+        block(data,err);
+    }];
+    
+}
+
+-(void)redeemArgoPoints:(APReward *)reward block:(APRemoteAPIRequestBlock)block
+{
+    [self getRewardsCmd:@"reward_redemption" block:block];
+    
+}
+
+-(void)getMerchantPoints:(APMerchant *)merchant block:(APRemoteAPIRequestBlock)block
+{
+    [self requestDataFromServer:@"merchant_points" block:^(id data,NSError *err) {
+        if( err )
+        {
+            block(nil,err);
+            return;
+        }
+        NSDictionary * dictionary = data;
+        NSArray * points = dictionary[@"merchantPoints"];
+        block(points,nil);
+    }];
+}
+
+-(void)redeemMerchantPoints:(APMerchantPoints *)points block:(APRemoteAPIRequestBlock)block
+{
+    [self requestDataFromServer:@"merchant_points" block:^(id data,NSError *err) {
+        if( err )
+        {
+            block(nil,err);
+            return;
+        }
+        NSInteger credits = [points.merchant.credits integerValue];
+        NSInteger deduct  = [points.points integerValue];
+        points.merchant.credits = @(credits - deduct);
+        block(points,nil);
+    }];
+    
 }
 
 @end

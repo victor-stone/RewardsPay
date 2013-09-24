@@ -8,7 +8,7 @@
 
 #import "UIViewController+ArgoPay.h"
 #import "APStrings.h"
-
+#import "APPopup.h"
 
 @implementation UIViewController (ArgoPay)
 
@@ -68,10 +68,29 @@ void * kTargetMapAssociationKey = &kTargetMapAssociationKey;
     
 }
 
+-(void)addBackButton:(UINavigationBar *)bar
+{
+    UIBarButtonItem * bbBack = [self barButtonForImage:kImageBack
+                                                 title:@"Back"
+                                                 block:^(UIViewController *me, id sender)
+                                {
+                                    [me.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+                                }];
+    bar.topItem.leftBarButtonItem = bbBack;
+    
+}
 
 -(void)navigateTo:(NSString *)vcName
 {
     if( self.parentViewController )
        [self.parentViewController navigateTo:vcName];
 }
+
+-(void)showError:(NSError *)error
+{
+    UIViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:kViewError];
+    [vc setValue:error forKey:@"errorObj"];
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
 @end

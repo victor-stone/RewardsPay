@@ -6,6 +6,8 @@
                   "name" : "Transaction Merchant",
                   "address" : "1235 1st Street Ave. ",
                   "city" : "City1",
+                  "phone": "301-555-9833",
+                  "credits": 230,
                   "state" : "S1",
                   "zip": "11111",
                   "url": "http://merchant1.com"

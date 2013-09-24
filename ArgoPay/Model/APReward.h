@@ -24,7 +24,7 @@ typedef enum _APRewardStatus {
 @property (nonatomic,strong) NSNumber      * credit;
 @property (nonatomic)        APRewardStatus  status;
 
--(void)redeem;
+-(void)redeem:(APRemoteAPIRequestBlock)block;
 
 @end
 

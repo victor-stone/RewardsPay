@@ -25,6 +25,7 @@ typedef enum _APTranasctionRequestState {
 @interface APTransactionRequest : NSObject
 @property (nonatomic,strong) APTransaction * transaction;
 @property (nonatomic,readonly) APTransactionRequestState state;
+@property (nonatomic,readonly) NSError *requestError;
 
 -(id)initWithScanResult:(APScanResult *)scanResult;
 -(void)accept;

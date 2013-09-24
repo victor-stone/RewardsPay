@@ -19,6 +19,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 
 #import "APDebug.h"
+#import "APError.h"
 
 #import "BKGlobals.h"
 #import "NSArray+BlocksKit.h"

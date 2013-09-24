@@ -19,12 +19,27 @@ APLOGRELEASE
                     resizableImageWithCapInsets:UIEdgeInsetsMake(kBGInset,kBGInset,kBGInset,kBGInset)
                     resizingMode:UIImageResizingModeStretch];
     
-    return [[VSPopup alloc] initWithParent:parent flags:flags textOrView:text bg:bg];
+    return [[APPopup alloc] initWithParent:parent flags:flags textOrView:text bg:bg];
 }
 
 +(id)msgWithParent:(UIView *)parent text:(NSString *)text
 {
     return [self popupWithParent:parent text:text flags:kPopupCloseOnAnyTap];
+}
+
++(id)errorWithParent:(UIView *)parent error:(NSError *)err
+{
+    UIImage * bg = [[UIImage imageNamed:kImageErrorBalloon]
+                    resizableImageWithCapInsets:UIEdgeInsetsMake(kErrorPopupInsetTop,kErrorPopupInsetLeft,
+                                                                 kErrorPopupInsetBottom, kErrorPopupInsetRight)
+                    resizingMode:UIImageResizingModeStretch];
+    
+    return [[APPopup alloc] initWithParent:parent flags:kPopupCloseOnAnyTap textOrView:[err localizedDescription] bg:bg];
+}
+
+-(id)initWithParent:(UIView *)parent flags:(VSPopupFlags)flags textOrView:(id)textOrView bg:(UIImage *)background
+{
+    return [super initWithParent:parent flags:flags textOrView:textOrView bg:background];
 }
 
 @end

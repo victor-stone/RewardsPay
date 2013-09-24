@@ -23,14 +23,7 @@ APLOGRELEASE
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-
-    UIBarButtonItem * bbBack = [self barButtonForImage:kImageBack
-                                                 title:@"Back"
-                                                 block:^(APMenuBaseController *me, id sender)
-    {
-        [me.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    }];
-    _navBar.topItem.leftBarButtonItem = bbBack;
+    [self addBackButton:_navBar];
 }
                                           
 @end
@@ -82,21 +75,7 @@ APLOGRELEASE
     [self registerForBroadcast:kNotifyRewardStatusChange
                          block:^(APRewardsViewController *me, APReward *reward)
     {
-        NSInteger counter = 0;
-        APReward * test = nil;
-        for( test in me->_rewards )
-        {
-            if( [test.key isEqual:reward.key] )
-                break;
-            ++counter;
-        }
-        if( test )
-        {
-            @synchronized(me) {
-                [me->_rewardsTable reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:counter inSection:0]]
-                                         withRowAnimation:UITableViewRowAnimationFade];
-            }
-        }
+        [me updateReward:reward];
     }];
     
     APPopup * _popup = [APPopup popupWithParent:self.view
@@ -104,17 +83,53 @@ APLOGRELEASE
                                          flags:kPopupActivity];
     
     APRemoteAPI *api = [APRemoteAPI sharedInstance];
-    [api getRewards:^(id data) {
-        _rewards = data;
-        [_rewardsTable reloadData];
-        [_popup dismiss];
+    [api getRewards:^(id data, NSError *error) {
+        if( error )
+        {
+            [_popup dismiss];
+            [self showError:error];
+        }
+        else
+        {
+            _rewards = data;
+            [_rewardsTable reloadData];
+            [_popup dismiss];
+        }
     }];
 }
 
+-(void)updateReward:(APReward *)replacement
+{
+    NSInteger counter = 0;
+    APReward * test = nil;
+    for( test in _rewards )
+    {
+        if( [test.key isEqual:replacement.key] )
+            break;
+        ++counter;
+    }
+    if( test )
+    {
+        @synchronized(self) {
+            NSMutableArray * editable = [NSMutableArray arrayWithArray:_rewards];
+            [editable replaceObjectAtIndex:counter withObject:replacement];
+            _rewards = editable;
+            
+            [_rewardsTable reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:counter inSection:0]]
+                                     withRowAnimation:UITableViewRowAnimationNone];
+        }
+    }
+    
+}
 -(void)redeemReward:(UIButton *)button
 {
     APReward * reward = _rewards[button.tag];
-    [reward redeem];
+    [reward redeem:^(APReward *result, NSError *err) {
+        if( err )
+            [self showError:err];
+        else
+            [self updateReward:result];
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -131,6 +146,7 @@ APLOGRELEASE
     cell.merchantName.text = reward.merchant.name;
     cell.points.text = [NSString stringWithFormat:@"%d",[reward.points intValue]];
     cell.value.text = [NSString stringWithFormat:@"$%.0f", [reward.credit floatValue]];
+    // TODO: delay this with network call
     [cell.logo setImage:reward.merchant.logoImg];
     if( reward.status == kRewardStatusRedeemable )
     {
@@ -163,6 +179,14 @@ APLOGRELEASE
         [cell.activity stopAnimating];        
     }
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    APReward * reward = _rewards[indexPath.row];
+    UIViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:kViewMerchantDetail];
+    [vc setValue:reward.merchant forKey:@"merchant"];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 @end

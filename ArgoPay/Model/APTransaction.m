@@ -23,8 +23,9 @@ APLOGRELEASE
         return nil;
     
     APRemoteAPI * api = [APRemoteAPI sharedInstance];
-    [api requestTransaction:scanResult block:^(id data) {
+    [api requestTransaction:scanResult block:^(id data,NSError *err) {
         _transaction = data;
+        _requestError = err;
         [self broadcast:kNotifyTransactionResult payload:self];
     }];
     _state = kTransactionStateUnknown;
