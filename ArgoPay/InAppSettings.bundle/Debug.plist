@@ -44,60 +44,6 @@
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSMultiValueSpecifier</string>
-			<key>Key</key>
-			<string>kSettingDebugNetworkDelay</string>
-			<key>Title</key>
-			<string>Network Delay</string>
-			<key>Titles</key>
-			<array>
-				<string>0.5 seconds</string>
-				<string>1.0 seconds</string>
-				<string>1.5 seconds</string>
-				<string>2.5 seconds</string>
-			</array>
-			<key>Values</key>
-			<array>
-				<string>0.5</string>
-				<string>1</string>
-				<string>1.5</string>
-				<string>2.5</string>
-			</array>
-			<key>DefaultValue</key>
-			<string>1.5</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>DefaultValue</key>
-			<string>YES</string>
-			<key>Key</key>
-			<string>kSettingDebugNetworkSimulatedFail</string>
-			<key>Title</key>
-			<string>Simulate Fail</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>DefaultValue</key>
-			<string>YES</string>
-			<key>Key</key>
-			<string>kSettingDebugNetworkUseRequestBin</string>
-			<key>Title</key>
-			<string>Use requestb.in</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>DefaultValue</key>
-			<string>YES</string>
-			<key>Key</key>
-			<string>kSettingDebugRejectLogin</string>
-			<key>Title</key>
-			<string>Reject Log In</string>
-		</dict>
-		<dict>
-			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 			<key>KeyboardType</key>
 			<string>NumberPad</string>

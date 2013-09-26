@@ -42,7 +42,6 @@ APLOGRELEASE
 
 @implementation APRemoteCommand {
     NSMutableDictionary *_shippingProperties;
-    NSString *_watcherKey;
 }
 
 -(id)initWithCmd:(NSString *)cmd subDomain:(NSString *)subDomain
@@ -54,11 +53,11 @@ APLOGRELEASE
     _command = cmd;
     _subDomain = subDomain;
     NSMutableDictionary *props = _shippingProperties;
-    _watcherKey = [self addObserverForKeyPaths:[self keyPaths]
-                                       options:NSKeyValueObservingOptionNew
-                                          task:^(id obj, NSString *keyPath, NSDictionary *change) {
-                                              props[keyPath] = change[NSKeyValueChangeNewKey];
-                                          }];
+    [self addObserverForKeyPaths:[self keyPaths]
+                         options:NSKeyValueObservingOptionNew
+                            task:^(id obj, NSString *keyPath, NSDictionary *change) {
+                                props[keyPath] = change[NSKeyValueChangeNewKey];
+                            }];
     return self;
 }
 

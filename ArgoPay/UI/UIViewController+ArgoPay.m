@@ -89,21 +89,22 @@ void * kTargetMapAssociationKey = &kTargetMapAssociationKey;
 
 -(void)showError:(NSError *)error
 {
-    UIViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:kViewError];
-    [vc setValue:error forKey:@"errorObj"];
     APAppDelegate * ad = (APAppDelegate *)([UIApplication sharedApplication].delegate);
-    UIViewController * rvc = ad.window.rootViewController;
-    if( rvc.presentedViewController )
+    UIViewController * host = ad.window.rootViewController;
+    if( host.presentedViewController )
+        host = host.presentedViewController;
+    
+    if( [host isBeingDismissed] || [host isBeingPresented] )
     {
-        [rvc dismissViewControllerAnimated:NO completion:nil];
         [NSObject performBlock:^{
             [self showError:error];
-        } afterDelay:0.8];
+        } afterDelay:0.3];
+        return;
     }
-    else
-    {
-        [rvc presentViewController:vc animated:YES completion:nil];        
-    }
+    
+    UIViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:kViewError];
+    [vc setValue:error forKey:@"errorObj"];
+    [host presentViewController:vc animated:YES completion:nil];
 }
 
 @end
