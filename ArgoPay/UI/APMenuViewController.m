@@ -7,7 +7,7 @@
 //
 
 #import "APStrings.h"
-#import "APReward.h"
+#import "APArgoPointsReward.h"
 #import "APMerchant.h"
 #import "APRemoteAPI.h"
 #import "APPopup.h"
@@ -44,154 +44,6 @@ APLOGRELEASE
 
 
 @end
-
-@interface APRewardsCell : UITableViewCell
-@property (weak,nonatomic) IBOutlet UIImageView *logo;
-@property (weak,nonatomic) IBOutlet UILabel *merchantName;
-@property (weak,nonatomic) IBOutlet UILabel *points;
-@property (weak,nonatomic) IBOutlet UILabel *value;
-@property (weak, nonatomic) IBOutlet UIButton *redeemButton;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activity;
-@property (weak,nonatomic) IBOutlet UILabel *status;
-@end
-
-@implementation APRewardsCell
-@end
-
-
-@interface APRewardsViewController : APMenuBaseController<UITableViewDataSource,UITableViewDelegate>
-@property (weak, nonatomic) IBOutlet UITableView *rewardsTable;
-@end
-
-@implementation APRewardsViewController {
-    NSArray * _rewards;
-
-}
-
--(void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    [self registerForBroadcast:kNotifyRewardStatusChange
-                         block:^(APRewardsViewController *me, APReward *reward)
-    {
-        [me updateReward:reward];
-    }];
-    
-    APPopup * _popup = [APPopup popupWithParent:self.view
-                                          text:@"Contacting ArgoPay Server"
-                                         flags:kPopupActivity];
-    
-    APRemoteAPI *api = [APRemoteAPI sharedInstance];
-    [api getRewards:^(id data, NSError *error) {
-        if( error )
-        {
-            [_popup dismiss];
-            [self showError:error];
-        }
-        else
-        {
-            _rewards = data;
-            [_rewardsTable reloadData];
-            [_popup dismiss];
-        }
-    }];
-}
-
--(void)updateReward:(APReward *)replacement
-{
-    NSInteger counter = 0;
-    APReward * test = nil;
-    for( test in _rewards )
-    {
-        if( [test.key isEqual:replacement.key] )
-            break;
-        ++counter;
-    }
-    if( test )
-    {
-        @synchronized(self) {
-            NSMutableArray * editable = [NSMutableArray arrayWithArray:_rewards];
-            [editable replaceObjectAtIndex:counter withObject:replacement];
-            _rewards = editable;
-            
-            [_rewardsTable reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:counter inSection:0]]
-                                     withRowAnimation:UITableViewRowAnimationNone];
-        }
-    }
-    
-}
--(void)redeemReward:(UIButton *)button
-{
-    APReward * reward = _rewards[button.tag];
-    [reward redeem:^(APReward *result, NSError *err) {
-        if( err )
-            [self showError:err];
-        else
-            [self updateReward:result];
-    }];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return [_rewards count];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    APRewardsCell * cell = [tableView dequeueReusableCellWithIdentifier:kCellIDReward forIndexPath:indexPath];
-    APReward * reward = _rewards[indexPath.row];
-    
-    cell.merchantName.text = reward.merchant.name;
-    cell.points.text = [NSString stringWithFormat:@"%d",[reward.points intValue]];
-    cell.value.text = [NSString stringWithFormat:@"$%.0f", [reward.credit floatValue]];
-    // TODO: delay this with network call
-    [cell.logo setImage:reward.merchant.logoImg];
-    if( reward.status == kRewardStatusRedeemable )
-    {
-        cell.status.hidden = YES;
-        cell.activity.hidden = YES;
-        [cell.activity stopAnimating];
-        cell.redeemButton.hidden = NO;
-        cell.redeemButton.tag = indexPath.row;
-        [cell.redeemButton addTarget:self action:@selector(redeemReward:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    else if( reward.status == kRewardStatusReadyToUse )
-    {
-        cell.status.hidden = NO;
-        cell.activity.hidden = YES;
-        [cell.activity stopAnimating];
-        cell.redeemButton.hidden = YES;
-    }
-    else if( reward.status == kRewardStatusSeekingRedemption )
-    {
-        cell.status.hidden = YES;
-        cell.redeemButton.hidden = YES;
-        cell.activity.hidden = NO;
-        [cell.activity startAnimating];
-    }
-    else
-    {
-        cell.redeemButton.hidden = YES;
-        cell.status.hidden = NO;
-        cell.activity.hidden = YES;
-        [cell.activity stopAnimating];        
-    }
-    return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    APReward * reward = _rewards[indexPath.row];
-    UIViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:kViewMerchantDetail];
-    [vc setValue:reward.merchant forKey:@"merchant"];
-    [self presentViewController:vc animated:YES completion:nil];
-}
-
-@end
-
-
 
 @interface APMenuCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -231,10 +83,10 @@ static NSArray *menuItems()
     
     if( !_items )
     {
-        _items = @[ [APMenuItem miWithImage:kImageSettings label:@"Settings" vc:kViewSettings],
-                    [APMenuItem miWithImage:kImageHistory label:@"History" vc:kViewHistory],
-                    [APMenuItem miWithImage:kImageAccount label:@"Account" vc:kViewAccount],
-                    [APMenuItem miWithImage:kImageRewards label:@"Rewards" vc:kViewRewards]];
+        _items = @[ [APMenuItem miWithImage:kImageSettings label:NSLocalizedString(@"Settings","menu") vc:kViewSettings],
+                    [APMenuItem miWithImage:kImageHistory label:NSLocalizedString(@"History","menu") vc:kViewHistory],
+                    [APMenuItem miWithImage:kImageAccount label:NSLocalizedString(@"Account","menu") vc:kViewAccount],
+                    [APMenuItem miWithImage:kImageRewards label:NSLocalizedString(@"Rewards","menu") vc:kViewRewards]];
     }
     
     return _items;

@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 
-#import "APLocationViewController.h"
 #import "APStrings.h"
 
-@interface APLocationViewController ()
+@interface APLocationViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UINavigationBar *argoNavBar;
 
 @end
 

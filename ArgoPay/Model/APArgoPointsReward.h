@@ -11,13 +11,13 @@
 @class APMerchant;
 
 typedef enum _APRewardStatus {
-    kRewardStatusUnknown,
+    kRewardStatusCantAfford,
     kRewardStatusRedeemable,
     kRewardStatusReadyToUse,
     kRewardStatusSeekingRedemption
 } APRewardStatus;
 
-@interface APReward : APRemotableObject
+@interface APArgoPointsReward : APRemotableObject
 
 @property (nonatomic,strong) APMerchant    * merchant;
 @property (nonatomic,strong) NSNumber      * points;

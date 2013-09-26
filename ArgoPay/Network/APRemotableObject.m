@@ -7,13 +7,14 @@
 //
 
 #import "APRemotableObject.h"
+#import "APStrings.h"
 
-
-static unsigned int __testingCounter = 0;
 
 @implementation APRemotableObject {
     NSMutableDictionary * _propDict;
 }
+
+APLOGRELEASE
 
 -(id)initWithDictionary:(NSDictionary *)values
 {
@@ -21,9 +22,6 @@ static unsigned int __testingCounter = 0;
         return nil;
     
     _propDict = [NSMutableDictionary new];
-    
-    if( !_key )
-        _key = @(++__testingCounter);
     
     [self setValuesForKeysWithDictionary:values];
     
@@ -38,6 +36,40 @@ static unsigned int __testingCounter = 0;
 -(id)valueForUndefinedKey:(NSString *)key
 {
     return _propDict[key];
+}
+
+@end
+
+@implementation APRemoteCommand {
+    NSMutableDictionary *_shippingProperties;
+}
+
+-(id)initWithCmd:(NSString *)cmd subDomain:(NSString *)subDomain
+{
+    self = [super init];
+    if( !self ) return nil;
+    
+    _shippingProperties = [NSMutableDictionary new];
+    _command = cmd;
+    _subDomain = subDomain;
+    return self;
+}
+
+-(void)didChangeValueForKey:(NSString *)key
+{
+    [super didChangeValueForKey:key];
+    _shippingProperties[key] = [self valueForKey:key];
+}
+
+-(NSDictionary *)remotableProperties
+{
+    return _shippingProperties;
+}
+
+-(Class)payloadClass
+{
+    NSAssert(0, @"Derived classes must set the 'payloadClass' property");
+    return nil;
 }
 
 @end

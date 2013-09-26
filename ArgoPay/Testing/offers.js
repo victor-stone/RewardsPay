@@ -45,20 +45,38 @@
                   "zip": "11114",
                   "url": "http://merchant4.com"
                   }],
-    "reward" : [{
-                "key": 600,
+    "offer" : [{
+                "key": 700,
                 "merchant_id": 1,
-                "points": 100,
-                "credit" : 1.00
+                "expires": 1380787200,
+               "selected": 0,
+               "recommendationWeight": 0.3,
+               "created": 1375318800,
+                "description" : "Holiday in Cambodia"
                 },{
-                "key": 601,
-                "merchant_id": 2,
-                "points": 200,
-                "credit" : 2.00
-                },{
-                "key": 602,
-                "merchant_id": 3,
-                "points": 300,
-                "credit" : 3.00
-                }]
+               "key": 710,
+               "merchant_id": 2,
+               "selected": 1,
+               "created": 1375318801,
+               "recommendationWeight": 0.5,
+               "expires": 1383465600,
+               "description" : "Hot rock massage"
+               },{
+               "key": 720,
+               "merchant_id": 3,
+               "selected": 1,
+               "recommendationWeight": 0.2,
+               "created": 1375318802,
+               "expires": 1381824000,
+               "description" : "All the Twix you can eat"
+               },{
+               "key": 730,
+               "merchant_id": 4,
+               "selected": 0,
+               "recommendationWeight": 1.0,
+               "created": 1375318803,
+               "expires": 1385884800,
+               "description" : "Hip replacement"
+               }]
+               
 }}

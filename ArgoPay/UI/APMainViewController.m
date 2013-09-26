@@ -12,6 +12,8 @@
 #import "APTransaction.h"
 #import "APTranasctionViewController.h"
 
+#define kTransitionDuration 0.5
+
 #pragma mark - Local Interfaces
 
 @class APTabNavigator;
@@ -97,7 +99,7 @@ typedef void (^APScannerDoneBlock)(APMainViewController *);
         [me toggleScanner:^(APMainViewController *me) {
             if( result == AP_EMPTY_SCAN_RESULT )
             {
-                [APPopup msgWithParent:me.view text:@"QR Code scan was cancelled"];
+                [APPopup msgWithParent:me.view text:NSLocalizedString(@"QR Code scan was cancelled", "popup")];
             }
             else
             {
@@ -116,9 +118,9 @@ typedef void (^APScannerDoneBlock)(APMainViewController *);
     {
         NSString * msg = nil;
         if( request.state == kTransactionStateCancelled )
-            msg = @"Transaction Canelled";
+            msg = NSLocalizedString(@"Transaction Canelled", "popup");
         else if( request.state == kTransactionStateAccepted )
-            msg = @"Transaction Accepted! Thanks for using ArgoPay!";
+            msg = NSLocalizedString(@"Transaction Accepted! Thanks for using ArgoPay!","popup");
         [APPopup msgWithParent:me.view text:msg];
     }];
     
@@ -166,26 +168,26 @@ typedef void (^APScannerDoneBlock)(APMainViewController *);
 {
     UIViewController * dest = [self.storyboard instantiateViewControllerWithIdentifier:vcName];
     UIViewController * src = self;
-    CGRect rc = _embeddingContainer.bounds;
-    
     [_currentEmbeddedVC willMoveToParentViewController:nil];
     [_currentEmbeddedVC removeFromParentViewController];
-    
+
     [dest willMoveToParentViewController:src];
     [src addChildViewController:dest];
     UIView * newView = dest.view;
-
-//   rc.size.height -= 44;
-    CGRect targetRC = rc;
-    rc.origin.x = rc.size.width;
+    UIView * oldView = [_embeddingContainer subviews][0];
+    CGRect rc = _embeddingContainer.bounds;
     newView.frame = rc;
+
+	[UIView beginAnimations:nil context:NULL];
+	[UIView setAnimationDuration:kTransitionDuration];
+	[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft
+                           forView:_embeddingContainer
+                             cache:YES];
+    [oldView removeFromSuperview];
     [_embeddingContainer addSubview:newView];
+	[UIView commitAnimations];
     
     [dest didMoveToParentViewController:src];
-    [UIView animateWithDuration:0.5 animations:^{
-        dest.view.frame = targetRC;
-    }];
-    
     _currentEmbeddedVC = dest;
     
     _lastNavTab = vcName;
@@ -193,7 +195,7 @@ typedef void (^APScannerDoneBlock)(APMainViewController *);
 #ifdef DEBUG
     if( APENABLED(kDebugViews) )
     {
-        APDebug(kDebugFire, @"Children -------------");
+        APDebug(kDebugFire, @"Children VC -------------");
         
         for( UIViewController * vc in self.childViewControllers )
         {
@@ -202,6 +204,10 @@ typedef void (^APScannerDoneBlock)(APMainViewController *);
             {
                 APDebug(kDebugFire, @"GrandChild vc: %@", gvc);
             }
+        }
+        for( UIView * view in _embeddingContainer.subviews )
+        {
+            APDebug(kDebugFire, @"Embedding child: %@", view);
         }
     }
 #endif

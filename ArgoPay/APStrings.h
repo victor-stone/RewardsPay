@@ -7,7 +7,7 @@
 //
 
 #ifndef APKEYEDSTRING
-#define APKEYEDSTRING(key) extern NSString * key;
+#define APKEYEDSTRING(key) extern NSString *const key;
 #endif
 
 APKEYEDSTRING(kNotifyRequestScanner)
@@ -29,6 +29,7 @@ APKEYEDSTRING(kSettingDebugNetworkDelay)
 APKEYEDSTRING(kSettingDebugNetworkSimulatedFail)
 APKEYEDSTRING(kSettingDebugNetworkUseRequestBin)
 APKEYEDSTRING(kSettingDebugRejectLogin)
+APKEYEDSTRING(kSettingDebugNetworkSSL)
 
 APKEYEDSTRING(kViewAccount)
 APKEYEDSTRING(kViewError)
@@ -36,6 +37,7 @@ APKEYEDSTRING(kViewHistory)
 APKEYEDSTRING(kViewHome)
 APKEYEDSTRING(kViewMerchantDetail)
 APKEYEDSTRING(kViewOffers)
+APKEYEDSTRING(kViewOfferDetail)
 APKEYEDSTRING(kViewPlaces)
 APKEYEDSTRING(kViewRewards)
 APKEYEDSTRING(kViewScanner)
@@ -47,6 +49,7 @@ APKEYEDSTRING(kSegueMainEmbedding)
 APKEYEDSTRING(kCellIDMenu)
 APKEYEDSTRING(kCellIDReward)
 APKEYEDSTRING(kCellIDMerchantDetail)
+APKEYEDSTRING(kCellIDOffer)
 
 APKEYEDSTRING(kImageAccount)
 APKEYEDSTRING(kImageAlert)

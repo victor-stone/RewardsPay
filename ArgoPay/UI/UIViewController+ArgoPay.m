@@ -71,7 +71,7 @@ void * kTargetMapAssociationKey = &kTargetMapAssociationKey;
 -(void)addBackButton:(UINavigationBar *)bar
 {
     UIBarButtonItem * bbBack = [self barButtonForImage:kImageBack
-                                                 title:@"Back"
+                                                 title:NSLocalizedString(@"Back", "Navigation button")
                                                  block:^(UIViewController *me, id sender)
                                 {
                                     [me.presentingViewController dismissViewControllerAnimated:YES completion:nil];

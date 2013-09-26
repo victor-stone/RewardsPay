@@ -5,11 +5,10 @@
 //  Created by victor on 9/17/13.
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
-
-#import "APSettingsViewController.h"
+#import "VSSettings.h"
 #import "APStrings.h"
 
-@interface APSettingsViewController ()
+@interface APSettingsViewController : VSSettingsExtensions
 
 @end
 

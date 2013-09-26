@@ -16,4 +16,6 @@
 @property (nonatomic,strong) NSString * password;
 @property (nonatomic,strong) NSNumber * argoPoints;
 
+-(void)adjustArgoPoint:(NSUInteger)amount;
+
 @end

@@ -9,26 +9,48 @@
 #import "APRemoteAPI.h"
 #import "APRemotableObject.h"
 #import "APStrings.h"
+#import "AFNetworking.h"
+
+#ifndef APREMOTESTRINGV
+#define APREMOTESTRINGV(type,k,v) NSString * kRemote##type##k = @ #v ;
+#endif
+
+#import "APRemoteStrings.h"
 
 // TODO: temp including for mockup
-#import "APReward.h"
+#import "APArgoPointsReward.h"
 #import "APMerchant.h"
+#import "APTransaction.h"
+#import "APOffer.h"
 
-typedef struct _APRemoteTypeMapping {
-    const char * remoteName;
-    const char * objCTClassName;
-} APRemoteTypeMapping;
+@interface APJSONRequest : AFJSONRequestOperation
 
-static APRemoteTypeMapping _typeMapping[] = {
-    { "merchant", "APMerchant" },
-    { "reward",   "APReward" },
-    { "transaction", "APTransaction" },
-    { "merchantPoints", "APMerchantPoints" }
-};
+@end
+@implementation APJSONRequest
 
-static const char kNumRemoteMappings = (sizeof(_typeMapping)/sizeof(_typeMapping[0]));
+-(id)initWithRequest:(NSURLRequest *)urlRequest
+{
+    self = [super initWithRequest:urlRequest];
+    if( self )
+        self.JSONReadingOptions = NSJSONReadingAllowFragments;
+    return self;
+}
 
-@implementation APRemoteAPI
+@end
+
+@interface APRemoteRepsonse : APRemotableObject
+@property (nonatomic,strong) NSNumber *Status;
+@property (nonatomic,strong) NSString *Message;
+@property (nonatomic,strong) NSString *UserMessage;
+@end
+
+@implementation APRemoteRepsonse
+@end
+
+@implementation APRemoteAPI {
+    NSDictionary *_typeMapping;
+    NSMutableDictionary *_clients;
+}
 
 static void * kRemoteAPIInitializeToken = &kRemoteAPIInitializeToken;
 
@@ -43,13 +65,35 @@ static APRemoteAPI * _sharedRemoteAPI;
     return _sharedRemoteAPI;
 }
 
--(NSString *)baseURL
++(NSString *)baseURLForSubDomain:(NSString *)scope
 {
 #ifdef DEBUG
-    return @"http://requestb.in/ytib2eyt";
+    NSString * protocol = APENABLED(kSettingDebugNetworkSSL) ? @"https" : @"http";
+    NSString * base = [[NSUserDefaults standardUserDefaults] stringForKey:kSettingDebugNetworkStubbed];
 #else
-    return nil;
+    NSString *protocol = @"https";
+    NSString * base = @".argopay.com";
 #endif
+    
+    if( [base characterAtIndex:0] == '.' )
+        base = [scope stringByAppendingString:base];
+    
+    return [NSString stringWithFormat:@"%@://%@", protocol, base];
+}
+
++(AFHTTPClient *)clientForSubDomain:(NSString *)subDomain
+{
+    NSString *urlString = [self baseURLForSubDomain:subDomain];
+    APRemoteAPI * api = [APRemoteAPI sharedInstance];
+    AFHTTPClient * client = api->_clients[urlString];
+    if( !client )
+    {
+        client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:urlString]];
+        [client registerHTTPOperationClass:[APJSONRequest class]];
+        [client setDefaultHeader:@"Accept" value:@"text/json"];
+        api->_clients[urlString] = client;
+    }
+    return client;
 }
 
 -(id)init
@@ -66,6 +110,15 @@ static APRemoteAPI * _sharedRemoteAPI;
     self = [super init];
     if( !self ) return nil;
     
+    _typeMapping = @{@"merchant": [APMerchant class],
+                     @"reward":   [APArgoPointsReward class],
+                     @"transaction": [APTransaction class],
+                     @"merchantPoints": [APMerchantPoints class],
+                     @"offer": [APOffer class]
+                     };
+    
+    _clients = [NSMutableDictionary new];
+    
     return self;
 }
 
@@ -78,9 +131,11 @@ static APRemoteAPI * _sharedRemoteAPI;
         {
             id jsonObj = nil;
             err = nil;
-            jsonObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
+            jsonObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
             if( jsonObj && !err )
+            {
                 argoObjects = [self convertJSONDictionaryToArgoObjects:jsonObj];
+            }
         }
         block(argoObjects,err);
     };
@@ -137,22 +192,11 @@ static APRemoteAPI * _sharedRemoteAPI;
 }
 -(id)convertJSONDictionaryToArgoObjects:(NSDictionary *)dictionary
 {
-    static NSMutableDictionary * typeMap = nil;
-    
-    if( !typeMap )
-    {
-        typeMap = [[NSMutableDictionary alloc] initWithCapacity:kNumRemoteMappings];
-        for( int i = 0; i < kNumRemoteMappings; i++ )
-        {
-            typeMap[@(_typeMapping[i].remoteName)] = NSClassFromString(@(_typeMapping[i].objCTClassName));
-        }
-    }
-    
     NSMutableDictionary * results = [[NSMutableDictionary alloc] initWithCapacity:dictionary.count];
     dictionary = dictionary[@"rootObj"];
     for( NSString * key in dictionary )
     {
-        Class klass = typeMap[key];
+        Class klass = _typeMapping[key];
         if( klass )
         {
             NSArray * jsonDefinitions = dictionary[key];
@@ -212,7 +256,7 @@ static APRemoteAPI * _sharedRemoteAPI;
 #ifdef DEBUG
     if( APENABLED(kSettingDebugNetworkStubbed) )
     {
-        name = @"merchantlogo.jpg";
+        name = @"appicon";
     }
 #endif
     
@@ -221,10 +265,21 @@ static APRemoteAPI * _sharedRemoteAPI;
 
 -(void)getRewards:(APRemoteAPIRequestBlock)block
 {
-    [self getRewardsCmd:@"rewards" block:block];
+    [self requestMerchantData:@"rewards"
+                   recordName:@"reward"
+                        block:block];
 }
 
--(void)getRewardsCmd:(NSString *)cmd block:(APRemoteAPIRequestBlock)block
+-(void)getOffers:(APRemoteAPIRequestBlock)block
+{
+    [self requestMerchantData:@"offers"
+                   recordName:@"offer"
+                        block:block];
+}
+
+-(void)requestMerchantData:(NSString *)cmd
+                recordName:(NSString *)recordName
+                     block:(APRemoteAPIRequestBlock)block
 {
     // TODO: generalize fixups away from here
     
@@ -233,7 +288,7 @@ static APRemoteAPI * _sharedRemoteAPI;
         {
             NSDictionary * dictionary = data;
             NSArray * merchants = dictionary[@"merchant"];
-            NSArray * rewards = dictionary[@"reward"];
+            NSArray * rewards = dictionary[recordName];
             [self fixupMerchants:merchants otherStuff:rewards];
             data = rewards;
         }
@@ -242,10 +297,16 @@ static APRemoteAPI * _sharedRemoteAPI;
     
 }
 
--(void)redeemArgoPoints:(APReward *)reward block:(APRemoteAPIRequestBlock)block
+-(void)redeemArgoPoints:(APArgoPointsReward *)reward block:(APRemoteAPIRequestBlock)block
 {
-    [self getRewardsCmd:@"reward_redemption" block:block];
-    
+    [self requestMerchantData:@"reward_redemption"
+                   recordName:@"reward"
+                        block:^(NSArray *data, NSError *err) {
+                            if( err )
+                                block(nil,err);
+                            else
+                                block(data[0],nil);
+                        }];
 }
 
 -(void)getMerchantPoints:(APMerchant *)merchant block:(APRemoteAPIRequestBlock)block
@@ -275,7 +336,36 @@ static APRemoteAPI * _sharedRemoteAPI;
         points.merchant.credits = @(credits - deduct);
         block(points,nil);
     }];
-    
 }
 
+@end
+
+@implementation APRemoteCommand (perform)
+-(void)performRequest:(APRemoteAPIRequestBlock)block
+{
+    AFHTTPClient *client = [APRemoteAPI clientForSubDomain:self.subDomain];
+    
+    [client postPath:self.command
+          parameters:self.remotableProperties
+             success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+                 APRemoteRepsonse * response = [[APRemoteRepsonse alloc] initWithDictionary:responseObject];
+                 if( [response.Status integerValue] != 0 )
+                 {
+                     block(nil,[[APError alloc] initWithMsg:response.Message]);
+                 }
+                 else
+                 {
+                     NSString *payloadName = self.payloadName;
+                     NSDictionary *responseDict = nil;
+                     if( payloadName )
+                         responseDict = [responseObject valueForKey:payloadName];
+                     else
+                         responseDict = responseObject;
+                     id instance = [[self.payloadClass alloc] initWithDictionary:responseObject];
+                     block(instance,nil);
+                 }
+             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 block(nil,error);
+             }];
+}
 @end

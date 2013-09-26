@@ -14,4 +14,8 @@ NSString * kAPErrorDomain = @"com.ArgoPay.ArgoPayMobile.ErrorDomain";
 
 @implementation APError
 
+-(id)initWithMsg:(NSString *)msg
+{
+    return [super initWithDomain:kAPErrorDomain code:0x100 userInfo:@{NSLocalizedDescriptionKey:msg}];
+}
 @end

@@ -39,10 +39,33 @@ static APAccount * __sharedAccount;
     
     NSUserDefaults * settings = [NSUserDefaults standardUserDefaults];
     
-    _login = [settings stringForKey:kSettingUserLoginName];
-    _password = [settings stringForKey:kSettingUserLoginPassword];
-    _argoPoints = @([settings integerForKey:kSettingUserArgoPoints]);
+    _login      = [settings stringForKey:kSettingUserLoginName];
+    _password   = [settings stringForKey:kSettingUserLoginPassword];
+    _argoPoints = [settings valueForKey:kSettingUserArgoPoints];
     
     return self;
+}
+
+-(void)setLogin:(NSString *)login
+{
+    _login = login;
+    [[NSUserDefaults standardUserDefaults] setValue:login forKey:kSettingUserLoginName];
+}
+
+-(void)setPassword:(NSString *)password
+{
+    _password = password;
+    [[NSUserDefaults standardUserDefaults] setValue:password forKey:kSettingUserLoginPassword];
+}
+
+-(void)setArgoPoints:(NSNumber *)argoPoints
+{
+    _argoPoints = argoPoints;
+    [[NSUserDefaults standardUserDefaults] setValue:argoPoints forKey:kSettingUserArgoPoints];
+}
+
+-(void)adjustArgoPoint:(NSUInteger)amount
+{
+    self.argoPoints = @([_argoPoints integerValue] + amount);
 }
 @end

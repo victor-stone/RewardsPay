@@ -43,6 +43,8 @@
     NSArray * _actualPoints;
 }
 
+APLOGRELEASE
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -57,18 +59,18 @@
 -(void)commitMerchant
 {
     _merchantName.text = _merchant.name;
-    _merchantPoints.text = [NSString stringWithFormat:@"%dpts",[_merchant.credits integerValue]];
+    _merchantPoints.text = [NSString stringWithFormat:NSLocalizedString(@"%dpts","MerchantDetail"),[_merchant.credits integerValue]];
     _streetAddr.text = _merchant.address;
     _cityState.text = [NSString stringWithFormat:@"%@, %@", _merchant.city, _merchant.state];
     _phoneNumber.text = _merchant.phone;
     _urlAddr.text = [_merchant.url stringByReplacingOccurrencesOfString:@"http://" withString:@""];
     
 }
+
 -(void)setMerchant:(APMerchant *)merchant
 {
     _merchant = merchant;
-    if( _loaded )
-        [self commitMerchant];
+    [self commitMerchant];
 }
 
 - (IBAction)disclose:(id)sender
@@ -114,12 +116,6 @@
     }];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [_points count];
@@ -146,7 +142,7 @@
         }
         else
         {
-            _merchantPoints.text = [NSString stringWithFormat:@"%dpts",[_merchant.credits integerValue]];
+            _merchantPoints.text = [NSString stringWithFormat:NSLocalizedString(@"%dpts","MerchantDetail"),[_merchant.credits integerValue]];
             [_pointsTable reloadData];
         }
     }];
@@ -170,7 +166,7 @@
         cell.redeemButton.hidden = YES;
     }
     
-    cell.points.text = [NSString stringWithFormat:@"%dpts", pts];
+    cell.points.text = [NSString stringWithFormat:NSLocalizedString(@"%dpts","MerchantDetailCell"), pts];
     cell.credit.text = points.value;
     return cell;
 }

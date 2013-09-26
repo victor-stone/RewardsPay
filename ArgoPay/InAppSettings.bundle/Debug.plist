@@ -12,13 +12,35 @@
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>PSMultiValueSpecifier</string>
 			<key>DefaultValue</key>
-			<string>YES</string>
+			<string>argotest</string>
 			<key>Key</key>
 			<string>kSettingDebugNetworkStubbed</string>
 			<key>Title</key>
-			<string>Stub Network</string>
+			<string>Network</string>
+			<key>Titles</key>
+			<array>
+				<string>localhost</string>
+				<string>Developer ArgoPay</string>
+				<string>Production ArgoPay</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>argotest</string>
+				<string>dev.argopay.com</string>
+				<string>.argopay.com</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>DefaultValue</key>
+			<string>NO</string>
+			<key>Key</key>
+			<string>kSettingDebugNetworkSSL</string>
+			<key>Title</key>
+			<string>Use SLL</string>
 		</dict>
 		<dict>
 			<key>Type</key>

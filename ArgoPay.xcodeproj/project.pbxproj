@@ -15,11 +15,17 @@
 		574B2DF917ECB7EB008E17EE /* merchantlogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 574B2DF817ECB7EB008E17EE /* merchantlogo.jpg */; };
 		574B2DFA17ECBAA5008E17EE /* rewards.js in Resources */ = {isa = PBXBuildFile; fileRef = 574B2DF617ECB1AF008E17EE /* rewards.js */; };
 		574B2DFC17ECDC2D008E17EE /* transaction.js in Resources */ = {isa = PBXBuildFile; fileRef = 574B2DFB17ECDC2D008E17EE /* transaction.js */; };
+		578BB57A17F208DC009E2F45 /* offers.js in Resources */ = {isa = PBXBuildFile; fileRef = 578BB57917F208DC009E2F45 /* offers.js */; };
+		578BB57D17F208FE009E2F45 /* APOffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 578BB57C17F208FE009E2F45 /* APOffer.m */; };
+		578BB5B617F22C9F009E2F45 /* run_genstrings.sh in Resources */ = {isa = PBXBuildFile; fileRef = 578BB5B517F22C9F009E2F45 /* run_genstrings.sh */; };
+		578BB5BB17F22CFA009E2F45 /* AFNetworking.strings in Resources */ = {isa = PBXBuildFile; fileRef = 578BB5B717F22CFA009E2F45 /* AFNetworking.strings */; };
+		578BB5BC17F22CFA009E2F45 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 578BB5B917F22CFA009E2F45 /* Localizable.strings */; };
+		578BB5BF17F248F4009E2F45 /* APRewardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 578BB5BE17F248F4009E2F45 /* APRewardViewController.m */; };
 		5793E3DB17EB7379004B0838 /* appIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5793E3DA17EB7379004B0838 /* appIcon.png */; };
 		5793E3DD17EB7383004B0838 /* appIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5793E3DC17EB7383004B0838 /* appIcon@2x.png */; };
 		5793E3E417EB7E98004B0838 /* APRemotableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5793E3E317EB7E98004B0838 /* APRemotableObject.m */; };
 		5793E3E717EB7F24004B0838 /* APMerchant.m in Sources */ = {isa = PBXBuildFile; fileRef = 5793E3E617EB7F24004B0838 /* APMerchant.m */; };
-		5793E3EA17EB7FBF004B0838 /* APReward.m in Sources */ = {isa = PBXBuildFile; fileRef = 5793E3E917EB7FBF004B0838 /* APReward.m */; };
+		5793E3EA17EB7FBF004B0838 /* APArgoPointsReward.m in Sources */ = {isa = PBXBuildFile; fileRef = 5793E3E917EB7FBF004B0838 /* APArgoPointsReward.m */; };
 		5793E3EC17EBBE23004B0838 /* kImageRewardsTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 5793E3EB17EBBE23004B0838 /* kImageRewardsTop.png */; };
 		5793E3EE17EBC38A004B0838 /* kImageButtonBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5793E3ED17EBC38A004B0838 /* kImageButtonBg.png */; };
 		579E4E2317EFDB1D00D03437 /* APError.m in Sources */ = {isa = PBXBuildFile; fileRef = 579E4E2217EFDB1D00D03437 /* APError.m */; };
@@ -116,6 +122,7 @@
 		57A224F017E92D1A000B52E9 /* VSSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A224EF17E92D1A000B52E9 /* VSSettings.m */; };
 		57A224F317E95154000B52E9 /* APSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A224F217E95153000B52E9 /* APSettingsViewController.m */; };
 		57A224F517E951A5000B52E9 /* InAppSettings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 57A224F417E951A5000B52E9 /* InAppSettings.bundle */; };
+		57C2EC0B17F3483A003B3CA3 /* ArgoMessages.txt in Resources */ = {isa = PBXBuildFile; fileRef = 57C2EC0A17F3483A003B3CA3 /* ArgoMessages.txt */; };
 		57E08D0A17EF68AD00E22B1A /* reward_redemption.js in Resources */ = {isa = PBXBuildFile; fileRef = 57E08D0917EF68AD00E22B1A /* reward_redemption.js */; };
 		57E08D0C17EF77E400E22B1A /* kImageMerchantTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 57E08D0B17EF77E400E22B1A /* kImageMerchantTop.png */; };
 		57E08D0F17EF7FAF00E22B1A /* APMerchantDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E08D0E17EF7FAF00E22B1A /* APMerchantDetailViewController.m */; };
@@ -159,6 +166,13 @@
 		574B2DF617ECB1AF008E17EE /* rewards.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = rewards.js; sourceTree = "<group>"; };
 		574B2DF817ECB7EB008E17EE /* merchantlogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = merchantlogo.jpg; sourceTree = "<group>"; };
 		574B2DFB17ECDC2D008E17EE /* transaction.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = transaction.js; sourceTree = "<group>"; };
+		578BB57917F208DC009E2F45 /* offers.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = offers.js; sourceTree = "<group>"; };
+		578BB57B17F208FE009E2F45 /* APOffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APOffer.h; sourceTree = "<group>"; };
+		578BB57C17F208FE009E2F45 /* APOffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APOffer.m; sourceTree = "<group>"; };
+		578BB5B517F22C9F009E2F45 /* run_genstrings.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = run_genstrings.sh; sourceTree = "<group>"; };
+		578BB5B817F22CFA009E2F45 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AFNetworking.strings; sourceTree = "<group>"; };
+		578BB5BA17F22CFA009E2F45 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		578BB5BE17F248F4009E2F45 /* APRewardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APRewardViewController.m; sourceTree = "<group>"; };
 		5793E3DA17EB7379004B0838 /* appIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon.png; sourceTree = "<group>"; };
 		5793E3DC17EB7383004B0838 /* appIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "appIcon@2x.png"; sourceTree = "<group>"; };
 		5793E3DF17EB7CC7004B0838 /* qrcode.17094104.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qrcode.17094104.png; sourceTree = "<group>"; };
@@ -167,8 +181,8 @@
 		5793E3E317EB7E98004B0838 /* APRemotableObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APRemotableObject.m; sourceTree = "<group>"; };
 		5793E3E517EB7F24004B0838 /* APMerchant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMerchant.h; sourceTree = "<group>"; };
 		5793E3E617EB7F24004B0838 /* APMerchant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMerchant.m; sourceTree = "<group>"; };
-		5793E3E817EB7FBF004B0838 /* APReward.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APReward.h; sourceTree = "<group>"; };
-		5793E3E917EB7FBF004B0838 /* APReward.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APReward.m; sourceTree = "<group>"; };
+		5793E3E817EB7FBF004B0838 /* APArgoPointsReward.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APArgoPointsReward.h; sourceTree = "<group>"; };
+		5793E3E917EB7FBF004B0838 /* APArgoPointsReward.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APArgoPointsReward.m; sourceTree = "<group>"; };
 		5793E3EB17EBBE23004B0838 /* kImageRewardsTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageRewardsTop.png; sourceTree = "<group>"; };
 		5793E3ED17EBC38A004B0838 /* kImageButtonBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageButtonBg.png; sourceTree = "<group>"; };
 		579E4E2117EFDB1D00D03437 /* APError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APError.h; sourceTree = "<group>"; };
@@ -260,10 +274,8 @@
 		57A2245017E90F27000B52E9 /* IASKTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKTextField.h; sourceTree = "<group>"; };
 		57A2245117E90F27000B52E9 /* IASKTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKTextField.m; sourceTree = "<group>"; };
 		57A2247417E90F47000B52E9 /* APMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMainViewController.m; sourceTree = "<group>"; };
-		57A2247517E90F47000B52E9 /* APLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APLocationViewController.h; sourceTree = "<group>"; };
 		57A2247617E90F47000B52E9 /* APLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLocationViewController.m; sourceTree = "<group>"; };
 		57A2247717E90F47000B52E9 /* APMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMenuViewController.m; sourceTree = "<group>"; };
-		57A2247817E90F47000B52E9 /* APOffersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APOffersViewController.h; sourceTree = "<group>"; };
 		57A2247917E90F47000B52E9 /* APOffersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APOffersViewController.m; sourceTree = "<group>"; };
 		57A2247A17E90F47000B52E9 /* APScanView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APScanView.h; sourceTree = "<group>"; };
 		57A2247B17E90F47000B52E9 /* APScanView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APScanView.m; sourceTree = "<group>"; };
@@ -331,9 +343,10 @@
 		57A224EC17E92683000B52E9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		57A224EE17E92D1A000B52E9 /* VSSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSSettings.h; sourceTree = "<group>"; };
 		57A224EF17E92D1A000B52E9 /* VSSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSSettings.m; sourceTree = "<group>"; };
-		57A224F117E95153000B52E9 /* APSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APSettingsViewController.h; sourceTree = "<group>"; };
 		57A224F217E95153000B52E9 /* APSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APSettingsViewController.m; sourceTree = "<group>"; };
 		57A224F417E951A5000B52E9 /* InAppSettings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = InAppSettings.bundle; sourceTree = "<group>"; };
+		57C2EC0A17F3483A003B3CA3 /* ArgoMessages.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ArgoMessages.txt; sourceTree = "<group>"; };
+		57C2EC0C17F35DC3003B3CA3 /* APRemoteStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APRemoteStrings.h; sourceTree = "<group>"; };
 		57E08D0917EF68AD00E22B1A /* reward_redemption.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = reward_redemption.js; sourceTree = "<group>"; };
 		57E08D0B17EF77E400E22B1A /* kImageMerchantTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageMerchantTop.png; sourceTree = "<group>"; };
 		57E08D0E17EF7FAF00E22B1A /* APMerchantDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMerchantDetailViewController.m; sourceTree = "<group>"; };
@@ -410,6 +423,7 @@
 		571D75D817EB46E700F0B869 /* specs */ = {
 			isa = PBXGroup;
 			children = (
+				57C2EC0A17F3483A003B3CA3 /* ArgoMessages.txt */,
 				571D75D917EB46E700F0B869 /* ArgoPay UX note 091113.docx */,
 				571D75DA17EB46E700F0B869 /* credit product - Account Activation.pdf */,
 				571D75DB17EB46E700F0B869 /* credit product - Manage Account.pdf */,
@@ -427,6 +441,15 @@
 			path = work_scope;
 			sourceTree = "<group>";
 		};
+		578BB5B417F22C9F009E2F45 /* bin */ = {
+			isa = PBXGroup;
+			children = (
+				578BB5B517F22C9F009E2F45 /* run_genstrings.sh */,
+			);
+			name = bin;
+			path = ../bin;
+			sourceTree = "<group>";
+		};
 		5793E3DE17EB7CC7004B0838 /* Testing */ = {
 			isa = PBXGroup;
 			children = (
@@ -434,6 +457,7 @@
 				5793E3DF17EB7CC7004B0838 /* qrcode.17094104.png */,
 				5793E3E017EB7CC7004B0838 /* qrcode.17094497.png */,
 				574B2DF617ECB1AF008E17EE /* rewards.js */,
+				578BB57917F208DC009E2F45 /* offers.js */,
 				57E08D1317EF8B2900E22B1A /* merchant_points.js */,
 				57E08D0917EF68AD00E22B1A /* reward_redemption.js */,
 				574B2DFB17ECDC2D008E17EE /* transaction.js */,
@@ -444,6 +468,7 @@
 		5793E3E117EB7E98004B0838 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				57C2EC0C17F35DC3003B3CA3 /* APRemoteStrings.h */,
 				5793E3E217EB7E98004B0838 /* APRemotableObject.h */,
 				5793E3E317EB7E98004B0838 /* APRemotableObject.m */,
 				574B2DF017EC9BEF008E17EE /* APRemoteAPI.h */,
@@ -508,6 +533,7 @@
 				57A2240517E90F27000B52E9 /* Vendor */,
 				57A2248717E913B3000B52E9 /* glyphs */,
 				57A223E917E90626000B52E9 /* Supporting Files */,
+				578BB5B417F22C9F009E2F45 /* bin */,
 				5793E3DE17EB7CC7004B0838 /* Testing */,
 			);
 			path = ArgoPay;
@@ -516,6 +542,8 @@
 		57A223E917E90626000B52E9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				578BB5B717F22CFA009E2F45 /* AFNetworking.strings */,
+				578BB5B917F22CFA009E2F45 /* Localizable.strings */,
 				57A223FA17E90626000B52E9 /* MainStoryboard.storyboard */,
 				57A223EA17E90626000B52E9 /* ArgoPay-Info.plist */,
 				57A223EB17E90626000B52E9 /* InfoPlist.strings */,
@@ -675,14 +703,12 @@
 				57E7B83817E9FC9E00205BCB /* Categories */,
 				57A2247417E90F47000B52E9 /* APMainViewController.m */,
 				57A2247717E90F47000B52E9 /* APMenuViewController.m */,
-				57A2247517E90F47000B52E9 /* APLocationViewController.h */,
+				578BB5BE17F248F4009E2F45 /* APRewardViewController.m */,
 				57A2247617E90F47000B52E9 /* APLocationViewController.m */,
-				57A2247817E90F47000B52E9 /* APOffersViewController.h */,
 				57E08D0E17EF7FAF00E22B1A /* APMerchantDetailViewController.m */,
 				57A2247917E90F47000B52E9 /* APOffersViewController.m */,
 				57A2247A17E90F47000B52E9 /* APScanView.h */,
 				57A2247B17E90F47000B52E9 /* APScanView.m */,
-				57A224F117E95153000B52E9 /* APSettingsViewController.h */,
 				57A224F217E95153000B52E9 /* APSettingsViewController.m */,
 				57E7B83917E9FCE900205BCB /* APTranasctionViewController.h */,
 				57E7B83A17E9FCE900205BCB /* APTranasctionViewController.m */,
@@ -812,10 +838,12 @@
 				57E7B84C17EA5C0000205BCB /* APTransaction.m */,
 				5793E3E517EB7F24004B0838 /* APMerchant.h */,
 				5793E3E617EB7F24004B0838 /* APMerchant.m */,
-				5793E3E817EB7FBF004B0838 /* APReward.h */,
-				5793E3E917EB7FBF004B0838 /* APReward.m */,
+				5793E3E817EB7FBF004B0838 /* APArgoPointsReward.h */,
+				5793E3E917EB7FBF004B0838 /* APArgoPointsReward.m */,
 				57E08D1017EF896700E22B1A /* APAccount.h */,
 				57E08D1117EF896700E22B1A /* APAccount.m */,
+				578BB57B17F208FE009E2F45 /* APOffer.h */,
+				578BB57C17F208FE009E2F45 /* APOffer.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -873,6 +901,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				574B2DFA17ECBAA5008E17EE /* rewards.js in Resources */,
+				578BB57A17F208DC009E2F45 /* offers.js in Resources */,
 				57E08D1417EF8B2900E22B1A /* merchant_points.js in Resources */,
 				57E08D0A17EF68AD00E22B1A /* reward_redemption.js in Resources */,
 				574B2DFC17ECDC2D008E17EE /* transaction.js in Resources */,
@@ -922,6 +951,10 @@
 				57E08D0C17EF77E400E22B1A /* kImageMerchantTop.png in Resources */,
 				579E4E2617F0C6B900D03437 /* kImageErrorBalloon.png in Resources */,
 				579E4E2717F0C6B900D03437 /* kImageErrorBang.png in Resources */,
+				578BB5B617F22C9F009E2F45 /* run_genstrings.sh in Resources */,
+				578BB5BB17F22CFA009E2F45 /* AFNetworking.strings in Resources */,
+				578BB5BC17F22CFA009E2F45 /* Localizable.strings in Resources */,
+				57C2EC0B17F3483A003B3CA3 /* ArgoMessages.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -983,19 +1016,37 @@
 				57E7B84D17EA5C0000205BCB /* APTransaction.m in Sources */,
 				5793E3E417EB7E98004B0838 /* APRemotableObject.m in Sources */,
 				5793E3E717EB7F24004B0838 /* APMerchant.m in Sources */,
-				5793E3EA17EB7FBF004B0838 /* APReward.m in Sources */,
+				5793E3EA17EB7FBF004B0838 /* APArgoPointsReward.m in Sources */,
 				574B2DF217EC9BEF008E17EE /* APRemoteAPI.m in Sources */,
 				574B2DF517ECA097008E17EE /* APDebug.m in Sources */,
 				57E08D0F17EF7FAF00E22B1A /* APMerchantDetailViewController.m in Sources */,
 				57E08D1217EF896700E22B1A /* APAccount.m in Sources */,
 				579E4E2317EFDB1D00D03437 /* APError.m in Sources */,
 				579E4E2A17F143A400D03437 /* APErrorViewController.m in Sources */,
+				578BB57D17F208FE009E2F45 /* APOffer.m in Sources */,
+				578BB5BF17F248F4009E2F45 /* APRewardViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		578BB5B717F22CFA009E2F45 /* AFNetworking.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				578BB5B817F22CFA009E2F45 /* en */,
+			);
+			name = AFNetworking.strings;
+			sourceTree = "<group>";
+		};
+		578BB5B917F22CFA009E2F45 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				578BB5BA17F22CFA009E2F45 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		57A223EB17E90626000B52E9 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

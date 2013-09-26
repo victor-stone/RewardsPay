@@ -24,9 +24,12 @@
              kSettingUserLoginPassword: @"",
              kSettingSlidingCameraView: @(YES)
 #ifdef DEBUG
-             , kSettingDebugNetworkStubbed: @(YES),
+             , kSettingDebugNetworkStubbed: @"argotest",
              kSettingDebugNetworkDelay: @("1.5"),
-             kSettingDebugRejectLogin: @(NO)
+             kSettingDebugRejectLogin: @(NO),
+             kSettingUserArgoPoints: @(230),
+             kSettingDebugNetworkSimulatedFail: @(NO),
+             kSettingDebugNetworkSSL: @(NO)
 #endif
              };
 }

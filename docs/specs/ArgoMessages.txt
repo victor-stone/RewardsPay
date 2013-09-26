@@ -1,0 +1,295 @@
+                                                                     
+                                                                     
+                                                                     
+                                             
+ArgoPay API Documentation
+Version 2013-09-25 16:45:00
+
+Security Model:
+A consumer logs in either when creating a new record with ConsumerAdd, or ConsumerLogin
+The incoming data is the Email, Password and an incoming token in either case.
+The returned data is a Status, AToken, and the AccountID
+The AToken is used to authenticate every call after that.  Each call will include the
+AToken field to identify the logged in user.
+
+Merchant records are secured by a MToken value
+Register logins (for transactions) are secured by a RToken value
+
+For all calls, the first two fields will always be "Status" which is a error reporting
+method for the call.  "Message" is a human readable error message if the call fails
+or succeeds.
+
+Status is also 0 (zero) for all successful transaction.  It is non-zero for all non-successful transaction
+Message is a user readable message as to why the call failed
+UserMessage is a user readable message to be displayed when a call works or fails
+
+All data will be encoded in JSON format.  Most will be a single list of entries, except for methods that return
+Arrays of entries which will be denoted in {} format.
+
+The format of the following is:
+   /MessageID
+    > Incoming fields
+    < Returned fields
+
+
+-Consumer
+   /ConsumerAdd - Adds a consumer record
+    > Email, Password, InToken
+    < Status, Message, AToken, AccountID
+
+   /ConsumerLogin
+    > Email, Password, InToken
+    < Status, Message, AToken, AccountID
+
+
+   /ConsumerMetaData  (Adds other consumer metadata, Full Name, Address, etc.)
+    > AToken, Fname, Lname, Sault, Suffix, Addr1, Addr2, City, State, Zip, Tel, Gender, DOB
+    < Status, Message
+
+
+   /ConsumerProtect (Adds consumer protection questions)
+    > AToken, Ques1, Ques2, Ques3, Ans1, Ans2, Ans3
+    < Status, Message
+
+   /ConsumerValidateGet (Gets consumer protection questions.  Consumer does not need to be logged in)
+    > Email
+    < Status, Message, Ques1, Ques2, Ques3
+
+   /ConsumerValidateTest (Send answers for verification to server. If successful, logs in consumer)
+    > Email, Ans1, Ans2, Ans3
+    < Status, Message, AToken, AccountID
+
+   /ConsumerCreditApply (List of questions that need to be correctly answered for Credit to be extended)
+                        (This is different than the protection questions, but relies on external source)
+                        (For questions and answers)
+                        (The format of the questions might include answers to select-TBD)
+    > AToken
+    < Status, Message, Ques1, Ques2, Ques3, Ques4
+
+   /ConsumerCreditAnswer (The answers to the questions from the above message)
+                         (If approved, the the CreditLine will contain the approved Credit Line)
+    > AToken, Ans1, Ans2, Ans3, Ans4
+    < Status, Message, CreditLine
+
+
+   /ConsumerACHEnter (User supplies us banking information)
+                     (UserMessage Specifies the message to be displayed to the user)
+    > AToken, Type, AccUsername, AccName, Routing, AccNumber, ExpMonth, ExpYear, CCD
+    < Status, Message, UserMessage
+
+   /ConsumerACHVerify (User Verifies Banking Information with deposited amount)
+    > AToken, Amount
+    < Status, Message, UserMessage
+
+   /ConsumerGetPaymentMethods (Gets Payment Methods, returns an array of methods in Methods)
+    > AToken
+    < Status, Message, Methods: {ID, Name, Primary}
+ 
+   /ConsumerDisable (Disable Enable a Consumer's Account)
+    > AToken, Disable
+    < Status, Message, UserMessage
+
+-Merchant
+   /MerchantAdd
+    >Email, Password, InToken
+    <Status, Message, MToken, AccountID
+
+   /MerchantLogin
+    >Email, Password, InToken
+    <Status, Message, MToken
+
+   /MerchantMetaData
+    >MToken, Name, LegalName, Addr1, Addr2, City, State, Zip, ImageURL
+    <Status, Message
+
+   /MerchantContactAdd
+    >MToken, Email, Fname, Lname, Role, Tele
+    <Status, Message
+
+   /MerchantLocationList (Lists all locations associated with a merchant)
+    >MToken
+    <Status, Message, Locations:{MLocID, Name, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, Website}
+
+   /MerchantLocationAdd
+    >MToken, Name, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, Website
+    <Status, Message, MLocID
+
+   /MerchantLocationUpdate
+    >MToken, MLocID, Name, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, Website
+    <Status, Message, MLocID
+
+   /MerchantLocationDelete
+    >MToken, MLocID
+    <Status, Message
+
+   /MerchantLocationACHAdd
+    >MToken, MLocID, Type, AccName, Routing, AccNumber
+    <Status, Message, UserMessage
+
+   /MerchantACHVerify (Merchant Verifies Banking Information with deposited amount)
+    > MToken, MLocID, Amount
+    < Status, Message, UserMessage
+
+   /MerchantRegisterAdd (Adds a register to a Merchant Location)
+    >MToken, MLocID, QRCode, Password, Description
+    <Status, Message, RegisterID
+
+   /MerchantRegisterModify (Modifies register to a Merchant Location)
+    >MToken, MLocID, RegisterID, QRCode, Password, Description
+    <Status, Message, RegisterID
+
+   /MerchantRegisterList (Lists registers at a location)
+    >MToken, MLocID
+    <Status, Message, RegisterList: {RegisterID, Description}
+
+   /MerchantRegisterDelete (Deletes a register)
+    >MToken, MLocID, RegisterID
+    <Status, Message
+
+   /MerchantAddCategory (Associates a Merchant with a Category)
+    >MToken, CategoryID
+    <Status, Message
+
+Future:
+(We have to later add security models for individual locations)
+   AddMerchantLocationContact
+   ActivateMerchant - external future
+   ActivateMerchantResponse - external future
+
+
+- The following functions do not require a login since they only retreive data for public viewing
+   /MerchantCategoryList (shows all merchant Categories)
+    >Limit
+    <Status, Message, Categories: {CategoryID, Name}
+
+   /MerchantLocationSearch (Searches for locations of merchants locations nearby)
+                           (Used by consumers to search for merchants that take ArgoPay)
+                           (Limit specificies how many merchant locations to return)
+                           (SortBy specifies the sort order (D)istance, (C)ategory)
+                           (CategoryID specific a specific Category ID)
+    >Lat, Long, Distance, Limit, SortBy, CategoryID
+    <Status, Message, Locations:{MLocID, Nam, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, ImageURL}
+
+
+-Offers
+   /MerchantLocationOfferDiscountCreate
+    > MToken, MLocID, DateFrom, DateTo, DaysToUse, Count, AmountDiscount, AmountMinimum
+    < Status, Message, OfferID
+
+   /MerchantLocationOfferBonusCreate
+    > MToken, MLocID, DateFrom, DateTo, DaysToUse, Count, PointBonus, PointMultiplier, ArgoBonus, ArgoMultiplier
+    < Status, Mesage, OfferID
+
+   /MerchantLocationOfferList (Type D is discount, B is Bonus)
+    > MToken, MLocID
+    < Status, Message, OfferList {OfferID, Type, DateFrom, DateTo, DaysToUse, Count, AmountDiscount, AmountMinimum, PointBonus, PointMultiplier, ArgoBonus, ArgoMultiplier}
+
+   /MerchantLocationOfferDelete
+    > MToken, MLocID, OfferID
+    < Status, message
+
+   /ConsumerGetAvailableOffers   (Limit is Quantity of Records to return)
+                                 (SortBy is (N)one, W-Newest First, (R)eady to use, (A)vailable to Select, (E)xpiring Soon)
+                                 (Selected means that the offer has already been selected by the consumer)
+    > AToken, Lat, Long, Distance, Limit, SortBy
+    < Status, Message, Offers {OfferID, Type, Selected, DateFrom, DateTo, DaysToUse, Count, AmountDiscount, AmountMinimum, PointBonus, PointMultiplier, ArgoBonus, ArgoMultiplier, 
+       Nam, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, ImageURL, Website}
+
+   /ConsActivateOffer
+    >AToken, OfferID
+    <Status, Message, UserMessage
+
+-Rewards
+   /MerchantLocationRewardAdd
+    > MToken, MLocID, DateFrom, DateTo, AmountReward, AmountMinimum, MultipleUse
+    < Status, Message, RewardID
+
+   /MerchantLocationRewardList (Type D is discount, B is Bonus)
+    > MToken, MLocID
+    < Status, Message, RewardList {RewardID, DateFrom, DateTo, AmountReward, AmountMinimum, MultipleUse}
+
+   /MerchantLocationRewardDelete
+    > MToken, MLocID, RewardID
+    < Status, message
+
+   /ConsumerGetAvailableRewards (Limit is Quantity of records to return)
+                                (SortBy is (N)one, W-Newest First, (R)eady to use, (A)vailable to Select, (E)xpiring Soon)
+                                (Selected means that the offer has already been selected by the consumer)
+    > AToken, Lat, Long, Distance, Limit, SortBy 
+    < Status, Message, Rewards {RewardID, DateFrom, Selected, DateTo, Count, AmountReward, AmountMinimum, MultipleUse,
+        Nam, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, ImageURL, Website}
+
+   /ConsActivateReward
+    >AToken, RewardID
+    <Status, Message, UserMessage
+
+
+
+-Transactions
+   /ConsumerTransactionStart (Starts a transaction from the client. Immediately returns with
+                             (a transaction ID. PayID is non-zero if consumer wants to use )
+                             (a different payment method instead of ArgoCredit)
+    > AToken, QrData, Lat, Long, PayID
+    < Status, Message, TransID
+
+
+   /ConsumerTransactionStatus (Gets the status of a transaction.  Returns a TransStatus of:
+                              (P: Pending, T: Timeout, A: Approve, I: Insufficient Credit, C: Cancelled)
+                              (If Pending, then Retry the call, if Timeout, Merchant did not)
+                              (create transaction in time.  If Approve, then ask consumer if)
+                              (Should be approved, If Insufficient credit, then consumer) 
+                              (Cannot pay that way because of insufficient credit)
+                              (This call can take as long as 30 seconds to return if transaction)
+                              (Is Pending.  If it returns Pending, retry)
+                              (Amounts is the different parts of the charge [base, tip, etc.])
+                              (PayAmounts is the payment methods [Charge, reward, offer])
+                              (The totals both will always add up to TotalAmount)
+    >AToken, TransID
+    <Status, Message, TransStatus, Amounts: {Type,Amount), TotalAmount, PayAmounts: {Desc, Amount}, MerchName, MerchLocation, MerchRegister
+
+   /ConsumerTransactionApprove (Approves or denies a transaction)
+    >AToken, TransID, Approve (Binary [Y/N])
+    <Status, Message, UserMessage
+
+   /ConsumerTransactionCancel (Allows a consumer to cancel a transaction in progress before approving)
+    >AToken, TransID
+    <Status, Message, UserMessage
+
+   /RegisterAuthenticate (A register logging into the server)
+                         (This is how a register gets a login to create transactions)
+    >RegisterID, MerchantID, Password, InToken
+    <Status, Message, RToken
+
+   /RegisterTransactionStart (This is the Register starting a transaction)
+    >RToken, TotalAmount, Amounts: {Type, Amount}
+    <Status, Message, TransID
+
+   /RegisterTransactionStatus (Same returned values as ConsumerTransactionStatus)
+    >RToken, TransID
+    <Status, Message, TransStatus, ApprovalCode, UserMessage
+
+   /RegisterTransactionCancel (Merchant Register can cancel a transaction)
+    >RToken, TransID
+    <Status, Message, UserMessage
+
+
+   /ConsumerStatementSummary
+   >AToken
+   <Status, Message, AmountAvailable, AmountOutstanding, LastTransDate, LastPayDate, ArgoPoints
+ 
+   /ConsumerStatementDetail
+   >AToken, DateFrom, DateTo
+   <Status, Message, Transactions {Date, Type, Amount, AmountUnpaid, Description}
+
+   /ConsumerMerchantRewardsBalance
+   >AToken
+   <Status, Message, RewardsBalances {Merchant Name, PointsBalance, LastTransactionDate}
+
+   /ConsumerSchedulePayment (PaymentMethod =0 means use the default payment method default ACH account)
+   >AToken, Amount, PaymentMethod
+   <Status, Message, UserMessage
+
+- Admin Functionality - These functions are used by Argopay for administration of the system
+   /AdminAddCategory
+   >Username,Password, Desc, LongDesc
+   <Status, Message, CategoryID

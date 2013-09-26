@@ -9,7 +9,7 @@
 
 #ifdef DEBUG
 
-#define APENABLED(key)  [[NSUserDefaults standardUserDefaults] boolForKey:key]
+#define APENABLED(key)  ([[NSUserDefaults standardUserDefaults] boolForKey:key] != NO)
 
 #define APLOG(key,fmt,...) APDebug(key,fmt,__VA_ARGS__);
 #define APDUMPVIEW(view) APDebugDumpView(view);

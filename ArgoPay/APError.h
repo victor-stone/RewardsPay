@@ -13,5 +13,5 @@ extern NSString * kAPErrorDomain;
 #endif
 
 @interface APError : NSError
-
+-(id)initWithMsg:(NSString *)msg;
 @end

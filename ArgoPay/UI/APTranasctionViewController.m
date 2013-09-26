@@ -23,7 +23,7 @@ APLOGRELEASE
     [super viewDidLoad];
     
     __block APPopup * popup = [APPopup popupWithParent:self.view
-                                          text:@"Contacting ArgoPay Server"
+                                          text:NSLocalizedString(@"Contacting ArgoPay Server","popup")
                                          flags:kPopupActivity];
 
     [self registerForBroadcast:kNotifyTransactionResult

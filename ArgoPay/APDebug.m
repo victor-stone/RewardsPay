@@ -32,8 +32,9 @@ void APDebugDumpView(UIView *view)
         dump = ^(UIView *view, NSString *indent)
         {
             APDebug(kDebugFire, @"%@%@", indent, view);
-            for( UIView * child in view.subviews )
-                dump( child, [NSString stringWithFormat:@"%@    ",indent]);
+            if( ![view isKindOfClass:[UITableView class]] )
+                for( UIView * child in view.subviews )
+                    dump( child, [NSString stringWithFormat:@"%@    ",indent]);
         };
         dump(view,@"");
         dump = nil;

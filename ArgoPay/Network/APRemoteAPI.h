@@ -11,7 +11,7 @@
 typedef void (^APRemoteAPIRequestBlock)(id data, NSError *err);
 
 @class APScanResult;
-@class APReward;
+@class APArgoPointsReward;
 @class APMerchant;
 @class APMerchantPoints;
 
@@ -22,8 +22,8 @@ typedef void (^APRemoteAPIRequestBlock)(id data, NSError *err);
 -(void)getRewards:(APRemoteAPIRequestBlock)block;
 -(void)getMerchantImage:(NSString *)name block:(APRemoteAPIRequestBlock)block;
 -(void)requestTransaction:(APScanResult *)scanResult block:(APRemoteAPIRequestBlock)block;
--(void)redeemArgoPoints:(APReward *)reward block:(APRemoteAPIRequestBlock)block;
+-(void)redeemArgoPoints:(APArgoPointsReward *)reward block:(APRemoteAPIRequestBlock)block;
 -(void)getMerchantPoints:(APMerchant *)merchant block:(APRemoteAPIRequestBlock)block;
 -(void)redeemMerchantPoints:(APMerchantPoints *)points block:(APRemoteAPIRequestBlock)block;
-
+-(void)getOffers:(APRemoteAPIRequestBlock)block;
 @end

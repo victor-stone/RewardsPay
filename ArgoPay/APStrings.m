@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 
-#define APKEYEDSTRING(key) NSString * key = @ #key;
+#define APKEYEDSTRING(key) NSString *const key = @ #key;
 
 #import "APStrings.h"
 
