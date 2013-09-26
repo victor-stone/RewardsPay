@@ -12,10 +12,7 @@
 
 APKEYEDSTRING(kNotifyRequestScanner)
 APKEYEDSTRING(kNotifyScanComplete)
-APKEYEDSTRING(kNotifyTransactionRequest)
-APKEYEDSTRING(kNotifyTransactionResult)
-APKEYEDSTRING(kNotifyTransactionComplete)
-APKEYEDSTRING(kNotifyRewardStatusChange)
+APKEYEDSTRING(kNotifyTransactionUserActed)
 
 APKEYEDSTRING(kSettingUserLoginName)
 APKEYEDSTRING(kSettingUserLoginPassword)
@@ -30,6 +27,7 @@ APKEYEDSTRING(kSettingDebugNetworkSimulatedFail)
 APKEYEDSTRING(kSettingDebugNetworkUseRequestBin)
 APKEYEDSTRING(kSettingDebugRejectLogin)
 APKEYEDSTRING(kSettingDebugNetworkSSL)
+APKEYEDSTRING(kSettingDebugLocalhostAddr)
 
 APKEYEDSTRING(kViewAccount)
 APKEYEDSTRING(kViewError)

@@ -32,6 +32,8 @@
 #import "NSTimer+BlocksKit.h"
 #import "UIGestureRecognizer+BlocksKit.h"
 
+#import "UIImageView+AFNetworking.h"
+
 #import "NSObject+VSBroadcasting.h"
 
 #import "UIViewController+ArgoPay.h"

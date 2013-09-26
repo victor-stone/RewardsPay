@@ -24,11 +24,10 @@
              kSettingUserLoginPassword: @"",
              kSettingSlidingCameraView: @(YES)
 #ifdef DEBUG
-             , kSettingDebugNetworkStubbed: @"argotest",
-             kSettingDebugNetworkDelay: @("1.5"),
-             kSettingDebugRejectLogin: @(NO),
+             ,
+             kSettingDebugNetworkStubbed: @"localhost",
+             kSettingDebugLocalhostAddr: @"testingargo.192.168.1.3.xip.io",
              kSettingUserArgoPoints: @(230),
-             kSettingDebugNetworkSimulatedFail: @(NO),
              kSettingDebugNetworkSSL: @(NO)
 #endif
              };
@@ -36,6 +35,7 @@
 
 -(void)registerUserDefaults
 {
+    // I don't think I'm doing this right...
     [[NSUserDefaults standardUserDefaults] registerDefaults:[self factoryUserDefaultSettings]];
 }
 

@@ -8,14 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@class APScanResult;
+@class APTransactionStatusResponse;
 
 @interface APTranasctionViewController : UIViewController
 
-@property (nonatomic,strong) APScanResult * scanResult;
 @property (weak, nonatomic) IBOutlet UILabel *grandTotal;
 @property (weak, nonatomic) IBOutlet UILabel *merchantItem;
 @property (weak, nonatomic) IBOutlet UILabel *merchantName;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+
+@property (nonatomic,strong) NSString *transID;
+@property (nonatomic,strong) APTransactionStatusResponse *statusResponse;
 
 @end

@@ -8,41 +8,52 @@
 
 #import "APTransaction.h"
 #import "APStrings.h"
-#import "APRemoteAPI.h"
+#import "APRemoteStrings.h"
 
-@implementation APTransaction
+@implementation APTransactionStartRequest
+-(id)init
+{
+    return [super initWithCmd:kRemoteCmdConsumerTransactionStart
+                    subDomain:kRemoteSubDomainTransaction];
+}
+
+-(Class)payloadClass
+{
+    return [APTransactionIDResponse class];
+}
 @end
 
-@implementation APTransactionRequest
-
-APLOGRELEASE
-
--(id)initWithScanResult:(APScanResult *)scanResult
-{
-    if( (self = [super init]) == nil )
-        return nil;
-    
-    APRemoteAPI * api = [APRemoteAPI sharedInstance];
-    [api requestTransaction:scanResult block:^(id data,NSError *err) {
-        _transaction = data;
-        _requestError = err;
-        [self broadcast:kNotifyTransactionResult payload:self];
-    }];
-    _state = kTransactionStateUnknown;
-    return self;
-}
-
-
--(void)accept
-{
-    _state = kTransactionStateAccepted;
-    [self broadcast:kNotifyTransactionComplete payload:self];
-}
-
--(void)cancel
-{
-    _state = kTransactionStateCancelled;
-    [self broadcast:kNotifyTransactionComplete payload:self];
-}
-
+@implementation APTransactionIDResponse
 @end
+
+@implementation APTransactionStatusRequest
+-(id)init
+{
+    return [super initWithCmd:kRemoteCmdConsumerTransactionStatus
+                    subDomain:kRemoteSubDomainTransaction];
+}
+
+-(Class)payloadClass
+{
+    return [APTransactionStatusResponse class];
+}
+@end
+
+
+@implementation APTransactionStatusResponse
+@end
+
+/*
+ 
+ /ConsumerTransactionApprove
+ >AToken, TransID, Approve (Binary [Y/N])
+ <Status, Message, UserMessage
+ */
+@implementation APTransactionApprovalRequest
+-(id)init
+{
+    return [super initWithCmd:kRemoteCmdConsumerTransactionApprove
+                    subDomain:kRemoteSubDomainTransaction];
+}
+@end
+

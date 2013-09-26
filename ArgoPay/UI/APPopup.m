@@ -22,6 +22,13 @@ APLOGRELEASE
     return [[APPopup alloc] initWithParent:parent flags:flags textOrView:text bg:bg];
 }
 
++(id)withNetActivity:(UIView *)parent
+{
+    return [self popupWithParent:parent
+                            text: NSLocalizedString(@"Contacting ArgoPay Server","popup")
+                           flags:kPopupActivity];
+}
+
 +(id)msgWithParent:(UIView *)parent text:(NSString *)text
 {
     return [self popupWithParent:parent text:text flags:kPopupCloseOnAnyTap];

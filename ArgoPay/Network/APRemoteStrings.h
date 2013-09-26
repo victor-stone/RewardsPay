@@ -24,12 +24,32 @@ APREMOTESTRINGV(SubDomain, Customer,    customer)
 
 // Commands
 APREMOTECMD(ConsumerGetAvailableOffers)
+APREMOTECMD(ConsumerGetAvailableRewards)
+APREMOTECMD(ConsActivateReward)
+APREMOTECMD(ConsumerTransactionStart)
+APREMOTECMD(ConsumerTransactionStatus)
+APREMOTECMD(ConsumerTransactionApprove)
 
 // Payloads
 APREMOTEPAYLOAD(Offers)
+APREMOTEPAYLOAD(Rewards)
 
-// Offer.SortBy Values
-// (SortBy is (N)one, W-Newest First, (R)eady to use, (A)vailable to Select, (E)xpiring Soon)
+//
+// Values
+//
+
+APREMOTESTRINGV(Value, YES, Y);
+APREMOTESTRINGV(Value, NO,  N);
+
+// Transaction Status
+APREMOTESTRINGV(Value, TransactionStatusTimeOut,           T);
+APREMOTESTRINGV(Value, TransactionStatusPending,           P);
+APREMOTESTRINGV(Value, TransactionStatusReadyForApproval,  A);
+APREMOTESTRINGV(Value, TransactionStatusInsufficientFunds, I);
+APREMOTESTRINGV(Value, TransactionStatusServerCancelled,   C);
+
+
+// Offer/Rewards.SortBy Values
 APREMOTESTRINGV(Value, SortByNone,              W); // actually: none doesn't make sense to map to 'newest'
 APREMOTESTRINGV(Value, SortByNewest,            W);
 APREMOTESTRINGV(Value, SortByReadyToUse,        R);

@@ -58,13 +58,12 @@ APLOGRELEASE
 
 -(void)commitMerchant
 {
-    _merchantName.text = _merchant.name;
-    _merchantPoints.text = [NSString stringWithFormat:NSLocalizedString(@"%dpts","MerchantDetail"),[_merchant.credits integerValue]];
-    _streetAddr.text = _merchant.address;
-    _cityState.text = [NSString stringWithFormat:@"%@, %@", _merchant.city, _merchant.state];
-    _phoneNumber.text = _merchant.phone;
-    _urlAddr.text = [_merchant.url stringByReplacingOccurrencesOfString:@"http://" withString:@""];
-    
+    _merchantName.text = _merchant.Nam;
+    _merchantPoints.text = @"???"; // [NSString stringWithFormat:NSLocalizedString(@"%dpts","MerchantDetail"),[_merchant.credits integerValue]];
+    _streetAddr.text = _merchant.Addr1;
+    _cityState.text = [NSString stringWithFormat:@"%@, %@", _merchant.City, _merchant.State];
+    _phoneNumber.text = _merchant.Tel;
+    _urlAddr.text = [_merchant.Website stringByReplacingOccurrencesOfString:@"http://" withString:@""];
 }
 
 -(void)setMerchant:(APMerchant *)merchant
@@ -91,6 +90,7 @@ APLOGRELEASE
         }
         else
         {
+            /*
             [_merchant getMerchantPoints:^(NSArray * points,NSError *err) {
                 if( err )
                 {
@@ -103,6 +103,7 @@ APLOGRELEASE
                     [self expandTable];
                 }
             }];
+             */
         }
     }
     _showingPoints = !_showingPoints;
@@ -135,24 +136,14 @@ APLOGRELEASE
     }];
     
     APMerchantPoints * points = _points[button.tag];
-    [_merchant redeemPoints:points block:^(id data, NSError *err) {
-        if( err )
-        {
-            [self showError:err];
-        }
-        else
-        {
-            _merchantPoints.text = [NSString stringWithFormat:NSLocalizedString(@"%dpts","MerchantDetail"),[_merchant.credits integerValue]];
-            [_pointsTable reloadData];
-        }
-    }];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     APMerchantDetailCell * cell = [tableView dequeueReusableCellWithIdentifier:kCellIDMerchantDetail forIndexPath:indexPath];
     APMerchantPoints * points = _points[indexPath.row];
-    NSInteger credits = [_merchant.credits integerValue];
+    NSInteger TODO_whatCredits = 999; // [_merchant.credits integerValue];
+    NSInteger credits = 200;
     NSInteger pts = [points.points integerValue];
     if( credits >= pts )
     {

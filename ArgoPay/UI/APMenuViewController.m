@@ -9,7 +9,6 @@
 #import "APStrings.h"
 #import "APArgoPointsReward.h"
 #import "APMerchant.h"
-#import "APRemoteAPI.h"
 #import "APPopup.h"
 
 @interface APMenuBaseController : UIViewController

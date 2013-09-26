@@ -6,9 +6,10 @@
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 
-#import "APRemoteAPI.h"
-
 #define kRemoteArrayLimit 300
+
+typedef void (^APRemoteAPIRequestBlock)(id data, NSError *err);
+
 
 @interface APRemotableObject : NSObject
 
@@ -33,4 +34,12 @@
 
 @interface APRemoteCommand (perform)
 -(void)performRequest:(APRemoteAPIRequestBlock)block;
+@end
+
+
+// Generic response
+@interface APRemoteRepsonse : APRemotableObject
+@property (nonatomic,strong) NSNumber *Status;
+@property (nonatomic,strong) NSString *Message;
+@property (nonatomic,strong) NSString *UserMessage;
 @end

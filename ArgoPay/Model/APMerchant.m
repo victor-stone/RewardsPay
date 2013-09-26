@@ -10,19 +10,6 @@
 
 @implementation APMerchant
 
--(void)getMerchantPoints:(APRemoteAPIRequestBlock)block
-{
-    APRemoteAPI * api = [APRemoteAPI sharedInstance];
-    [api getMerchantPoints:self block:block];
-}
-
--(void)redeemPoints:(APMerchantPoints *)points block:(APRemoteAPIRequestBlock)block
-{
-    APRemoteAPI * api = [APRemoteAPI sharedInstance];
-    points.merchant = self;
-    [api redeemMerchantPoints:points block:block];
-}
-
 @end
 
 @implementation APMerchantPoints

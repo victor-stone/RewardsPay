@@ -10,61 +10,42 @@
 #import "APPopup.h"
 #import "APTranasctionViewController.h"
 #import "APTransaction.h"
-#import "APMerchant.h"
+#import "APRemoteStrings.h"
 
-@implementation APTranasctionViewController {
-    APTransactionRequest * _transactionRequest;
-}
+@implementation APTranasctionViewController
 
 APLOGRELEASE
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    __block APPopup * popup = [APPopup popupWithParent:self.view
-                                          text:NSLocalizedString(@"Contacting ArgoPay Server","popup")
-                                         flags:kPopupActivity];
 
-    [self registerForBroadcast:kNotifyTransactionResult
-                         block:^(APTranasctionViewController *me,
-                                 APTransactionRequest *request) {
-                             if( request.requestError )
-                             {
-                                 [popup dismiss];
-                                 [self showError:request.requestError];
-                             }
-                             else
-                             {
-                                 APTransaction * result = request.transaction;
-                                 me->_merchantItem.text = result.merchantItem;
-                                 me->_merchantName.text = result.merchant.name;
-                                 me->_grandTotal.text = [NSString stringWithFormat:@"$%.2f", [result.grandTotal floatValue]];
-                                 [popup dismiss];
-                             }
-                             popup = nil;
-                         }];
+    _grandTotal.text = [NSString stringWithFormat:@"%.2f",[_statusResponse.TotalAmount floatValue]];
+    _merchantName.text = _statusResponse.MerchName;
+    _merchantItem.text = [_statusResponse.Amounts[0] valueForKey:@"Desc"]; // this can't be right
+}
+
+-(void)userAction:(NSString *)type
+{
+    APTransactionApprovalRequest *request = [APTransactionApprovalRequest new];
+    request.AToken = @"Yup TODO again";
+    request.Approve = type;
     
-    [self registerForBroadcast:kNotifyTransactionComplete
-                         block:^(APTranasctionViewController *me,
-                                 APTransactionRequest *request) {
-                             [NSObject performBlock:^{
-                                 [me dismissViewControllerAnimated:YES completion:nil];
-                             } afterDelay:0.2];
-                         }];
-    
-    _transactionRequest = [[APTransactionRequest alloc] initWithScanResult:self.scanResult];
-    
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+        [NSObject performBlock:^{
+            [self broadcast:kNotifyTransactionUserActed payload:request];
+        } afterDelay:0.2];
+    }];
 }
 
 - (IBAction)cancelPayment:(id)sender
 {
-    [_transactionRequest cancel];
+    [self userAction:kRemoteValueNO];
 }
 
 - (IBAction)approvePayment:(id)sender
 {
-    [_transactionRequest accept];
+    [self userAction:kRemoteValueYES];
 }
 
 @end

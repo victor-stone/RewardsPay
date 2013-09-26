@@ -6,9 +6,7 @@
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 
-#import "APRemotableObject.h"
-
-@class APMerchant;
+#import "APMerchant.h"
 
 /*
  /ConsumerGetAvailableOffers   (Limit is Quantity of Records to return)
@@ -35,7 +33,7 @@
 @property (nonatomic,strong) NSNumber *Limit;
 @end
 
-@interface APOffer : APRemotableObject
+@interface APOffer : APMerchant
 
 @property (nonatomic,strong) NSString *OfferID;
 @property (nonatomic,strong) NSString *Type;
@@ -50,18 +48,7 @@
 @property (nonatomic,strong) NSNumber *PointMultiplier;
 @property (nonatomic,strong) NSNumber *ArgoBonus;
 @property (nonatomic,strong) NSNumber *ArgoMultiplier;
-@property (nonatomic,strong) NSString *Nam;
-@property (nonatomic,strong) NSString *Addr1;
-@property (nonatomic,strong) NSString *Addr2;
-@property (nonatomic,strong) NSString *City;
-@property (nonatomic,strong) NSString *State;
-@property (nonatomic,strong) NSString *Zip;
-@property (nonatomic,strong) NSString *Tel;
-@property (nonatomic,strong) NSNumber *Lat;
-@property (nonatomic,strong) NSNumber *Long;
 @property (nonatomic,strong) NSString *Description;
-@property (nonatomic,strong) NSString *ImageURL;
-@property (nonatomic,strong) NSString *Website;
 
 @end
 

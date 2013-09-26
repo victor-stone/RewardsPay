@@ -27,7 +27,7 @@
 			</array>
 			<key>Values</key>
 			<array>
-				<string>argotest</string>
+				<string>localhost</string>
 				<string>dev.argopay.com</string>
 				<string>.argopay.com</string>
 			</array>
@@ -41,6 +41,16 @@
 			<string>kSettingDebugNetworkSSL</string>
 			<key>Title</key>
 			<string>Use SLL</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Key</key>
+			<string>kSettingDebugLocalhostAddr</string>
+			<key>Title</key>
+			<string>Localhost Addr</string>
+			<key>DefaultValue</key>
+			<string>testingargo.192.168.1.3.xip.io</string>
 		</dict>
 		<dict>
 			<key>Type</key>

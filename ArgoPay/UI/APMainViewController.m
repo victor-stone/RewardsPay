@@ -11,6 +11,7 @@
 #import "APPopup.h"
 #import "APTransaction.h"
 #import "APTranasctionViewController.h"
+#import "APRemoteStrings.h"
 
 #define kTransitionDuration 0.5
 
@@ -103,28 +104,106 @@ typedef void (^APScannerDoneBlock)(APMainViewController *);
             }
             else
             {
-                APTranasctionViewController * vc = [me.storyboard instantiateViewControllerWithIdentifier:kViewTransaction];
-                vc.scanResult = result;
                 [NSObject performBlock:^{
-                    [me presentViewController:vc animated:YES completion:nil];
+                    [me attemptTransaction:result];
                 } afterDelay:0.3];
             }
         }];
     }];
-
-    [self registerForBroadcast:kNotifyTransactionComplete
-                         block:^(APMainViewController *me,
-                                 APTransactionRequest *request)
-    {
-        NSString * msg = nil;
-        if( request.state == kTransactionStateCancelled )
-            msg = NSLocalizedString(@"Transaction Canelled", "popup");
-        else if( request.state == kTransactionStateAccepted )
-            msg = NSLocalizedString(@"Transaction Accepted! Thanks for using ArgoPay!","popup");
-        [APPopup msgWithParent:me.view text:msg];
-    }];
     
+    [self registerForBroadcast:kNotifyTransactionUserActed
+                         block:^(APMainViewController *me, APTransactionApprovalRequest *request)
+     {
+         [request performRequest:^(APRemoteRepsonse *response, NSError *err)
+         {
+             if( err )
+             {
+                 [me showError:err];
+             }
+             else
+             {
+                 [APPopup msgWithParent:me.view text:response.UserMessage];
+             }
+         }];
+     }];
 }
+
+-(void)handleTransaction:(APPopup *)popup transID:(NSString *)transID
+{
+    APRemoteAPIRequestBlock handleStatusReponse = ^(APTransactionStatusResponse *response, NSError *err)
+    {
+        if( err )
+        {
+            [self showError:err];
+        }
+        else
+        {
+            NSString *stat = response.TransStatus;
+            
+            if( [stat isEqualToString:kRemoteValueTransactionStatusPending] )
+            {
+                [NSObject performBlock:^{
+                    [self handleTransaction:popup transID:transID];
+                } afterDelay:0.5];
+                return;
+            }
+            
+            [popup dismiss];
+            
+            if( [stat isEqualToString:kRemoteValueTransactionStatusInsufficientFunds] )
+            {
+                [APPopup msgWithParent:self.view text:NSLocalizedString(@"Sorry, there are insufficient funds in your ArgoPay Account to cover this purchase!", @"TransactionResponse")];
+            }
+            else if( [stat isEqualToString:kRemoteValueTransactionStatusServerCancelled] )
+            {
+                [APPopup msgWithParent:self.view text:NSLocalizedString(@"This transaction was cancelled!", @"TransactionResponse")];
+            }
+            else if( [stat isEqualToString:kRemoteValueTransactionStatusTimeOut] )
+            {
+                [APPopup msgWithParent:self.view text:NSLocalizedString(@"This transaction was cancelled because it was taking too long.", @"TransactionResponse")];
+            }
+            else if( [stat isEqualToString:kRemoteValueTransactionStatusReadyForApproval] )
+            {
+                APTranasctionViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:kViewTransaction];
+                vc.transID = transID;
+                vc.statusResponse = response;
+                [NSObject performBlock:^{
+                    [self presentViewController:vc animated:YES completion:nil];
+                } afterDelay:0.3];
+            }
+        }
+    };
+    
+    APTransactionStatusRequest *request = [APTransactionStatusRequest new];
+    request.TransID = transID;
+    [request performRequest:handleStatusReponse];
+}
+
+-(void)attemptTransaction:(APScanResult *)result
+{
+    __block APPopup *popup = [APPopup withNetActivity:self.view];
+    
+    // yea, all this should be somewhere else
+    
+    APTransactionStartRequest *start = [APTransactionStartRequest new];
+    start.AToken = @"justAToken";
+    start.QrData = result.text;
+    start.Lat = @(83223.02323);
+    start.Long = @(-99933.000342322);
+    [start performRequest:^(APTransactionIDResponse *idResponse, NSError *err) {
+        if( err )
+        {
+            [self showError:err];
+        }
+        else
+        {
+            [NSObject performBlock:^{
+                [self handleTransaction:popup transID:idResponse.TransID];
+            } afterDelay:0.1];
+        }
+    }];
+}
+
 -(void)toggleScanner:(APScannerDoneBlock)block
 {
     if( _scanner )

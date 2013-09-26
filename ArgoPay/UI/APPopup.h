@@ -22,6 +22,7 @@
 +(id)popupWithParent:(UIView *)parent text:(NSString *)text flags:(VSPopupFlags)flags;
 +(id)msgWithParent:(UIView *)parent text:(NSString *)text;
 +(id)errorWithParent:(UIView *)view error:(NSError *)err;
++(id)withNetActivity:(UIView *)parent;
 @end
 
 

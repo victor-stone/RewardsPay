@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 
-#import "APRemoteAPI.h"
 #import "APRemotableObject.h"
 #import "APStrings.h"
 #import "AFNetworking.h"
@@ -23,28 +22,10 @@
 #import "APTransaction.h"
 #import "APOffer.h"
 
-@interface APJSONRequest : AFJSONRequestOperation
+@interface APRemoteAPI : NSObject
 
-@end
-@implementation APJSONRequest
++(id)sharedInstance;
 
--(id)initWithRequest:(NSURLRequest *)urlRequest
-{
-    self = [super initWithRequest:urlRequest];
-    if( self )
-        self.JSONReadingOptions = NSJSONReadingAllowFragments;
-    return self;
-}
-
-@end
-
-@interface APRemoteRepsonse : APRemotableObject
-@property (nonatomic,strong) NSNumber *Status;
-@property (nonatomic,strong) NSString *Message;
-@property (nonatomic,strong) NSString *UserMessage;
-@end
-
-@implementation APRemoteRepsonse
 @end
 
 @implementation APRemoteAPI {
@@ -69,6 +50,8 @@ static APRemoteAPI * _sharedRemoteAPI;
 #ifdef DEBUG
     NSString * protocol = APENABLED(kSettingDebugNetworkSSL) ? @"https" : @"http";
     NSString * base = [[NSUserDefaults standardUserDefaults] stringForKey:kSettingDebugNetworkStubbed];
+    if( [base isEqualToString:@"localhost"] )
+        base = [[NSUserDefaults standardUserDefaults] stringForKey:kSettingDebugLocalhostAddr];
 #else
     NSString *protocol = @"https";
     NSString * base = @".argopay.com";
@@ -88,20 +71,14 @@ static APRemoteAPI * _sharedRemoteAPI;
     if( !client )
     {
         client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:urlString]];
-        [client registerHTTPOperationClass:[APJSONRequest class]];
+        [client registerHTTPOperationClass:[AFJSONRequestOperation class]];
         [client setDefaultHeader:@"Accept" value:@"text/json"];
         client.parameterEncoding = AFJSONParameterEncoding;
         api->_clients[urlString] = client;
+        APLOG(kDebugNetwork, @"Created HTTP-JSON client for base URL: %@", urlString);
     }
     return client;
 }
-
--(id)init
-{
-    NSAssert(0,@"Do not initialize APRemoteAPI. Use +sharedInstance instead\n");
-    return nil;
-}
-
 
 -(id)initWithToken:(void *)token
 {
@@ -115,111 +92,6 @@ static APRemoteAPI * _sharedRemoteAPI;
     return self;
 }
 
-
--(void)requestDataFromServer:(NSString *)requestString block:(APRemoteAPIRequestBlock)block
-{
-    block(nil,[[APError alloc] initWithMsg:@"You're running old code"]);
-}
-
--(void)fixupMerchants:(NSArray *)merchants otherStuff:(NSArray *)other
-{
-    for( APRemotableObject * obj in other )
-    {
-        NSNumber *merchantID = [obj valueForKey:@"merchant_id"];
-        for( APMerchant * merchant in merchants )
-        {
-            if( [merchant.key isEqual:merchantID] )
-            {
-                [obj setValue:merchant forKey:@"merchant"];
-                break;
-            }
-        }
-    }
-}
-
--(void)requestTransaction:(APScanResult *)scanResult block:(APRemoteAPIRequestBlock)block
-{
-    [self requestDataFromServer:@"transaction" block:^(id data, NSError *err) {
-        if( !err )
-        {
-            NSDictionary * dictionary = data;
-            NSArray * merchants = dictionary[@"merchant"];
-            NSArray * transArray = dictionary[@"transaction"];
-            [self fixupMerchants:merchants otherStuff:transArray];
-            data = transArray[0];
-        }
-        block(data,err);
-    }];
-}
-
--(void)getRewards:(APRemoteAPIRequestBlock)block
-{
-    [self requestMerchantData:@"rewards"
-                   recordName:@"reward"
-                        block:block];
-}
-
--(void)requestMerchantData:(NSString *)cmd
-                recordName:(NSString *)recordName
-                     block:(APRemoteAPIRequestBlock)block
-{
-    // TODO: generalize fixups away from here
-    
-    [self requestDataFromServer:cmd block:^(id data,NSError *err) {
-        if( !err )
-        {
-            NSDictionary * dictionary = data;
-            NSArray * merchants = dictionary[@"merchant"];
-            NSArray * rewards = dictionary[recordName];
-            [self fixupMerchants:merchants otherStuff:rewards];
-            data = rewards;
-        }
-        block(data,err);
-    }];
-    
-}
-
--(void)redeemArgoPoints:(APArgoPointsReward *)reward block:(APRemoteAPIRequestBlock)block
-{
-    [self requestMerchantData:@"reward_redemption"
-                   recordName:@"reward"
-                        block:^(NSArray *data, NSError *err) {
-                            if( err )
-                                block(nil,err);
-                            else
-                                block(data[0],nil);
-                        }];
-}
-
--(void)getMerchantPoints:(APMerchant *)merchant block:(APRemoteAPIRequestBlock)block
-{
-    [self requestDataFromServer:@"merchant_points" block:^(id data,NSError *err) {
-        if( err )
-        {
-            block(nil,err);
-            return;
-        }
-        NSDictionary * dictionary = data;
-        NSArray * points = dictionary[@"merchantPoints"];
-        block(points,nil);
-    }];
-}
-
--(void)redeemMerchantPoints:(APMerchantPoints *)points block:(APRemoteAPIRequestBlock)block
-{
-    [self requestDataFromServer:@"merchant_points" block:^(id data,NSError *err) {
-        if( err )
-        {
-            block(nil,err);
-            return;
-        }
-        NSInteger credits = [points.merchant.credits integerValue];
-        NSInteger deduct  = [points.points integerValue];
-        points.merchant.credits = @(credits - deduct);
-        block(points,nil);
-    }];
-}
-
 @end
 
 @implementation APRemoteCommand (perform)
@@ -229,10 +101,19 @@ static APRemoteAPI * _sharedRemoteAPI;
     
     [self willSend];
     
+    APLOG(kDebugNetwork, @"Posting: %@ %@", self.command, self.remotableProperties);
+    
     [client postPath:self.command
           parameters:self.remotableProperties
              success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
                  APRemoteRepsonse * response = [[APRemoteRepsonse alloc] initWithDictionary:responseObject];
+                 APLOG(kDebugNetwork, @"Repsonse: Status: %@\n    Msg: %@\n   UMsg: %@\n  count: %d\n rawParams:%@",
+                       response.Status,
+                       response.Message,
+                       response.UserMessage,
+                       [[responseObject allKeys] count],
+                       responseObject[@"rawPostData"]
+                       );
                  if( [response.Status integerValue] != 0 )
                  {
                      APError *error = [[APError alloc] initWithMsg:response.Message];
@@ -263,6 +144,7 @@ static APRemoteAPI * _sharedRemoteAPI;
                      }
                  }
              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 APLOG(kDebugFire, @"Network error: %@\nResponse text: %@", error, operation.responseString);
                  [self didGetError:error];
                  block(nil,error);
              }];

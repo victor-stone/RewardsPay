@@ -33,11 +33,6 @@ APLOGRELEASE
     _propDict[key] = value;
 }
 
--(id)valueForUndefinedKey:(NSString *)key
-{
-    return _propDict[key];
-}
-
 @end
 
 @implementation APRemoteCommand {
@@ -83,12 +78,6 @@ APLOGRELEASE
     return result;
 }
 
--(void)didChangeValueForKey:(NSString *)key
-{
-    [super didChangeValueForKey:key];
-    _shippingProperties[key] = [self valueForKey:key];
-}
-
 -(NSDictionary *)remotableProperties
 {
     return _shippingProperties;
@@ -96,8 +85,7 @@ APLOGRELEASE
 
 -(Class)payloadClass
 {
-    NSAssert(0, @"Derived classes must set the 'payloadClass' property");
-    return nil;
+    return [APRemoteRepsonse class];
 }
 
 -(void)willSend {}
@@ -105,3 +93,7 @@ APLOGRELEASE
 -(void)didGetError:(NSError *)error {}
 
 @end
+
+@implementation APRemoteRepsonse
+@end
+

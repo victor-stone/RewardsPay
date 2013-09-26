@@ -8,46 +8,41 @@
 
 #import "APArgoPointsReward.h"
 #import "APStrings.h"
-#import "APRemoteAPI.h"
 #import "APAccount.h"
+#import "APRemoteStrings.h"
 
-@implementation APArgoPointsReward
+@implementation APRequestRewards
 
--(id)initWithDictionary:(NSDictionary *)values
+-(id)init
 {
-    self = [super initWithDictionary:values];
-    if( !self )
-        return nil;
+    self = [super initWithCmd:kRemoteCmdConsumerGetAvailableRewards
+                    subDomain:kRemoteSubDomainOffers];
+    if( !self ) return nil;
     
-    [self calcStatus];
+    _Limit = @(kRemoteArrayLimit);
+    
     return self;
 }
 
--(void)setStatus:(APRewardStatus)status
+-(Class)payloadClass
 {
-    _status = status;
-    [self broadcast:kNotifyRewardStatusChange payload:self];
+    return [APArgoPointsReward class];
 }
 
--(void)calcStatus
+-(NSString *)payloadName
 {
-    if( (_status != kRewardStatusSeekingRedemption) && (_status != kRewardStatusReadyToUse) )
-    {
-        APAccount *account = [APAccount sharedInstance];
-        NSInteger argoPoints = [account.argoPoints integerValue];
-        if( argoPoints > [_points integerValue] )
-            _status = kRewardStatusRedeemable;
-    }
+    return kRemotePayloadRewards;
 }
 
--(void)redeem:(APRemoteAPIRequestBlock)block
+@end
+
+@implementation APArgoPointsReward
+@end
+
+@implementation APActivateReward
+-(id)init
 {
-    self.status = kRewardStatusSeekingRedemption;
-    APRemoteAPI *api = [APRemoteAPI sharedInstance];
-    [api redeemArgoPoints:self block:^(APArgoPointsReward *result,NSError *err) {
-        if( !err )
-            [result calcStatus];
-        block(result,err);
-    }];
+    return [super initWithCmd:kRemoteCmdConsActivateReward
+                    subDomain:kRemoteSubDomainOffers];
 }
 @end
