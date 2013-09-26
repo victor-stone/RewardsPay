@@ -249,7 +249,7 @@ static APRemoteAPI * _sharedRemoteAPI;
                          NSArray *dictionaries = [responseObject valueForKey:payloadName];
                          for( NSDictionary *dictionary in dictionaries)
                          {
-                             APRemotableObject *instance = [[klass alloc] initWithDictionary:responseObject];
+                             APRemotableObject *instance = [[klass alloc] initWithDictionary:dictionary];
                              [self didGetResponse:instance];
                              [remotableObjects addObject:instance];
                          }

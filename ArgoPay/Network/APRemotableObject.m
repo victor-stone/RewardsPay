@@ -8,7 +8,7 @@
 
 #import "APRemotableObject.h"
 #import "APStrings.h"
-
+#import <objc/runtime.h>
 
 @implementation APRemotableObject {
     NSMutableDictionary * _propDict;
@@ -42,6 +42,7 @@ APLOGRELEASE
 
 @implementation APRemoteCommand {
     NSMutableDictionary *_shippingProperties;
+    NSString *_watcherKey;
 }
 
 -(id)initWithCmd:(NSString *)cmd subDomain:(NSString *)subDomain
@@ -52,7 +53,35 @@ APLOGRELEASE
     _shippingProperties = [NSMutableDictionary new];
     _command = cmd;
     _subDomain = subDomain;
+    NSMutableDictionary *props = _shippingProperties;
+    _watcherKey = [self addObserverForKeyPaths:[self keyPaths]
+                                       options:NSKeyValueObservingOptionNew
+                                          task:^(id obj, NSString *keyPath, NSDictionary *change) {
+                                              props[keyPath] = change[NSKeyValueChangeNewKey];
+                                          }];
     return self;
+}
+
+-(void)dealloc
+{
+    [self removeAllBlockObservers];
+}
+
+-(NSArray*) keyPaths
+{
+    NSMutableArray *result = [NSMutableArray new];
+    
+    unsigned int count;
+    objc_property_t *props = class_copyPropertyList([self class], &count);
+    
+    for (int i = 0; i < count; ++i)
+    {
+        const char *propName = property_getName(props[i]);
+        [result addObject:[NSString stringWithUTF8String:propName]];
+    }
+    
+    free(props);
+    return result;
 }
 
 -(void)didChangeValueForKey:(NSString *)key

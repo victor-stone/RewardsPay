@@ -214,14 +214,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="481"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="O14-HH-ZCs">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="95" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="O14-HH-ZCs">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="442" id="EzD-3l-bBz"/>
+                                </constraints>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="kCellIDOffer" id="doM-zm-aAu" customClass="APOffersCell">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="60"/>
+                                        <rect key="frame" x="0.0" y="22" width="320" height="95"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="94"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="appIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="0Wc-aF-IF6">
@@ -238,20 +241,21 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Offer gpy description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8p1-Jr-hg3">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Offer gpy description that goes one for a while until now.  " lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" adjustsLetterSpacingToFitWidth="YES" preferredMaxLayoutWidth="190" translatesAutoresizingMaskIntoConstraints="NO" id="8p1-Jr-hg3">
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="HS4-Yt-TQD"/>
-                                                        <constraint firstAttribute="width" constant="200" id="xme-5a-JrW"/>
+                                                        <constraint firstAttribute="height" constant="35" id="avq-na-dmz"/>
+                                                        <constraint firstAttribute="width" constant="190" id="dhj-mJ-Htd"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Offer expires: 88/88/8888" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZMx-vf-X4s">
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="A61-PK-lVK"/>
+                                                        <constraint firstAttribute="height" constant="21" id="5Kh-T2-UPz"/>
+                                                        <constraint firstAttribute="width" constant="200" id="LXA-nI-oX4"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
@@ -259,15 +263,14 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="0Wc-aF-IF6" firstAttribute="centerY" secondItem="doM-zm-aAu" secondAttribute="centerY" type="default" id="9wu-eC-nq1"/>
-                                            <constraint firstItem="1ij-Kj-PSV" firstAttribute="leading" secondItem="doM-zm-aAu" secondAttribute="leading" constant="68" id="Ge0-it-vxt"/>
+                                            <constraint firstAttribute="bottom" secondItem="ZMx-vf-X4s" secondAttribute="bottom" constant="1" id="6oq-mc-4ND"/>
                                             <constraint firstItem="0Wc-aF-IF6" firstAttribute="leading" secondItem="doM-zm-aAu" secondAttribute="leading" constant="6" id="LIw-Iv-Iax"/>
-                                            <constraint firstItem="ZMx-vf-X4s" firstAttribute="trailing" secondItem="8p1-Jr-hg3" secondAttribute="trailing" type="default" id="bUy-mf-p3w"/>
-                                            <constraint firstItem="1ij-Kj-PSV" firstAttribute="top" secondItem="doM-zm-aAu" secondAttribute="top" type="default" id="fEk-fk-z7a"/>
-                                            <constraint firstItem="1ij-Kj-PSV" firstAttribute="leading" secondItem="8p1-Jr-hg3" secondAttribute="leading" type="default" id="fV5-uO-byO"/>
-                                            <constraint firstItem="8p1-Jr-hg3" firstAttribute="leading" secondItem="ZMx-vf-X4s" secondAttribute="leading" type="default" id="fc1-tu-hFk"/>
-                                            <constraint firstAttribute="bottom" secondItem="8p1-Jr-hg3" secondAttribute="bottom" constant="20" type="default" id="gPQ-bQ-fdU"/>
-                                            <constraint firstAttribute="bottom" secondItem="ZMx-vf-X4s" secondAttribute="bottom" constant="1" id="qxL-bS-GJh"/>
+                                            <constraint firstItem="1ij-Kj-PSV" firstAttribute="leading" secondItem="doM-zm-aAu" secondAttribute="leading" constant="68" id="ONi-Bn-Jnf"/>
+                                            <constraint firstItem="1ij-Kj-PSV" firstAttribute="leading" secondItem="8p1-Jr-hg3" secondAttribute="leading" type="default" id="lEj-ba-c68"/>
+                                            <constraint firstItem="8p1-Jr-hg3" firstAttribute="top" secondItem="doM-zm-aAu" secondAttribute="top" constant="29" id="qp4-EN-akt"/>
+                                            <constraint firstItem="1ij-Kj-PSV" firstAttribute="top" secondItem="doM-zm-aAu" secondAttribute="top" constant="6" id="rgs-dK-yIN"/>
+                                            <constraint firstItem="ZMx-vf-X4s" firstAttribute="leading" secondItem="8p1-Jr-hg3" secondAttribute="leading" type="default" id="wMn-ic-h2b"/>
+                                            <constraint firstItem="0Wc-aF-IF6" firstAttribute="top" secondItem="doM-zm-aAu" secondAttribute="top" constant="24" id="zal-wz-39V"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="businessName" destination="1ij-Kj-PSV" id="9L6-Xz-vG0"/>
@@ -288,48 +291,20 @@
                                     <navigationItem title="Offers" id="LuM-EX-Csa"/>
                                 </items>
                             </navigationBar>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Default sort" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4NJ-lJ-reG">
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="189" id="2bn-fZ-wIc"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uxt-RC-6Ji">
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Change">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="changeFilter:" destination="oS9-Q0-BIf" eventType="touchUpInside" id="YCj-pl-fO8"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="PHS-Mb-cqQ" firstAttribute="top" secondItem="MU0-WA-BZU" secondAttribute="top" type="default" id="4ud-rM-tu4"/>
-                            <constraint firstItem="O14-HH-ZCs" firstAttribute="top" relation="greaterThanOrEqual" secondItem="MU0-WA-BZU" secondAttribute="top" constant="114" type="user" id="ABV-M1-OPU"/>
                             <constraint firstItem="PHS-Mb-cqQ" firstAttribute="leading" secondItem="MU0-WA-BZU" secondAttribute="leading" type="default" id="AYw-76-bX4"/>
                             <constraint firstItem="PHS-Mb-cqQ" firstAttribute="trailing" secondItem="MU0-WA-BZU" secondAttribute="trailing" type="default" id="EOr-YJ-Lgr"/>
-                            <constraint firstItem="4NJ-lJ-reG" firstAttribute="leading" secondItem="MU0-WA-BZU" secondAttribute="leading" constant="25" id="Jpz-8O-IeB"/>
+                            <constraint firstItem="O14-HH-ZCs" firstAttribute="top" secondItem="PHS-Mb-cqQ" secondAttribute="bottom" type="default" id="GDe-dW-gFm"/>
                             <constraint firstItem="O14-HH-ZCs" firstAttribute="leading" secondItem="MU0-WA-BZU" secondAttribute="leading" type="default" id="Nde-ys-F9a"/>
-                            <constraint firstAttribute="bottom" secondItem="O14-HH-ZCs" secondAttribute="bottom" constant="-5" type="user" id="Ond-EV-W82"/>
-                            <constraint firstItem="Uxt-RC-6Ji" firstAttribute="centerY" secondItem="4NJ-lJ-reG" secondAttribute="centerY" type="default" id="T8J-yi-LzB"/>
-                            <constraint firstAttribute="trailing" secondItem="Uxt-RC-6Ji" secondAttribute="trailing" constant="9" id="aqd-Jf-PvV"/>
-                            <constraint firstItem="O14-HH-ZCs" firstAttribute="top" secondItem="MU0-WA-BZU" secondAttribute="top" constant="114" type="user" id="fWR-Wb-n9i"/>
                             <constraint firstItem="O14-HH-ZCs" firstAttribute="trailing" secondItem="MU0-WA-BZU" secondAttribute="trailing" type="default" id="hxc-BQ-JzA"/>
-                            <constraint firstItem="Uxt-RC-6Ji" firstAttribute="top" secondItem="MU0-WA-BZU" secondAttribute="top" constant="55" id="ky5-9X-DLK"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
                     <connections>
                         <outlet property="argoNavBar" destination="PHS-Mb-cqQ" id="So6-r5-1vy"/>
-                        <outlet property="filterTypeName" destination="4NJ-lJ-reG" id="gaJ-xh-4iM"/>
                         <outlet property="offersTable" destination="O14-HH-ZCs" id="J1r-Jj-PhG"/>
                     </connections>
                 </viewController>
@@ -344,8 +319,24 @@
                     <view key="view" contentMode="scaleToFill" id="CH6-q3-BTL">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AMS-Zt-dAy">
+                                <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <items>
+                                    <navigationItem title="Offer Detail" id="wQg-6t-eZJ"/>
+                                </items>
+                            </navigationBar>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="AMS-Zt-dAy" firstAttribute="trailing" secondItem="CH6-q3-BTL" secondAttribute="trailing" type="default" id="11k-l0-nNa"/>
+                            <constraint firstItem="AMS-Zt-dAy" firstAttribute="leading" secondItem="CH6-q3-BTL" secondAttribute="leading" type="default" id="Zga-jb-osl"/>
+                            <constraint firstItem="AMS-Zt-dAy" firstAttribute="top" secondItem="CH6-q3-BTL" secondAttribute="top" type="default" id="l0u-2t-OQG"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="argoNavBar" destination="AMS-Zt-dAy" id="W6n-Qv-Fdg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LVl-8a-LjB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1340,7 +1331,6 @@
         <class className="APMerchantDetailViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/APMerchantDetailViewController.h"/>
             <relationships>
-                <relationship kind="action" name="disclose:"/>
                 <relationship kind="outlet" name="cityState" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="discloseButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="merchantName" candidateClass="UILabel"/>
@@ -1354,6 +1344,9 @@
         </class>
         <class className="APOfferDetailViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/APOfferDetailViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="argoNavBar" candidateClass="UINavigationBar"/>
+            </relationships>
         </class>
         <class className="APOffersCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/APOffersCell.h"/>
@@ -1367,9 +1360,7 @@
         <class className="APOffersViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/APOffersViewController.h"/>
             <relationships>
-                <relationship kind="action" name="changeFilter:"/>
                 <relationship kind="outlet" name="argoNavBar" candidateClass="UINavigationBar"/>
-                <relationship kind="outlet" name="filterTypeName" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="offersTable" candidateClass="UITableView"/>
             </relationships>
         </class>
@@ -1395,6 +1386,9 @@
         </class>
         <class className="APSettingsViewController" superclassName="VSSettingsExtensions">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/APSettingsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="done:"/>
+            </relationships>
         </class>
         <class className="APTab" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/APTab.h"/>
@@ -1414,6 +1408,8 @@
         <class className="APTranasctionViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/APTranasctionViewController.h"/>
             <relationships>
+                <relationship kind="action" name="approvePayment:"/>
+                <relationship kind="action" name="cancelPayment:"/>
                 <relationship kind="outlet" name="cancelButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="grandTotal" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="merchantItem" candidateClass="UILabel"/>

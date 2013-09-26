@@ -22,17 +22,22 @@
 @end
 
 @interface APOfferDetailViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UINavigationBar *argoNavBar;
 @property (nonatomic,strong) APOffer *offer;
 @end
 
 @implementation APOfferDetailViewController
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	[self addBackButton:_argoNavBar];
+}
 
 @end
 
 
 @interface APOffersViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,
                                                     UIActionSheetDelegate>
-@property (weak, nonatomic) IBOutlet UILabel *filterTypeName;
 
 @property (weak, nonatomic) IBOutlet UITableView *offersTable;
 @property (weak, nonatomic) IBOutlet UINavigationBar *argoNavBar;
@@ -51,6 +56,13 @@ APLOGRELEASE
 {
     [super viewDidLoad];
 	[self addHomeButton:_argoNavBar];
+    UIBarButtonItem * bbi = [self barButtonForImage:kImageSort
+                                              title:nil
+                                              block:^(APOffersViewController *me, id button) {
+                                                  [me changeFilter:button];
+                                              }];
+    _argoNavBar.topItem.rightBarButtonItem = bbi;
+    
     _sortNames = @[ NSLocalizedString(@"Newest", "Offer sort type"),
                     NSLocalizedString(@"Ready to use", "Offer sort type"),
                     NSLocalizedString(@"Available", "Offer sort type"),
@@ -86,7 +98,7 @@ APLOGRELEASE
     }];
 }
 
-- (IBAction)changeFilter:(id)sender
+- (void)changeFilter:(id)sender
 {
     _actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Order", "Offer sort")
                                                delegate:self
@@ -125,9 +137,9 @@ APLOGRELEASE
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSLog(@"Picked: %d",buttonIndex);
     if( buttonIndex < 5 )
     {
+        NSLog(@"Picked: %d sort: %@",buttonIndex,_sortTypes[buttonIndex]);
         [self fetchOffers:_sortTypes[buttonIndex]];
     }
     [_actionSheet dismissWithClickedButtonIndex:5 animated:YES];
