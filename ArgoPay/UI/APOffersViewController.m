@@ -8,8 +8,7 @@
 
 #import "APStrings.h"
 #import "APOffer.h"
-#import "APMerchant.h"
-#import "APRemoteAPI.h"
+#import "APRemoteStrings.h"
 
 @interface APOffersCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *logo;
@@ -42,6 +41,7 @@
 @implementation APOffersViewController {
     NSArray * _offers;
     NSArray * _sortNames;
+    NSArray * _sortTypes;
     UIActionSheet *_actionSheet;
 }
 
@@ -54,11 +54,26 @@ APLOGRELEASE
     _sortNames = @[ NSLocalizedString(@"Newest", "Offer sort type"),
                     NSLocalizedString(@"Ready to use", "Offer sort type"),
                     NSLocalizedString(@"Available", "Offer sort type"),
-                    NSLocalizedString(@"Expiring Soon", "Offer sort type"),
-                    NSLocalizedString(@"Recommended for You", "Offer sort type") ];
+                    NSLocalizedString(@"Expiring Soon", "Offer sort type") /*,
+                    NSLocalizedString(@"Recommended for You", "Offer sort type") */];
+    
+    _sortTypes = @[ kRemoteValueSortByNewest,
+                    kRemoteValueSortByReadyToUse,
+                    kRemoteValueSortByAvailableToSelect,
+                    kRemoteValueSortByExpiringSoon ];
+    
+    [self fetchOffers:kRemoteValueSortByNewest];
+}
 
-    APRemoteAPI *api = [APRemoteAPI sharedInstance];
-    [api getOffers:^(id data, NSError *err) {
+-(void)fetchOffers:(NSString *)sort
+{
+    APRequestOffers *request = [[APRequestOffers alloc] init];
+    request.AToken = @"FakeToken"; // TODO put real data here
+    request.Distance = @(20.0);
+    request.Lat = @(343.0032);
+    request.Long = @(-893.32099);
+    request.SortBy = sort;
+    [request performRequest:^(id data, NSError *err) {
         if( err )
         {
             [self showError:err];
@@ -70,13 +85,14 @@ APLOGRELEASE
         }
     }];
 }
+
 - (IBAction)changeFilter:(id)sender
 {
     _actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Order", "Offer sort")
                                                delegate:self
                                       cancelButtonTitle:@"Cancel"
                                  destructiveButtonTitle:nil
-                                      otherButtonTitles:_sortNames[0],_sortNames[1],_sortNames[2],_sortNames[3],_sortNames[4],nil];
+                                      otherButtonTitles:_sortNames[0],_sortNames[1],_sortNames[2],_sortNames[3],nil];
     
     [_actionSheet showInView:self.view.superview];
 }
@@ -100,10 +116,10 @@ APLOGRELEASE
 {
     APOffersCell * cell = [tableView dequeueReusableCellWithIdentifier:kCellIDOffer forIndexPath:indexPath];
     APOffer * offer = _offers[indexPath.row];
-    cell.businessName.text = offer.merchant.name;
-    cell.offerDescription.text = offer.description;
-    cell.expiration.text = [NSString stringWithFormat:NSLocalizedString(@"Expires in %u days","OfferListingCell"),offer.daysToExpire];
-    cell.accessoryType = [offer.selected boolValue] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+    cell.businessName.text = offer.Nam;
+    cell.offerDescription.text = offer.Description;
+    cell.expiration.text = [NSString stringWithFormat:NSLocalizedString(@"Expires in %u days","OfferListingCell"),[offer.DaysToUse integerValue]];
+    cell.accessoryType = [offer.Selected boolValue] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
     return cell;
 }
 
@@ -112,9 +128,7 @@ APLOGRELEASE
     NSLog(@"Picked: %d",buttonIndex);
     if( buttonIndex < 5 )
     {
-        _offers = [_offers arrayByOfferSort:buttonIndex+1];
-        _filterTypeName.text = _sortNames[buttonIndex];
-        [_offersTable reloadData];
+        [self fetchOffers:_sortTypes[buttonIndex]];
     }
     [_actionSheet dismissWithClickedButtonIndex:5 animated:YES];
 }

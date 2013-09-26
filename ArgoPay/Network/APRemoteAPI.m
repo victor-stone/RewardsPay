@@ -48,7 +48,6 @@
 @end
 
 @implementation APRemoteAPI {
-    NSDictionary *_typeMapping;
     NSMutableDictionary *_clients;
 }
 
@@ -91,6 +90,7 @@ static APRemoteAPI * _sharedRemoteAPI;
         client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:urlString]];
         [client registerHTTPOperationClass:[APJSONRequest class]];
         [client setDefaultHeader:@"Accept" value:@"text/json"];
+        client.parameterEncoding = AFJSONParameterEncoding;
         api->_clients[urlString] = client;
     }
     return client;
@@ -110,13 +110,6 @@ static APRemoteAPI * _sharedRemoteAPI;
     self = [super init];
     if( !self ) return nil;
     
-    _typeMapping = @{@"merchant": [APMerchant class],
-                     @"reward":   [APArgoPointsReward class],
-                     @"transaction": [APTransaction class],
-                     @"merchantPoints": [APMerchantPoints class],
-                     @"offer": [APOffer class]
-                     };
-    
     _clients = [NSMutableDictionary new];
     
     return self;
@@ -125,102 +118,11 @@ static APRemoteAPI * _sharedRemoteAPI;
 
 -(void)requestDataFromServer:(NSString *)requestString block:(APRemoteAPIRequestBlock)block
 {
-    void (^receivedData)(id,NSError *) = ^(id data, NSError *err) {
-        NSDictionary * argoObjects = nil;
-        if( !err )
-        {
-            id jsonObj = nil;
-            err = nil;
-            jsonObj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
-            if( jsonObj && !err )
-            {
-                argoObjects = [self convertJSONDictionaryToArgoObjects:jsonObj];
-            }
-        }
-        block(argoObjects,err);
-    };
-    
-    NSData * data = nil;
-#ifdef DEBUG
-    if( APENABLED(kSettingDebugNetworkStubbed) )
-    {
-        NSString * path = [[NSBundle mainBundle] pathForResource:requestString ofType:@"js"];
-        data = [NSData dataWithContentsOfFile:path];
-        CGFloat delay = [[NSUserDefaults standardUserDefaults] floatForKey:kSettingDebugNetworkDelay];
-        NSError * error = nil;
-        if( [[NSUserDefaults standardUserDefaults] boolForKey:kSettingDebugNetworkSimulatedFail] )
-            error = [NSError errorWithDomain:kAPErrorDomain code:0x100 userInfo:@{
-                   NSLocalizedDescriptionKey: @"Some kind of (fake) network error"}];
-        [NSObject performBlock:^{
-            receivedData(data,error);
-        } afterDelay:delay];
-    }
-    else
-    {
-#endif
-
-        // real network code goes here
-        
-#ifdef DEBUG
-    }
-#endif
-}
-
--(void)requestImageFromServer:(NSString *)filename block:(APRemoteAPIRequestBlock)block
-{
-#ifdef DEBUG
-    if( APENABLED(kSettingDebugNetworkStubbed) )
-    {
-        CGFloat delay = [[NSUserDefaults standardUserDefaults] floatForKey:kSettingDebugNetworkDelay];
-        [NSObject performBlock:^{
-            NSError * error = nil;
-            if( [[NSUserDefaults standardUserDefaults] boolForKey:kSettingDebugNetworkSimulatedFail] )
-                error = [NSError errorWithDomain:kAPErrorDomain code:0x100 userInfo:@{}];
-            block( [UIImage imageNamed:filename], error );
-        } afterDelay:delay];
-    }
-    else
-    {
-#endif
-        
-        // real network code goes here
-        
-#ifdef DEBUG
-    }
-#endif
-    
-}
--(id)convertJSONDictionaryToArgoObjects:(NSDictionary *)dictionary
-{
-    NSMutableDictionary * results = [[NSMutableDictionary alloc] initWithCapacity:dictionary.count];
-    dictionary = dictionary[@"rootObj"];
-    for( NSString * key in dictionary )
-    {
-        Class klass = _typeMapping[key];
-        if( klass )
-        {
-            NSArray * jsonDefinitions = dictionary[key];
-            NSMutableArray * argoObjects = [[NSMutableArray alloc] initWithCapacity:jsonDefinitions.count];
-            for( NSDictionary * values in jsonDefinitions )
-            {
-                APRemotableObject * obj = [[klass alloc] initWithDictionary:values];
-                [argoObjects addObject:obj];
-            }
-            results[key] = argoObjects;
-        }
-    }
-    return results;
+    block(nil,[[APError alloc] initWithMsg:@"You're running old code"]);
 }
 
 -(void)fixupMerchants:(NSArray *)merchants otherStuff:(NSArray *)other
 {
-    for( APMerchant * merchant in merchants )
-    {
-        [self getMerchantImage:[merchant valueForKey:@"logo"] block:[^(id data) {
-            merchant.logoImg = data;
-        } copy]];
-    }
-    
     for( APRemotableObject * obj in other )
     {
         NSNumber *merchantID = [obj valueForKey:@"merchant_id"];
@@ -250,30 +152,10 @@ static APRemoteAPI * _sharedRemoteAPI;
     }];
 }
 
--(void)getMerchantImage:(NSString *)name block:(APRemoteAPIRequestBlock)block
-{
-    
-#ifdef DEBUG
-    if( APENABLED(kSettingDebugNetworkStubbed) )
-    {
-        name = @"appicon";
-    }
-#endif
-    
-    [self requestImageFromServer:name block:block];
-}
-
 -(void)getRewards:(APRemoteAPIRequestBlock)block
 {
     [self requestMerchantData:@"rewards"
                    recordName:@"reward"
-                        block:block];
-}
-
--(void)getOffers:(APRemoteAPIRequestBlock)block
-{
-    [self requestMerchantData:@"offers"
-                   recordName:@"offer"
                         block:block];
 }
 
@@ -345,26 +227,43 @@ static APRemoteAPI * _sharedRemoteAPI;
 {
     AFHTTPClient *client = [APRemoteAPI clientForSubDomain:self.subDomain];
     
+    [self willSend];
+    
     [client postPath:self.command
           parameters:self.remotableProperties
              success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
                  APRemoteRepsonse * response = [[APRemoteRepsonse alloc] initWithDictionary:responseObject];
                  if( [response.Status integerValue] != 0 )
                  {
-                     block(nil,[[APError alloc] initWithMsg:response.Message]);
+                     APError *error = [[APError alloc] initWithMsg:response.Message];
+                     [self didGetError:error];
+                     block(nil,error);
                  }
                  else
                  {
+                     Class klass = self.payloadClass;
                      NSString *payloadName = self.payloadName;
-                     NSDictionary *responseDict = nil;
                      if( payloadName )
-                         responseDict = [responseObject valueForKey:payloadName];
+                     {
+                         NSMutableArray *remotableObjects = [NSMutableArray new];
+                         NSArray *dictionaries = [responseObject valueForKey:payloadName];
+                         for( NSDictionary *dictionary in dictionaries)
+                         {
+                             APRemotableObject *instance = [[klass alloc] initWithDictionary:responseObject];
+                             [self didGetResponse:instance];
+                             [remotableObjects addObject:instance];
+                         }
+                         block(remotableObjects,nil);
+                     }
                      else
-                         responseDict = responseObject;
-                     id instance = [[self.payloadClass alloc] initWithDictionary:responseObject];
-                     block(instance,nil);
+                     {
+                         APRemotableObject *instance = [[klass alloc] initWithDictionary:responseObject];
+                         [self didGetResponse:instance];
+                         block(instance,nil);
+                     }
                  }
              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 [self didGetError:error];
                  block(nil,error);
              }];
 }

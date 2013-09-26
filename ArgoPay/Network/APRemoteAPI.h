@@ -20,10 +20,9 @@ typedef void (^APRemoteAPIRequestBlock)(id data, NSError *err);
 +(id)sharedInstance;
 
 -(void)getRewards:(APRemoteAPIRequestBlock)block;
--(void)getMerchantImage:(NSString *)name block:(APRemoteAPIRequestBlock)block;
 -(void)requestTransaction:(APScanResult *)scanResult block:(APRemoteAPIRequestBlock)block;
 -(void)redeemArgoPoints:(APArgoPointsReward *)reward block:(APRemoteAPIRequestBlock)block;
 -(void)getMerchantPoints:(APMerchant *)merchant block:(APRemoteAPIRequestBlock)block;
 -(void)redeemMerchantPoints:(APMerchantPoints *)points block:(APRemoteAPIRequestBlock)block;
--(void)getOffers:(APRemoteAPIRequestBlock)block;
+
 @end

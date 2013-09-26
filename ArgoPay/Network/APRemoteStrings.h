@@ -15,6 +15,7 @@
 
 #define APREMOTESTRING(type,k) APREMOTESTRINGV(type,k,k)
 #define APREMOTECMD(k)         APREMOTESTRINGV(Cmd,k,k)
+#define APREMOTEPAYLOAD(k)     APREMOTESTRINGV(Payload,k,k)
 
 // SubDomains
 APREMOTESTRINGV(SubDomain, Offers,      offers)
@@ -24,6 +25,8 @@ APREMOTESTRINGV(SubDomain, Customer,    customer)
 // Commands
 APREMOTECMD(ConsumerGetAvailableOffers)
 
+// Payloads
+APREMOTEPAYLOAD(Offers)
 
 // Offer.SortBy Values
 // (SortBy is (N)one, W-Newest First, (R)eady to use, (A)vailable to Select, (E)xpiring Soon)

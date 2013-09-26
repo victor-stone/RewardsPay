@@ -72,4 +72,8 @@ APLOGRELEASE
     return nil;
 }
 
+-(void)willSend {}
+-(void)didGetResponse:(id)responseObject {}
+-(void)didGetError:(NSError *)error {}
+
 @end

@@ -35,30 +35,33 @@
 @property (nonatomic,strong) NSNumber *Limit;
 @end
 
-typedef enum _APOfferSort {
-    kOfferSortNone,
-    kOfferSortNewest,
-    kOfferSortReadyToUse,
-    kOfferSortAvailableToSelect,
-    kOfferSortExpiringSoon,
-    kOfferSortRecommended
-    
-} APOfferSort;
-
 @interface APOffer : APRemotableObject
 
-@property (nonatomic,strong) APMerchant *merchant;
-@property (nonatomic,strong) NSNumber *expires;
-@property (nonatomic,strong) NSNumber *created;
-@property (nonatomic,strong) NSString *description;
-@property (nonatomic,strong) NSNumber *selected;
-@property (nonatomic,strong) NSNumber *recommendationWeight;
+@property (nonatomic,strong) NSString *OfferID;
+@property (nonatomic,strong) NSString *Type;
+@property (nonatomic,strong) NSNumber *Selected;
+@property (nonatomic,strong) NSString *DateFrom;
+@property (nonatomic,strong) NSString *DateTo;
+@property (nonatomic,strong) NSNumber *DaysToUse;
+@property (nonatomic,strong) NSNumber *Count;
+@property (nonatomic,strong) NSNumber *AmountDiscount;
+@property (nonatomic,strong) NSNumber *AmountMinimum;
+@property (nonatomic,strong) NSNumber *PointBonus;
+@property (nonatomic,strong) NSNumber *PointMultiplier;
+@property (nonatomic,strong) NSNumber *ArgoBonus;
+@property (nonatomic,strong) NSNumber *ArgoMultiplier;
+@property (nonatomic,strong) NSString *Nam;
+@property (nonatomic,strong) NSString *Addr1;
+@property (nonatomic,strong) NSString *Addr2;
+@property (nonatomic,strong) NSString *City;
+@property (nonatomic,strong) NSString *State;
+@property (nonatomic,strong) NSString *Zip;
+@property (nonatomic,strong) NSString *Tel;
+@property (nonatomic,strong) NSNumber *Lat;
+@property (nonatomic,strong) NSNumber *Long;
+@property (nonatomic,strong) NSString *Description;
+@property (nonatomic,strong) NSString *ImageURL;
+@property (nonatomic,strong) NSString *Website;
 
--(NSUInteger)daysToExpire;
-
-@end
-
-@interface NSArray (OfferSorter)
--(NSArray *)arrayByOfferSort:(APOfferSort)sort;
 @end
 

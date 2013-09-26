@@ -9,6 +9,7 @@
 #import "UIViewController+ArgoPay.h"
 #import "APStrings.h"
 #import "APPopup.h"
+#import "APAppDelegate.h"
 
 @implementation UIViewController (ArgoPay)
 
@@ -90,7 +91,19 @@ void * kTargetMapAssociationKey = &kTargetMapAssociationKey;
 {
     UIViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:kViewError];
     [vc setValue:error forKey:@"errorObj"];
-    [self presentViewController:vc animated:YES completion:nil];
+    APAppDelegate * ad = (APAppDelegate *)([UIApplication sharedApplication].delegate);
+    UIViewController * rvc = ad.window.rootViewController;
+    if( rvc.presentedViewController )
+    {
+        [rvc dismissViewControllerAnimated:NO completion:nil];
+        [NSObject performBlock:^{
+            [self showError:error];
+        } afterDelay:0.8];
+    }
+    else
+    {
+        [rvc presentViewController:vc animated:YES completion:nil];        
+    }
 }
 
 @end
