@@ -123,8 +123,8 @@ APLOGRELEASE
     APRewardsCell * cell = [tableView dequeueReusableCellWithIdentifier:kCellIDReward forIndexPath:indexPath];
     APArgoPointsReward * reward = _rewards[indexPath.row];
     
-    cell.merchantName.text = reward.Nam;
-    cell.points.text = [NSString stringWithFormat:@"%d",[reward.Count intValue]];
+    cell.merchantName.text = reward.Name;
+    cell.points.text = [NSString stringWithFormat:@"%d",[reward.PointsRequired intValue]];
     cell.value.text = [NSString stringWithFormat:@"$%.0f", [reward.AmountReward floatValue]];
 
     [cell.logo setImageWithURL:[NSURL URLWithString:reward.ImageURL] placeholderImage:[UIImage imageNamed:@"appIcon"]];

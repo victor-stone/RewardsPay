@@ -58,7 +58,7 @@ APLOGRELEASE
 
 -(void)commitMerchant
 {
-    _merchantName.text = _merchant.Nam;
+    _merchantName.text = _merchant.Name;
     _merchantPoints.text = @"???"; // [NSString stringWithFormat:NSLocalizedString(@"%dpts","MerchantDetail"),[_merchant.credits integerValue]];
     _streetAddr.text = _merchant.Addr1;
     _cityState.text = [NSString stringWithFormat:@"%@, %@", _merchant.City, _merchant.State];

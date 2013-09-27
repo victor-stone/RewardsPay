@@ -145,7 +145,7 @@ APLOGRELEASE
 {
     APOffersCell * cell = [tableView dequeueReusableCellWithIdentifier:kCellIDOffer forIndexPath:indexPath];
     APOffer * offer = _offers[indexPath.row];
-    cell.businessName.text = offer.Nam;
+    cell.businessName.text = offer.Name;
     cell.offerDescription.text = offer.Description;
     cell.expiration.text = [NSString stringWithFormat:NSLocalizedString(@"Expires in %u days","OfferListingCell"),[offer.DaysToUse integerValue]];
     cell.accessoryType = [offer.Selected boolValue] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;

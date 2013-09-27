@@ -50,7 +50,7 @@ static APAccount * __currentAccount;
         }
         else
         {
-            APLOG(kDebugUser, @"User is logged with AToken: %@ AccountID: %@",account.AToken,account.AccountID);
+            APLOG(kDebugUser, @"User is logged with AToken: %@",account.AToken);
         }
         __currentAccount = account;
         __currentAccount.login = loginRequest.Email;
@@ -100,14 +100,13 @@ static APAccount * __currentAccount;
     self.password = nil;
     [[NSUserDefaults standardUserDefaults] synchronize];
     _AToken = nil;
-    _AccountID = nil;
     [self broadcast:kNotifyUserLoginStatusChanged payload:self when:0.2];
     APLOG(kDebugUser, @"User account logged out", 0);
 }
 
 -(BOOL)isLoggedIn
 {
-    return _AToken != nil && _AccountID != nil;
+    return _AToken != nil;
 }
 @end
 

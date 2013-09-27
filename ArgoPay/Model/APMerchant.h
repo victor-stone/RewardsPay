@@ -11,7 +11,7 @@
 @class APMerchantPoints;
 
 @interface APMerchant : APRemotableObject
-@property (nonatomic,strong) NSString *Nam;
+@property (nonatomic,strong) NSString *Name;
 @property (nonatomic,strong) NSString *Addr1;
 @property (nonatomic,strong) NSString *Addr2;
 @property (nonatomic,strong) NSString *City;

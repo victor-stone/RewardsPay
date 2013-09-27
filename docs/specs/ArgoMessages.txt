@@ -1,9 +1,5 @@
-                                                                     
-                                                                     
-                                                                     
-                                             
 ArgoPay API Documentation
-Version 2013-09-25 16:45:00
+Version 2013-09-26 17:00:00
 
 Security Model:
 A consumer logs in either when creating a new record with ConsumerAdd, or ConsumerLogin
@@ -96,7 +92,7 @@ The format of the following is:
 
    /MerchantLogin
     >Email, Password, InToken
-    <Status, Message, MToken
+    <Status, Message, MToken, AccountID
 
    /MerchantMetaData
     >MToken, Name, LegalName, Addr1, Addr2, City, State, Zip, ImageURL
@@ -126,7 +122,7 @@ The format of the following is:
     >MToken, MLocID, Type, AccName, Routing, AccNumber
     <Status, Message, UserMessage
 
-   /MerchantACHVerify (Merchant Verifies Banking Information with deposited amount)
+   /MerchantLocationACHVerify (Merchant Verifies Banking Information with deposited amount)
     > MToken, MLocID, Amount
     < Status, Message, UserMessage
 
@@ -168,7 +164,7 @@ Future:
                            (SortBy specifies the sort order (D)istance, (C)ategory)
                            (CategoryID specific a specific Category ID)
     >Lat, Long, Distance, Limit, SortBy, CategoryID
-    <Status, Message, Locations:{MLocID, Nam, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, ImageURL}
+    <Status, Message, Locations:{MLocID, Name, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, ImageURL, Website}
 
 
 -Offers
@@ -193,7 +189,7 @@ Future:
                                  (Selected means that the offer has already been selected by the consumer)
     > AToken, Lat, Long, Distance, Limit, SortBy
     < Status, Message, Offers {OfferID, Type, Selected, DateFrom, DateTo, DaysToUse, Count, AmountDiscount, AmountMinimum, PointBonus, PointMultiplier, ArgoBonus, ArgoMultiplier, 
-       Nam, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, ImageURL, Website}
+       Name, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, ImageURL, Website}
 
    /ConsActivateOffer
     >AToken, OfferID
@@ -201,12 +197,12 @@ Future:
 
 -Rewards
    /MerchantLocationRewardAdd
-    > MToken, MLocID, DateFrom, DateTo, AmountReward, AmountMinimum, MultipleUse
+    > MToken, MLocID, DateFrom, DateTo, AmountReward, AmountMinimum, PointsRequired, MultipleUse
     < Status, Message, RewardID
 
    /MerchantLocationRewardList (Type D is discount, B is Bonus)
     > MToken, MLocID
-    < Status, Message, RewardList {RewardID, DateFrom, DateTo, AmountReward, AmountMinimum, MultipleUse}
+    < Status, Message, RewardList {RewardID, DateFrom, DateTo, AmountReward, AmountMinimum, MultipleUse, PointsRequired}
 
    /MerchantLocationRewardDelete
     > MToken, MLocID, RewardID
@@ -216,8 +212,8 @@ Future:
                                 (SortBy is (N)one, W-Newest First, (R)eady to use, (A)vailable to Select, (E)xpiring Soon)
                                 (Selected means that the offer has already been selected by the consumer)
     > AToken, Lat, Long, Distance, Limit, SortBy 
-    < Status, Message, Rewards {RewardID, DateFrom, Selected, DateTo, Count, AmountReward, AmountMinimum, MultipleUse,
-        Nam, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, ImageURL, Website}
+    < Status, Message, Rewards {RewardID, DateFrom, Selected, DateTo, AmountReward, AmountMinimum, MultipleUse, PointsRequired
+        Name, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, ImageURL, Website}
 
    /ConsActivateReward
     >AToken, RewardID
