@@ -10,6 +10,7 @@
 #import "APStrings.h"
 #import "APPopup.h"
 #import "APAppDelegate.h"
+#import "APAccount.h"
 
 @implementation UIViewController (ArgoPay)
 
@@ -54,7 +55,7 @@ void * kTargetMapAssociationKey = &kTargetMapAssociationKey;
     }
     [button addTarget:self action:@selector(invokeMenuItem:) forControlEvents:UIControlEventTouchUpInside];
     NSMutableDictionary * _map = self.targetMap;
-    _map[@(button.hash)] = block;
+    _map[@(button.hash)] = [block copy];
     return [[UIBarButtonItem alloc] initWithCustomView:button];
 }
 
@@ -67,6 +68,37 @@ void * kTargetMapAssociationKey = &kTargetMapAssociationKey;
                                               }];
     bar.topItem.leftBarButtonItems = @[bbi];
     
+}
+
+-(void)addLoginButton:(UINavigationBar *)bar
+{
+    BOOL isLoggedIn = [[APAccount sharedInstance] isLoggedIn];
+    NSString *const image = isLoggedIn ? kImageLogout : kImageLogin;
+    UIBarButtonItem * bbi = [self barButtonForImage:image
+                                              title:nil
+                                              block:^(UIViewController *me, id button) {
+                                                  [me toggleLogin:bar];
+                                              }];
+    bar.topItem.rightBarButtonItem = bbi;
+}
+
+-(void)toggleLogin:(UINavigationBar *)bar
+{
+    APAccount *account = [APAccount sharedInstance];
+    if( account.isLoggedIn )
+    {
+        [account logUserOut];
+        [self addLoginButton:bar];
+        NSString *msg = NSLocalizedString(@"You have been logged out", @"Log out button");
+        [APPopup msgWithParent:self.view text:msg dismissBlock:^{
+            [self broadcast:kNotifyUserLoginStatusChanged payload:account when:0.2];
+        }];
+    }
+    else
+    {
+        UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:kViewLogin];
+        [self presentViewController:vc animated:YES completion:nil];
+    }
 }
 
 -(void)addBackButton:(UINavigationBar *)bar

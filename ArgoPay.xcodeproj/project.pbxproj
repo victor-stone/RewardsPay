@@ -118,6 +118,19 @@
 		57A224F017E92D1A000B52E9 /* VSSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A224EF17E92D1A000B52E9 /* VSSettings.m */; };
 		57A224F317E95154000B52E9 /* APSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A224F217E95153000B52E9 /* APSettingsViewController.m */; };
 		57A224F517E951A5000B52E9 /* InAppSettings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 57A224F417E951A5000B52E9 /* InAppSettings.bundle */; };
+		57ADDAA217F5DBC700F23689 /* kImageSignIn.png in Resources */ = {isa = PBXBuildFile; fileRef = 57ADDAA017F5DBC700F23689 /* kImageSignIn.png */; };
+		57ADDAA317F5DBC700F23689 /* kImageSignIn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57ADDAA117F5DBC700F23689 /* kImageSignIn@2x.png */; };
+		57ADDAA617F5DFB500F23689 /* APLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57ADDAA517F5DFB500F23689 /* APLoginViewController.m */; };
+		57ADDAA917F5E1A100F23689 /* kImageLogin.png in Resources */ = {isa = PBXBuildFile; fileRef = 57ADDAA717F5E1A100F23689 /* kImageLogin.png */; };
+		57ADDAAA17F5E1A100F23689 /* kImageLogin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57ADDAA817F5E1A100F23689 /* kImageLogin@2x.png */; };
+		57ADDAB617F5F33F00F23689 /* ConsActivateOffer.js in Resources */ = {isa = PBXBuildFile; fileRef = 57ADDAAE17F5F33F00F23689 /* ConsActivateOffer.js */; };
+		57ADDAB717F5F33F00F23689 /* ConsActivateReward.js in Resources */ = {isa = PBXBuildFile; fileRef = 57ADDAAF17F5F33F00F23689 /* ConsActivateReward.js */; };
+		57ADDAB817F5F33F00F23689 /* ConsumerGetAvailableOffers.js in Resources */ = {isa = PBXBuildFile; fileRef = 57ADDAB017F5F33F00F23689 /* ConsumerGetAvailableOffers.js */; };
+		57ADDAB917F5F33F00F23689 /* ConsumerGetAvailableRewards.js in Resources */ = {isa = PBXBuildFile; fileRef = 57ADDAB117F5F33F00F23689 /* ConsumerGetAvailableRewards.js */; };
+		57ADDABA17F5F33F00F23689 /* ConsumerLogin.js in Resources */ = {isa = PBXBuildFile; fileRef = 57ADDAB217F5F33F00F23689 /* ConsumerLogin.js */; };
+		57ADDABB17F5F33F00F23689 /* ConsumerTransactionApprove.js in Resources */ = {isa = PBXBuildFile; fileRef = 57ADDAB317F5F33F00F23689 /* ConsumerTransactionApprove.js */; };
+		57ADDABC17F5F33F00F23689 /* ConsumerTransactionStart.js in Resources */ = {isa = PBXBuildFile; fileRef = 57ADDAB417F5F33F00F23689 /* ConsumerTransactionStart.js */; };
+		57ADDABD17F5F33F00F23689 /* ConsumerTransactionStatus.js in Resources */ = {isa = PBXBuildFile; fileRef = 57ADDAB517F5F33F00F23689 /* ConsumerTransactionStatus.js */; };
 		57E08D0C17EF77E400E22B1A /* kImageMerchantTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 57E08D0B17EF77E400E22B1A /* kImageMerchantTop.png */; };
 		57E08D0F17EF7FAF00E22B1A /* APMerchantDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E08D0E17EF7FAF00E22B1A /* APMerchantDetailViewController.m */; };
 		57E08D1217EF896700E22B1A /* APAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E08D1117EF896700E22B1A /* APAccount.m */; };
@@ -334,6 +347,20 @@
 		57A224EF17E92D1A000B52E9 /* VSSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSSettings.m; sourceTree = "<group>"; };
 		57A224F217E95153000B52E9 /* APSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APSettingsViewController.m; sourceTree = "<group>"; };
 		57A224F417E951A5000B52E9 /* InAppSettings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = InAppSettings.bundle; sourceTree = "<group>"; };
+		57ADDAA017F5DBC700F23689 /* kImageSignIn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageSignIn.png; sourceTree = "<group>"; };
+		57ADDAA117F5DBC700F23689 /* kImageSignIn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageSignIn@2x.png"; sourceTree = "<group>"; };
+		57ADDAA517F5DFB500F23689 /* APLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLoginViewController.m; sourceTree = "<group>"; };
+		57ADDAA717F5E1A100F23689 /* kImageLogin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageLogin.png; sourceTree = "<group>"; };
+		57ADDAA817F5E1A100F23689 /* kImageLogin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageLogin@2x.png"; sourceTree = "<group>"; };
+		57ADDAAB17F5F1E700F23689 /* gen_jsonstubs.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = gen_jsonstubs.sh; sourceTree = "<group>"; };
+		57ADDAAE17F5F33F00F23689 /* ConsActivateOffer.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ConsActivateOffer.js; sourceTree = "<group>"; };
+		57ADDAAF17F5F33F00F23689 /* ConsActivateReward.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ConsActivateReward.js; sourceTree = "<group>"; };
+		57ADDAB017F5F33F00F23689 /* ConsumerGetAvailableOffers.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ConsumerGetAvailableOffers.js; sourceTree = "<group>"; };
+		57ADDAB117F5F33F00F23689 /* ConsumerGetAvailableRewards.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ConsumerGetAvailableRewards.js; sourceTree = "<group>"; };
+		57ADDAB217F5F33F00F23689 /* ConsumerLogin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ConsumerLogin.js; sourceTree = "<group>"; };
+		57ADDAB317F5F33F00F23689 /* ConsumerTransactionApprove.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ConsumerTransactionApprove.js; sourceTree = "<group>"; };
+		57ADDAB417F5F33F00F23689 /* ConsumerTransactionStart.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ConsumerTransactionStart.js; sourceTree = "<group>"; };
+		57ADDAB517F5F33F00F23689 /* ConsumerTransactionStatus.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ConsumerTransactionStatus.js; sourceTree = "<group>"; };
 		57C2EC0A17F3483A003B3CA3 /* ArgoMessages.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ArgoMessages.txt; sourceTree = "<group>"; };
 		57C2EC0C17F35DC3003B3CA3 /* APRemoteStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APRemoteStrings.h; sourceTree = "<group>"; };
 		57C2ED3317F3FAA2003B3CA3 /* _.htaccess */ = {isa = PBXFileReference; lastKnownFileType = text; path = _.htaccess; sourceTree = "<group>"; };
@@ -436,6 +463,7 @@
 			isa = PBXGroup;
 			children = (
 				578BB5B517F22C9F009E2F45 /* run_genstrings.sh */,
+				57ADDAAB17F5F1E700F23689 /* gen_jsonstubs.sh */,
 			);
 			name = bin;
 			path = ../bin;
@@ -444,6 +472,7 @@
 		5793E3DE17EB7CC7004B0838 /* Testing */ = {
 			isa = PBXGroup;
 			children = (
+				57ADDAAD17F5F33F00F23689 /* stubs */,
 				57C2ED3217F3FAA2003B3CA3 /* site */,
 				5793E3DF17EB7CC7004B0838 /* qrcode.17094104.png */,
 				5793E3E017EB7CC7004B0838 /* qrcode.17094497.png */,
@@ -700,6 +729,7 @@
 				57E7B84417EA1BA400205BCB /* APPopup.h */,
 				57E7B84517EA1BA400205BCB /* APPopup.m */,
 				579E4E2917F143A400D03437 /* APErrorViewController.m */,
+				57ADDAA517F5DFB500F23689 /* APLoginViewController.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -725,6 +755,8 @@
 				57A2249517E913B3000B52E9 /* kImageLocation.png */,
 				57A2249617E913B3000B52E9 /* kImageLocation@2x.png */,
 				57A2249717E913B3000B52E9 /* kImageLocationCircle.png */,
+				57ADDAA717F5E1A100F23689 /* kImageLogin.png */,
+				57ADDAA817F5E1A100F23689 /* kImageLogin@2x.png */,
 				57A2249817E913B3000B52E9 /* kImageLogout.png */,
 				57E08D0B17EF77E400E22B1A /* kImageMerchantTop.png */,
 				57A2249917E913B3000B52E9 /* kImageOffers.png */,
@@ -736,6 +768,8 @@
 				5793E3EB17EBBE23004B0838 /* kImageRewardsTop.png */,
 				57A2249E17E913B3000B52E9 /* kImageRewards.png */,
 				57A2249F17E913B3000B52E9 /* kImageSettings.png */,
+				57ADDAA017F5DBC700F23689 /* kImageSignIn.png */,
+				57ADDAA117F5DBC700F23689 /* kImageSignIn@2x.png */,
 				57597A0017F4825F0074346E /* kImageSort.png */,
 				571D75C417EB3D0A00F0B869 /* kImageTransactionBottom.png */,
 				571D75C517EB3D0A00F0B869 /* kImageTransactionExpander.png */,
@@ -806,6 +840,21 @@
 				57A224E317E91EA9000B52E9 /* zbar-samples.png */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		57ADDAAD17F5F33F00F23689 /* stubs */ = {
+			isa = PBXGroup;
+			children = (
+				57ADDAAE17F5F33F00F23689 /* ConsActivateOffer.js */,
+				57ADDAAF17F5F33F00F23689 /* ConsActivateReward.js */,
+				57ADDAB017F5F33F00F23689 /* ConsumerGetAvailableOffers.js */,
+				57ADDAB117F5F33F00F23689 /* ConsumerGetAvailableRewards.js */,
+				57ADDAB217F5F33F00F23689 /* ConsumerLogin.js */,
+				57ADDAB317F5F33F00F23689 /* ConsumerTransactionApprove.js */,
+				57ADDAB417F5F33F00F23689 /* ConsumerTransactionStart.js */,
+				57ADDAB517F5F33F00F23689 /* ConsumerTransactionStatus.js */,
+			);
+			path = stubs;
 			sourceTree = "<group>";
 		};
 		57C2ED3217F3FAA2003B3CA3 /* site */ = {
@@ -900,6 +949,14 @@
 				57A223ED17E90626000B52E9 /* InfoPlist.strings in Resources */,
 				57A223F517E90626000B52E9 /* Default.png in Resources */,
 				57A223F717E90626000B52E9 /* Default@2x.png in Resources */,
+				57ADDAB617F5F33F00F23689 /* ConsActivateOffer.js in Resources */,
+				57ADDAB717F5F33F00F23689 /* ConsActivateReward.js in Resources */,
+				57ADDAB817F5F33F00F23689 /* ConsumerGetAvailableOffers.js in Resources */,
+				57ADDAB917F5F33F00F23689 /* ConsumerGetAvailableRewards.js in Resources */,
+				57ADDABA17F5F33F00F23689 /* ConsumerLogin.js in Resources */,
+				57ADDABB17F5F33F00F23689 /* ConsumerTransactionApprove.js in Resources */,
+				57ADDABC17F5F33F00F23689 /* ConsumerTransactionStart.js in Resources */,
+				57ADDABD17F5F33F00F23689 /* ConsumerTransactionStatus.js in Resources */,
 				57A223F917E90626000B52E9 /* Default-568h@2x.png in Resources */,
 				57A223FC17E90626000B52E9 /* MainStoryboard.storyboard in Resources */,
 				57A224A117E913B3000B52E9 /* kImageAccount.png in Resources */,
@@ -945,6 +1002,10 @@
 				578BB5BB17F22CFA009E2F45 /* AFNetworking.strings in Resources */,
 				578BB5BC17F22CFA009E2F45 /* Localizable.strings in Resources */,
 				57597A0117F4825F0074346E /* kImageSort.png in Resources */,
+				57ADDAA217F5DBC700F23689 /* kImageSignIn.png in Resources */,
+				57ADDAA317F5DBC700F23689 /* kImageSignIn@2x.png in Resources */,
+				57ADDAA917F5E1A100F23689 /* kImageLogin.png in Resources */,
+				57ADDAAA17F5E1A100F23689 /* kImageLogin@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1015,6 +1076,7 @@
 				579E4E2A17F143A400D03437 /* APErrorViewController.m in Sources */,
 				578BB57D17F208FE009E2F45 /* APOffer.m in Sources */,
 				578BB5BF17F248F4009E2F45 /* APRewardViewController.m in Sources */,
+				57ADDAA617F5DFB500F23689 /* APLoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

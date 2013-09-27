@@ -8,6 +8,7 @@
 
 #import "APAccount.h"
 #import "APStrings.h"
+#import "APRemoteStrings.h"
 
 @implementation APAccount
 
@@ -67,5 +68,29 @@ static APAccount * __sharedAccount;
 -(void)adjustArgoPoint:(NSUInteger)amount
 {
     self.argoPoints = @([_argoPoints integerValue] + amount);
+}
+
+-(void)logUserOut
+{
+    self.password = nil;
+    self.login = nil;
+}
+-(BOOL)isLoggedIn
+{
+    return _password != nil && _login != nil;
+}
+@end
+
+@implementation APAccountLogin
+
+-(id)init
+{
+    return [super initWithCmd:kRemoteCmdConsumerLogin
+                    subDomain:kRemoteSubDomainCustomer];
+}
+
+-(Class)payloadClass
+{
+    return [APAccount class];
 }
 @end

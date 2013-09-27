@@ -52,6 +52,8 @@ static APRemoteAPI * _sharedRemoteAPI;
     NSString * base = [[NSUserDefaults standardUserDefaults] stringForKey:kSettingDebugNetworkStubbed];
     if( [base isEqualToString:@"localhost"] )
         base = [[NSUserDefaults standardUserDefaults] stringForKey:kSettingDebugLocalhostAddr];
+    else if( [base isEqualToString:@"file"] )
+        protocol = @"file";
 #else
     NSString *protocol = @"https";
     NSString * base = @".argopay.com";
@@ -66,11 +68,16 @@ static APRemoteAPI * _sharedRemoteAPI;
 +(AFHTTPClient *)clientForSubDomain:(NSString *)subDomain
 {
     NSString *urlString = [self baseURLForSubDomain:subDomain];
+    NSURL * url = [NSURL URLWithString:urlString];
+#ifdef DEBUG
+    if( url.isFileURL )
+        return nil;
+#endif
     APRemoteAPI * api = [APRemoteAPI sharedInstance];
     AFHTTPClient * client = api->_clients[urlString];
     if( !client )
     {
-        client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:urlString]];
+        client = [[AFHTTPClient alloc] initWithBaseURL:url];
         [client registerHTTPOperationClass:[AFJSONRequestOperation class]];
         [client setDefaultHeader:@"Accept" value:@"text/json"];
         client.parameterEncoding = AFJSONParameterEncoding;
@@ -89,6 +96,18 @@ static APRemoteAPI * _sharedRemoteAPI;
     
     _clients = [NSMutableDictionary new];
     
+    [self registerForBroadcast:kNotifyUserSettingChanged block:^(APRemoteAPI *me, NSDictionary *info)
+     {
+        for( NSString *key in info )
+        {
+            if( [key isEqualToString:kSettingDebugNetworkStubbed] )
+            {
+                APLOG(kDebugNetwork, @"Resetting network access stub to:%@", info[key] );
+                me->_clients = [NSMutableDictionary new];
+            }
+        }
+     }];
+    
     return self;
 }
 
@@ -102,6 +121,48 @@ static APRemoteAPI * _sharedRemoteAPI;
     [self willSend];
     
     APLOG(kDebugNetwork, @"Posting: %@ %@", self.command, self.remotableProperties);
+    
+    void (^parseJSON)(NSDictionary *,APRemoteAPIRequestBlock) = ^(NSDictionary *responseObject,APRemoteAPIRequestBlock block)
+    {
+        Class klass = self.payloadClass;
+        NSString *payloadName = self.payloadName;
+        if( payloadName )
+        {
+            NSMutableArray *remotableObjects = [NSMutableArray new];
+            NSArray *dictionaries = [responseObject valueForKey:payloadName];
+            for( NSDictionary *dictionary in dictionaries)
+            {
+                APRemotableObject *instance = [[klass alloc] initWithDictionary:dictionary];
+                [self didGetResponse:instance];
+                [remotableObjects addObject:instance];
+            }
+            block(remotableObjects,nil);
+        }
+        else
+        {
+            APRemotableObject *instance = [[klass alloc] initWithDictionary:responseObject];
+            [self didGetResponse:instance];
+            block(instance,nil);
+        }
+    };
+    
+#ifdef DEBUG
+    if( !client )
+    {
+        NSString * path = [[NSBundle mainBundle] pathForResource:self.command ofType:@"js"];
+        APLOG(kDebugNetwork, @"Using JSON file stubs: %@",path);
+        
+        NSData *data = [NSData dataWithContentsOfFile:path];
+        id jsonObj = nil;
+        NSError * err = nil;
+        jsonObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
+        if( err )
+            block(nil,err);
+        else
+            parseJSON(jsonObj,block);
+        return;
+    }
+#endif
     
     [client postPath:self.command
           parameters:self.remotableProperties
@@ -122,26 +183,7 @@ static APRemoteAPI * _sharedRemoteAPI;
                  }
                  else
                  {
-                     Class klass = self.payloadClass;
-                     NSString *payloadName = self.payloadName;
-                     if( payloadName )
-                     {
-                         NSMutableArray *remotableObjects = [NSMutableArray new];
-                         NSArray *dictionaries = [responseObject valueForKey:payloadName];
-                         for( NSDictionary *dictionary in dictionaries)
-                         {
-                             APRemotableObject *instance = [[klass alloc] initWithDictionary:dictionary];
-                             [self didGetResponse:instance];
-                             [remotableObjects addObject:instance];
-                         }
-                         block(remotableObjects,nil);
-                     }
-                     else
-                     {
-                         APRemotableObject *instance = [[klass alloc] initWithDictionary:responseObject];
-                         [self didGetResponse:instance];
-                         block(instance,nil);
-                     }
+                     parseJSON(responseObject,block);
                  }
              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                  APLOG(kDebugFire, @"Network error: %@\nResponse text: %@", error, operation.responseString);

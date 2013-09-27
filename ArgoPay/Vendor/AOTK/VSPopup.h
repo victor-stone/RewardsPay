@@ -16,6 +16,8 @@ extern NSString * kVSNotificationPopupDismissed;
 #define kPopupInsetPadding 10
 #endif
 
+typedef void (^VSPopupDismissBlock)();
+
 typedef enum _VSPopupFlags {
     kPopupDefaults = 0,
     kPopupCloseOnAnyTap = 1,
@@ -34,5 +36,6 @@ typedef enum _VSPopupFlags {
                  bg:(UIImage *)background;
 
 -(void)present;
+-(void)present:(VSPopupDismissBlock)dismissBlock;
 -(void)dismiss;
 @end

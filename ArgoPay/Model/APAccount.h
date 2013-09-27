@@ -8,7 +8,22 @@
 
 #import "APRemotableObject.h"
 
+
+/*
+ /ConsumerLogin
+ > Email, Password, InToken
+ < Status, Message, AToken, AccountID
+*/
+@interface APAccountLogin : APRemoteCommand
+@property (nonatomic,strong) NSString *Email;
+@property (nonatomic,strong) NSString *Password;
+@property (nonatomic,strong) NSString *InToken;
+@end
+
 @interface APAccount : APRemotableObject
+
+@property (nonatomic,strong) NSString *AToken;
+@property (nonatomic,strong) NSString *AccountID;
 
 +(id)sharedInstance;
 
@@ -16,6 +31,8 @@
 @property (nonatomic,strong) NSString * password;
 @property (nonatomic,strong) NSNumber * argoPoints;
 
--(void)adjustArgoPoint:(NSUInteger)amount;
+
+-(void)logUserOut;
+@property (nonatomic,readonly) BOOL isLoggedIn;
 
 @end

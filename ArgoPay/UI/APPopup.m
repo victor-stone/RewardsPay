@@ -34,6 +34,13 @@ APLOGRELEASE
     return [self popupWithParent:parent text:text flags:kPopupCloseOnAnyTap];
 }
 
++(id)msgWithParent:(UIView *)parent text:(NSString *)text dismissBlock:(VSPopupDismissBlock)dismissBlock
+{
+    APPopup *popup = [self popupWithParent:parent text:text flags:kPopupCloseOnAnyTap|kPopupNoAutoShow];
+    [popup present:dismissBlock];
+    return popup;
+}
+
 +(id)errorWithParent:(UIView *)parent error:(NSError *)err
 {
     UIImage * bg = [[UIImage imageNamed:kImageErrorBalloon]

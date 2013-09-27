@@ -1,0 +1,1 @@
+{"Status":0,"Message":"","UserMessage":"Transaction approved. Thank you for using ArgoPay."}

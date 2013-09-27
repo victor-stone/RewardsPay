@@ -1,0 +1,1 @@
+{"Status":0,"Message":"","TransStatus":"A","Amounts":[{"Type":"X","Amount":20},{"Type":"Q","Amount":3.22}],"TotalAmount":23.22,"PayAmounts":[{"Desc":"Don't care","Amount":32.99}],"MerchName":"Whooley Bully","MerchLocation":"DontCareVille, NY","MerchRegister":"Henry"}

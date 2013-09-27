@@ -21,6 +21,7 @@
 @interface APPopup : VSPopup
 +(id)popupWithParent:(UIView *)parent text:(NSString *)text flags:(VSPopupFlags)flags;
 +(id)msgWithParent:(UIView *)parent text:(NSString *)text;
++(id)msgWithParent:(UIView *)parent text:(NSString *)text dismissBlock:(VSPopupDismissBlock)dismissBlock;
 +(id)errorWithParent:(UIView *)view error:(NSError *)err;
 +(id)withNetActivity:(UIView *)parent;
 @end

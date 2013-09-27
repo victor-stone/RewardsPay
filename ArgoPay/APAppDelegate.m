@@ -8,13 +8,33 @@
 
 #import "APAppDelegate.h"
 #import "APStrings.h"
+#import "IASKSettingsReader.h"
 
-@implementation APAppDelegate
+@implementation APAppDelegate {
+    id _notifyObserver;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self registerUserDefaults];
+    [self registerForNotifications];
     return YES;
+}
+
+-(void)registerForNotifications
+{
+    _notifyObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kIASKAppSettingChanged
+                                                      object:nil
+                                                       queue:nil
+                                                  usingBlock:^(NSNotification *note)
+    {
+        [self broadcast:kNotifyUserSettingChanged payload:note.userInfo];
+    }];
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:_notifyObserver];
 }
 
 -(NSDictionary *)factoryUserDefaultSettings

@@ -13,7 +13,9 @@ $json = new Services_JSON();
 // assumes Content-Type 'application/json'
 $parameters = $json->decode($HTTP_RAW_POST_DATA);
 
-$value = array( 'Status' => 0, 'Message' => '', 'rawPostData' => $HTTP_RAW_POST_DATA, 'callingParams' => $parameters );
+$value = array( 'Status' => 0, 'Message' => ''
+               //,'rawPostData' => $HTTP_RAW_POST_DATA, 'callingParams' => $parameters
+               );
 
 switch($_REQUEST['cmd'] )
 {

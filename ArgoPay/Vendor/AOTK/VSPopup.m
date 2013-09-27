@@ -14,7 +14,9 @@
 
 NSString * kVSNotificationPopupDismissed = @"kVSNotificationPopupDismissed";
 
-@implementation VSPopup
+@implementation VSPopup {
+    VSPopupDismissBlock _dismissBlock;
+}
 
 APLOGRELEASE
 
@@ -122,7 +124,12 @@ APLOGRELEASE
         self.alpha = 1.0;
     }];
 }
- 
+
+-(void)present:(VSPopupDismissBlock)dismissBlock
+{
+    _dismissBlock = dismissBlock;
+    [self present];
+}
 
 -(void)dismiss
 {
@@ -131,6 +138,11 @@ APLOGRELEASE
     } completion:^(BOOL finished) {
         [self broadcast:kVSNotificationPopupDismissed payload:self];
         [self removeFromSuperview];
+        if( _dismissBlock )
+        {
+            _dismissBlock();
+            _dismissBlock = nil;
+        }
     }];
 }
 @end

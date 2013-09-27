@@ -312,6 +312,99 @@
             </objects>
             <point key="canvasLocation" x="657" y="-646"/>
         </scene>
+        <!--Login View Controller-->
+        <scene sceneID="2AO-Ur-aOg">
+            <objects>
+                <viewController storyboardIdentifier="kVIewLogin" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BLI-wt-2gI" customClass="APLoginViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pst-Pt-uhv">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QrT-v3-Elt">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="gDS-Fi-kkx"/>
+                                </constraints>
+                                <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <items>
+                                    <navigationItem title="Sign In" id="B0F-wm-4Rc"/>
+                                </items>
+                            </navigationBar>
+                            <imageView userInteractionEnabled="NO" contentMode="top" image="kImageSignIn.png" translatesAutoresizingMaskIntoConstraints="NO" id="DP2-h6-95W"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xjA-8U-IP0">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="256" id="YW9-Eu-9xa"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IX4-Vd-0Mn">
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ie0-bO-jFo">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="GYK-rE-Jvn"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="forgotPassword:" destination="BLI-wt-2gI" eventType="touchUpInside" id="Mi6-gu-0he"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v68-gL-sLM">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="52" id="9Ud-qf-Abq"/>
+                                    <constraint firstAttribute="width" constant="149" id="BYg-3d-faQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="submit:" destination="BLI-wt-2gI" eventType="touchUpInside" id="HyF-cc-l9S"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="DP2-h6-95W" firstAttribute="bottom" secondItem="pst-Pt-uhv" secondAttribute="bottom" type="default" id="17x-zZ-w2s"/>
+                            <constraint firstItem="xjA-8U-IP0" firstAttribute="centerX" secondItem="QrT-v3-Elt" secondAttribute="centerX" type="default" id="4Qg-7O-Ufd"/>
+                            <constraint firstItem="IX4-Vd-0Mn" firstAttribute="leading" secondItem="xjA-8U-IP0" secondAttribute="leading" type="default" id="9BP-GR-tro"/>
+                            <constraint firstItem="xjA-8U-IP0" firstAttribute="top" secondItem="pst-Pt-uhv" secondAttribute="top" constant="88" id="CzS-OA-xod"/>
+                            <constraint firstItem="QrT-v3-Elt" firstAttribute="trailing" secondItem="pst-Pt-uhv" secondAttribute="trailing" type="default" id="MqJ-kd-uuQ"/>
+                            <constraint firstItem="ie0-bO-jFo" firstAttribute="trailing" secondItem="IX4-Vd-0Mn" secondAttribute="trailing" type="default" id="Pd2-9z-Odp"/>
+                            <constraint firstItem="QrT-v3-Elt" firstAttribute="top" secondItem="pst-Pt-uhv" secondAttribute="top" type="default" id="VHZ-9F-ndh"/>
+                            <constraint firstItem="IX4-Vd-0Mn" firstAttribute="top" secondItem="pst-Pt-uhv" secondAttribute="top" constant="152" id="VSR-tI-MRd"/>
+                            <constraint firstAttribute="bottom" secondItem="v68-gL-sLM" secondAttribute="bottom" constant="215" id="Vfm-89-Nkv"/>
+                            <constraint firstItem="QrT-v3-Elt" firstAttribute="leading" secondItem="pst-Pt-uhv" secondAttribute="leading" type="default" id="bZn-ZL-VXm"/>
+                            <constraint firstItem="DP2-h6-95W" firstAttribute="top" secondItem="QrT-v3-Elt" secondAttribute="bottom" type="default" id="btV-RL-LHc"/>
+                            <constraint firstItem="xjA-8U-IP0" firstAttribute="trailing" secondItem="IX4-Vd-0Mn" secondAttribute="trailing" type="default" id="fW7-DI-Ilk"/>
+                            <constraint firstItem="ie0-bO-jFo" firstAttribute="leading" secondItem="IX4-Vd-0Mn" secondAttribute="leading" type="default" id="fsH-40-xxc"/>
+                            <constraint firstItem="ie0-bO-jFo" firstAttribute="centerX" secondItem="v68-gL-sLM" secondAttribute="centerX" type="default" id="tmU-5d-dd9"/>
+                            <constraint firstItem="DP2-h6-95W" firstAttribute="leading" secondItem="pst-Pt-uhv" secondAttribute="leading" type="default" id="ugv-nd-h99"/>
+                            <constraint firstItem="ie0-bO-jFo" firstAttribute="top" secondItem="pst-Pt-uhv" secondAttribute="top" constant="213" id="vZ0-wY-O6H"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="argoNavBar" destination="QrT-v3-Elt" id="U0f-Y6-y3S"/>
+                        <outlet property="password" destination="IX4-Vd-0Mn" id="sGM-zZ-tUk"/>
+                        <outlet property="username" destination="xjA-8U-IP0" id="zlG-Xi-4Cq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BIw-9I-kee" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="657" y="-1379"/>
+        </scene>
         <!--Offer Detail View Controller-->
         <scene sceneID="Kjx-Z4-rMt">
             <objects>
@@ -1268,176 +1361,11 @@
         <image name="kImageOffers.png" width="30" height="30"/>
         <image name="kImageQR.png" width="30" height="30"/>
         <image name="kImageRewardsTop.png" width="365" height="320"/>
+        <image name="kImageSignIn.png" width="320" height="302"/>
         <image name="kImageTransactionBottom.png" width="387" height="197"/>
         <image name="kImageTransactionExpander.png" width="387" height="20"/>
         <image name="kImageTransactionTop.png" width="387" height="307"/>
     </resources>
-    <classes>
-        <class className="APAccountViewController" superclassName="APMenuBaseController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/APAccountViewController.h"/>
-        </class>
-        <class className="APErrorViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/APErrorViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="bottomMessage" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="mainMessage" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
-            </relationships>
-        </class>
-        <class className="APHistoryViewController" superclassName="APMenuBaseController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/APHistoryViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
-            </relationships>
-        </class>
-        <class className="APLocationViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/APLocationViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="argoNavBar" candidateClass="UINavigationBar"/>
-            </relationships>
-        </class>
-        <class className="APMainViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/APMainViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="blackTapNavBackground" candidateClass="UIView"/>
-                <relationship kind="outlet" name="embeddingContainer" candidateClass="UIView"/>
-                <relationship kind="outlet" name="tabNavigator" candidateClass="APTabNavigator"/>
-            </relationships>
-        </class>
-        <class className="APMenuBaseController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/APMenuBaseController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
-            </relationships>
-        </class>
-        <class className="APMenuCell" superclassName="UICollectionViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/APMenuCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="title" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="APMenuViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/APMenuViewController.h"/>
-        </class>
-        <class className="APMerchantDetailCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/APMerchantDetailCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="credit" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="points" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="redeemButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="APMerchantDetailViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/APMerchantDetailViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="cityState" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="discloseButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="merchantName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="merchantPoints" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="orangeNavBar" candidateClass="UINavigationBar"/>
-                <relationship kind="outlet" name="phoneNumber" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="pointsTable" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="streetAddr" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="urlAddr" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="APOfferDetailViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/APOfferDetailViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="argoNavBar" candidateClass="UINavigationBar"/>
-            </relationships>
-        </class>
-        <class className="APOffersCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/APOffersCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="businessName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="expiration" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="logo" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="offerDescription" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="APOffersViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/APOffersViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="argoNavBar" candidateClass="UINavigationBar"/>
-                <relationship kind="outlet" name="offersTable" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="APRewardsCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/APRewardsCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="activity" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="logo" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="merchantName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="points" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="redeemButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="status" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="value" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="APRewardsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/APRewardsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="argPoints" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
-                <relationship kind="outlet" name="rewardsTable" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="APSettingsViewController" superclassName="VSSettingsExtensions">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/APSettingsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="done:"/>
-            </relationships>
-        </class>
-        <class className="APTab" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/APTab.h"/>
-            <relationships>
-                <relationship kind="outlet" name="image" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="label" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="APTabNavigator" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/APTabNavigator.h"/>
-            <relationships>
-                <relationship kind="outlet" name="location" candidateClass="APTab"/>
-                <relationship kind="outlet" name="offers" candidateClass="APTab"/>
-                <relationship kind="outlet" name="scan" candidateClass="APTab"/>
-            </relationships>
-        </class>
-        <class className="APTranasctionViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/APTranasctionViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="approvePayment:"/>
-                <relationship kind="action" name="cancelPayment:"/>
-                <relationship kind="outlet" name="cancelButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="grandTotal" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="merchantItem" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="merchantName" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="IASKAppSettingsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/IASKAppSettingsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="delegate"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="UICollectionReusableView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
-        </class>
-        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
-        </class>
-        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
-        </class>
-        <class className="VSSettingsExtensions" superclassName="IASKAppSettingsViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/VSSettingsExtensions.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

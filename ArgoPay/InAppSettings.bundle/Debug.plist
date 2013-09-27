@@ -22,12 +22,14 @@
 			<key>Titles</key>
 			<array>
 				<string>localhost</string>
+                <string>Stubs</string>
 				<string>Developer ArgoPay</string>
 				<string>Production ArgoPay</string>
 			</array>
 			<key>Values</key>
 			<array>
 				<string>localhost</string>
+                <string>file</string>
 				<string>dev.argopay.com</string>
 				<string>.argopay.com</string>
 			</array>

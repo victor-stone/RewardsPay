@@ -29,6 +29,7 @@ APREMOTECMD(ConsActivateReward)
 APREMOTECMD(ConsumerTransactionStart)
 APREMOTECMD(ConsumerTransactionStatus)
 APREMOTECMD(ConsumerTransactionApprove)
+APREMOTECMD(ConsumerLogin)
 
 // Payloads
 APREMOTEPAYLOAD(Offers)
