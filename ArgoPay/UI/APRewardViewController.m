@@ -46,7 +46,7 @@ APLOGRELEASE
     [super viewDidLoad];
     [self addBackButton:_navBar];
     
-    APAccount *account = [APAccount sharedInstance];
+    APAccount *account = [APAccount currentAccount];
     _argPoints.text = [NSString stringWithFormat:@"%d",[account.argoPoints integerValue]];
     _currentSort = kRemoteValueSortByNewest;
     [self fetchRewards:YES];

@@ -9,6 +9,7 @@
 #import "APStrings.h"
 #import "APOffer.h"
 #import "APRemoteStrings.h"
+#import "APAccount.h"
 
 @interface APOffersCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *logo;
@@ -48,6 +49,7 @@
     NSArray * _sortNames;
     NSArray * _sortTypes;
     UIActionSheet *_actionSheet;
+    NSUInteger _numberOfButtonsShowing;
 }
 
 APLOGRELEASE
@@ -56,23 +58,25 @@ APLOGRELEASE
 {
     [super viewDidLoad];
 	[self addHomeButton:_argoNavBar];
+    [self addLoginButton:_argoNavBar];
     UIBarButtonItem * bbi = [self barButtonForImage:kImageSort
                                               title:nil
                                               block:^(APOffersViewController *me, id button) {
                                                   [me changeFilter:button];
                                               }];
-    _argoNavBar.topItem.rightBarButtonItem = bbi;
+    [self addRightButton:_argoNavBar button:bbi];
     
     _sortNames = @[ NSLocalizedString(@"Newest", "Offer sort type"),
+                    NSLocalizedString(@"Expiring Soon", "Offer sort type"),
                     NSLocalizedString(@"Ready to use", "Offer sort type"),
-                    NSLocalizedString(@"Available", "Offer sort type"),
-                    NSLocalizedString(@"Expiring Soon", "Offer sort type") /*,
+                    NSLocalizedString(@"Available", "Offer sort type") /*,
                     NSLocalizedString(@"Recommended for You", "Offer sort type") */];
     
     _sortTypes = @[ kRemoteValueSortByNewest,
+                    kRemoteValueSortByExpiringSoon,
                     kRemoteValueSortByReadyToUse,
-                    kRemoteValueSortByAvailableToSelect,
-                    kRemoteValueSortByExpiringSoon ];
+                    kRemoteValueSortByAvailableToSelect
+                    ];
     
     [self fetchOffers:kRemoteValueSortByNewest];
 }
@@ -100,11 +104,24 @@ APLOGRELEASE
 
 - (void)changeFilter:(id)sender
 {
-    _actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Order", "Offer sort")
-                                               delegate:self
-                                      cancelButtonTitle:@"Cancel"
-                                 destructiveButtonTitle:nil
-                                      otherButtonTitles:_sortNames[0],_sortNames[1],_sortNames[2],_sortNames[3],nil];
+    if( [[APAccount currentAccount] isLoggedIn] )
+    {
+        _actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Order", "Offer sort")
+                                                   delegate:self
+                                          cancelButtonTitle:@"Cancel"
+                                     destructiveButtonTitle:nil
+                                          otherButtonTitles:_sortNames[0],_sortNames[1],_sortNames[2],_sortNames[3],nil];
+        _numberOfButtonsShowing = 4;
+    }
+    else
+    {
+        _actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Order", "Offer sort")
+                                                   delegate:self
+                                          cancelButtonTitle:@"Cancel"
+                                     destructiveButtonTitle:nil
+                                          otherButtonTitles:_sortNames[0],_sortNames[1],nil];
+        _numberOfButtonsShowing = 2;
+    }
     
     [_actionSheet showInView:self.view.superview];
 }
@@ -137,7 +154,7 @@ APLOGRELEASE
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if( buttonIndex < 5 )
+    if( buttonIndex < _numberOfButtonsShowing )
     {
         NSLog(@"Picked: %d sort: %@",buttonIndex,_sortTypes[buttonIndex]);
         [self fetchOffers:_sortTypes[buttonIndex]];

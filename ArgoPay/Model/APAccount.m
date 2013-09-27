@@ -10,41 +10,70 @@
 #import "APStrings.h"
 #import "APRemoteStrings.h"
 
+/*
+ /ConsumerLogin
+ > Email, Password, InToken
+ < Status, Message, AToken, AccountID
+ */
+@interface APAccountLogin : APRemoteCommand
+@property (nonatomic,strong) NSString *Email;
+@property (nonatomic,strong) NSString *Password;
+@property (nonatomic,strong) NSString *InToken;
+@end
+
+
 @implementation APAccount
 
-static void * kAccountSharedInitToken = &kAccountSharedInitToken;
+static APAccount * __currentAccount;
 
-static APAccount * __sharedAccount;
-
-+(id)sharedInstance
++(id)currentAccount
 {
-    @synchronized(self) {
-        if( !__sharedAccount )
-            __sharedAccount = [[APAccount alloc] initWithToken:kAccountSharedInitToken];
+    return __currentAccount;
+}
+
++(void)login:(NSString *)loginEmail
+    password:(NSString *)password
+       block:(APRemoteAPIRequestBlock)block
+{
+    APAccountLogin *loginRequest = [APAccountLogin new];
+    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
+    loginRequest.Email      = loginEmail ?: [settings stringForKey:kSettingUserLoginName];
+    loginRequest.Password   = password ?: [settings stringForKey:kSettingUserLoginPassword];
+
+    APLOG(kDebugUser, @"Attemping login with username: %@ password: %@", loginRequest.Email, loginRequest.Password);
+    
+    APRemoteAPIRequestBlock handleAccount = ^(APAccount *account, NSError *err) {
+        if( !account )
+        {
+            APLOG(kDebugUser, @"No user account returned, creating blank", 0)
+            account = [APAccount new];
+        }
+        else
+        {
+            APLOG(kDebugUser, @"User is logged with AToken: %@ AccountID: %@",account.AToken,account.AccountID);
+        }
+        __currentAccount = account;
+        __currentAccount.login = loginRequest.Email;
+        __currentAccount.password = loginRequest.Password;
+        if( block )
+        {
+            if( err )
+                block(nil,err);
+            else
+                block(account,nil);
+        }
+        [self broadcast:kNotifyUserLoginStatusChanged payload:account when:0.2];
+    };
+    
+    if( (loginRequest.Email.length == 0) || (loginRequest.Password.length == 0 ) )
+    {
+        APError *appError = [[APError alloc] initWithMsg:NSLocalizedString(@"Both login name and password are required to login", @"Account login")];
+        handleAccount(nil,appError);
     }
-    return __sharedAccount;
-}
-
--(id)init
-{
-    NSAssert(0,@"Do not initialize APAccount. Use +sharedInstance instead\n");
-    return nil;
-}
-
--(id)initWithToken:(void *)token
-{
-    NSAssert(token == kAccountSharedInitToken, @"Illegal initialization of APAccount. Use +sharedInstance instead");
-    
-    self = [super init];
-    if( !self ) return nil;
-    
-    NSUserDefaults * settings = [NSUserDefaults standardUserDefaults];
-    
-    _login      = [settings stringForKey:kSettingUserLoginName];
-    _password   = [settings stringForKey:kSettingUserLoginPassword];
-    _argoPoints = [settings valueForKey:kSettingUserArgoPoints];
-    
-    return self;
+    else
+    {
+        [loginRequest performRequest:handleAccount];
+    }
 }
 
 -(void)setLogin:(NSString *)login
@@ -65,19 +94,20 @@ static APAccount * __sharedAccount;
     [[NSUserDefaults standardUserDefaults] setValue:argoPoints forKey:kSettingUserArgoPoints];
 }
 
--(void)adjustArgoPoint:(NSUInteger)amount
-{
-    self.argoPoints = @([_argoPoints integerValue] + amount);
-}
-
 -(void)logUserOut
 {
-    self.password = nil;
     self.login = nil;
+    self.password = nil;
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    _AToken = nil;
+    _AccountID = nil;
+    [self broadcast:kNotifyUserLoginStatusChanged payload:self when:0.2];
+    APLOG(kDebugUser, @"User account logged out", 0);
 }
+
 -(BOOL)isLoggedIn
 {
-    return _password != nil && _login != nil;
+    return _AToken != nil && _AccountID != nil;
 }
 @end
 

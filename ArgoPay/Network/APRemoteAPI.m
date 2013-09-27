@@ -96,6 +96,7 @@ static APRemoteAPI * _sharedRemoteAPI;
     
     _clients = [NSMutableDictionary new];
     
+#ifdef DEBUG
     [self registerForBroadcast:kNotifyUserSettingChanged block:^(APRemoteAPI *me, NSDictionary *info)
      {
         for( NSString *key in info )
@@ -104,9 +105,11 @@ static APRemoteAPI * _sharedRemoteAPI;
             {
                 APLOG(kDebugNetwork, @"Resetting network access stub to:%@", info[key] );
                 me->_clients = [NSMutableDictionary new];
+                break;
             }
         }
      }];
+#endif
     
     return self;
 }

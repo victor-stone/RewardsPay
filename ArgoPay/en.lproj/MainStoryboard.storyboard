@@ -315,7 +315,7 @@
         <!--Login View Controller-->
         <scene sceneID="2AO-Ur-aOg">
             <objects>
-                <viewController storyboardIdentifier="kVIewLogin" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BLI-wt-2gI" customClass="APLoginViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="kViewLogin" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BLI-wt-2gI" customClass="APLoginViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pst-Pt-uhv">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -330,16 +330,16 @@
                                 </items>
                             </navigationBar>
                             <imageView userInteractionEnabled="NO" contentMode="top" image="kImageSignIn.png" translatesAutoresizingMaskIntoConstraints="NO" id="DP2-h6-95W"/>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xjA-8U-IP0">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xjA-8U-IP0">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="256" id="YW9-Eu-9xa"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IX4-Vd-0Mn">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="IX4-Vd-0Mn">
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ie0-bO-jFo">
                                 <constraints>

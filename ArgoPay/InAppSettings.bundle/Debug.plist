@@ -102,6 +102,16 @@
 			<key>Title</key>
 			<string>View hierarchy</string>
 		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>DefaultValue</key>
+			<string>NO</string>
+			<key>Key</key>
+			<string>kDebugUser</string>
+			<key>Title</key>
+			<string>User</string>
+		</dict>
 	</array>
 	<key>StringsTable</key>
 	<string>Root</string>

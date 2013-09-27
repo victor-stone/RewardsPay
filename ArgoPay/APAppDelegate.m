@@ -9,6 +9,7 @@
 #import "APAppDelegate.h"
 #import "APStrings.h"
 #import "IASKSettingsReader.h"
+#import "APAccount.h"
 
 @implementation APAppDelegate {
     id _notifyObserver;
@@ -18,6 +19,9 @@
 {
     [self registerUserDefaults];
     [self registerForNotifications];
+    // This has to happen here to prime the 'currentAccount' object
+    // Otherwise calls to +currentAccount will return nil
+    [APAccount login:nil password:nil block:nil];
     return YES;
 }
 
@@ -55,7 +59,6 @@
 
 -(void)registerUserDefaults
 {
-    // I don't think I'm doing this right...
     [[NSUserDefaults standardUserDefaults] registerDefaults:[self factoryUserDefaultSettings]];
 }
 

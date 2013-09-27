@@ -26,8 +26,18 @@ switch($_REQUEST['cmd'] )
          > Email, Password, InToken
          < Status, Message, AToken, AccountID
          */
-        $value['AToken'] = 'A-Magic-Token';
-        $value['AccountID'] = 'Some-Account-ID';
+        if( strcmp( $parameters->Email, "bogus" ) == 0 )
+        {
+            $value['Status'] = 1;
+            $value['Message'] = 'Invalid username and password combination';
+            $value['AToken'] = '';
+            $value['AccountID'] = '';
+        }
+        else
+        {
+            $value['AToken'] = 'A-Magic-Token';
+            $value['AccountID'] = 'Some-Account-ID';
+        }
         break;
     }
         

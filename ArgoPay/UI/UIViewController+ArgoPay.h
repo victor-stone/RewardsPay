@@ -22,6 +22,7 @@ typedef void (^APMenuBlock)(id,id);
 -(void)addHomeButton:(UINavigationBar *)bar;
 -(void)addBackButton:(UINavigationBar *)bar;
 -(void)addLoginButton:(UINavigationBar *)bar;
+-(void)addRightButton:(UINavigationBar *)bar button:(UIBarButtonItem *)bbi;
 
 -(void)navigateTo:(NSString *)vcName;
 

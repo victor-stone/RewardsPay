@@ -15,6 +15,7 @@
 @implementation UIViewController (ArgoPay)
 
 void * kTargetMapAssociationKey = &kTargetMapAssociationKey;
+void * kHasLoginWatcherKey = &kHasLoginWatcherKey;
 
 -(void)invokeMenuItem:(id)sender
 {
@@ -63,36 +64,76 @@ void * kTargetMapAssociationKey = &kTargetMapAssociationKey;
 {
     UIBarButtonItem * bbi = [self barButtonForImage:kImageHome
                                               title:nil
-                                              block:^(UIViewController *me, id button) {
-                                                  [me navigateTo:kViewHome];
-                                              }];
+                                              block:^(UIViewController *me, id button)
+                             {
+                                 if( [[APAccount currentAccount] isLoggedIn] )
+                                     [me navigateTo:kViewHome];
+                                 else
+                                     [me toggleLogin:bar];
+                                     
+                             }];
     bar.topItem.leftBarButtonItems = @[bbi];
     
 }
 
+-(void)addRightButton:(UINavigationBar *)bar button:(UIBarButtonItem *)bbi
+{
+    [self addRightButton:bar button:bbi replaceIndex:-1];
+}
+
+-(void)addRightButton:(UINavigationBar *)bar
+               button:(UIBarButtonItem *)bbi
+         replaceIndex:(NSInteger)atIndex
+{
+    NSMutableArray *arr = nil;
+    if( bar.topItem.rightBarButtonItems )
+    {
+        arr = [NSMutableArray arrayWithArray:bar.topItem.rightBarButtonItems];
+        if( atIndex == -1 )
+            [arr addObject:bbi];
+        else
+            [arr replaceObjectAtIndex:atIndex withObject:bbi];
+        
+    }
+    else
+    {
+        arr = [NSMutableArray new];
+        [arr addObject:bbi];
+    }
+    bar.topItem.rightBarButtonItems = arr;
+}
+
 -(void)addLoginButton:(UINavigationBar *)bar
 {
-    BOOL isLoggedIn = [[APAccount sharedInstance] isLoggedIn];
+    BOOL isLoggedIn = [[APAccount currentAccount] isLoggedIn];
     NSString *const image = isLoggedIn ? kImageLogout : kImageLogin;
     UIBarButtonItem * bbi = [self barButtonForImage:image
                                               title:nil
                                               block:^(UIViewController *me, id button) {
                                                   [me toggleLogin:bar];
                                               }];
-    bar.topItem.rightBarButtonItem = bbi;
+    
+    if( ![self associatedValueForKey:kHasLoginWatcherKey] )
+    {
+        [self associateValue:@(YES) withKey:kHasLoginWatcherKey];
+        [self registerForBroadcast:kNotifyUserLoginStatusChanged
+                             block:^(UIViewController *me, APAccount *account) {
+                                 [me addLoginButton:bar];
+                             }];
+    }
+    
+    [self addRightButton:bar button:bbi replaceIndex:0];
 }
 
 -(void)toggleLogin:(UINavigationBar *)bar
 {
-    APAccount *account = [APAccount sharedInstance];
+    APAccount *account = [APAccount currentAccount];
     if( account.isLoggedIn )
     {
         [account logUserOut];
-        [self addLoginButton:bar];
         NSString *msg = NSLocalizedString(@"You have been logged out", @"Log out button");
         [APPopup msgWithParent:self.view text:msg dismissBlock:^{
-            [self broadcast:kNotifyUserLoginStatusChanged payload:account when:0.2];
-        }];
+            }];
     }
     else
     {
