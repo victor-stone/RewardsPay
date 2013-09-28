@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 
-#import "APRemotableObject.h"
+#import "APRemoteObject.h"
 
 /*
  /ConsumerTransactionStart
@@ -21,7 +21,7 @@
 @property (nonatomic,strong) NSNumber *Long;
 @end
 
-@interface APTransactionIDResponse : APRemotableObject
+@interface APTransactionIDResponse : APRemoteObject
 @property (nonatomic,strong) NSString *TransID;
 @end
 
@@ -50,7 +50,7 @@
 @end
 
 
-@interface APTransactionStatusResponse : APRemotableObject
+@interface APTransactionStatusResponse : APRemoteObject
 @property (nonatomic,strong) NSString *TransStatus;
 @property (nonatomic,strong) NSArray *Amounts; // @{ 'Type':'', 'Amount':'' }
 @property (nonatomic,strong) NSNumber *TotalAmount;

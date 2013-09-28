@@ -27,14 +27,6 @@ APLOGRELEASE
                                           
 @end
 
-@interface APAccountViewController : APMenuBaseController
-
-@end
-
-@implementation APAccountViewController
-
-@end
-
 @interface APHistoryViewController : APMenuBaseController
 @property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
 @end

@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 
-#import "APRemotableObject.h"
+#import "APRemoteObject.h"
 #import "APStrings.h"
 #import "AFNetworking.h"
 
@@ -122,7 +122,7 @@ static APRemoteAPI * _sharedRemoteAPI;
 
 #define DOVALIDATION(obj) [self validateReceipt:obj]
 
--(id)validateReceipt:(APRemotableObject *)obj
+-(id)validateReceipt:(APRemoteObject *)obj
 {
     if( [self.command isEqualToString:kRemoteCmdConsumerLogin] )
         return obj;
@@ -190,7 +190,7 @@ static APRemoteAPI * _sharedRemoteAPI;
             NSArray *dictionaries = [responseObject valueForKey:payloadName];
             for( NSDictionary *dictionary in dictionaries)
             {
-                APRemotableObject *instance = [[klass alloc] initWithDictionary:dictionary];
+                APRemoteObject *instance = [[klass alloc] initWithDictionary:dictionary];
                 [self didGetResponse:instance];
                 DOVALIDATION(instance);
                 [remotableObjects addObject:instance];
@@ -199,7 +199,7 @@ static APRemoteAPI * _sharedRemoteAPI;
         }
         else
         {
-            APRemotableObject *instance = [[klass alloc] initWithDictionary:responseObject];
+            APRemoteObject *instance = [[klass alloc] initWithDictionary:responseObject];
             [self didGetResponse:instance];
             DOVALIDATION(instance);
             block(instance,nil);

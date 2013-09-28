@@ -124,3 +124,22 @@ static APAccount * __currentAccount;
     return [APAccount class];
 }
 @end
+
+@implementation APAccountSummaryRequest
+
+-(id)init
+{
+    return [super initWithCmd:kRemoteCmdConsumerStatementSummary
+                    subDomain:kRemoteSubDomainOffers];
+}
+
+-(Class)payloadClass
+{
+    return [APAccountSummary class];
+}
+
+@end
+
+@implementation APAccountSummary
+
+@end

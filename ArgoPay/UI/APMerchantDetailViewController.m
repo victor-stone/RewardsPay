@@ -188,7 +188,7 @@ APLOGRELEASE
     }
     
     cell.points.text = [NSString stringWithFormat:NSLocalizedString(@"%dpts","MerchantDetailCell"), pts];
-    cell.credit.text = [NSString stringWithFormat:@"$%d",[points.AmountReward integerValue]];
+    cell.credit.text = [NSString stringWithFormat:@"$%d credit",[points.AmountReward integerValue]];
     return cell;
 }
 

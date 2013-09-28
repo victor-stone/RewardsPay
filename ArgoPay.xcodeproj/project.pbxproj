@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		570EC1CF17F64DFC00CBA207 /* NSObject+KeyPaths.m in Sources */ = {isa = PBXBuildFile; fileRef = 570EC1CE17F64DFC00CBA207 /* NSObject+KeyPaths.m */; };
 		570EC1D117F7345C00CBA207 /* MerchantLocationRewardList.js in Resources */ = {isa = PBXBuildFile; fileRef = 570EC1D017F7345C00CBA207 /* MerchantLocationRewardList.js */; };
+		570EC1D317F7412500CBA207 /* kImageAccountBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 570EC1D217F7412500CBA207 /* kImageAccountBg.png */; };
+		570EC1D617F741C800CBA207 /* APArgoAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 570EC1D517F741C800CBA207 /* APArgoAccountViewController.m */; };
 		571D75C717EB3D0A00F0B869 /* kImageTransactionBottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 571D75C417EB3D0A00F0B869 /* kImageTransactionBottom.png */; };
 		571D75C817EB3D0A00F0B869 /* kImageTransactionExpander.png in Resources */ = {isa = PBXBuildFile; fileRef = 571D75C517EB3D0A00F0B869 /* kImageTransactionExpander.png */; };
 		571D75C917EB3D0A00F0B869 /* kImageTransactionTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 571D75C617EB3D0A00F0B869 /* kImageTransactionTop.png */; };
@@ -21,7 +23,7 @@
 		578BB5BF17F248F4009E2F45 /* APRewardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 578BB5BE17F248F4009E2F45 /* APRewardViewController.m */; };
 		5793E3DB17EB7379004B0838 /* appIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5793E3DA17EB7379004B0838 /* appIcon.png */; };
 		5793E3DD17EB7383004B0838 /* appIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5793E3DC17EB7383004B0838 /* appIcon@2x.png */; };
-		5793E3E417EB7E98004B0838 /* APRemotableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5793E3E317EB7E98004B0838 /* APRemotableObject.m */; };
+		5793E3E417EB7E98004B0838 /* APRemoteObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5793E3E317EB7E98004B0838 /* APRemoteObject.m */; };
 		5793E3E717EB7F24004B0838 /* APMerchant.m in Sources */ = {isa = PBXBuildFile; fileRef = 5793E3E617EB7F24004B0838 /* APMerchant.m */; };
 		5793E3EA17EB7FBF004B0838 /* APArgoPointsReward.m in Sources */ = {isa = PBXBuildFile; fileRef = 5793E3E917EB7FBF004B0838 /* APArgoPointsReward.m */; };
 		5793E3EC17EBBE23004B0838 /* kImageRewardsTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 5793E3EB17EBBE23004B0838 /* kImageRewardsTop.png */; };
@@ -149,6 +151,8 @@
 		570EC1CD17F64DFC00CBA207 /* NSObject+KeyPaths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+KeyPaths.h"; sourceTree = "<group>"; };
 		570EC1CE17F64DFC00CBA207 /* NSObject+KeyPaths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+KeyPaths.m"; sourceTree = "<group>"; };
 		570EC1D017F7345C00CBA207 /* MerchantLocationRewardList.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MerchantLocationRewardList.js; sourceTree = "<group>"; };
+		570EC1D217F7412500CBA207 /* kImageAccountBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageAccountBg.png; sourceTree = "<group>"; };
+		570EC1D517F741C800CBA207 /* APArgoAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APArgoAccountViewController.m; sourceTree = "<group>"; };
 		571D75C417EB3D0A00F0B869 /* kImageTransactionBottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageTransactionBottom.png; sourceTree = "<group>"; };
 		571D75C517EB3D0A00F0B869 /* kImageTransactionExpander.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageTransactionExpander.png; sourceTree = "<group>"; };
 		571D75C617EB3D0A00F0B869 /* kImageTransactionTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageTransactionTop.png; sourceTree = "<group>"; };
@@ -184,8 +188,8 @@
 		5793E3DC17EB7383004B0838 /* appIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "appIcon@2x.png"; sourceTree = "<group>"; };
 		5793E3DF17EB7CC7004B0838 /* qrcode.17094104.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qrcode.17094104.png; sourceTree = "<group>"; };
 		5793E3E017EB7CC7004B0838 /* qrcode.17094497.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qrcode.17094497.png; sourceTree = "<group>"; };
-		5793E3E217EB7E98004B0838 /* APRemotableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APRemotableObject.h; sourceTree = "<group>"; };
-		5793E3E317EB7E98004B0838 /* APRemotableObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APRemotableObject.m; sourceTree = "<group>"; };
+		5793E3E217EB7E98004B0838 /* APRemoteObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APRemoteObject.h; sourceTree = "<group>"; };
+		5793E3E317EB7E98004B0838 /* APRemoteObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APRemoteObject.m; sourceTree = "<group>"; };
 		5793E3E517EB7F24004B0838 /* APMerchant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMerchant.h; sourceTree = "<group>"; };
 		5793E3E617EB7F24004B0838 /* APMerchant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMerchant.m; sourceTree = "<group>"; };
 		5793E3E817EB7FBF004B0838 /* APArgoPointsReward.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APArgoPointsReward.h; sourceTree = "<group>"; };
@@ -489,8 +493,8 @@
 			isa = PBXGroup;
 			children = (
 				57C2EC0C17F35DC3003B3CA3 /* APRemoteStrings.h */,
-				5793E3E217EB7E98004B0838 /* APRemotableObject.h */,
-				5793E3E317EB7E98004B0838 /* APRemotableObject.m */,
+				5793E3E217EB7E98004B0838 /* APRemoteObject.h */,
+				5793E3E317EB7E98004B0838 /* APRemoteObject.m */,
 				574B2DF117EC9BEF008E17EE /* APRemoteAPI.m */,
 				570EC1CD17F64DFC00CBA207 /* NSObject+KeyPaths.h */,
 				570EC1CE17F64DFC00CBA207 /* NSObject+KeyPaths.m */,
@@ -737,6 +741,7 @@
 				57E7B84517EA1BA400205BCB /* APPopup.m */,
 				579E4E2917F143A400D03437 /* APErrorViewController.m */,
 				57ADDAA517F5DFB500F23689 /* APLoginViewController.m */,
+				570EC1D517F741C800CBA207 /* APArgoAccountViewController.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -745,6 +750,7 @@
 			isa = PBXGroup;
 			children = (
 				57A2248917E913B3000B52E9 /* kImageAccount.png */,
+				570EC1D217F7412500CBA207 /* kImageAccountBg.png */,
 				57A2248A17E913B3000B52E9 /* kImageAlert.png */,
 				57A2248B17E913B3000B52E9 /* kImageBack.png */,
 				57A2248C17E913B3000B52E9 /* kImageBack@2x.png */,
@@ -1015,6 +1021,7 @@
 				57ADDAA317F5DBC700F23689 /* kImageSignIn@2x.png in Resources */,
 				57ADDAA917F5E1A100F23689 /* kImageLogin.png in Resources */,
 				57ADDAAA17F5E1A100F23689 /* kImageLogin@2x.png in Resources */,
+				570EC1D317F7412500CBA207 /* kImageAccountBg.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1074,7 +1081,7 @@
 				57E7B84117EA042B00205BCB /* VSPopup.m in Sources */,
 				57E7B84617EA1BA400205BCB /* APPopup.m in Sources */,
 				57E7B84D17EA5C0000205BCB /* APTransaction.m in Sources */,
-				5793E3E417EB7E98004B0838 /* APRemotableObject.m in Sources */,
+				5793E3E417EB7E98004B0838 /* APRemoteObject.m in Sources */,
 				5793E3E717EB7F24004B0838 /* APMerchant.m in Sources */,
 				5793E3EA17EB7FBF004B0838 /* APArgoPointsReward.m in Sources */,
 				574B2DF217EC9BEF008E17EE /* APRemoteAPI.m in Sources */,
@@ -1087,6 +1094,7 @@
 				578BB5BF17F248F4009E2F45 /* APRewardViewController.m in Sources */,
 				57ADDAA617F5DFB500F23689 /* APLoginViewController.m in Sources */,
 				570EC1CF17F64DFC00CBA207 /* NSObject+KeyPaths.m in Sources */,
+				570EC1D617F741C800CBA207 /* APArgoAccountViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

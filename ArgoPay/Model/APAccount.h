@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 
-#import "APRemotableObject.h"
+#import "APRemoteObject.h"
 
 
-@interface APAccount : APRemotableObject
+@interface APAccount : APRemoteObject
 
 @property (nonatomic,strong) NSString *AToken;
 @property (nonatomic,strong) NSString *AccountID;
@@ -27,4 +27,22 @@
 -(void)logUserOut;
 @property (nonatomic,readonly) BOOL isLoggedIn;
 
+@end
+
+/*
+ /ConsumerStatementSummary
+ >AToken
+ <Status, Message, AmountAvailable, AmountOutstanding, LastTransDate, LastPayDate, ArgoPoints
+ */
+@interface APAccountSummaryRequest : APRemoteCommand
+@property (nonatomic,strong) NSString *AToken;
+@end
+
+
+@interface APAccountSummary : APRemoteObject
+@property (nonatomic,strong) NSNumber *AmountAvailable;
+@property (nonatomic,strong) NSNumber *AmountOutstanding;
+@property (nonatomic,strong) NSNumber *ArgoPoints;
+@property (nonatomic,strong) NSString *LastTransDate;
+@property (nonatomic,strong) NSString *LastPayDate;
 @end

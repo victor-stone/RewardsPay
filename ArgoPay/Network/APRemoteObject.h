@@ -11,14 +11,14 @@
 typedef void (^APRemoteAPIRequestBlock)(id data, NSError *err);
 
 
-@interface APRemotableObject : NSObject
+@interface APRemoteObject : NSObject
 
 -(id)initWithDictionary:(NSDictionary *)values;
 
 @property (nonatomic,strong) NSNumber * key;
 @end
 
-@interface APRemoteCommand : APRemotableObject
+@interface APRemoteCommand : APRemoteObject
 -(id)initWithCmd:(NSString *)cmd subDomain:(NSString *)subDomain;
 @property (readonly,nonatomic) NSDictionary *remotableProperties;
 @property (readonly,nonatomic) NSString *command;
@@ -38,7 +38,7 @@ typedef void (^APRemoteAPIRequestBlock)(id data, NSError *err);
 
 
 // Generic response
-@interface APRemoteRepsonse : APRemotableObject
+@interface APRemoteRepsonse : APRemoteObject
 @property (nonatomic,strong) NSNumber *Status;
 @property (nonatomic,strong) NSString *Message;
 @property (nonatomic,strong) NSString *UserMessage;

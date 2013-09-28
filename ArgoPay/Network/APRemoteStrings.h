@@ -31,6 +31,7 @@ APREMOTECMD(ConsumerTransactionStatus)
 APREMOTECMD(ConsumerTransactionApprove)
 APREMOTECMD(ConsumerLogin)
 APREMOTECMD(MerchantLocationRewardList)
+APREMOTECMD(ConsumerStatementSummary)
 
 
 // Payloads

@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 
-#import "APRemotableObject.h"
+#import "APRemoteObject.h"
 #import "APStrings.h"
 
-@implementation APRemotableObject {
+@implementation APRemoteObject {
     NSMutableDictionary * _propDict;
 }
 

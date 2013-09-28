@@ -6,12 +6,12 @@
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 
-#import "APRemotableObject.h"
+#import "APRemoteObject.h"
 
 /*
  Name, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, ImageURL, Website}
  */
-@interface APMerchant : APRemotableObject
+@interface APMerchant : APRemoteObject
 @property (nonatomic,strong) NSString *Name;
 @property (nonatomic,strong) NSString *Addr1;
 @property (nonatomic,strong) NSString *Addr2;
@@ -37,7 +37,7 @@
 @property (nonatomic,strong) NSString *MLocID;
 @end
 
-@interface APMerchantReward : APRemotableObject
+@interface APMerchantReward : APRemoteObject
 
 @property (nonatomic,strong) NSNumber * RewardID;
 @property (nonatomic,strong) NSString *DateFrom;
