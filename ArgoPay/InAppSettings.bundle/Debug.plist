@@ -56,6 +56,42 @@
 		</dict>
 		<dict>
 			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>DefaultValue</key>
+			<string>1.0</string>
+			<key>Key</key>
+			<string>kSettingDebugNetworkDelay</string>
+			<key>Title</key>
+			<string>Bake Delay</string>
+			<key>Titles</key>
+			<array>
+				<string>0.0</string>
+				<string>0.5</string>
+				<string>1.0</string>
+				<string>2.0</string>
+				<string>3.0</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>0.0</string>
+				<string>0.5</string>
+				<string>1.0</string>
+				<string>2.0</string>
+				<string>3.0</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Key</key>
+			<string>kSettingDebugStrictJSON</string>
+			<key>Title</key>
+			<string>Strict JSON</string>
+			<key>DefaultValue</key>
+			<string>NO</string>
+		</dict>
+		<dict>
+			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 			<key>KeyboardType</key>
 			<string>NumberPad</string>

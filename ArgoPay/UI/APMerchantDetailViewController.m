@@ -9,6 +9,7 @@
 #import "APMerchant.h"
 #import "APStrings.h"
 #import "APPopup.h"
+#import "APAccount.h"
 
 @interface APMerchantDetailCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *points;
@@ -39,8 +40,7 @@
 @implementation APMerchantDetailViewController {
     bool _loaded;
     bool _showingPoints;
-    NSArray * _points;
-    NSArray * _actualPoints;
+    NSArray * _rewards;
 }
 
 APLOGRELEASE
@@ -59,11 +59,34 @@ APLOGRELEASE
 -(void)commitMerchant
 {
     _merchantName.text = _merchant.Name;
-    _merchantPoints.text = @"???"; // [NSString stringWithFormat:NSLocalizedString(@"%dpts","MerchantDetail"),[_merchant.credits integerValue]];
+    NSInteger whatPoints = 200;
+    _merchantPoints.text = @"200pts"; // [NSString stringWithFormat:NSLocalizedString(@"%dpts","MerchantDetail"),[_merchant.credits integerValue]];
     _streetAddr.text = _merchant.Addr1;
     _cityState.text = [NSString stringWithFormat:@"%@, %@", _merchant.City, _merchant.State];
     _phoneNumber.text = _merchant.Tel;
     _urlAddr.text = [_merchant.Website stringByReplacingOccurrencesOfString:@"http://" withString:@""];
+    [self fetchRewardPoints];
+    
+}
+
+-(void)fetchRewardPoints
+{
+    APMerchantRewardListRequest * request = [APMerchantRewardListRequest new];
+    NSString * mtoken = @"";
+    NSString * mloc = @"";
+    request.MToken = @"fakeToken";
+    request.MLocID = @"fakeLocID";
+    [request performRequest:^(NSArray *rewards, NSError *err) {
+        if( err )
+        {
+            [self showError:err];
+        }
+        else
+        {
+            _rewards = rewards;
+            [_pointsTable reloadData];
+        }
+    }];
 }
 
 -(void)setMerchant:(APMerchant *)merchant
@@ -84,26 +107,17 @@ APLOGRELEASE
     }
     else
     {
-        if( _points )
+        if( _rewards )
         {
             [self expandTable];
         }
         else
         {
-            /*
-            [_merchant getMerchantPoints:^(NSArray * points,NSError *err) {
-                if( err )
-                {
-                    [self showError:err];
-                }
-                else
-                {
-                    _points = points;
-                    [_pointsTable reloadData];
-                    [self expandTable];
-                }
-            }];
-             */
+            // points haven't arrived yet, try again later
+            [NSObject performBlock:^{
+                [self disclose:sender];
+            } afterDelay:0.6];
+            return;
         }
     }
     _showingPoints = !_showingPoints;
@@ -119,7 +133,7 @@ APLOGRELEASE
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [_points count];
+    return [_rewards count];
 }
 
 -(void)redeemCredit:(UIButton *)button
@@ -135,16 +149,32 @@ APLOGRELEASE
         av.alpha = 1.0;
     }];
     
-    APMerchantPoints * points = _points[button.tag];
+    APMerchantReward * reward = _rewards[button.tag];
+    APMerchantRewardRedeemd *request = [APMerchantRewardRedeemd new];
+    APAccount *account = [APAccount currentAccount];
+    request.AToken = account.AToken;
+    request.RewardID = reward.RewardID;
+    [request performRequest:^(APRemoteRepsonse *response, NSError *err) {
+        [av removeFromSuperview];
+        if( err )
+        {
+            [self showError:err];
+        }
+        else
+        {
+            [self fetchRewardPoints];
+        }
+    }];
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     APMerchantDetailCell * cell = [tableView dequeueReusableCellWithIdentifier:kCellIDMerchantDetail forIndexPath:indexPath];
-    APMerchantPoints * points = _points[indexPath.row];
+    APMerchantReward * points = _rewards[indexPath.row];
     NSInteger TODO_whatCredits = 999; // [_merchant.credits integerValue];
     NSInteger credits = 200;
-    NSInteger pts = [points.points integerValue];
+    NSInteger pts = [points.PointsRequired integerValue];
     if( credits >= pts )
     {
         cell.redeemButton.hidden = NO;
@@ -158,7 +188,7 @@ APLOGRELEASE
     }
     
     cell.points.text = [NSString stringWithFormat:NSLocalizedString(@"%dpts","MerchantDetailCell"), pts];
-    cell.credit.text = points.value;
+    cell.credit.text = [NSString stringWithFormat:@"$%d",[points.AmountReward integerValue]];
     return cell;
 }
 

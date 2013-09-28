@@ -117,8 +117,63 @@ static APRemoteAPI * _sharedRemoteAPI;
 @end
 
 @implementation APRemoteCommand (perform)
+
+#ifdef DEBUG
+
+#define DOVALIDATION(obj) [self validateReceipt:obj]
+
+-(id)validateReceipt:(APRemotableObject *)obj
+{
+    if( [self.command isEqualToString:kRemoteCmdConsumerLogin] )
+        return obj;
+    
+    BOOL strict = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingDebugStrictJSON];
+    NSArray *keyPaths = [obj keyPaths];
+    
+    for( NSString *key in keyPaths )
+    {
+        if( [obj valueForKey:key] == nil )
+        {
+            if( strict )
+                NSAssert(0,@"Never received %@:%@ value from JSON server", self.command,key);
+            else
+                APLOG(kDebugFire,@"Never received %@:%@ value from JSON server",self.command,key);
+        }
+    }
+    return self;
+}
+
+#else
+
+#define DOVALIDATION(obj)
+
+#endif
+
+#ifdef DEBUG
+
 -(void)performRequest:(APRemoteAPIRequestBlock)block
 {
+    CGFloat delay = [[NSUserDefaults standardUserDefaults] floatForKey:kSettingDebugNetworkDelay];
+    if( delay > 0.001 )
+    {
+        [NSObject performBlock:^{
+            [self _performRequest:block];
+        } afterDelay:delay];
+    }
+    else
+    {
+        [self _performRequest:block];
+    }
+}
+
+-(void)_performRequest:(APRemoteAPIRequestBlock)block
+{
+
+#else
+-(void)performRequest:(APRemoteAPIRequestBlock)block
+{
+
+#endif
     AFHTTPClient *client = [APRemoteAPI clientForSubDomain:self.subDomain];
     
     [self willSend];
@@ -137,14 +192,16 @@ static APRemoteAPI * _sharedRemoteAPI;
             {
                 APRemotableObject *instance = [[klass alloc] initWithDictionary:dictionary];
                 [self didGetResponse:instance];
+                DOVALIDATION(instance);
                 [remotableObjects addObject:instance];
             }
-            block(remotableObjects,nil);
+            block( remotableObjects,nil);
         }
         else
         {
             APRemotableObject *instance = [[klass alloc] initWithDictionary:responseObject];
             [self didGetResponse:instance];
+            DOVALIDATION(instance);
             block(instance,nil);
         }
     };

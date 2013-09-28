@@ -7,11 +7,41 @@
 //
 
 #import "APMerchant.h"
+#import "APRemoteStrings.h"
 
 @implementation APMerchant
 
 @end
 
-@implementation APMerchantPoints
+@implementation APMerchantRewardListRequest
 
+-(id)init
+{
+    return [super initWithCmd:kRemoteCmdMerchantLocationRewardList
+                    subDomain:kRemoteSubDomainOffers];
+}
+
+-(Class)payloadClass
+{
+    return [APMerchantReward class];
+}
+
+-(NSString *)payloadName
+{
+    return kRemotePayloadRewardList;
+}
+
+@end
+
+@implementation APMerchantReward
+
+@end
+
+@implementation APMerchantRewardRedeemd
+
+-(id)init
+{
+    return [super initWithCmd:kRemoteCmdConsActivateReward
+                    subDomain:kRemoteSubDomainOffers];
+}
 @end

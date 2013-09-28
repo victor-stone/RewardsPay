@@ -37,4 +37,5 @@
 #import "NSObject+VSBroadcasting.h"
 
 #import "UIViewController+ArgoPay.h"
+#import "NSObject+KeyPaths.h"
 #endif

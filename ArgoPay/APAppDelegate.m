@@ -52,6 +52,8 @@
              kSettingDebugNetworkStubbed: @"localhost",
              kSettingDebugLocalhostAddr: @"testingargo.192.168.1.3.xip.io",
              kSettingUserArgoPoints: @(230),
+             kSettingDebugStrictJSON: @(NO),
+             kSettingDebugNetworkDelay: @(1.0),
              kSettingDebugNetworkSSL: @(NO)
 #endif
              };

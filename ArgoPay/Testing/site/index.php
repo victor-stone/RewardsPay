@@ -54,46 +54,89 @@ switch($_REQUEST['cmd'] )
         
     case 'ConsumerGetAvailableOffers':
     {
-        /*
-         offers:
-         Offers {OfferID, Type, Selected, DateFrom, DateTo, DaysToUse, Count, AmountDiscount,
-         AmountMinimum, PointBonus, PointMultiplier, ArgoBonus, ArgoMultiplier,
-         Nam, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, ImageURL, Website}
-         */
-        
-        $params = array(
-                        array( 'OfferID' => 100,
-                              'Type' => 'D',
-                              'Selected' => 1,
-                              'DaysToUse' => 28,
-                              'PointBonus' => 33,
-                              'Nam' => 'Funky Cleaners',
-                              'Addr1' => '1234 First Ave.',
-                              'City' => 'CityField',
-                              'State' => 'ST',
-                              'DateFrom' => '10/11/2013 08:33:00',
-                              'Zip' => '30009',
-                              'Tel' => '301-555-1234',
-                              'Description' => 'Everything I do is goin be funky from now on',
-                              'ImageURL' => 'http://'. $_SERVER[HTTP_HOST] .'/_appIcon.png',
-                              'Website' => 'http://funkychicken.com'
-                              ),
-                        array( 'OfferID' => 200,
-                              'Type' => 'D',
-                              'Selected' => 0,
-                              'DaysToUse' => 45,
-                              'PointBonus' => 33,
-                              'Nam' => 'World Around You',
-                              'Addr1' => '1234 First Ave.',
-                              'City' => 'CityField',
-                              'State' => 'ST',
-                              'Zip' => '30009',
-                              'Tel' => '301-555-1234',
-                              'Description' => 'We loved each other we just couldn\'t get it on.',
-                              'ImageURL' => 'http://'. $HTTP_HOST .'/_appIcon.png',
-                              'Website' => 'http://funkychicken.com'
-                              ),
+        $offer1 = array( 'OfferID' => 100,
+                          'Type' => 'D',
+                          'Selected' => 1,
+                          'DateFrom' => '2013/10/11 08:33:00',
+                          'DateTo' => '2013/12/11 08:33:00',
+                          'DaysToUse' => 28,
+                          'Count' => 333,
+                          'AmountDiscount' => 33,
+                          'AmountMinimum' => 43,
+                        'PointBonus' => 33,
+                        'PointMultiplier' => 43,
+                        'ArgoBonus' => 33,
+                        'ArgoMultiplier' => 43,
+                          'MultipleUse' => 0,
+                          'PointBonus' => 33,
+                        
+                          'Description' => 'Everything I do is goin be funky from now on',
+                          
+                          'Name' => 'Funky Cleaners',
+                          'Addr1' => '1234 First Ave.',
+                          'City' => 'CityField',
+                          'State' => 'ST',
+                          'Zip' => '30009',
+                          'Tel' => '301-555-1234',
+                          'ImageURL' => 'http://'. $_SERVER[HTTP_HOST] .'/_appIcon.png',
+                          'Website' => 'http://funkychicken.com'
                         );
+
+        $offer2 = array( 'OfferID' => 101,
+                        'Type' => 'D',
+                        'Selected' => 1,
+                        'DateFrom' => '2013/10/11 08:33:00',
+                        'DateTo' => '2013/12/11 08:33:00',
+                        'DaysToUse' => 38,
+                        'Count' => 1333,
+                        'AmountDiscount' => 11,
+                        'AmountMinimum' => 111,
+                        'PointBonus' => 133,
+                        'PointMultiplier' => 43,
+                        'ArgoBonus' => 33,
+                        'ArgoMultiplier' => 43,
+                        'MultipleUse' => 0,
+                        'PointBonus' => 33,
+                        'Description' => 'offer2 Everything I do is goin be funky from now on',
+                        
+                        'Name' => 'Funky2 Cleaners',
+                        'Addr1' => '1234 First Ave.',
+                        'City' => 'CityField',
+                        'State' => 'ST',
+                        'Zip' => '30009',
+                        'Tel' => '301-555-1234',
+                        'ImageURL' => 'http://'. $_SERVER[HTTP_HOST] .'/_appIcon.png',
+                        'Website' => 'http://funky2chicken.com'
+                        );
+
+        $offer3 = array( 'OfferID' => 103,
+                        'Type' => 'D',
+                        'Selected' => 7,
+                        'DateFrom' => '2013/10/11 08:33:00',
+                        'DateTo' => '2013/12/11 08:33:00',
+                        'DaysToUse' => 77,
+                        'Count' => 777,
+                        'AmountDiscount' => 733,
+                        'AmountMinimum' => 743,
+                        'PointBonus' => 373,
+                        'PointMultiplier' => 437,
+                        'ArgoBonus' => 3377,
+                        'ArgoMultiplier' => 7437,
+                        'MultipleUse' => 0,
+                        'PointBonus' => 373,
+                        'Description' => 'offer3 Everything I do is goin be funky from now on',
+                        
+                        'Name' => 'Funky3 Hot Dogs',
+                        'Addr1' => '1234 First Ave.',
+                        'City' => 'CityField',
+                        'State' => 'ST',
+                        'Zip' => '30009',
+                        'Tel' => '301-555-1234',
+                        'ImageURL' => 'http://'. $_SERVER[HTTP_HOST] .'/_appIcon.png',
+                        'Website' => 'http://funkyhotdogs.com'
+                        );
+        
+        $params = array( $offer1, $offer2, $offer3 );
         $value['Offers'] = $params;
         break;
         
@@ -113,51 +156,127 @@ switch($_REQUEST['cmd'] )
         
     case 'ConsumerGetAvailableRewards':
     {
-        /*
-         /ConsumerGetAvailableRewards (Limit is Quantity of records to return)
-         (SortBy is (N)one, W-Newest First, (R)eady to use, (A)vailable to Select, (E)xpiring Soon)
-         (Selected means that the offer has already been selected by the consumer)
-         
-         > AToken, Lat, Long, Distance, Limit, SortBy
-         < Status, Message, Rewards
-         {RewardID, DateFrom, Selected, DateTo, Count, AmountReward, AmountMinimum, MultipleUse,
-         Nam, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, ImageURL, Website}
-         */
+        $reward1 = array( 'RewardID' => 200,
+                         'Selected' => 1,
+                         'AmountReward' => 233,
+                         'DateFrom' => '2013/10/11 08:33:00',
+                         'DateTo' => '2013/12/11 08:33:00',
+                         'PointsRequired' => 300,
+                         'AmountMinimum' => 200,
+                         'MultipleUse' => 0,
+                         
+                         'Description' => 'Everything I do is goin be funky from now on',
+                         
+                         'Name' => 'Funky Cleaners',
+                         'Addr1' => '1234 First Ave.',
+                         'City' => 'CityField',
+                         'State' => 'ST',
+                         'Zip' => '30009',
+                         'Tel' => '301-555-1234',
+                         'ImageURL' => 'http://argotest/_appIcon.png',
+                         'Website' => 'http://funkychicken.com'
+                         );
+
+        $reward2 = array( 'RewardID' => 201,
+                         'Selected' => 1,
+                         'AmountReward' => 500,
+                         'DateFrom' => '2013/10/11 08:33:00',
+                         'DateTo' => '2013/12/11 08:33:00',
+                         'PointsRequired' => 300,
+                         'AmountMinimum' => 200,
+                         'MultipleUse' => 0,
+                         
+                         'Description' => 'Everything I do is goin be funky from now on',
+                         
+                         'Name' => 'World Around You',
+                         'Addr1' => '1234 First Ave.',
+                         'City' => 'CityField',
+                         'State' => 'ST',
+                         'Zip' => '30009',
+                         'Tel' => '301-555-1234',
+                         'ImageURL' => 'http://argotest/_appIcon.png',
+                         'Website' => 'http://chicken.com'
+                         );
         
-        $params = array(
-                        array( 'RewardID' => 200,
-                              'Selected' => 1,
-                              'AmountReward' => 33,
-                              'Nam' => 'Funky Cleaners',
-                              'Addr1' => '1234 First Ave.',
-                              'City' => 'CityField',
-                              'State' => 'ST',
-                              'DateFrom' => '10/11/2013 08:33:00',
-                              'Zip' => '30009',
-                              'Tel' => '301-555-1234',
-                              'Description' => 'Everything I do is goin be funky from now on',
-                              'ImageURL' => 'http://argotest/_appIcon.png',
-                              'Website' => 'http://funkychicken.com'
-                              ),
-                        array( 'RewardID' => 201,
-                              'Selected' => 0,
-                              'AmountReward' => 33,
-                              'DaysToUse' => 45,
-                              'PointBonus' => 33,
-                              'Nam' => 'World Around You',
-                              'Addr1' => '1234 First Ave.',
-                              'City' => 'CityField',
-                              'State' => 'ST',
-                              'Zip' => '30009',
-                              'Tel' => '301-555-1234',
-                              'Description' => 'We loved each other we just couldn\'t get it on.',
-                              'ImageURL' => 'http://argotest/_appIcon.png',
-                              'Website' => 'http://funkychicken.com'
-                              ),
-                        );
+        $params = array( $reward1, $reward2 );
+
         $value['Rewards'] = $params;
         break;
     }
+     
+    case 'MerchantLocationRewardList':
+    {
+        
+        /*
+        (Type D is discount, B is Bonus)
+        > MToken, MLocID
+        < Status, Message, RewardList {RewardID, DateFrom, DateTo, AmountReward, AmountMinimum, MultipleUse, PointsRequired}
+         */
+        $m_reward_1 = array(
+                         'RewardID' => '800',
+                         'DateFrom' => '2013/10/01 01:01:01',
+                         'DateTo' => '2013/11/01 01:01:01',
+                         'AmountReward' => 800,
+                         'AmountMinimum' => 200,
+                         'MultipleUse' => 0,
+                         'PointsRequired' => 50
+                         );
+        $m_reward_2 = array(
+                         'RewardID' => '801',
+                         'DateFrom' => '2013/10/01 01:01:01',
+                         'DateTo' => '2013/11/01 01:01:01',
+                         'AmountReward' => 800,
+                         'AmountMinimum' => 200,
+                         'MultipleUse' => 0,
+                         'PointsRequired' => 100
+                         );
+        $m_reward_3 = array(
+                         'RewardID' => '802',
+                         'DateFrom' => '2013/10/01 01:01:01',
+                         'DateTo' => '2013/11/01 01:01:01',
+                         'AmountReward' => 800,
+                         'AmountMinimum' => 200,
+                         'MultipleUse' => 0,
+                         'PointsRequired' => 200
+                         );
+        $m_reward_4 = array(
+                         'RewardID' => '803',
+                         'DateFrom' => '2013/10/01 01:01:01',
+                         'DateTo' => '2013/11/01 01:01:01',
+                         'AmountReward' => 800,
+                         'AmountMinimum' => 200,
+                         'MultipleUse' => 0,
+                         'PointsRequired' => 300
+                         );
+        $m_reward_5 = array(
+                         'RewardID' => '804',
+                         'DateFrom' => '2013/10/01 01:01:01',
+                         'DateTo' => '2013/11/01 01:01:01',
+                         'AmountReward' => 800,
+                         'AmountMinimum' => 400,
+                         'MultipleUse' => 0,
+                         'PointsRequired' => 80
+                         );
+        $params = array( $m_reward_1, $m_reward_2, $m_reward_3, $m_reward_4, $m_reward_5  );
+        
+        $value['RewardList'] = $params;
+
+        break;
+        
+    }
+
+        /*
+    case 'ConsActivateReward'
+    {
+        
+        // /ConsActivateReward
+        // >AToken, RewardID
+        // <Status, Message, UserMessage
+         
+        $value['UserMessage'] = @"Merchant reward redeemed!";
+        break;
+    }
+         */
         
     case 'ConsumerTransactionStart':
     {

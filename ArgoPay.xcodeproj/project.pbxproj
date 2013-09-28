@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		570EC1CF17F64DFC00CBA207 /* NSObject+KeyPaths.m in Sources */ = {isa = PBXBuildFile; fileRef = 570EC1CE17F64DFC00CBA207 /* NSObject+KeyPaths.m */; };
+		570EC1D117F7345C00CBA207 /* MerchantLocationRewardList.js in Resources */ = {isa = PBXBuildFile; fileRef = 570EC1D017F7345C00CBA207 /* MerchantLocationRewardList.js */; };
 		571D75C717EB3D0A00F0B869 /* kImageTransactionBottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 571D75C417EB3D0A00F0B869 /* kImageTransactionBottom.png */; };
 		571D75C817EB3D0A00F0B869 /* kImageTransactionExpander.png in Resources */ = {isa = PBXBuildFile; fileRef = 571D75C517EB3D0A00F0B869 /* kImageTransactionExpander.png */; };
 		571D75C917EB3D0A00F0B869 /* kImageTransactionTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 571D75C617EB3D0A00F0B869 /* kImageTransactionTop.png */; };
@@ -144,6 +146,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		570EC1CD17F64DFC00CBA207 /* NSObject+KeyPaths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+KeyPaths.h"; sourceTree = "<group>"; };
+		570EC1CE17F64DFC00CBA207 /* NSObject+KeyPaths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+KeyPaths.m"; sourceTree = "<group>"; };
+		570EC1D017F7345C00CBA207 /* MerchantLocationRewardList.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MerchantLocationRewardList.js; sourceTree = "<group>"; };
 		571D75C417EB3D0A00F0B869 /* kImageTransactionBottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageTransactionBottom.png; sourceTree = "<group>"; };
 		571D75C517EB3D0A00F0B869 /* kImageTransactionExpander.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageTransactionExpander.png; sourceTree = "<group>"; };
 		571D75C617EB3D0A00F0B869 /* kImageTransactionTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageTransactionTop.png; sourceTree = "<group>"; };
@@ -487,6 +492,8 @@
 				5793E3E217EB7E98004B0838 /* APRemotableObject.h */,
 				5793E3E317EB7E98004B0838 /* APRemotableObject.m */,
 				574B2DF117EC9BEF008E17EE /* APRemoteAPI.m */,
+				570EC1CD17F64DFC00CBA207 /* NSObject+KeyPaths.h */,
+				570EC1CE17F64DFC00CBA207 /* NSObject+KeyPaths.m */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -853,6 +860,7 @@
 				57ADDAB317F5F33F00F23689 /* ConsumerTransactionApprove.js */,
 				57ADDAB417F5F33F00F23689 /* ConsumerTransactionStart.js */,
 				57ADDAB517F5F33F00F23689 /* ConsumerTransactionStatus.js */,
+				570EC1D017F7345C00CBA207 /* MerchantLocationRewardList.js */,
 			);
 			path = stubs;
 			sourceTree = "<group>";
@@ -948,6 +956,7 @@
 			files = (
 				57A223ED17E90626000B52E9 /* InfoPlist.strings in Resources */,
 				57A223F517E90626000B52E9 /* Default.png in Resources */,
+				570EC1D117F7345C00CBA207 /* MerchantLocationRewardList.js in Resources */,
 				57A223F717E90626000B52E9 /* Default@2x.png in Resources */,
 				57ADDAB617F5F33F00F23689 /* ConsActivateOffer.js in Resources */,
 				57ADDAB717F5F33F00F23689 /* ConsActivateReward.js in Resources */,
@@ -1077,6 +1086,7 @@
 				578BB57D17F208FE009E2F45 /* APOffer.m in Sources */,
 				578BB5BF17F248F4009E2F45 /* APRewardViewController.m in Sources */,
 				57ADDAA617F5DFB500F23689 /* APLoginViewController.m in Sources */,
+				570EC1CF17F64DFC00CBA207 /* NSObject+KeyPaths.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

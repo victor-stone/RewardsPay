@@ -16,12 +16,10 @@
  <    Status, 
       Message,
       Offers
-        { OfferID, Type, Selected, DateFrom, DateTo, 
-           DaysToUse, Count, AmountDiscount, AmountMinimum,
-           PointBonus, PointMultiplier, ArgoBonus, ArgoMultiplier,
-           Nam, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, 
-           ImageURL, Website
-        }
+    {OfferID, Type, Selected, DateFrom, DateTo, DaysToUse, 
+     Count, AmountDiscount, AmountMinimum, PointBonus, PointMultiplier, 
+     ArgoBonus, ArgoMultiplier,
+     Name, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, ImageURL, Website} 
  */
 
 @interface APRequestOffers : APRemoteCommand

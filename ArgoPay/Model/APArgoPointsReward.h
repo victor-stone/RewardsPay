@@ -16,6 +16,12 @@
  < Status, Message, Rewards 
       {RewardID, DateFrom, Selected, DateTo, Count, AmountReward, AmountMinimum, MultipleUse,
       Nam, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, ImageURL, Website}
+ 
+ Status, Message, Rewards {RewardID, DateFrom, Selected, DateTo, 
+ AmountReward, AmountMinimum, MultipleUse, PointsRequired
+ Name, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, ImageURL, Website}
+ 
+
  */
 
 

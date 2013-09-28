@@ -8,7 +8,6 @@
 
 #import "APRemotableObject.h"
 #import "APStrings.h"
-#import <objc/runtime.h>
 
 @implementation APRemotableObject {
     NSMutableDictionary * _propDict;
@@ -59,23 +58,6 @@ APLOGRELEASE
 -(void)dealloc
 {
     [self removeAllBlockObservers];
-}
-
--(NSArray*) keyPaths
-{
-    NSMutableArray *result = [NSMutableArray new];
-    
-    unsigned int count;
-    objc_property_t *props = class_copyPropertyList([self class], &count);
-    
-    for (int i = 0; i < count; ++i)
-    {
-        const char *propName = property_getName(props[i]);
-        [result addObject:[NSString stringWithUTF8String:propName]];
-    }
-    
-    free(props);
-    return result;
 }
 
 -(NSDictionary *)remotableProperties
