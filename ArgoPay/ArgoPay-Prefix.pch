@@ -32,7 +32,7 @@
 #import "NSTimer+BlocksKit.h"
 #import "UIGestureRecognizer+BlocksKit.h"
 
-#import "UIImageView+AFNetworking.h"
+#import "AFNetworking.h"
 
 #import "NSObject+VSBroadcasting.h"
 

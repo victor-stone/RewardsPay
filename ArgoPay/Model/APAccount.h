@@ -46,3 +46,24 @@
 @property (nonatomic,strong) NSString *LastTransDate;
 @property (nonatomic,strong) NSString *LastPayDate;
 @end
+
+
+/*
+ /ConsumerStatementDetail
+ >AToken, DateFrom, DateTo
+ <Status, Message, Transactions {Date, Type, Amount, AmountUnpaid, Description}
+*/
+
+@interface APStatementRequest : APRemoteCommand
+@property (nonatomic,strong) NSString *AToken;
+@property (nonatomic,strong) NSString *DateFrom;
+@property (nonatomic,strong) NSString *DateTo;
+@end
+
+@interface APStatementLine : APRemoteObject
+@property (nonatomic,strong) NSString *Date;
+@property (nonatomic,strong) NSString *Type;
+@property (nonatomic,strong) NSString *Description;
+@property (nonatomic,strong) NSNumber *Amount;
+@property (nonatomic,strong) NSNumber *AmountUnpaid;
+@end

@@ -7,6 +7,7 @@
 //
 
 #include "APStrings.h"
+#include "APAccount.h"
 
 @interface APArgoAccountViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *creditBalance;
@@ -16,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *transactionButton;
 @property (weak, nonatomic) IBOutlet UINavigationBar *argoNavBar;
 
+@property (nonatomic,strong) APAccountSummary *summary;
 @end
 
 @implementation APArgoAccountViewController
@@ -35,6 +37,21 @@
     _availableCredit.text = empty;
     _paymentDueDate.text = empty;
     _minimumPayment.text = empty;
+    
+    APAccount *account = [APAccount currentAccount];
+    APAccountSummaryRequest *request = [[APAccountSummaryRequest alloc] init];
+    request.AToken = account.AToken;
+    [request performRequest:^(APAccountSummary*summary, NSError *err) {
+        self.summary = summary;
+    }];
+}
+
+-(void)setSummary:(APAccountSummary *)summary
+{
+    _creditBalance.text = [NSString stringWithFormat:@"$%.2f",[summary.AmountAvailable floatValue]];
+    _availableCredit.text = [NSString stringWithFormat:@"$%.2f",[summary.AmountOutstanding floatValue]];
+    _paymentDueDate.text = [summary formatDateField:@"LastPayDate"];
+    _minimumPayment.text = [NSString stringWithFormat:@"$%.2f",[summary.AmountOutstanding floatValue]];
 }
 
 - (IBAction)seeTransaction:(id)sender {

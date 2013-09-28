@@ -324,6 +324,58 @@ switch($_REQUEST['cmd'] )
             $value['UserMessage'] = 'You can cancelled the transaction.';
         break;
     }
+
+    case 'ConsumerStatementSummary':
+    {
+        /*
+         /ConsumerStatementSummary
+         >AToken
+         <Status, Message, AmountAvailable, AmountOutstanding, LastTransDate, LastPayDate, ArgoPoints
+         */
+        $value['AmountAvailable'] = 345;
+        $value['AmountOutstanding'] = 456;
+        $value['ArgoPoints'] = 678;
+        $value['LastTransDate'] = '2013-09-02 03:40:12';
+        $value['LastPayDate'] = '2013-09-22 03:40:12';
+        break;
+    }
+        
+    case 'ConsumerStatementDetail':
+    {
+        /*
+         /ConsumerStatementDetail
+         >AToken, DateFrom, DateTo
+         <Status, Message, Transactions {Date, Type, Amount, AmountUnpaid, Description}
+         */
+        
+        $trans1 = array( 'Date' => '2013-06-01 08:22:11',
+                        'Type' => 'X',
+                        'Amount' => 993.09,
+                        'AmountUnpaid' => 323.35,
+                        'Description' => "somewhere in america"
+                        );
+        $trans2 = array( 'Date' => '2013-06-02 08:22:11',
+                        'Type' => 'X',
+                        'Amount' => 93.09,
+                        'AmountUnpaid' => 323.35,
+                        'Description' => "Beach is Better"
+                        );
+        $trans3 = array( 'Date' => '2013-06-03 08:22:11',
+                        'Type' => 'X',
+                        'Amount' => 193.09,
+                        'AmountUnpaid' => 323.35,
+                        'Description' => "Nickels and Dimes"
+                        );
+        $trans4 = array( 'Date' => '2013-07-02 08:22:11',
+                        'Type' => 'X',
+                        'Amount' => 60.03,
+                        'AmountUnpaid' => 323.35,
+                        'Description' => "La Familia"
+                        );
+        
+        $value['Transactions'] = array( $trans1,  $trans2,  $trans3,  $trans4 );
+        break;
+    }
         
     default:
     {

@@ -15,7 +15,9 @@ typedef void (^APRemoteAPIRequestBlock)(id data, NSError *err);
 
 -(id)initWithDictionary:(NSDictionary *)values;
 
-@property (nonatomic,strong) NSNumber * key;
+-(NSString *)formatDateField:(NSString *)nameOfDateField;
+-(NSString *)formatDateField:(NSString *)nameOfDateField style:(NSDateFormatterStyle)style;
+
 @end
 
 @interface APRemoteCommand : APRemoteObject

@@ -23,7 +23,13 @@
 @end
 
 @interface APOfferDetailViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIImageView *logo;
+@property (weak, nonatomic) IBOutlet UILabel *merchantName;
+@property (weak, nonatomic) IBOutlet UILabel *expiration;
+@property (weak, nonatomic) IBOutlet UILabel *offerName;
+@property (weak, nonatomic) IBOutlet UITextView *offerDetail;
 @property (weak, nonatomic) IBOutlet UINavigationBar *argoNavBar;
+@property (weak, nonatomic) IBOutlet UIView *map;
 @property (nonatomic,strong) APOffer *offer;
 @end
 
@@ -32,6 +38,17 @@
 {
     [super viewDidLoad];
 	[self addBackButton:_argoNavBar];
+    if( _offer )
+        self.offer = _offer;
+}
+
+-(void)setOffer:(APOffer *)offer
+{
+    _offer = offer;
+    [_logo setImageWithURL:[NSURL URLWithString:offer.ImageURL]];
+    _merchantName.text = offer.Name;
+    _offerName.text = offer.Description;
+    _expiration.text = [NSString stringWithFormat:NSLocalizedString(@"Expires: %@", @"offer detail"),[offer formatDateField:@"DateTo"]];
 }
 
 @end

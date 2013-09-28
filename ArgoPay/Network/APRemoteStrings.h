@@ -32,12 +32,14 @@ APREMOTECMD(ConsumerTransactionApprove)
 APREMOTECMD(ConsumerLogin)
 APREMOTECMD(MerchantLocationRewardList)
 APREMOTECMD(ConsumerStatementSummary)
+APREMOTECMD(ConsumerStatementDetail)
 
 
 // Payloads
 APREMOTEPAYLOAD(Offers)
 APREMOTEPAYLOAD(Rewards)
 APREMOTEPAYLOAD(RewardList)
+APREMOTEPAYLOAD(Transactions)
 
 //
 // Values

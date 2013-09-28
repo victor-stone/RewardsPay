@@ -32,6 +32,19 @@ APLOGRELEASE
     _propDict[key] = value;
 }
 
+-(NSString *)formatDateField:(NSString *)nameOfDateField
+{
+    return [self formatDateField:nameOfDateField style:NSDateFormatterMediumStyle];
+}
+
+-(NSString *)formatDateField:(NSString *)nameOfDateField style:(NSDateFormatterStyle)style
+{
+    NSString *value = [self valueForKey:nameOfDateField];
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    [fmt setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *date = [fmt dateFromString:value];
+    return [NSDateFormatter localizedStringFromDate:date dateStyle:style timeStyle:NSDateFormatterNoStyle];
+}
 @end
 
 @implementation APRemoteCommand {
@@ -47,11 +60,31 @@ APLOGRELEASE
     _command = cmd;
     _subDomain = subDomain;
     NSMutableDictionary *props = _shippingProperties;
-    [self addObserverForKeyPaths:[self keyPaths]
-                         options:NSKeyValueObservingOptionNew
-                            task:^(id obj, NSString *keyPath, NSDictionary *change) {
-                                props[keyPath] = change[NSKeyValueChangeNewKey];
-                            }];
+    // there's some quirky bug in Blocks stuff, don't have time
+    // to chase it down now. Work around: check for case where
+    // there's only one property on the object to watch and
+    // special case:
+    NSArray *propertyNames = [self keyPaths];
+    if( propertyNames.count > 0 )
+    {
+        if( propertyNames.count == 1 )
+        {
+            NSString *key = propertyNames[0];
+            [self addObserverForKeyPath:key options:NSKeyValueObservingOptionNew
+                                   task:^(id obj, NSDictionary *change) {
+                                       props[key] = change[NSKeyValueChangeNewKey];
+                                   }];
+        }
+        else
+        {
+            [self addObserverForKeyPaths:[self keyPaths]
+                                 options:NSKeyValueObservingOptionNew
+                                    task:^(id obj, NSString *keyPath, NSDictionary *change) {
+                                        props[keyPath] = change[NSKeyValueChangeNewKey];
+                                    }];
+            
+        }
+    }
     return self;
 }
 

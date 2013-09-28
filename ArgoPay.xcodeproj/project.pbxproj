@@ -11,6 +11,9 @@
 		570EC1D117F7345C00CBA207 /* MerchantLocationRewardList.js in Resources */ = {isa = PBXBuildFile; fileRef = 570EC1D017F7345C00CBA207 /* MerchantLocationRewardList.js */; };
 		570EC1D317F7412500CBA207 /* kImageAccountBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 570EC1D217F7412500CBA207 /* kImageAccountBg.png */; };
 		570EC1D617F741C800CBA207 /* APArgoAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 570EC1D517F741C800CBA207 /* APArgoAccountViewController.m */; };
+		570EC1F217F74FED00CBA207 /* ConsumerStatementSummary.js in Resources */ = {isa = PBXBuildFile; fileRef = 570EC1F117F74FED00CBA207 /* ConsumerStatementSummary.js */; };
+		570EC1F517F75ACA00CBA207 /* APHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 570EC1F417F75ACA00CBA207 /* APHistoryViewController.m */; };
+		570EC1F717F7638E00CBA207 /* ConsumerStatementDetail.js in Resources */ = {isa = PBXBuildFile; fileRef = 570EC1F617F7638D00CBA207 /* ConsumerStatementDetail.js */; };
 		571D75C717EB3D0A00F0B869 /* kImageTransactionBottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 571D75C417EB3D0A00F0B869 /* kImageTransactionBottom.png */; };
 		571D75C817EB3D0A00F0B869 /* kImageTransactionExpander.png in Resources */ = {isa = PBXBuildFile; fileRef = 571D75C517EB3D0A00F0B869 /* kImageTransactionExpander.png */; };
 		571D75C917EB3D0A00F0B869 /* kImageTransactionTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 571D75C617EB3D0A00F0B869 /* kImageTransactionTop.png */; };
@@ -153,6 +156,9 @@
 		570EC1D017F7345C00CBA207 /* MerchantLocationRewardList.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MerchantLocationRewardList.js; sourceTree = "<group>"; };
 		570EC1D217F7412500CBA207 /* kImageAccountBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageAccountBg.png; sourceTree = "<group>"; };
 		570EC1D517F741C800CBA207 /* APArgoAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APArgoAccountViewController.m; sourceTree = "<group>"; };
+		570EC1F117F74FED00CBA207 /* ConsumerStatementSummary.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ConsumerStatementSummary.js; sourceTree = "<group>"; };
+		570EC1F417F75ACA00CBA207 /* APHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APHistoryViewController.m; sourceTree = "<group>"; };
+		570EC1F617F7638D00CBA207 /* ConsumerStatementDetail.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ConsumerStatementDetail.js; sourceTree = "<group>"; };
 		571D75C417EB3D0A00F0B869 /* kImageTransactionBottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageTransactionBottom.png; sourceTree = "<group>"; };
 		571D75C517EB3D0A00F0B869 /* kImageTransactionExpander.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageTransactionExpander.png; sourceTree = "<group>"; };
 		571D75C617EB3D0A00F0B869 /* kImageTransactionTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageTransactionTop.png; sourceTree = "<group>"; };
@@ -728,6 +734,7 @@
 				57E7B83817E9FC9E00205BCB /* Categories */,
 				57A2247417E90F47000B52E9 /* APMainViewController.m */,
 				57A2247717E90F47000B52E9 /* APMenuViewController.m */,
+				570EC1F417F75ACA00CBA207 /* APHistoryViewController.m */,
 				578BB5BE17F248F4009E2F45 /* APRewardViewController.m */,
 				57A2247617E90F47000B52E9 /* APLocationViewController.m */,
 				57E08D0E17EF7FAF00E22B1A /* APMerchantDetailViewController.m */,
@@ -858,6 +865,8 @@
 		57ADDAAD17F5F33F00F23689 /* stubs */ = {
 			isa = PBXGroup;
 			children = (
+				570EC1F617F7638D00CBA207 /* ConsumerStatementDetail.js */,
+				570EC1F117F74FED00CBA207 /* ConsumerStatementSummary.js */,
 				57ADDAAE17F5F33F00F23689 /* ConsActivateOffer.js */,
 				57ADDAAF17F5F33F00F23689 /* ConsActivateReward.js */,
 				57ADDAB017F5F33F00F23689 /* ConsumerGetAvailableOffers.js */,
@@ -962,6 +971,8 @@
 			files = (
 				57A223ED17E90626000B52E9 /* InfoPlist.strings in Resources */,
 				57A223F517E90626000B52E9 /* Default.png in Resources */,
+				570EC1F217F74FED00CBA207 /* ConsumerStatementSummary.js in Resources */,
+				570EC1F717F7638E00CBA207 /* ConsumerStatementDetail.js in Resources */,
 				570EC1D117F7345C00CBA207 /* MerchantLocationRewardList.js in Resources */,
 				57A223F717E90626000B52E9 /* Default@2x.png in Resources */,
 				57ADDAB617F5F33F00F23689 /* ConsActivateOffer.js in Resources */,
@@ -1095,6 +1106,7 @@
 				57ADDAA617F5DFB500F23689 /* APLoginViewController.m in Sources */,
 				570EC1CF17F64DFC00CBA207 /* NSObject+KeyPaths.m in Sources */,
 				570EC1D617F741C800CBA207 /* APArgoAccountViewController.m in Sources */,
+				570EC1F517F75ACA00CBA207 /* APHistoryViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

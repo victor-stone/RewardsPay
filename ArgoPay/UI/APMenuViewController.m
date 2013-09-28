@@ -7,34 +7,7 @@
 //
 
 #import "APStrings.h"
-#import "APArgoPointsReward.h"
-#import "APMerchant.h"
 #import "APPopup.h"
-
-@interface APMenuBaseController : UIViewController
-@property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
-@end
-
-@implementation APMenuBaseController
-
-APLOGRELEASE
-
--(void)viewDidLoad
-{
-    [super viewDidLoad];
-    [self addBackButton:_navBar];
-}
-                                          
-@end
-
-@interface APHistoryViewController : APMenuBaseController
-@property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
-@end
-
-@implementation APHistoryViewController
-
-
-@end
 
 @interface APMenuCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -74,10 +47,10 @@ static NSArray *menuItems()
     
     if( !_items )
     {
-        _items = @[ [APMenuItem miWithImage:kImageSettings label:NSLocalizedString(@"Settings","menu") vc:kViewSettings],
-                    [APMenuItem miWithImage:kImageHistory label:NSLocalizedString(@"History","menu") vc:kViewHistory],
-                    [APMenuItem miWithImage:kImageAccount label:NSLocalizedString(@"Account","menu") vc:kViewAccount],
-                    [APMenuItem miWithImage:kImageRewards label:NSLocalizedString(@"Rewards","menu") vc:kViewRewards]];
+        _items = @[ [APMenuItem miWithImage:kImageSettings label: NSLocalizedString(@"Settings","menu") vc:kViewSettings],
+                    [APMenuItem miWithImage:kImageHistory label: NSLocalizedString(@"History","menu") vc:kViewHistory],
+                    [APMenuItem miWithImage:kImageAccount label: NSLocalizedString(@"ArgoCredit","menu") vc:kViewAccount],
+                    [APMenuItem miWithImage:kImageRewards label: NSLocalizedString(@"Rewards","menu") vc:kViewRewards]];
     }
     
     return _items;

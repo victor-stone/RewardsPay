@@ -130,16 +130,36 @@ static APAccount * __currentAccount;
 -(id)init
 {
     return [super initWithCmd:kRemoteCmdConsumerStatementSummary
-                    subDomain:kRemoteSubDomainOffers];
+                    subDomain:kRemoteSubDomainCustomer];
 }
 
 -(Class)payloadClass
 {
     return [APAccountSummary class];
 }
-
 @end
 
 @implementation APAccountSummary
+@end
 
+@implementation APStatementRequest
+
+-(id)init
+{
+    return [super initWithCmd:kRemoteCmdConsumerStatementDetail
+                    subDomain:kRemoteSubDomainCustomer];
+}
+
+-(Class)payloadClass
+{
+    return [APStatementLine class];
+}
+
+-(NSString *)payloadName
+{
+    return kRemotePayloadTransactions;
+}
+@end
+
+@implementation APStatementLine
 @end

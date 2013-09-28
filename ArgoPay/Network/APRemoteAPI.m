@@ -227,6 +227,7 @@ static APRemoteAPI * _sharedRemoteAPI;
     [client postPath:self.command
           parameters:self.remotableProperties
              success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+                 //APLOG(kDebugFire, @"%@", operation.responseString);
                  APRemoteRepsonse * response = [[APRemoteRepsonse alloc] initWithDictionary:responseObject];
                  APLOG(kDebugNetwork, @"Repsonse: Status: %@\n    Msg: %@\n   UMsg: %@\n  count: %d\n rawParams:%@",
                        response.Status,
