@@ -103,10 +103,6 @@ APLOGRELEASE
     return [APRemoteRepsonse class];
 }
 
--(void)willSend {}
--(void)didGetResponse:(id)responseObject {}
--(void)didGetError:(NSError *)error {}
-
 @end
 
 @implementation APRemoteRepsonse

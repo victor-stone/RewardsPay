@@ -10,6 +10,7 @@
 #import "APOffer.h"
 #import "APRemoteStrings.h"
 #import "APAccount.h"
+#import "APPopup.h"
 
 @interface APOffersCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *logo;
@@ -50,7 +51,6 @@
     _offerName.text = offer.Description;
     _expiration.text = [NSString stringWithFormat:NSLocalizedString(@"Expires: %@", @"offer detail"),[offer formatDateField:@"DateTo"]];
 }
-
 @end
 
 
@@ -59,10 +59,10 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *offersTable;
 @property (weak, nonatomic) IBOutlet UINavigationBar *argoNavBar;
+@property (nonatomic,strong) NSArray * offers;
 @end
 
 @implementation APOffersViewController {
-    NSArray * _offers;
     NSArray * _sortNames;
     NSArray * _sortTypes;
     UIActionSheet *_actionSheet;
@@ -95,18 +95,26 @@ APLOGRELEASE
                     kRemoteValueSortByAvailableToSelect
                     ];
     
-    [self fetchOffers:kRemoteValueSortByNewest];
+    if( !_offers )
+    {
+        self.view.alpha = 0.0;
+        [self fetchOffers:kRemoteValueSortByNewest];
+        self.view.alpha = 1.0;
+    }
 }
 
 -(void)fetchOffers:(NSString *)sort
 {
+    APPopup *popup = [APPopup withNetActivity:self.view];
     APRequestOffers *request = [[APRequestOffers alloc] init];
-    request.AToken = @"FakeToken"; // TODO put real data here
+    APAccount *account = [APAccount currentAccount];
+    request.AToken = account.AToken;
     request.Distance = @(20.0);
     request.Lat = @(343.0032);
     request.Long = @(-893.32099);
     request.SortBy = sort;
     [request performRequest:^(id data, NSError *err) {
+        [popup dismiss];
         if( err )
         {
             [self showError:err];
@@ -150,12 +158,19 @@ APLOGRELEASE
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    APOffer * offer = _offers[indexPath.row];
-    UIViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:kViewOfferDetail];
-    [vc setValue:offer forKey:@"offer"];
-    [self presentViewController:vc animated:YES completion:nil];
+    APAccount *account = [APAccount currentAccount];
+    if( account.isLoggedIn )
+    {
+        APOffer * offer = _offers[indexPath.row];
+        /*
+        UIViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:kViewOfferDetail];
+        [vc setValue:offer forKey:@"offer"];
+        [self presentView_OLD_Controller:vc animated:YES completion:nil];
+         */
+        UIViewController *vc = [self presentVC:kViewOfferDetail animated:YES completion:nil];
+        [vc setValue:offer forKey:@"offer"];        
+    }
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -165,7 +180,7 @@ APLOGRELEASE
     cell.businessName.text = offer.Name;
     cell.offerDescription.text = offer.Description;
     cell.expiration.text = [NSString stringWithFormat:NSLocalizedString(@"Expires in %u days","OfferListingCell"),[offer.DaysToUse integerValue]];
-    cell.accessoryType = [offer.Selected boolValue] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+    cell.accessoryType = [offer.Selected isRemoteYES] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
     return cell;
 }
 
@@ -173,7 +188,6 @@ APLOGRELEASE
 {
     if( buttonIndex < _numberOfButtonsShowing )
     {
-        NSLog(@"Picked: %d sort: %@",buttonIndex,_sortTypes[buttonIndex]);
         [self fetchOffers:_sortTypes[buttonIndex]];
     }
     [_actionSheet dismissWithClickedButtonIndex:5 animated:YES];

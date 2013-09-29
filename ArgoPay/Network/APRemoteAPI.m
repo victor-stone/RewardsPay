@@ -156,6 +156,7 @@ static APRemoteAPI * _sharedRemoteAPI;
     CGFloat delay = [[NSUserDefaults standardUserDefaults] floatForKey:kSettingDebugNetworkDelay];
     if( delay > 0.001 )
     {
+        APLOG(kDebugNetwork, @"Network bakedin delay: %f", delay);
         [NSObject performBlock:^{
             [self _performRequest:block];
         } afterDelay:delay];
@@ -176,8 +177,6 @@ static APRemoteAPI * _sharedRemoteAPI;
 #endif
     AFHTTPClient *client = [APRemoteAPI clientForSubDomain:self.subDomain];
     
-    [self willSend];
-    
     APLOG(kDebugNetwork, @"Posting: %@ %@", self.command, self.remotableProperties);
     
     void (^parseJSON)(NSDictionary *,APRemoteAPIRequestBlock) = ^(NSDictionary *responseObject,APRemoteAPIRequestBlock block)
@@ -191,7 +190,6 @@ static APRemoteAPI * _sharedRemoteAPI;
             for( NSDictionary *dictionary in dictionaries)
             {
                 APRemoteObject *instance = [[klass alloc] initWithDictionary:dictionary];
-                [self didGetResponse:instance];
                 DOVALIDATION(instance);
                 [remotableObjects addObject:instance];
             }
@@ -200,7 +198,6 @@ static APRemoteAPI * _sharedRemoteAPI;
         else
         {
             APRemoteObject *instance = [[klass alloc] initWithDictionary:responseObject];
-            [self didGetResponse:instance];
             DOVALIDATION(instance);
             block(instance,nil);
         }
@@ -213,9 +210,8 @@ static APRemoteAPI * _sharedRemoteAPI;
         APLOG(kDebugNetwork, @"Using JSON file stubs: %@",path);
         
         NSData *data = [NSData dataWithContentsOfFile:path];
-        id jsonObj = nil;
         NSError * err = nil;
-        jsonObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
+        id jsonObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
         if( err )
             block(nil,err);
         else
@@ -238,8 +234,7 @@ static APRemoteAPI * _sharedRemoteAPI;
                        );
                  if( [response.Status integerValue] != 0 )
                  {
-                     APError *error = [[APError alloc] initWithMsg:response.Message];
-                     [self didGetError:error];
+                     APError *error = [[APError alloc] initWithMsg:response.Message serverStatus:[response.Status integerValue]];
                      block(nil,error);
                  }
                  else
@@ -248,7 +243,6 @@ static APRemoteAPI * _sharedRemoteAPI;
                  }
              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                  APLOG(kDebugFire, @"Network error: %@\nResponse text: %@", error, operation.responseString);
-                 [self didGetError:error];
                  block(nil,error);
              }];
 }

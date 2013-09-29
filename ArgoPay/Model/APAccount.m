@@ -68,7 +68,7 @@ static APAccount * __currentAccount;
     
     if( (loginRequest.Email.length == 0) || (loginRequest.Password.length == 0 ) )
     {
-        APError *appError = [[APError alloc] initWithMsg:NSLocalizedString(@"Both login name and password are required to login", @"Account login")];
+        APError *appError = [APError errorWithCode:kAPERROR_MISSINGLOGINFIELDS];
         handleAccount(nil,appError);
     }
     else
@@ -87,12 +87,6 @@ static APAccount * __currentAccount;
 {
     _password = password;
     [[NSUserDefaults standardUserDefaults] setValue:password forKey:kSettingUserLoginPassword];
-}
-
--(void)setArgoPoints:(NSNumber *)argoPoints
-{
-    _argoPoints = argoPoints;
-    [[NSUserDefaults standardUserDefaults] setValue:argoPoints forKey:kSettingUserArgoPoints];
 }
 
 -(void)logUserOut

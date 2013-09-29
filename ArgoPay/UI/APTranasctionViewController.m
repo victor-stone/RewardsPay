@@ -11,6 +11,7 @@
 #import "APTranasctionViewController.h"
 #import "APTransaction.h"
 #import "APRemoteStrings.h"
+#import "APAccount.h"
 
 @implementation APTranasctionViewController
 
@@ -28,7 +29,8 @@ APLOGRELEASE
 -(void)userAction:(NSString *)type
 {
     APTransactionApprovalRequest *request = [APTransactionApprovalRequest new];
-    request.AToken = @"Yup TODO again";
+    APAccount *account = [APAccount currentAccount];
+    request.AToken = account.AToken;
     request.Approve = type;
     
     [self.presentingViewController dismissViewControllerAnimated:YES completion:^{

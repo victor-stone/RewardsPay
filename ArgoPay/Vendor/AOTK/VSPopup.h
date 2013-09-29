@@ -23,7 +23,10 @@ typedef enum _VSPopupFlags {
     kPopupCloseOnAnyTap = 1,
     kPopupCancelButton = 1 << 1,
     kPopupActivity = 1 << 2,
-    kPopupNoAutoShow = 1 << 3
+    kPopupNoAutoShow = 1 << 3,
+    kPopupAnimateIn = 1 << 4,
+    kPopupAnimateOut = 1 << 5,
+    kPopupAnimate = (kPopupAnimateIn | kPopupAnimateOut)
 } VSPopupFlags;
 
 @interface VSPopup : UIView
@@ -39,3 +42,4 @@ typedef enum _VSPopupFlags {
 -(void)present:(VSPopupDismissBlock)dismissBlock;
 -(void)dismiss;
 @end
+

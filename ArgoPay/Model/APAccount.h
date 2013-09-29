@@ -16,8 +16,6 @@
 
 @property (nonatomic,strong) NSString * login;
 @property (nonatomic,strong) NSString * password;
-@property (nonatomic,strong) NSNumber * argoPoints;
-
 
 +(id)currentAccount;
 +(void)login:(NSString *)loginEmail

@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12F37" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12F37" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="dD4-Sa-Ac7">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
+        <!--Master View Controller-->
+        <scene sceneID="Dc6-Ty-YEa">
+            <objects>
+                <viewController wantsFullScreenLayout="YES" modalTransitionStyle="crossDissolve" id="dD4-Sa-Ac7" customClass="APMasterViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wgj-9m-g68">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Owp-bK-oJn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-318" y="-665"/>
+        </scene>
         <!--Main View Controller-->
         <scene sceneID="5">
             <objects>
-                <viewController id="2" customClass="APMainViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="kViewMain" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="2" customClass="APMainViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -335,11 +349,17 @@
                                     <constraint firstAttribute="width" constant="256" id="YW9-Eu-9xa"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BLI-wt-2gI" id="hAc-Bh-4kH"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="IX4-Vd-0Mn">
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="go" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BLI-wt-2gI" id="RtO-gT-MKC"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ie0-bO-jFo">
                                 <constraints>
@@ -408,7 +428,7 @@
         <!--Offer Detail View Controller-->
         <scene sceneID="Kjx-Z4-rMt">
             <objects>
-                <viewController storyboardIdentifier="kViewOfferDetail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="mba-FJ-5bN" customClass="APOfferDetailViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="kViewOfferDetail" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="mba-FJ-5bN" customClass="APOfferDetailViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CH6-q3-BTL">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -749,7 +769,7 @@
         <!--Tranasction View Controller-->
         <scene sceneID="uUe-8T-Wo9">
             <objects>
-                <viewController storyboardIdentifier="kViewTransaction" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Aan-T8-BMv" customClass="APTranasctionViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="kViewTransaction" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Aan-T8-BMv" customClass="APTranasctionViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MYg-YV-0Bc">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1140,7 +1160,7 @@
         <!--Merchant Detail View Controller-->
         <scene sceneID="Uaq-MT-Ocu">
             <objects>
-                <viewController storyboardIdentifier="kViewMerchantDetail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DAN-qH-K6z" customClass="APMerchantDetailViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="kViewMerchantDetail" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DAN-qH-K6z" customClass="APMerchantDetailViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Zaq-3g-be9">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1519,7 +1539,7 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="z9j-3o-efh">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="z9j-3o-efh">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="329" id="99k-eY-ise"/>
@@ -1591,13 +1611,6 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <searchBar contentMode="redraw" placeholder="Business name" translatesAutoresizingMaskIntoConstraints="NO" id="tQj-j4-kgp">
-                                <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="TF4-fZ-akv" id="03r-Pe-mI0"/>
-                                </connections>
-                            </searchBar>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ycf-Bu-4UJ">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="4Ua-6C-gKj"/>
@@ -1617,39 +1630,36 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <searchBar contentMode="redraw" placeholder="Business name" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aY7-Lj-nep">
+                                <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                <connections>
+                                    <outlet property="delegate" destination="TF4-fZ-akv" id="asO-U6-ZnR"/>
+                                </connections>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="tQj-j4-kgp" firstAttribute="trailing" secondItem="HUU-IV-yzr" secondAttribute="trailing" type="default" id="4Nd-2Q-5Ib"/>
-                            <constraint firstItem="tQj-j4-kgp" firstAttribute="top" secondItem="H2O-E6-9pq" secondAttribute="bottom" type="default" id="4Xa-VD-HT4"/>
                             <constraint firstItem="z9j-3o-efh" firstAttribute="trailing" secondItem="HUU-IV-yzr" secondAttribute="trailing" type="default" id="ADY-9S-5nI"/>
                             <constraint firstItem="Tfg-d3-4fk" firstAttribute="centerY" secondItem="ycf-Bu-4UJ" secondAttribute="centerY" type="default" id="GQb-4T-xqi"/>
                             <constraint firstItem="z9j-3o-efh" firstAttribute="top" secondItem="ycf-Bu-4UJ" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="HBn-Ix-ggN"/>
+                            <constraint firstItem="aY7-Lj-nep" firstAttribute="trailing" secondItem="HUU-IV-yzr" secondAttribute="trailing" type="default" id="K9h-IL-oh0"/>
                             <constraint firstItem="Tfg-d3-4fk" firstAttribute="leading" secondItem="HUU-IV-yzr" secondAttribute="leading" constant="9" id="Mf7-Fr-9vQ"/>
                             <constraint firstItem="H2O-E6-9pq" firstAttribute="top" secondItem="HUU-IV-yzr" secondAttribute="top" type="default" id="MoK-7T-uzk"/>
                             <constraint firstItem="ycf-Bu-4UJ" firstAttribute="leading" secondItem="Tfg-d3-4fk" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="NTE-hB-dzS"/>
-                            <constraint firstItem="tQj-j4-kgp" firstAttribute="leading" secondItem="HUU-IV-yzr" secondAttribute="leading" type="default" id="Pde-fQ-Uq4"/>
+                            <constraint firstItem="aY7-Lj-nep" firstAttribute="top" secondItem="H2O-E6-9pq" secondAttribute="bottom" type="default" id="NWQ-BB-e2f"/>
                             <constraint firstItem="H2O-E6-9pq" firstAttribute="leading" secondItem="HUU-IV-yzr" secondAttribute="leading" type="default" id="ek3-3p-zMM"/>
                             <constraint firstItem="ycf-Bu-4UJ" firstAttribute="top" secondItem="HUU-IV-yzr" secondAttribute="top" constant="96" id="h3Y-cl-ikG"/>
                             <constraint firstItem="H2O-E6-9pq" firstAttribute="trailing" secondItem="HUU-IV-yzr" secondAttribute="trailing" type="default" id="nBO-Lb-vot"/>
+                            <constraint firstItem="aY7-Lj-nep" firstAttribute="leading" secondItem="HUU-IV-yzr" secondAttribute="leading" type="default" id="qDY-vG-8jq"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="argoNavBar" destination="H2O-E6-9pq" id="t7A-as-TE5"/>
-                        <outlet property="searchDisplayController" destination="nhu-UT-vp6" id="7pG-bm-iWr"/>
                         <outlet property="transactionsTable" destination="z9j-3o-efh" id="pF8-Ru-kiF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oay-DH-XCn" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="nhu-UT-vp6">
-                    <connections>
-                        <outlet property="delegate" destination="TF4-fZ-akv" id="68J-qY-SiN"/>
-                        <outlet property="searchBar" destination="tQj-j4-kgp" id="9Qw-1W-ysj"/>
-                        <outlet property="searchContentsController" destination="TF4-fZ-akv" id="JfM-QO-Bu1"/>
-                        <outlet property="searchResultsDataSource" destination="TF4-fZ-akv" id="B7p-41-JCo"/>
-                        <outlet property="searchResultsDelegate" destination="TF4-fZ-akv" id="c6B-dR-sLs"/>
-                    </connections>
-                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1455" y="205"/>
         </scene>

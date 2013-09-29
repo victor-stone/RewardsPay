@@ -27,17 +27,11 @@ typedef void (^APRemoteAPIRequestBlock)(id data, NSError *err);
 @property (readonly,nonatomic) NSString *subDomain;
 @property (readonly,nonatomic) Class payloadClass;
 @property (readonly,nonatomic) NSString *payloadName;
-
-// for derived classes
--(void)willSend;
--(void)didGetResponse:(id)responseObject;
--(void)didGetError:(NSError *)error;
 @end
 
 @interface APRemoteCommand (perform)
 -(void)performRequest:(APRemoteAPIRequestBlock)block;
 @end
-
 
 // Generic response
 @interface APRemoteRepsonse : APRemoteObject

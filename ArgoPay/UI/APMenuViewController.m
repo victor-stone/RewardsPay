@@ -85,10 +85,10 @@ APLOGRELEASE
 didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     APMenuItem * mi = menuItems()[indexPath.row];
-    UIViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:mi.navVC];
-    [self presentViewController:vc animated:YES completion:^{
-        
-    }];
+    [self presentVC:mi.navVC animated:YES
+              completion:^{
+                  //
+              }];
 }
 
 

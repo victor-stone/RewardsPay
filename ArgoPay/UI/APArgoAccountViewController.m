@@ -8,6 +8,7 @@
 
 #include "APStrings.h"
 #include "APAccount.h"
+#include "APPopup.h"
 
 @interface APArgoAccountViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *creditBalance;
@@ -41,8 +42,11 @@
     APAccount *account = [APAccount currentAccount];
     APAccountSummaryRequest *request = [[APAccountSummaryRequest alloc] init];
     request.AToken = account.AToken;
+    
+    APPopup *popup = [APPopup withNetActivity:self.view];
     [request performRequest:^(APAccountSummary*summary, NSError *err) {
         self.summary = summary;
+        [popup dismiss];
     }];
 }
 
@@ -54,7 +58,9 @@
     _minimumPayment.text = [NSString stringWithFormat:@"$%.2f",[summary.AmountOutstanding floatValue]];
 }
 
-- (IBAction)seeTransaction:(id)sender {
+- (IBAction)seeTransaction:(id)sender
+{
+    [self presentVC:kViewHistory animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning

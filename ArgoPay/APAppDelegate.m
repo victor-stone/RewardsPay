@@ -10,6 +10,18 @@
 #import "APStrings.h"
 #import "IASKSettingsReader.h"
 #import "APAccount.h"
+#import "APPopup.h"
+
+@implementation APMasterViewController
+
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    [APPopup withNetActivity:self.view];
+}
+
+@end
+
 
 @implementation APAppDelegate {
     id _notifyObserver;
@@ -21,8 +33,39 @@
     [self registerForNotifications];
     // This has to happen here to prime the 'currentAccount' object
     // Otherwise calls to +currentAccount will return nil
-    [APAccount login:nil password:nil block:nil];
+    [self attemptLogin];
     return YES;
+}
+
+-(APMasterViewController *)masterVC
+{
+    return (APMasterViewController *)_window.rootViewController;
+}
+
++(APMasterViewController *)masterVC
+{
+    return [((APAppDelegate *)[UIApplication sharedApplication].delegate) masterVC];
+}
+
+-(void)attemptLogin
+{
+    [APAccount login:nil password:nil block:^(id data, NSError *err) {
+        UIViewController *initial = _window.rootViewController;
+        if( err )
+        {
+            if( !((err.code == kAPERROR_MISSINGLOGINFIELDS) && (err.domain == kAPMobileErrorDomain)) )
+            {
+                [initial showError:err dismissBlock:^(UIViewController *dismissing) {
+                    [NSObject performBlock:^{
+                        [self attemptLogin];
+                    } afterDelay:0.3];
+                }];
+                return;
+            }
+        }
+        UIViewController *home = [initial.storyboard instantiateViewControllerWithIdentifier:kViewMain];
+        _window.rootViewController = home;
+    }];
 }
 
 -(void)registerForNotifications
@@ -49,11 +92,10 @@
              kSettingSlidingCameraView: @(YES)
 #ifdef DEBUG
              ,
-             kSettingDebugNetworkStubbed: @"localhost",
+             kSettingDebugNetworkStubbed: @"file",
              kSettingDebugLocalhostAddr: @"testingargo.192.168.1.3.xip.io",
-             kSettingUserArgoPoints: @(230),
              kSettingDebugStrictJSON: @(NO),
-             kSettingDebugNetworkDelay: @(1.0),
+             kSettingDebugNetworkDelay: @"1.0",
              kSettingDebugNetworkSSL: @(NO)
 #endif
              };

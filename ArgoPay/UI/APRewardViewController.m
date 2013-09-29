@@ -45,9 +45,7 @@ APLOGRELEASE
 {
     [super viewDidLoad];
     [self addBackButton:_navBar];
-    
-    APAccount *account = [APAccount currentAccount];
-    _argPoints.text = [NSString stringWithFormat:@"%d",[account.argoPoints integerValue]];
+    _argPoints.text = @"";
     _currentSort = kRemoteValueSortByNewest;
     [self fetchRewards:YES];
 }
@@ -58,10 +56,20 @@ APLOGRELEASE
     
     if( withUI )
         popup = [APPopup withNetActivity:self.view];
+
+    APAccount *account = [APAccount currentAccount];
+    
+    APAccountSummaryRequest *summaryReq = [APAccountSummaryRequest new];
+    summaryReq.AToken = account.AToken;
+    [summaryReq performRequest:^(APAccountSummary *summary, NSError *err) {
+        if( err )
+            [self showError:err];
+        else
+            _argPoints.text = [NSString stringWithFormat:@"%d",[summary.ArgoPoints integerValue]];
+    }];
     
     APRequestRewards *request = [[APRequestRewards alloc] init];
-    
-    request.AToken = @"FakeToken"; // TODO put real data here
+    request.AToken = account.AToken;
     request.Distance = @(20.0);
     request.Lat = @(343.0032);
     request.Long = @(-893.32099);
@@ -84,7 +92,8 @@ APLOGRELEASE
 {
     APArgoPointsReward * reward = _rewards[button.tag];
     APActivateReward *request = [APActivateReward new];
-    request.AToken = @"Er, Yea, OK";
+    APAccount *account = [APAccount currentAccount];
+    request.AToken = account.AToken;
     request.RewardID = reward.RewardID;
     [request performRequest:^(APRemoteRepsonse *response, NSError *err) {
         if( err )
@@ -111,9 +120,8 @@ APLOGRELEASE
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     APArgoPointsReward * reward = _rewards[indexPath.row];
-    UIViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:kViewMerchantDetail];
+    UIViewController *vc = [self presentVC:kViewMerchantDetail animated:YES completion:nil];
     [vc setValue:reward forKey:@"merchant"];
-    [self presentViewController:vc animated:YES completion:nil];
 }
 
 
@@ -129,7 +137,7 @@ APLOGRELEASE
 
     [cell.logo setImageWithURL:[NSURL URLWithString:reward.ImageURL] placeholderImage:[UIImage imageNamed:@"appIcon"]];
 
-    if( [reward.Selected boolValue] == NO )
+    if( [reward.Selected isRemoteYES] == NO )
     {
         cell.status.hidden = YES;
         cell.activity.hidden = YES;

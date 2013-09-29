@@ -10,12 +10,52 @@
 
 #import "APError.h"
 
-NSString * kAPErrorDomain = @"com.ArgoPay.ArgoPayMobile.ErrorDomain";
+NSString *const kAPMobileErrorDomain = @"com.ArgoPay.ArgoPayMobile.ErrorDomain";
+NSString *const kAPErrorDomain       = @"com.ArgoPay.ArgoPay.ErrorDomain";
+NSString *const kAPClientErrorKey = @"kAPClientErrorKey";
+NSString *const kAPServerErrorKey = @"kAPServerErrorKey";
 
 @implementation APError
 
++(id)errorWithCode:(NSUInteger)code;
+{
+    NSString *msg = nil;
+    switch (code) {
+        case kAPERROR_MISSINGLOGINFIELDS:
+            msg = NSLocalizedString(@"Both login name and password are required to login", @"Account login");
+            break;
+            
+        default:
+            msg = NSLocalizedString(@"Sorry, but something didn't quite right", @"Generic error");
+            break;
+    }
+    
+    return [[APError alloc] initWithMsg:msg code:code];
+}
+
+-(id)initWithMsg:(NSString *)msg code:(NSUInteger)code
+{
+    return [super initWithDomain:kAPMobileErrorDomain
+                            code:code
+                        userInfo:@{ NSLocalizedDescriptionKey:msg,
+               kAPClientErrorKey: @(YES)} ];
+    
+}
+
 -(id)initWithMsg:(NSString *)msg
 {
-    return [super initWithDomain:kAPErrorDomain code:0x100 userInfo:@{NSLocalizedDescriptionKey:msg}];
+    return [super initWithDomain:kAPMobileErrorDomain
+                            code:KAPERROR_GENERIC
+                        userInfo:@{ NSLocalizedDescriptionKey:msg,
+                                    kAPClientErrorKey: @(YES)} ];
 }
+
+-(id)initWithMsg:(NSString *)msg serverStatus:(NSUInteger)serverStatus
+{
+    return [super initWithDomain:kAPErrorDomain
+                            code:serverStatus
+                        userInfo:@{ NSLocalizedDescriptionKey:msg,
+               kAPServerErrorKey: @(YES)} ];    
+}
+
 @end

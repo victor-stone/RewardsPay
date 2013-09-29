@@ -56,7 +56,7 @@ switch($_REQUEST['cmd'] )
     {
         $offer1 = array( 'OfferID' => 100,
                           'Type' => 'D',
-                          'Selected' => 1,
+                          'Selected' => 'Y',
                           'DateFrom' => '2013-10-11 08:33:00',
                           'DateTo' => '2013-12-11 08:33:00',
                           'DaysToUse' => 28,
@@ -84,7 +84,7 @@ switch($_REQUEST['cmd'] )
 
         $offer2 = array( 'OfferID' => 101,
                         'Type' => 'D',
-                        'Selected' => 1,
+                        'Selected' => 'N',
                         'DateFrom' => '2013-10-11 08:33:00',
                         'DateTo' => '2013-12-11 08:33:00',
                         'DaysToUse' => 38,
@@ -111,7 +111,7 @@ switch($_REQUEST['cmd'] )
 
         $offer3 = array( 'OfferID' => 103,
                         'Type' => 'D',
-                        'Selected' => 7,
+                        'Selected' => 'Y',
                         'DateFrom' => '2013-10-11 08:33:00',
                         'DateTo' => '2013-12-11 08:33:00',
                         'DaysToUse' => 77,
@@ -157,7 +157,7 @@ switch($_REQUEST['cmd'] )
     case 'ConsumerGetAvailableRewards':
     {
         $reward1 = array( 'RewardID' => 200,
-                         'Selected' => 1,
+                         'Selected' => 'Y',
                          'AmountReward' => 233,
                          'DateFrom' => '2013-10-11 08:33:00',
                          'DateTo' => '2013-12-11 08:33:00',
@@ -178,11 +178,11 @@ switch($_REQUEST['cmd'] )
                          );
 
         $reward2 = array( 'RewardID' => 201,
-                         'Selected' => 1,
+                         'Selected' => 'N',
                          'AmountReward' => 500,
                          'DateFrom' => '2013-10-11 08:33:00',
                          'DateTo' => '2013-12-11 08:33:00',
-                         'PointsRequired' => 300,
+                         'PointsRequired' => 1300,
                          'AmountMinimum' => 200,
                          'MultipleUse' => 0,
                          

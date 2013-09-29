@@ -92,18 +92,6 @@
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSTextFieldSpecifier</string>
-			<key>KeyboardType</key>
-			<string>NumberPad</string>
-			<key>Key</key>
-			<string>kSettingUserArgoPoints</string>
-			<key>Title</key>
-			<string>Account Argo Points</string>
-			<key>DefaultValue</key>
-			<string>230</string>
-		</dict>
-		<dict>
-			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
 			<string>Logging</string>

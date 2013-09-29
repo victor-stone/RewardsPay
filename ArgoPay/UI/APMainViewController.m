@@ -92,6 +92,20 @@ typedef void (^APScannerDoneBlock)(APMainViewController *);
     [self registerForEvents];    
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    // first time through
+    // see APAppDelegate
+    
+    if( self.view.alpha == 0.0 )
+    {
+        [UIView animateWithDuration:1.8 animations:^{
+            self.view.alpha = 1.0;
+        }];
+    }
+}
+
 -(void)registerForEvents
 {
     [self registerForBroadcast:kNotifyScanComplete
@@ -306,15 +320,7 @@ typedef void (^APScannerDoneBlock)(APMainViewController *);
         if( _lastNavTab == vcName )
             return;
         
-        if( [vcName isEqualToString:kViewTransaction] )
-        {
-            UIViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:vcName];
-            [self presentViewController:vc animated:YES completion:nil];
-        }
-        else
-        {
-            [self slideInView:vcName];
-        }
+        [self slideInView:vcName];
     }
 }
 

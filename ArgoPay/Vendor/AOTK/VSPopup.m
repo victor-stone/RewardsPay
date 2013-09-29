@@ -16,6 +16,7 @@ NSString * kVSNotificationPopupDismissed = @"kVSNotificationPopupDismissed";
 
 @implementation VSPopup {
     VSPopupDismissBlock _dismissBlock;
+    CGFloat _animationSpeed;
 }
 
 APLOGRELEASE
@@ -48,12 +49,14 @@ APLOGRELEASE
     }
     
     self.alpha = 0.0;
-    self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.8];
+    CGFloat bgAlpha = ( (flags & kPopupActivity) != 0 ) ? 0.2 : 0.8;
+    self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:bgAlpha];
     
-    CGRect rc =  self.frame;
-    CGRect imgFrame = CGRectInset(rc, rc.size.width * 0.25, rc.size.height * 0.3);
+    CGRect rcX =  self.frame;
+    CGRect imgFrame = CGRectInset(rcX, rcX.size.width * 0.25, rcX.size.height * 0.3);
     
     UIView * view = nil;
+    BOOL isText = NO;
     if( [textOrView isKindOfClass:[NSString class]] )
     {
         CGFloat width = imgFrame.size.width * 0.8;
@@ -72,6 +75,7 @@ APLOGRELEASE
         sz.height /= 2.0;
         tframe.origin = (CGPoint){ sz.width - (width/2.0), sz.height - (tframe.size.height/2.0) };
         label.frame = tframe;
+        isText = YES;
         view = label;
     }
     else
@@ -79,25 +83,37 @@ APLOGRELEASE
         view = textOrView;
         CGSize vrc = view.frame.size;
         if( vrc.height + vrc.width == 0 )
-            view.frame = CGRectInset(imgFrame, rc.size.width * 0.1, rc.size.height * 0.1 );
+            view.frame = CGRectInset(imgFrame, rcX.size.width * 0.1, rcX.size.height * 0.1 );
     }
 
     [self addSubview:view];
     
     UIEdgeInsets inset = background.capInsets;
-    rc = view.frame;
+    CGRect rc = view.frame;
     imgFrame  =  CGRectInset(view.frame, -((inset.left+inset.right)+kPopupInsetPadding), -((inset.top+inset.bottom)+kPopupInsetPadding));
     
+    UIActivityIndicatorView * activity = nil;
     if( (flags & kPopupActivity) != 0 )
     {
-        UIActivityIndicatorView * activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        activity = [[UIActivityIndicatorView alloc]
+                    initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        
         CGRect aframe = activity.frame;
         aframe.origin.y = (rc.origin.y + rc.size.height) + (aframe.size.height * 2);
-        aframe.origin.x = (self.bounds.size.width / 2.0) - (aframe.size.width / 2.0);
+        aframe.origin.x = (self.bounds.size.width / 2.0) - (aframe.size.width * 1);
         activity.frame = aframe;
         [activity startAnimating];
         [self addSubview:activity];
-        imgFrame.size.height += (aframe.size.height * 4.0);
+        imgFrame.size.height += (aframe.size.height * 3.0);
+        if( isText )
+        {
+            ((UILabel *)view).textColor = [UIColor whiteColor];
+        }
+        _animationSpeed = 0.35;
+    }
+    else
+    {
+        _animationSpeed = 0.6;
     }
     
     UIImageView * imgView = [[UIImageView alloc] initWithFrame:imgFrame];
@@ -110,17 +126,17 @@ APLOGRELEASE
     
     [self insertSubview:imgView atIndex:0];
     
-        [parent addSubview:self];
-        
-        if( (flags & kPopupNoAutoShow) == 0 )
-            [self present];
-        
+    [parent addSubview:self];
+    
+    if( (flags & kPopupNoAutoShow) == 0 )
+        [self present];
+    
     return self;
 }
 
 -(void)present
 {
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:_animationSpeed animations:^{
         self.alpha = 1.0;
     }];
 }
@@ -133,7 +149,7 @@ APLOGRELEASE
 
 -(void)dismiss
 {
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:_animationSpeed animations:^{
         self.alpha = 0.0;
     } completion:^(BOOL finished) {
         [self broadcast:kVSNotificationPopupDismissed payload:self];

@@ -16,6 +16,7 @@
 
 void * kTargetMapAssociationKey = &kTargetMapAssociationKey;
 void * kHasLoginWatcherKey = &kHasLoginWatcherKey;
+void * kDismissBlockKey = &kDismissBlockKey;
 
 -(void)invokeMenuItem:(id)sender
 {
@@ -148,7 +149,11 @@ void * kHasLoginWatcherKey = &kHasLoginWatcherKey;
                                                  title:NSLocalizedString(@"Back", "Navigation button")
                                                  block:^(UIViewController *me, id sender)
                                 {
-                                    [me.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+                                    [me.presentingViewController dismissViewControllerAnimated:YES completion:^{
+                                        APDismissBlock block = [me associatedValueForKey:kDismissBlockKey];
+                                        if( block )
+                                            block(me);
+                                    }];
                                 }];
     bar.topItem.leftBarButtonItem = bbBack;
     
@@ -160,7 +165,24 @@ void * kHasLoginWatcherKey = &kHasLoginWatcherKey;
        [self.parentViewController navigateTo:vcName];
 }
 
+-(UIViewController *)presentVC:(NSString *)vcName animated:(BOOL)animated completion:(void (^)())block
+{
+    UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:vcName];
+    [self presentViewController:vc animated:animated completion:block];
+    return vc;
+}
+
 -(void)showError:(NSError *)error
+{
+    [self showError:error dismissBlock:nil];
+}
+
+-(void)setDismissBlock:(APDismissBlock)block
+{
+    [self associateValue:[block copy] withKey:kDismissBlockKey];
+}
+
+-(void)showError:(NSError *)error dismissBlock:(APDismissBlock)block
 {
     APAppDelegate * ad = (APAppDelegate *)([UIApplication sharedApplication].delegate);
     UIViewController * host = ad.window.rootViewController;
@@ -170,12 +192,14 @@ void * kHasLoginWatcherKey = &kHasLoginWatcherKey;
     if( [host isBeingDismissed] || [host isBeingPresented] )
     {
         [NSObject performBlock:^{
-            [self showError:error];
+            [self showError:error dismissBlock:block];
         } afterDelay:0.3];
         return;
     }
     
     UIViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:kViewError];
+    if( block )
+        [vc setDismissBlock:block];
     [vc setValue:error forKey:@"errorObj"];
     [host presentViewController:vc animated:YES completion:nil];
 }

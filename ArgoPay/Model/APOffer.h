@@ -8,20 +8,6 @@
 
 #import "APMerchant.h"
 
-/*
- /ConsumerGetAvailableOffers   (Limit is Quantity of Records to return)
-                               (SortBy is (N)one, W-Newest First, (R)eady to use, (A)vailable to Select, (E)xpiring Soon)
-                               (Selected means that the offer has already been selected by the consumer)
- > AToken, Lat, Long, Distance, Limit, SortBy
- <    Status, 
-      Message,
-      Offers
-    {OfferID, Type, Selected, DateFrom, DateTo, DaysToUse, 
-     Count, AmountDiscount, AmountMinimum, PointBonus, PointMultiplier, 
-     ArgoBonus, ArgoMultiplier,
-     Name, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, ImageURL, Website} 
- */
-
 @interface APRequestOffers : APRemoteCommand
 @property (nonatomic,strong) NSString *AToken;
 @property (nonatomic,strong) NSNumber *Lat;
@@ -35,7 +21,7 @@
 
 @property (nonatomic,strong) NSString *OfferID;
 @property (nonatomic,strong) NSString *Type;
-@property (nonatomic,strong) NSNumber *Selected;
+@property (nonatomic,strong) NSString *Selected;
 @property (nonatomic,strong) NSString *DateFrom;
 @property (nonatomic,strong) NSString *DateTo;
 @property (nonatomic,strong) NSNumber *DaysToUse;

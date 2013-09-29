@@ -8,8 +8,9 @@
 
 #import "APAccount.h"
 #import "APStrings.h"
+#import "APPopup.h"
 
-@interface APLoginViewController : UIViewController
+@interface APLoginViewController : UIViewController<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *username;
 @property (weak, nonatomic) IBOutlet UITextField *password;
 @property (weak, nonatomic) IBOutlet UINavigationBar *argoNavBar;
@@ -22,6 +23,7 @@
 {
     [super viewDidLoad];
     [self addBackButton:_argoNavBar];
+    [_username becomeFirstResponder];
 }
 
 - (IBAction)forgotPassword:(id)sender
@@ -30,9 +32,14 @@
 
 - (IBAction)submit:(id)sender
 {
+    APPopup *popup = [APPopup withNetActivity:self.view];
+    [_password resignFirstResponder];
+    [_username resignFirstResponder];
+    
     [APAccount login:_username.text password:_password.text block:^(APAccount *account, NSError *err) {
         if( err )
         {
+            [popup dismiss];
             [self showError:err];
         }
         else
@@ -49,10 +56,13 @@
     }];
 }
 
-- (void)didReceiveMemoryWarning
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    if( textField == _username )
+        [_password becomeFirstResponder];
+    else
+        [self submit:textField];
+    return YES;
 }
 
 @end

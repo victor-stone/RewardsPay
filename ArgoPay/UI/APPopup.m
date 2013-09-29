@@ -24,9 +24,12 @@ APLOGRELEASE
 
 +(id)withNetActivity:(UIView *)parent
 {
-    return [self popupWithParent:parent
-                            text: NSLocalizedString(@"Contacting ArgoPay Server","popup")
-                           flags:kPopupActivity];
+#define kBlackBGInset 13
+    
+    UIImage * bg = [[UIImage imageNamed:kImageBlackSq]
+                    resizableImageWithCapInsets:UIEdgeInsetsMake(kBlackBGInset,kBlackBGInset,kBlackBGInset,kBlackBGInset)
+                    resizingMode:UIImageResizingModeStretch];
+    return [[APPopup alloc] initWithParent:parent flags:kPopupActivity textOrView:@"Connecting..." bg:bg];
 }
 
 +(id)msgWithParent:(UIView *)parent text:(NSString *)text

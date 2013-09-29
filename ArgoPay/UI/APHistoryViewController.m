@@ -8,6 +8,7 @@
 
 #import "APStrings.h"
 #import "APAccount.h"
+#import "APPopup.h"
 
 @interface APHistoryCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *date;
@@ -19,12 +20,14 @@
 @implementation APHistoryCell
 @end
 
-@interface APHistoryViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface APHistoryViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,
+                                                                UISearchDisplayDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *transactionsTable;
 @property (weak, nonatomic) IBOutlet UINavigationBar *argoNavBar;
 @end
 
 @implementation APHistoryViewController {
+    NSArray *_allResults;
     NSArray *_historyItems;
 }
 
@@ -39,19 +42,22 @@
 
 -(void)fetchHistory:(NSString *)sort
 {
+    APPopup *popup = [APPopup withNetActivity:self.view];
     APAccount *account = [APAccount currentAccount];
     APStatementRequest *request = [[APStatementRequest alloc] init];
     request.AToken = account.AToken;
     request.DateFrom = @"1970-01-02 00:00:00";
     request.DateTo   = @"2970-01-02 00:00:00";
     [request performRequest:^(NSArray *items, NSError *err) {
+        [popup dismiss];
         if( err )
         {
             [self showError:err];
         }
         else
         {
-            _historyItems = items;
+            _allResults = items;
+            _historyItems = [NSArray arrayWithArray:items];
             [_transactionsTable reloadData];
         }
     }];
@@ -74,6 +80,33 @@
     cell.name.text = item.Description;
     cell.amount = [NSString stringWithFormat:@"$%.2f", [item.Amount floatValue]] ;
     return cell;
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchString   // called when text changes (including clear)
+{
+    if( searchString.length == 0 )
+    {
+        _historyItems = [NSArray arrayWithArray:_allResults];
+    }
+    else
+    {
+        searchString = [searchString lowercaseString];
+        _historyItems = [_allResults select:^BOOL(APStatementLine *line) {
+            NSString *test = [line.Description lowercaseString];
+            return ( ([test rangeOfString:searchString].location == NSNotFound) ? NO : YES );
+        }];
+    }
+    [_transactionsTable reloadData];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar
+{
+    [searchBar resignFirstResponder];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar;                     // called when keyboard search button pressed
+{
+    [searchBar resignFirstResponder];
 }
 
 @end

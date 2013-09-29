@@ -11,7 +11,7 @@
 #define kBarButtonSize 30
 
 typedef void (^APMenuBlock)(id,id);
-
+typedef void (^APDismissBlock)(UIViewController* dismissing);
 
 @interface UIViewController (ArgoPay)
 
@@ -24,8 +24,12 @@ typedef void (^APMenuBlock)(id,id);
 -(void)addLoginButton:(UINavigationBar *)bar;
 -(void)addRightButton:(UINavigationBar *)bar button:(UIBarButtonItem *)bbi;
 
+-(void)setDismissBlock:(APDismissBlock)block;
+
 -(void)navigateTo:(NSString *)vcName;
 
 -(void)showError:(NSError *)error;
+-(void)showError:(NSError *)error dismissBlock:(APDismissBlock)block;
 
+-(UIViewController *)presentVC:(NSString *)vcName animated:(BOOL)animated completion:(void (^)())block;
 @end

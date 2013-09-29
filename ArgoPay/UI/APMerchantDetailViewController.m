@@ -59,7 +59,6 @@ APLOGRELEASE
 -(void)commitMerchant
 {
     _merchantName.text = _merchant.Name;
-    NSInteger whatPoints = 200;
     _merchantPoints.text = @"200pts"; // [NSString stringWithFormat:NSLocalizedString(@"%dpts","MerchantDetail"),[_merchant.credits integerValue]];
     _streetAddr.text = _merchant.Addr1;
     _cityState.text = [NSString stringWithFormat:@"%@, %@", _merchant.City, _merchant.State];
@@ -72,8 +71,6 @@ APLOGRELEASE
 -(void)fetchRewardPoints
 {
     APMerchantRewardListRequest * request = [APMerchantRewardListRequest new];
-    NSString * mtoken = @"";
-    NSString * mloc = @"";
     request.MToken = @"fakeToken";
     request.MLocID = @"fakeLocID";
     [request performRequest:^(NSArray *rewards, NSError *err) {
@@ -172,7 +169,6 @@ APLOGRELEASE
 {
     APMerchantDetailCell * cell = [tableView dequeueReusableCellWithIdentifier:kCellIDMerchantDetail forIndexPath:indexPath];
     APMerchantReward * points = _rewards[indexPath.row];
-    NSInteger TODO_whatCredits = 999; // [_merchant.credits integerValue];
     NSInteger credits = 200;
     NSInteger pts = [points.PointsRequired integerValue];
     if( credits >= pts )

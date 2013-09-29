@@ -9,9 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "VSConnectivity.h"
 
+@interface APMasterViewController : UIViewController
+@end
+
 @interface APAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+
++(APMasterViewController *)masterVC;
 
 /**
  *  Maintains the current state of the network connectivity.
