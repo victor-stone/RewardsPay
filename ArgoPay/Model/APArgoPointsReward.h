@@ -29,11 +29,6 @@
 @property (nonatomic,strong) NSString *Description;
 @end
 
-/*
- /ConsActivateReward
- >AToken, RewardID
- <Status, Message, UserMessage
- */
 @interface APActivateReward : APRemoteCommand
 @property (nonatomic,strong) NSString *AToken;
 @property (nonatomic,strong) NSString *RewardID;

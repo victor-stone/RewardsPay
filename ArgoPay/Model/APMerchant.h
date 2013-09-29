@@ -8,9 +8,6 @@
 
 #import "APRemoteObject.h"
 
-/*
- Name, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, ImageURL, Website}
- */
 @interface APMerchant : APRemoteObject
 @property (nonatomic,strong) NSString *Name;
 @property (nonatomic,strong) NSString *Addr1;
@@ -25,12 +22,6 @@
 @property (nonatomic,strong) NSString *Website;
 
 @end
-
-/*
- /MerchantLocationRewardList (Type D is discount, B is Bonus)
- > MToken, MLocID
- < Status, Message, RewardList {RewardID, DateFrom, DateTo, AmountReward, AmountMinimum, MultipleUse, PointsRequired}
- */
 
 @interface APMerchantRewardListRequest : APRemoteCommand
 @property (nonatomic,strong) NSString *MToken;
@@ -48,11 +39,6 @@
 @property (nonatomic,strong) NSNumber * PointsRequired;
 @end
 
-/*
- /ConsActivateReward
- >AToken, RewardID
- <Status, Message, UserMessage
- */
 @interface APMerchantRewardRedeemd : APRemoteCommand
 @property (nonatomic,strong) NSString *AToken;
 @property (nonatomic,strong) NSNumber *RewardID;

@@ -43,12 +43,6 @@
 @implementation APTransactionStatusResponse
 @end
 
-/*
- 
- /ConsumerTransactionApprove
- >AToken, TransID, Approve (Binary [Y/N])
- <Status, Message, UserMessage
- */
 @implementation APTransactionApprovalRequest
 -(id)init
 {

@@ -27,11 +27,6 @@
 
 @end
 
-/*
- /ConsumerStatementSummary
- >AToken
- <Status, Message, AmountAvailable, AmountOutstanding, LastTransDate, LastPayDate, ArgoPoints
- */
 @interface APAccountSummaryRequest : APRemoteCommand
 @property (nonatomic,strong) NSString *AToken;
 @end
