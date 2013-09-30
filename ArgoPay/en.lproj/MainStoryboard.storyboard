@@ -9,7 +9,7 @@
             <objects>
                 <viewController wantsFullScreenLayout="YES" modalTransitionStyle="crossDissolve" id="dD4-Sa-Ac7" customClass="APMasterViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wgj-9m-g68">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -23,7 +23,7 @@
             <objects>
                 <viewController storyboardIdentifier="kViewMain" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="2" customClass="APMainViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ays-II-wps">
@@ -300,7 +300,7 @@
             <objects>
                 <viewController storyboardIdentifier="kViewOffers" title="Offers" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oS9-Q0-BIf" customClass="APOffersViewController" sceneMemberID="viewController">
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="MU0-WA-BZU">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="481"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="393"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="95" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="O14-HH-ZCs">
@@ -406,19 +406,15 @@
             <objects>
                 <viewController storyboardIdentifier="kViewLogin" title="Sign In" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BLI-wt-2gI" customClass="APLoginViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pst-Pt-uhv">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QrT-v3-Elt">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="gDS-Fi-kkx"/>
-                                </constraints>
                                 <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <items>
                                     <navigationItem title="Sign In" id="B0F-wm-4Rc"/>
                                 </items>
                             </navigationBar>
-                            <imageView userInteractionEnabled="NO" contentMode="top" image="kImageSignIn.png" translatesAutoresizingMaskIntoConstraints="NO" id="DP2-h6-95W"/>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xjA-8U-IP0">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="256" id="YW9-Eu-9xa"/>
@@ -438,7 +434,7 @@
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ie0-bO-jFo">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="GYK-rE-Jvn"/>
+                                    <constraint firstAttribute="height" constant="44" id="YyV-Fr-glF"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal">
@@ -452,14 +448,15 @@
                                     <action selector="forgotPassword:" destination="BLI-wt-2gI" eventType="touchUpInside" id="Mi6-gu-0he"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v68-gL-sLM">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v68-gL-sLM">
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="52" type="user" id="9Ud-qf-Abq"/>
+                                    <constraint firstAttribute="height" constant="51" id="5YU-0Z-vnZ"/>
                                     <constraint firstAttribute="width" constant="149" id="BYg-3d-faQ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                 <state key="normal" title="Submit">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="0.0" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
@@ -487,38 +484,50 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Forgot your username or password?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fR2-DG-nVb">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aOa-Tx-xQ9">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="Eb9-yQ-9JU"/>
+                                    <constraint firstAttribute="width" constant="263" id="W4b-0P-g2n"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <inset key="contentEdgeInsets" minX="42" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="Forgot your username or password?">
+                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="kImageHelp.png" translatesAutoresizingMaskIntoConstraints="NO" id="iog-Tz-VP7">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="PfE-oA-8Wl"/>
+                                    <constraint firstAttribute="width" constant="30" id="boK-AZ-NY2"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="v68-gL-sLM" firstAttribute="top" secondItem="pst-Pt-uhv" secondAttribute="top" constant="281" type="user" id="05W-7J-ogf"/>
                             <constraint firstItem="uAW-lC-6qE" firstAttribute="leading" secondItem="IX4-Vd-0Mn" secondAttribute="leading" type="default" id="0Nr-AD-dZP"/>
-                            <constraint firstItem="DP2-h6-95W" firstAttribute="bottom" secondItem="pst-Pt-uhv" secondAttribute="bottom" type="default" id="17x-zZ-w2s"/>
-                            <constraint firstItem="xjA-8U-IP0" firstAttribute="centerX" secondItem="QrT-v3-Elt" secondAttribute="centerX" type="default" id="4Qg-7O-Ufd"/>
+                            <constraint firstItem="aOa-Tx-xQ9" firstAttribute="bottom" secondItem="ie0-bO-jFo" secondAttribute="bottom" type="default" id="BE5-sG-lWJ"/>
                             <constraint firstItem="xjA-8U-IP0" firstAttribute="top" secondItem="pst-Pt-uhv" secondAttribute="top" constant="88" id="CzS-OA-xod"/>
+                            <constraint firstItem="aOa-Tx-xQ9" firstAttribute="leading" secondItem="pst-Pt-uhv" secondAttribute="leading" constant="31" id="EiG-2v-BSM"/>
                             <constraint firstItem="QrT-v3-Elt" firstAttribute="trailing" secondItem="pst-Pt-uhv" secondAttribute="trailing" type="default" id="MqJ-kd-uuQ"/>
+                            <constraint firstItem="xjA-8U-IP0" firstAttribute="centerX" secondItem="QrT-v3-Elt" secondAttribute="centerX" type="default" id="MuW-hu-XmL"/>
                             <constraint firstItem="IhQ-TD-9pI" firstAttribute="top" secondItem="pst-Pt-uhv" secondAttribute="top" constant="65" id="NYM-dJ-ZMt"/>
-                            <constraint firstItem="ie0-bO-jFo" firstAttribute="trailing" secondItem="IX4-Vd-0Mn" secondAttribute="trailing" type="default" id="Pd2-9z-Odp"/>
-                            <constraint firstItem="fR2-DG-nVb" firstAttribute="leading" secondItem="pst-Pt-uhv" secondAttribute="leading" constant="72" id="Psr-4e-Gwt"/>
                             <constraint firstItem="uAW-lC-6qE" firstAttribute="leading" secondItem="xjA-8U-IP0" secondAttribute="leading" type="default" id="TEq-zf-ZBM"/>
                             <constraint firstItem="uAW-lC-6qE" firstAttribute="top" secondItem="pst-Pt-uhv" secondAttribute="top" constant="131" id="U5q-Iv-JsW"/>
+                            <constraint firstItem="iog-Tz-VP7" firstAttribute="centerY" secondItem="ie0-bO-jFo" secondAttribute="centerY" type="default" id="UFe-8Z-bQf"/>
                             <constraint firstItem="QrT-v3-Elt" firstAttribute="top" secondItem="pst-Pt-uhv" secondAttribute="top" type="default" id="VHZ-9F-ndh"/>
                             <constraint firstItem="IX4-Vd-0Mn" firstAttribute="top" secondItem="pst-Pt-uhv" secondAttribute="top" constant="152" id="VSR-tI-MRd"/>
-                            <constraint firstItem="fR2-DG-nVb" firstAttribute="top" secondItem="pst-Pt-uhv" secondAttribute="top" constant="223" id="XOA-Ha-dan"/>
                             <constraint firstItem="QrT-v3-Elt" firstAttribute="leading" secondItem="pst-Pt-uhv" secondAttribute="leading" type="default" id="bZn-ZL-VXm"/>
-                            <constraint firstItem="DP2-h6-95W" firstAttribute="top" secondItem="QrT-v3-Elt" secondAttribute="bottom" type="default" id="btV-RL-LHc"/>
+                            <constraint firstItem="iog-Tz-VP7" firstAttribute="top" secondItem="pst-Pt-uhv" secondAttribute="top" constant="220" id="coL-Fg-3ej"/>
                             <constraint firstItem="xjA-8U-IP0" firstAttribute="trailing" secondItem="IX4-Vd-0Mn" secondAttribute="trailing" type="default" id="fW7-DI-Ilk"/>
                             <constraint firstItem="ie0-bO-jFo" firstAttribute="leading" secondItem="IX4-Vd-0Mn" secondAttribute="leading" type="default" id="fsH-40-xxc"/>
-                            <constraint firstItem="ie0-bO-jFo" firstAttribute="centerX" secondItem="v68-gL-sLM" secondAttribute="centerX" type="default" id="tmU-5d-dd9"/>
-                            <constraint firstItem="DP2-h6-95W" firstAttribute="leading" secondItem="pst-Pt-uhv" secondAttribute="leading" type="default" id="ugv-nd-h99"/>
-                            <constraint firstItem="ie0-bO-jFo" firstAttribute="top" secondItem="pst-Pt-uhv" secondAttribute="top" constant="213" id="vZ0-wY-O6H"/>
+                            <constraint firstItem="IX4-Vd-0Mn" firstAttribute="trailing" secondItem="ie0-bO-jFo" secondAttribute="trailing" type="default" id="gJT-Ps-ufS"/>
+                            <constraint firstItem="v68-gL-sLM" firstAttribute="centerX" secondItem="ie0-bO-jFo" secondAttribute="centerX" type="default" id="gzE-h8-Bad"/>
+                            <constraint firstItem="aOa-Tx-xQ9" firstAttribute="top" secondItem="ie0-bO-jFo" secondAttribute="top" type="default" id="iQ3-mg-pJC"/>
+                            <constraint firstItem="iog-Tz-VP7" firstAttribute="leading" secondItem="pst-Pt-uhv" secondAttribute="leading" constant="44" id="pxm-7U-j0s"/>
                             <constraint firstItem="IhQ-TD-9pI" firstAttribute="leading" secondItem="xjA-8U-IP0" secondAttribute="leading" type="default" id="wXV-E1-VEu"/>
                         </constraints>
                     </view>
@@ -537,7 +546,7 @@
             <objects>
                 <viewController storyboardIdentifier="kViewOfferDetail" title="Offer Details" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="mba-FJ-5bN" customClass="APOfferDetailViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CH6-q3-BTL">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AMS-Zt-dAy">
@@ -663,7 +672,7 @@
             <objects>
                 <viewController storyboardIdentifier="kViewHome" title="Home" useStoryboardIdentifierAsRestorationIdentifier="YES" id="J4c-CJ-Shm" customClass="APMenuViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="waH-ic-Tae">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="FN4-Sx-Yci">
@@ -748,7 +757,7 @@
             <objects>
                 <tableViewController id="1B1-C9-Iyx" customClass="APSettingsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="9Q4-Vq-ROz">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
@@ -873,7 +882,7 @@
             <objects>
                 <viewController storyboardIdentifier="kViewTransaction" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Aan-T8-BMv" customClass="APTranasctionViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MYg-YV-0Bc">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="kImageTransactionTop.png" translatesAutoresizingMaskIntoConstraints="NO" id="HRd-P3-gee">
@@ -971,7 +980,6 @@
                             <constraint firstItem="ztY-aR-kKk" firstAttribute="top" secondItem="MYg-YV-0Bc" secondAttribute="top" type="default" id="IfE-hl-q3v"/>
                             <constraint firstAttribute="trailing" secondItem="g5g-gr-nQc" secondAttribute="trailing" constant="11" type="user" id="IrL-WV-jUg"/>
                             <constraint firstItem="4Nj-Aa-xSN" firstAttribute="top" secondItem="MYg-YV-0Bc" secondAttribute="top" constant="96" id="NkD-yp-OcX"/>
-                            <constraint firstItem="HRd-P3-gee" firstAttribute="trailing" secondItem="MYg-YV-0Bc" secondAttribute="trailing" type="default" id="Rn4-sM-qH4"/>
                             <constraint firstItem="HRd-P3-gee" firstAttribute="top" secondItem="ztY-aR-kKk" secondAttribute="bottom" type="default" id="VP2-1y-lNn"/>
                             <constraint firstAttribute="bottom" secondItem="Uj6-X0-qFH" secondAttribute="bottom" constant="158" type="user" id="Zsu-cZ-fn4"/>
                             <constraint firstItem="Uj6-X0-qFH" firstAttribute="top" secondItem="MYg-YV-0Bc" secondAttribute="top" constant="294" type="user" id="b3T-ex-1Iw"/>
@@ -986,7 +994,6 @@
                             <constraint firstAttribute="trailing" secondItem="uO0-Xo-i2G" secondAttribute="trailing" constant="11" type="user" id="vsl-0T-nl4"/>
                             <constraint firstItem="ztY-aR-kKk" firstAttribute="leading" secondItem="MYg-YV-0Bc" secondAttribute="leading" type="default" id="wOj-S8-Xqb"/>
                             <constraint firstItem="GXo-Fv-Kd4" firstAttribute="leading" secondItem="MYg-YV-0Bc" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="wV5-bG-Kjl"/>
-                            <constraint firstItem="aJx-f8-Ode" firstAttribute="trailing" secondItem="MYg-YV-0Bc" secondAttribute="trailing" type="default" id="x2d-fR-XFh"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1004,7 +1011,7 @@
             <objects>
                 <viewController storyboardIdentifier="kViewError" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TLe-xE-3KK" customClass="APErrorViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hbc-Rv-8a4">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n9H-iT-eaO">
@@ -1073,7 +1080,7 @@
             <objects>
                 <viewController storyboardIdentifier="kViewRewards" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cwm-m2-HBm" customClass="APRewardsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YVk-4i-TTz">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="kImageRewardsTop.png" translatesAutoresizingMaskIntoConstraints="NO" id="dpu-lo-j6d">
@@ -1235,7 +1242,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="hUy-ef-Uy3" firstAttribute="top" secondItem="wHg-QM-uGl" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="0tL-jx-ptm"/>
-                            <constraint firstItem="dpu-lo-j6d" firstAttribute="trailing" secondItem="YVk-4i-TTz" secondAttribute="trailing" type="default" id="2n8-H0-RKq"/>
                             <constraint firstItem="P3m-wE-RMG" firstAttribute="baseline" secondItem="938-ta-uTo" secondAttribute="baseline" type="default" id="4Rj-9M-LlQ"/>
                             <constraint firstAttribute="trailing" secondItem="P3m-wE-RMG" secondAttribute="trailing" constant="107" id="8ua-gl-LIz"/>
                             <constraint firstItem="dpu-lo-j6d" firstAttribute="top" secondItem="Swh-AM-SEe" secondAttribute="bottom" type="default" id="BN7-Lf-xuH"/>
@@ -1275,7 +1281,7 @@
             <objects>
                 <viewController storyboardIdentifier="kViewMerchantDetail" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DAN-qH-K6z" customClass="APMerchantDetailViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Zaq-3g-be9">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NsM-PT-eFj">
@@ -1496,7 +1502,7 @@
             <objects>
                 <viewController storyboardIdentifier="kViewAccount" title="ArgoCredit" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BWM-YL-Foz" customClass="APArgoAccountViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="T68-VD-Qam">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jjK-et-rmU">
@@ -1652,7 +1658,7 @@
             <objects>
                 <viewController storyboardIdentifier="kViewHistory" title="Recent Transactions" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TF4-fZ-akv" customClass="APHistoryViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HUU-IV-yzr">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="z9j-3o-efh">
@@ -1802,7 +1808,7 @@
             <objects>
                 <viewController id="Qen-in-Eic" customClass="APMerchantDetailMapEmbedding" sceneMemberID="viewController">
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="zlA-hx-HaP">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="343"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="255"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1835,21 +1841,21 @@
         <image name="kImageButtonBg.png" width="100" height="80"/>
         <image name="kImageErrorBalloon.png" width="397" height="253"/>
         <image name="kImageErrorBang.png" width="140" height="143"/>
+        <image name="kImageHelp.png" width="66" height="71"/>
         <image name="kImageLocation.png" width="30" height="30"/>
         <image name="kImageMerchantListCellBg.png" width="301" height="51"/>
         <image name="kImageMerchantListHead.png" width="319" height="60"/>
         <image name="kImageMerchantTop.png" width="320" height="191"/>
         <image name="kImageOffers.png" width="30" height="30"/>
         <image name="kImageQR.png" width="30" height="30"/>
-        <image name="kImageRewardsTop.png" width="365" height="320"/>
-        <image name="kImageSignIn.png" width="320" height="302"/>
-        <image name="kImageTransactionBottom.png" width="387" height="197"/>
+        <image name="kImageRewardsTop.png" width="320" height="281"/>
+        <image name="kImageTransactionBottom.png" width="320" height="163"/>
         <image name="kImageTransactionExpander.png" width="387" height="20"/>
-        <image name="kImageTransactionTop.png" width="387" height="307"/>
+        <image name="kImageTransactionTop.png" width="320" height="254"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
+        <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
 </document>
