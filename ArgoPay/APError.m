@@ -22,7 +22,11 @@ NSString *const kAPServerErrorKey = @"kAPServerErrorKey";
     NSString *msg = nil;
     switch (code) {
         case kAPERROR_MISSINGLOGINFIELDS:
-            msg = NSLocalizedString(@"Both login name and password are required to login", @"Account login");
+            msg = NSLocalizedString(@"Both login name and password are required to login", @"Account login error");
+            break;
+            
+        case kAPERROR_NONETCONNECTION:
+            msg = NSLocalizedString(@"This app requires a network connection.", @"Network error");
             break;
             
         default:

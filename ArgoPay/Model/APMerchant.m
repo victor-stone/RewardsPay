@@ -45,3 +45,26 @@
                     subDomain:kRemoteSubDomainOffers];
 }
 @end
+
+@implementation APMerchantNearMe
+
+-(id)init
+{
+    return [super initWithCmd:kRemoteCmdConsumerMerchantsNear
+                    subDomain:kRemoteSubDomainOffers];
+}
+
+-(Class)payloadClass
+{
+    return [APMerchantLocation class];
+}
+
+-(NSString *)payloadName
+{
+    return kRemotePayloadMerchantLocations;
+}
+@end
+
+@implementation APMerchantLocation
+
+@end

@@ -377,6 +377,33 @@ switch($_REQUEST['cmd'] )
         break;
     }
         
+    case 'ConsumerMerchantsNear':
+    {
+        $location1 = array( 'MerchName' => 'Chilly Willy',
+                            'MerchType' => 'Old Movies',
+                           'MToken' => 400,
+                           'MLoc' => 1000,
+                            'Lat' => 40.686219,
+                            'Long' => -73.990934
+                           );
+        $location2 = array( 'MerchName' => 'Premium Crackers',
+                             'MerchType' => 'Snacks & Munchies',
+                           'MToken' => 401,
+                           'MLoc' => 1001,
+                             'Lat' => 40.692481,
+                           'Long' => -73.991527 );
+        
+        $location3 = array( 'MerchName' => 'Strats R US',
+                            'MerchType' => 'Fiddlers & Pipers',
+                           'MToken' => 402,
+                           'MLoc' => 1001,
+                             'Lat' => 40.684462,
+                           'Long' => -73.977285 );
+        
+        $value['MerchantLocations'] = array( $location1, $location2, $location3 );
+        break;
+    }
+        
     default:
     {
         $value['Status'] = -1;

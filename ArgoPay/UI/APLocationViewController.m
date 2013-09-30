@@ -8,23 +8,25 @@
 
 #import "APStrings.h"
 #import <GoogleMaps/GoogleMaps.h>
+#import "APMerchant.h"
+#import "APRemoteStrings.h"
+#import <CoreLocation/CoreLocation.h>
 
-@interface APLocationViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UINavigationBar *argoNavBar;
-
+@interface APLocationCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *businessName;
+@property (weak, nonatomic) IBOutlet UILabel *category;
+@property (weak, nonatomic) IBOutlet UILabel *distance;
 @end
 
-@implementation APLocationViewController {
-    GMSMapView *mapView_;
-}
+@implementation APLocationCell
+@end
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+@interface APLocationListViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UINavigationBar *argoNavBar;
+@end
+
+@implementation APLocationListViewController {
+    NSArray *_locations;
 }
 
 APLOGRELEASE
@@ -33,13 +35,29 @@ APLOGRELEASE
 {
     [super viewDidLoad];
 	[self addHomeButton:_argoNavBar];
+    
+    UIBarButtonItem *bbi = [self barButtonForImage:kImageMapView
+                                             title:nil
+                                             block:^(APLocationListViewController *me, id sender)
+    {
+        // flip to mapview
+    }];
+    
+    [self addRightButton:_argoNavBar button:bbi];
 }
 
-
-- (void)didReceiveMemoryWarning
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    return [_locations count];
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    APLocationCell * cell = [tableView dequeueReusableCellWithIdentifier:kCellIDLocation forIndexPath:indexPath];
+    APMerchantLocation * location = _locations[indexPath.row];
+    cell.businessName.text = location.MercName;
+    cell.category.text = location.MerchType;
+
 }
 
 @end

@@ -13,6 +13,8 @@
 #import "APTransaction.h"
 #import "APRemoteStrings.h"
 #import "APTranasctionViewController.h"
+#import "APLocation.h"
+#import "APAccount.h"
 
 @implementation APScanResult
 @end
@@ -112,24 +114,23 @@ APLOGRELEASE
     UIViewController *vc = [_delegate scanHostViewController];
     __block APPopup *popup = [APPopup withNetActivity:vc.view];
     
-    // yea, all this should be somewhere else
-    
     APTransactionStartRequest *start = [APTransactionStartRequest new];
-    start.AToken = @"justAToken";
-    start.QrData = result.text;
-    start.Lat = @(83223.02323);
-    start.Long = @(-99933.000342322);
-    [start performRequest:^(APTransactionIDResponse *idResponse, NSError *err) {
-        if( err )
-        {
-            [vc showError:err];
-        }
-        else
-        {
+    [[APLocation sharedInstance] currentLocation:^{
+        //
+    } gotLocation:^(CLLocationCoordinate2D loc) {
+        APAccount *account = [APAccount currentAccount];
+        start.AToken = account.AToken;
+        start.QrData = result.text;
+        start.Lat = @(loc.latitude);
+        start.Long = @(loc.longitude);
+        [start performRequest:^(APTransactionIDResponse *idResponse, NSError *err) {
             [NSObject performBlock:^{
-                [self handleTransaction:popup transID:idResponse.TransID];
+                if( err )
+                    [vc showError:err];
+                else
+                    [self handleTransaction:popup transID:idResponse.TransID];
             } afterDelay:0.1];
-        }
+        }];
     }];
 }
 

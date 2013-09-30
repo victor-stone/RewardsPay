@@ -31,8 +31,8 @@
 @interface APMerchantReward : APRemoteObject
 
 @property (nonatomic,strong) NSNumber * RewardID;
-@property (nonatomic,strong) NSString *DateFrom;
-@property (nonatomic,strong) NSString *DateTo;
+@property (nonatomic,strong) NSString * DateFrom;
+@property (nonatomic,strong) NSString * DateTo;
 @property (nonatomic,strong) NSNumber * AmountReward;
 @property (nonatomic,strong) NSNumber * AmountMinimum;
 @property (nonatomic,strong) NSNumber * MultipleUse;
@@ -42,4 +42,18 @@
 @interface APMerchantRewardRedeemd : APRemoteCommand
 @property (nonatomic,strong) NSString *AToken;
 @property (nonatomic,strong) NSNumber *RewardID;
+@end
+
+@interface APMerchantNearMe : APRemoteCommand
+@property (nonatomic,strong) NSString *AToken;
+@property (nonatomic,strong) NSNumber *Lat;
+@property (nonatomic,strong) NSNumber *Long;
+@end
+
+@interface APMerchantLocation : APRemoteObject
+@property (nonatomic,strong) NSString *MercName;
+@property (nonatomic,strong) NSString *MerchType;
+@property (nonatomic,strong) NSNumber *MerchantID;
+@property (nonatomic,strong) NSNumber *Lat;
+@property (nonatomic,strong) NSNumber *Long;
 @end

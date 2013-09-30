@@ -13,6 +13,7 @@
 #import "APPopup.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import "GoogleMapsKey.h"
+#import "APLocation.h"
 
 @implementation APMasterViewController
 
@@ -27,14 +28,25 @@
 
 @implementation APAppDelegate {
     id _notifyObserver;
+    bool _showingNotConnectedView;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [GMSServices provideAPIKey:GOOGLE_MAPS_API_KEY];
-    
     [self registerUserDefaults];
     [self registerForNotifications];
+    
+    _connectivity = [[VSConnectivity alloc] init];
+    
+    [GMSServices provideAPIKey:GOOGLE_MAPS_API_KEY];
+    
+    // Prime the location service
+    APLocation * location = [APLocation sharedInstance];
+    [location currentLocation:^{
+        //
+    } gotLocation:^(CLLocationCoordinate2D loc) {
+        [location stop];
+    }];
     // This has to happen here to prime the 'currentAccount' object
     // Otherwise calls to +currentAccount will return nil
     [self attemptLogin];
@@ -74,6 +86,24 @@
 
 -(void)registerForNotifications
 {
+    [self registerForBroadcast:kVSNotificationConnectionTypeChanged
+                         block:^(APAppDelegate *me, VSConnectivity *connectivity)
+    {
+        if( connectivity.connectionType == kConnectionNone )
+        {
+            [NSObject performBlock:^{
+                [me notConnectedToNework];
+            } afterDelay:0.2];
+        }
+        else
+        {
+            if( _showingNotConnectedView )
+            {
+                [_window.rootViewController dismissViewControllerAnimated:YES completion:nil];
+            }
+        }
+    }];
+    
     _notifyObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kIASKAppSettingChanged
                                                       object:nil
                                                        queue:nil
@@ -86,6 +116,13 @@
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:_notifyObserver];
+}
+
+-(void)notConnectedToNework
+{
+    APError *error = [APError errorWithCode:kAPERROR_NONETCONNECTION];
+    _showingNotConnectedView = true;
+    [_window.rootViewController showError:error];
 }
 
 -(NSDictionary *)factoryUserDefaultSettings
@@ -114,12 +151,14 @@
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    [[APLocation sharedInstance] stop];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [[APLocation sharedInstance] stop];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

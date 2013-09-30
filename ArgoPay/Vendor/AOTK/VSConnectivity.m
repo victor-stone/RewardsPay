@@ -39,12 +39,12 @@ void connectivity_callback(SCNetworkReachabilityRef target, SCNetworkReachabilit
     [conn broadcast:kVSNotificationConnectionTypeChanged payload:conn];
 }
 
--(id)init
+-(id)initWithHost:(NSString *)host
 {
     self = [super init];
     if( self )
     {
-        const char *host_name = VS_CONNECTIVITY_HOST_NAME;
+        const char *host_name = [host UTF8String];
         
         SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(NULL, host_name);
         

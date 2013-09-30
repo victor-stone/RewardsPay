@@ -12,32 +12,35 @@
 #import "APAccount.h"
 #import "APPopup.h"
 #import <GoogleMaps/GoogleMaps.h>
+#import "APLocation.h"
 
 @interface APOfferDetailsMapEmbedding : UIViewController
-
+@property (nonatomic) CLLocationCoordinate2D location;
+@property (nonatomic,strong) NSString *pinTitle;
+@property (nonatomic,strong) NSString *pinSnippet;
 @end
 
-@implementation APOfferDetailsMapEmbedding {
-    GMSMapView *mapView_;
-}
-
+@implementation APOfferDetailsMapEmbedding
 
 - (void)loadView {
     // Create a GMSCameraPosition that tells the map to display the
     // coordinate -33.86,151.20 at zoom level 6.
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-33.86
-                                                            longitude:151.20
-                                                                 zoom:6];
-    mapView_ = [GMSMapView mapWithFrame:CGRectZero camera:camera];
-    mapView_.myLocationEnabled = YES;
-    self.view = mapView_;
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:_location.latitude
+                                                            longitude:_location.longitude
+                                                                 zoom:13];
+    GMSMapView *mapView;
+    mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
+    mapView.myLocationEnabled = YES;
+    mapView.settings.myLocationButton = YES;
+    
+    self.view = mapView;
     
     // Creates a marker in the center of the map.
     GMSMarker *marker = [[GMSMarker alloc] init];
-    marker.position = CLLocationCoordinate2DMake(-33.86, 151.20);
-    marker.title = @"Sydney";
-    marker.snippet = @"Australia";
-    marker.map = mapView_;
+    marker.position   = _location;
+    marker.title      = _pinTitle;
+    marker.snippet    = _pinSnippet;
+    marker.map        = mapView;
 }
 
 @end
@@ -140,20 +143,25 @@ APLOGRELEASE
     APAccount *account = [APAccount currentAccount];
     request.AToken = account.AToken;
     request.Distance = @(20.0);
-    request.Lat = @(343.0032);
-    request.Long = @(-893.32099);
     request.SortBy = sort;
-    [request performRequest:^(id data, NSError *err) {
-        [popup dismiss];
-        if( err )
-        {
-            [self showError:err];
-        }
-        else
-        {
-            _offers = data;
-            [_offersTable reloadData];
-        }
+
+    [[APLocation sharedInstance] currentLocation:^{
+        //
+    } gotLocation:^(CLLocationCoordinate2D loc) {
+        request.Lat = @(loc.latitude);
+        request.Long = @(loc.longitude);
+        [request performRequest:^(id data, NSError *err) {
+            [popup dismiss];
+            if( err )
+            {
+                [self showError:err];
+            }
+            else
+            {
+                _offers = data;
+                [_offersTable reloadData];
+            }
+        }];
     }];
 }
 
