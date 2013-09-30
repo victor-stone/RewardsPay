@@ -161,14 +161,9 @@ APLOGRELEASE
     APAccount *account = [APAccount currentAccount];
     if( account.isLoggedIn )
     {
-        APOffer * offer = _offers[indexPath.row];
-        /*
-        UIViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:kViewOfferDetail];
-        [vc setValue:offer forKey:@"offer"];
-        [self presentView_OLD_Controller:vc animated:YES completion:nil];
-         */
         UIViewController *vc = [self presentVC:kViewOfferDetail animated:YES completion:nil];
-        [vc setValue:offer forKey:@"offer"];        
+        APOffer * offer = _offers[indexPath.row];
+        [vc setValue:offer forKey:@"offer"];
     }
 }
 

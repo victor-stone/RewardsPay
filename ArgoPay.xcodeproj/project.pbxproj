@@ -88,10 +88,8 @@
 		57A2248317E90F47000B52E9 /* UIViewController+ArgoPay.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A2247D17E90F47000B52E9 /* UIViewController+ArgoPay.m */; };
 		57A2248617E90FF3000B52E9 /* APStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A2248517E90FF3000B52E9 /* APStrings.m */; };
 		57A224A117E913B3000B52E9 /* kImageAccount.png in Resources */ = {isa = PBXBuildFile; fileRef = 57A2248917E913B3000B52E9 /* kImageAccount.png */; };
-		57A224A217E913B3000B52E9 /* kImageAlert.png in Resources */ = {isa = PBXBuildFile; fileRef = 57A2248A17E913B3000B52E9 /* kImageAlert.png */; };
 		57A224A317E913B3000B52E9 /* kImageBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 57A2248B17E913B3000B52E9 /* kImageBack.png */; };
 		57A224A417E913B3000B52E9 /* kImageBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57A2248C17E913B3000B52E9 /* kImageBack@2x.png */; };
-		57A224A517E913B3000B52E9 /* kImageBalloon.png in Resources */ = {isa = PBXBuildFile; fileRef = 57A2248D17E913B3000B52E9 /* kImageBalloon.png */; };
 		57A224A617E913B3000B52E9 /* kImageBanner.png in Resources */ = {isa = PBXBuildFile; fileRef = 57A2248E17E913B3000B52E9 /* kImageBanner.png */; };
 		57A224A717E913B3000B52E9 /* kImageBanner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57A2248F17E913B3000B52E9 /* kImageBanner@2x.png */; };
 		57A224A817E913B3000B52E9 /* kImageFavorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 57A2249017E913B3000B52E9 /* kImageFavorite.png */; };
@@ -307,10 +305,8 @@
 		57A2248417E90FF3000B52E9 /* APStrings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APStrings.h; sourceTree = "<group>"; };
 		57A2248517E90FF3000B52E9 /* APStrings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APStrings.m; sourceTree = "<group>"; };
 		57A2248917E913B3000B52E9 /* kImageAccount.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageAccount.png; sourceTree = "<group>"; };
-		57A2248A17E913B3000B52E9 /* kImageAlert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageAlert.png; sourceTree = "<group>"; };
 		57A2248B17E913B3000B52E9 /* kImageBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageBack.png; sourceTree = "<group>"; };
 		57A2248C17E913B3000B52E9 /* kImageBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageBack@2x.png"; sourceTree = "<group>"; };
-		57A2248D17E913B3000B52E9 /* kImageBalloon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageBalloon.png; sourceTree = "<group>"; };
 		57A2248E17E913B3000B52E9 /* kImageBanner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageBanner.png; sourceTree = "<group>"; };
 		57A2248F17E913B3000B52E9 /* kImageBanner@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageBanner@2x.png"; sourceTree = "<group>"; };
 		57A2249017E913B3000B52E9 /* kImageFavorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageFavorite.png; sourceTree = "<group>"; };
@@ -767,10 +763,8 @@
 			children = (
 				57A2248917E913B3000B52E9 /* kImageAccount.png */,
 				570EC1D217F7412500CBA207 /* kImageAccountBg.png */,
-				57A2248A17E913B3000B52E9 /* kImageAlert.png */,
 				57A2248B17E913B3000B52E9 /* kImageBack.png */,
 				57A2248C17E913B3000B52E9 /* kImageBack@2x.png */,
-				57A2248D17E913B3000B52E9 /* kImageBalloon.png */,
 				57A2248E17E913B3000B52E9 /* kImageBanner.png */,
 				57A2248F17E913B3000B52E9 /* kImageBanner@2x.png */,
 				57287ECE17F886FE00C37D2E /* kImageBlackSq.png */,
@@ -996,10 +990,8 @@
 				57A223F917E90626000B52E9 /* Default-568h@2x.png in Resources */,
 				57A223FC17E90626000B52E9 /* MainStoryboard.storyboard in Resources */,
 				57A224A117E913B3000B52E9 /* kImageAccount.png in Resources */,
-				57A224A217E913B3000B52E9 /* kImageAlert.png in Resources */,
 				57A224A317E913B3000B52E9 /* kImageBack.png in Resources */,
 				57A224A417E913B3000B52E9 /* kImageBack@2x.png in Resources */,
-				57A224A517E913B3000B52E9 /* kImageBalloon.png in Resources */,
 				57A224A617E913B3000B52E9 /* kImageBanner.png in Resources */,
 				57A224A717E913B3000B52E9 /* kImageBanner@2x.png in Resources */,
 				57A224A817E913B3000B52E9 /* kImageFavorite.png in Resources */,

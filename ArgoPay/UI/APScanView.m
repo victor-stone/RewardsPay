@@ -6,45 +6,135 @@
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 
-#define AP_SCAN_DECLS
 #import "APScanView.h"
 #import "APStrings.h"
 #import "ZBarSDK.h"
-
+#import "APPopup.h"
+#import "APTransaction.h"
+#import "APRemoteStrings.h"
+#import "APTranasctionViewController.h"
 
 @implementation APScanResult
 @end
 
-APScanResult * AP_EMPTY_SCAN_RESULT;
+@interface APScanRequestWatcher ()
+@property (weak,nonatomic) id<APScanDelegate> delegate;
+@end
 
 @implementation APScanRequestWatcher {
     ZBarReaderViewController * _reader;
 }
 
--(id)init
+APLOGRELEASE
+
+-(id)initWithDelegate:(id<APScanDelegate>)delegate
 {
     self = [super init];
     if( !self )
         return nil;
+
+    _delegate = delegate;
     
-    [self registerForBroadcast:kNotifyRequestScanner block:^(APScanRequestWatcher *me, UIViewController *caller) {
-        if( me->_reader )
+    [self registerForBroadcast:kNotifyTransactionUserActed
+                         block:^(APScanRequestWatcher *me, APTransactionApprovalRequest *request)
+     {
+         [request performRequest:^(APRemoteRepsonse *response, NSError *err)
+          {
+              UIViewController *vc = [_delegate scanHostViewController];
+              if( err )
+              {
+                  [vc showError:err];
+              }
+              else
+              {
+                  [APPopup msgWithParent:vc.view text:response.UserMessage];
+              }
+          }];
+     }];
+    
+    return self;
+}
+
+-(void)handleTransaction:(APPopup *)popup transID:(NSString *)transID
+{
+    APRemoteAPIRequestBlock handleStatusReponse = ^(APTransactionStatusResponse *response, NSError *err)
+    {
+        UIViewController *vc = [_delegate scanHostViewController];
+        if( err )
         {
-            [me closeReader:nil];
+            [vc showError:err];
+        }
+        else
+        {
+            NSString *stat = response.TransStatus;
+            
+            if( [stat isEqualToString:kRemoteValueTransactionStatusPending] )
+            {
+                [NSObject performBlock:^{
+                    [self handleTransaction:popup transID:transID];
+                } afterDelay:0.5];
+                return;
+            }
+            
+            [popup dismiss];
+            
+            if( [stat isEqualToString:kRemoteValueTransactionStatusInsufficientFunds] )
+            {
+                [APPopup msgWithParent:vc.view text:NSLocalizedString(@"Sorry, there are insufficient funds in your ArgoPay Account to cover this purchase!", @"TransactionResponse")];
+            }
+            else if( [stat isEqualToString:kRemoteValueTransactionStatusServerCancelled] )
+            {
+                [APPopup msgWithParent:vc.view text:NSLocalizedString(@"This transaction was cancelled!", @"TransactionResponse")];
+            }
+            else if( [stat isEqualToString:kRemoteValueTransactionStatusTimeOut] )
+            {
+                [APPopup msgWithParent:vc.view text:NSLocalizedString(@"This transaction was cancelled because it was taking too long.", @"TransactionResponse")];
+            }
+            else if( [stat isEqualToString:kRemoteValueTransactionStatusReadyForApproval] )
+            {
+                APTranasctionViewController * vct = [vc.storyboard instantiateViewControllerWithIdentifier:kViewTransaction];
+                vct.transID = transID;
+                vct.statusResponse = response;
+                [NSObject performBlock:^{
+                    [vc presentViewController:vct animated:YES completion:nil];
+                } afterDelay:0.3];
+            }
+        }
+    };
+    
+    APTransactionStatusRequest *request = [APTransactionStatusRequest new];
+    request.TransID = transID;
+    [request performRequest:handleStatusReponse];
+}
+
+-(void)attemptTransaction:(APScanResult *)result
+{
+    UIViewController *vc = [_delegate scanHostViewController];
+    __block APPopup *popup = [APPopup withNetActivity:vc.view];
+    
+    // yea, all this should be somewhere else
+    
+    APTransactionStartRequest *start = [APTransactionStartRequest new];
+    start.AToken = @"justAToken";
+    start.QrData = result.text;
+    start.Lat = @(83223.02323);
+    start.Long = @(-99933.000342322);
+    [start performRequest:^(APTransactionIDResponse *idResponse, NSError *err) {
+        if( err )
+        {
+            [vc showError:err];
         }
         else
         {
             [NSObject performBlock:^{
-                [me request:caller];
-            } afterDelay:0.2];
+                [self handleTransaction:popup transID:idResponse.TransID];
+            } afterDelay:0.1];
         }
     }];
-    return self;
 }
 
-APLOGRELEASE
 
--(UIViewController *)request:(UIViewController *)caller
+-(UIViewController *)request
 {
     ZBarReaderViewController *reader = [ZBarReaderViewController new];
     reader.wantsFullScreenLayout = NO;
@@ -71,17 +161,25 @@ APLOGRELEASE
     [self closeReader:result];
 }
 
--(void)closeReader:(APScanResult *)result
-{
-    if( !AP_EMPTY_SCAN_RESULT )
-        AP_EMPTY_SCAN_RESULT = [APScanResult new];
-        
-    [self broadcast:kNotifyScanComplete payload:result ?: AP_EMPTY_SCAN_RESULT];
-}
-
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [self closeReader:nil];
+}
+
+-(void)closeReader:(APScanResult *)result
+{
+    [_delegate toggleScanner:^(UIViewController *them) {
+        if( result )
+        {
+            [NSObject performBlock:^{
+                [self attemptTransaction:result];
+            } afterDelay:0.3];
+        }
+        else
+        {
+            [APPopup msgWithParent:them.view text:NSLocalizedString(@"QR Code scan was cancelled", "popup")];
+        }
+    }];
 }
 
 @end

@@ -9,9 +9,6 @@
 #import "APScanView.h"
 #import "APStrings.h"
 #import "APPopup.h"
-#import "APTransaction.h"
-#import "APTranasctionViewController.h"
-#import "APRemoteStrings.h"
 
 #define kTransitionDuration 0.5
 
@@ -19,7 +16,8 @@
 
 @class APTabNavigator;
 
-@interface APMainViewController : UIViewController
+@interface APMainViewController : UIViewController<APScanDelegate>
+
 @property (weak, nonatomic) IBOutlet APTabNavigator *tabNavigator;
 @property (weak, nonatomic) IBOutlet UIView *blackTapNavBackground;
 @property (weak, nonatomic) IBOutlet UIView *embeddingContainer;
@@ -39,6 +37,8 @@
 @property (weak,nonatomic) IBOutlet APTab *location;
 
 @property (weak,nonatomic) APTab *currentTab;
+
+-(NSString *)titleForVCName:(NSString *)vcName;
 @end
 
 #pragma mark - Local Implementations
@@ -67,12 +67,17 @@
     [_location wireUp:homeController];
 }
 
+-(NSString *)titleForVCName:(NSString *)vcName
+{
+    if( _offers.vcNav == vcName )
+        return _offers.label.text;
+    if( _scan.vcNav == vcName )
+        return nil;
+    return _location.label.text;
+}
 @end
 
 #pragma mark - Main View Controller
-
-typedef void (^APScannerDoneBlock)(APMainViewController *);
-
 
 @implementation APMainViewController {
     __weak APTab *_currentTab;
@@ -89,7 +94,9 @@ typedef void (^APScannerDoneBlock)(APMainViewController *);
     [super viewDidLoad];
 	[_tabNavigator wireUp:self];
     _lastNavTab = _tabNavigator.offers.vcNav;
-    [self registerForEvents];    
+    self.title = _tabNavigator.offers.label.text;
+    _scanWatcher = [[APScanRequestWatcher alloc] initWithDelegate:self];
+    [self registerForEvents];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -108,114 +115,11 @@ typedef void (^APScannerDoneBlock)(APMainViewController *);
 
 -(void)registerForEvents
 {
-    [self registerForBroadcast:kNotifyScanComplete
-                         block:^(APMainViewController *me, APScanResult *result)
-    {
-        [me toggleScanner:^(APMainViewController *me) {
-            if( result == AP_EMPTY_SCAN_RESULT )
-            {
-                [APPopup msgWithParent:me.view text:NSLocalizedString(@"QR Code scan was cancelled", "popup")];
-            }
-            else
-            {
-                [NSObject performBlock:^{
-                    [me attemptTransaction:result];
-                } afterDelay:0.3];
-            }
-        }];
-    }];
-    
-    [self registerForBroadcast:kNotifyTransactionUserActed
-                         block:^(APMainViewController *me, APTransactionApprovalRequest *request)
-     {
-         [request performRequest:^(APRemoteRepsonse *response, NSError *err)
-         {
-             if( err )
-             {
-                 [me showError:err];
-             }
-             else
-             {
-                 [APPopup msgWithParent:me.view text:response.UserMessage];
-             }
-         }];
-     }];
 }
 
--(void)handleTransaction:(APPopup *)popup transID:(NSString *)transID
+-(UIViewController *)scanHostViewController
 {
-    APRemoteAPIRequestBlock handleStatusReponse = ^(APTransactionStatusResponse *response, NSError *err)
-    {
-        if( err )
-        {
-            [self showError:err];
-        }
-        else
-        {
-            NSString *stat = response.TransStatus;
-            
-            if( [stat isEqualToString:kRemoteValueTransactionStatusPending] )
-            {
-                [NSObject performBlock:^{
-                    [self handleTransaction:popup transID:transID];
-                } afterDelay:0.5];
-                return;
-            }
-            
-            [popup dismiss];
-            
-            if( [stat isEqualToString:kRemoteValueTransactionStatusInsufficientFunds] )
-            {
-                [APPopup msgWithParent:self.view text:NSLocalizedString(@"Sorry, there are insufficient funds in your ArgoPay Account to cover this purchase!", @"TransactionResponse")];
-            }
-            else if( [stat isEqualToString:kRemoteValueTransactionStatusServerCancelled] )
-            {
-                [APPopup msgWithParent:self.view text:NSLocalizedString(@"This transaction was cancelled!", @"TransactionResponse")];
-            }
-            else if( [stat isEqualToString:kRemoteValueTransactionStatusTimeOut] )
-            {
-                [APPopup msgWithParent:self.view text:NSLocalizedString(@"This transaction was cancelled because it was taking too long.", @"TransactionResponse")];
-            }
-            else if( [stat isEqualToString:kRemoteValueTransactionStatusReadyForApproval] )
-            {
-                APTranasctionViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:kViewTransaction];
-                vc.transID = transID;
-                vc.statusResponse = response;
-                [NSObject performBlock:^{
-                    [self presentViewController:vc animated:YES completion:nil];
-                } afterDelay:0.3];
-            }
-        }
-    };
-    
-    APTransactionStatusRequest *request = [APTransactionStatusRequest new];
-    request.TransID = transID;
-    [request performRequest:handleStatusReponse];
-}
-
--(void)attemptTransaction:(APScanResult *)result
-{
-    __block APPopup *popup = [APPopup withNetActivity:self.view];
-    
-    // yea, all this should be somewhere else
-    
-    APTransactionStartRequest *start = [APTransactionStartRequest new];
-    start.AToken = @"justAToken";
-    start.QrData = result.text;
-    start.Lat = @(83223.02323);
-    start.Long = @(-99933.000342322);
-    [start performRequest:^(APTransactionIDResponse *idResponse, NSError *err) {
-        if( err )
-        {
-            [self showError:err];
-        }
-        else
-        {
-            [NSObject performBlock:^{
-                [self handleTransaction:popup transID:idResponse.TransID];
-            } afterDelay:0.1];
-        }
-    }];
+    return self;
 }
 
 -(void)toggleScanner:(APScannerDoneBlock)block
@@ -224,7 +128,7 @@ typedef void (^APScannerDoneBlock)(APMainViewController *);
     {
         CGRect rc = self.view.frame;
         rc.origin.y = rc.size.height;
-        CGFloat duration = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingSlidingCameraView] ? 0.5 : 0.0;
+        CGFloat duration = 0; // [[NSUserDefaults standardUserDefaults] boolForKey:kSettingSlidingCameraView] ? 0.5 : 0.0;
         [UIView animateWithDuration:duration animations:^{
             _scanner.view.frame = rc;
         } completion:^(BOOL finished) {
@@ -232,15 +136,13 @@ typedef void (^APScannerDoneBlock)(APMainViewController *);
             [_scanner willMoveToParentViewController:nil];
             [_scanner removeFromParentViewController];
             _scanner = nil;
-            _scanWatcher = nil;
             if( block )
                 block(self);
         }];
     }
     else
     {
-        _scanWatcher = [APScanRequestWatcher new];
-        _scanner = [_scanWatcher request:self];
+        _scanner = [_scanWatcher request];
         [_scanner willMoveToParentViewController:self];
         [self addChildViewController:_scanner];
         UIView * scannerView = _scanner.view;
@@ -251,7 +153,8 @@ typedef void (^APScannerDoneBlock)(APMainViewController *);
         scannerView.frame = rc;
         [self.view insertSubview:scannerView belowSubview:_tabNavigator];
         CGFloat duration = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingSlidingCameraView] ? 0.5 : 0.0;
-        [UIView animateWithDuration:duration animations:^{
+        [UIView animateWithDuration:duration animations:^
+        {
             scannerView.frame = targetRC;
         }];
     }
@@ -284,6 +187,7 @@ typedef void (^APScannerDoneBlock)(APMainViewController *);
     _currentEmbeddedVC = dest;
     
     _lastNavTab = vcName;
+    self.title = dest.title; // see: UIViewControler:addBackButton
     
 #ifdef DEBUG
     if( APENABLED(kDebugViews) )
@@ -316,7 +220,7 @@ typedef void (^APScannerDoneBlock)(APMainViewController *);
     {
         if( _scanner )
             [self toggleScanner:nil];
-        
+
         if( _lastNavTab == vcName )
             return;
         

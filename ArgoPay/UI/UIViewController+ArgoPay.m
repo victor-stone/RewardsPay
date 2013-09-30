@@ -42,23 +42,47 @@ void * kDismissBlockKey = &kDismissBlockKey;
                                 title:(NSString *)title
                                 block:(APMenuBlock)block
 {
-    UIImage * image = [UIImage imageNamed:imgName];
     UIButton * button = [[UIButton alloc] initWithFrame:(CGRect){0,0,kBarButtonSize,kBarButtonSize}];
     button.showsTouchWhenHighlighted = YES;
-    button.backgroundColor = [UIColor clearColor];
     if( title )
     {
-        button.titleLabel.text = title;
-        [button setBackgroundImage:image forState:UIControlStateNormal];
+        UIFont *font = button.titleLabel.font;
+        [button.titleLabel setFont:[UIFont fontWithName:font.familyName size:kBarButtonSize*0.4]];
+        [button setTitle:title forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     }
-    else
+    
+    if( imgName )
     {
-        [button setImage:image forState:UIControlStateNormal];
+        UIImage * image = [UIImage imageNamed:imgName];
+        [button setBackgroundImage:image forState:UIControlStateNormal];
     }
     [button addTarget:self action:@selector(invokeMenuItem:) forControlEvents:UIControlEventTouchUpInside];
     NSMutableDictionary * _map = self.targetMap;
     _map[@(button.hash)] = [block copy];
     return [[UIBarButtonItem alloc] initWithCustomView:button];
+}
+
+-(UIBarButtonItem *)barButtonForText:(NSString *)text
+                               block:(APMenuBlock)block
+{
+    UIBarButtonItem * bbi = [[UIBarButtonItem alloc] initWithTitle:text style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(invokeMenuItem:)];
+    NSMutableDictionary * _map = self.targetMap;
+    _map[@(bbi.hash)] = [block copy];
+    return bbi;
+}
+
+-(UIBarButtonItem *)barButton:(UIBarButtonSystemItem)sysItem
+                        block:(APMenuBlock)block
+{
+    UIBarButtonItem * bbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:sysItem
+                                                                          target:self
+                                                                          action:@selector(invokeMenuItem:)];
+    NSMutableDictionary * _map = self.targetMap;
+    _map[@(bbi.hash)] = [block copy];
+    return bbi;
 }
 
 -(void)addHomeButton:(UINavigationBar *)bar
@@ -142,21 +166,42 @@ void * kDismissBlockKey = &kDismissBlockKey;
         [self presentViewController:vc animated:YES completion:nil];
     }
 }
-
 -(void)addBackButton:(UINavigationBar *)bar
 {
-    UIBarButtonItem * bbBack = [self barButtonForImage:kImageBack
-                                                 title:NSLocalizedString(@"Back", "Navigation button")
-                                                 block:^(UIViewController *me, id sender)
-                                {
-                                    [me.presentingViewController dismissViewControllerAnimated:YES completion:^{
-                                        APDismissBlock block = [me associatedValueForKey:kDismissBlockKey];
-                                        if( block )
-                                            block(me);
-                                    }];
-                                }];
-    bar.topItem.leftBarButtonItem = bbBack;
+    [self addBackButton:bar title:nil];
+}
+
+-(void)addBackButton:(UINavigationBar *)bar title:(NSString *)title
+{
+    if( self.presentingViewController && self.presentingViewController.title )
+        title = self.presentingViewController.title ;
     
+    APMenuBlock block = ^(UIViewController *me, id sender)
+    {
+        [me.presentingViewController dismissViewControllerAnimated:YES completion:^{
+            APDismissBlock block = [me associatedValueForKey:kDismissBlockKey];
+            if( block )
+                block(me);
+        }];
+    };
+    UIBarButtonItem * bbBack = nil;
+    
+    if( title )
+    {
+        bbBack = [self barButtonForText:title block:block];
+        [bbBack setTitle:title];
+    }
+    else
+    {
+        bbBack = [self barButton:UIBarButtonSystemItemDone
+                           block:block];
+        
+    }
+    
+    [bbBack setTintColor:[UIColor colorWithRed:0.8 green:0.6 blue:0.0 alpha:1.0]];
+    UIImage *image = [UIImage imageNamed:kImageBack];
+    [bbBack setBackgroundImage:image forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+     bar.topItem.leftBarButtonItem = bbBack;
 }
 
 -(void)navigateTo:(NSString *)vcName

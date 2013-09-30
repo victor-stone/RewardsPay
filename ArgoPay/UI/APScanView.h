@@ -9,15 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "ZBarSDK.h"
 
+typedef void (^APScannerDoneBlock)(UIViewController *);
+
 @interface APScanResult : NSObject
 @property (nonatomic,strong) UIImage * image;
 @property (nonatomic,strong) NSString * text;
 @end
 
-#ifndef AP_SCAN_DECLS
-extern APScanResult *AP_EMPTY_SCAN_RESULT;
-#endif
+@protocol APScanDelegate <NSObject>
+-(UIViewController *)scanHostViewController;
+-(void)toggleScanner:(APScannerDoneBlock)block;
+@end
 
 @interface APScanRequestWatcher : NSObject<ZBarReaderDelegate>
--(UIViewController *)request:(UIViewController *)caller;
+-(id)initWithDelegate:(id<APScanDelegate>)delegate;
+-(UIViewController *)request;
 @end

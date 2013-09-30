@@ -10,7 +10,6 @@
 #define APKEYEDSTRING(key) extern NSString *const key;
 #endif
 
-APKEYEDSTRING(kNotifyRequestScanner)
 APKEYEDSTRING(kNotifyScanComplete)
 APKEYEDSTRING(kNotifyTransactionUserActed)
 APKEYEDSTRING(kNotifyUserLoginStatusChanged)
@@ -53,9 +52,7 @@ APKEYEDSTRING(kCellIDOffer)
 APKEYEDSTRING(kCellIDHistory)
 
 APKEYEDSTRING(kImageAccount)
-APKEYEDSTRING(kImageAlert)
 APKEYEDSTRING(kImageBack)
-APKEYEDSTRING(kImageBalloon)
 APKEYEDSTRING(kImageBlackSq)
 APKEYEDSTRING(kImageBanner)
 APKEYEDSTRING(kImageButtonBg)

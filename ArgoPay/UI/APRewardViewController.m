@@ -48,6 +48,7 @@ APLOGRELEASE
     _argPoints.text = @"";
     _currentSort = kRemoteValueSortByNewest;
     [self fetchRewards:YES];
+    self.title = @"Rewards";
 }
 
 -(void)fetchRewards:(BOOL)withUI;
