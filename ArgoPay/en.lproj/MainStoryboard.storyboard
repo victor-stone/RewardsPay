@@ -480,21 +480,6 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RJl-0r-5gn">
-                                <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Map goes here" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hLr-oy-uMJ">
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="0.092039233580000004" green="0.20446510039999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstItem="hLr-oy-uMJ" firstAttribute="top" secondItem="RJl-0r-5gn" secondAttribute="top" constant="46" id="Fqb-ul-8Fx"/>
-                                    <constraint firstItem="hLr-oy-uMJ" firstAttribute="centerX" secondItem="RJl-0r-5gn" secondAttribute="centerX" type="default" id="JGi-51-Zev"/>
-                                    <constraint firstAttribute="height" constant="131" type="user" id="fZg-Ai-hmd"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LOv-8N-1bU">
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CgK-x6-ykl">
@@ -556,20 +541,30 @@
                                     <constraint firstAttribute="bottom" secondItem="M1a-NP-N5g" secondAttribute="bottom" constant="9" type="user" id="wcb-8R-x5H"/>
                                 </constraints>
                             </view>
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yPz-b6-ZKH">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="131" type="user" id="yoh-sT-dpW"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="0j7-T1-mVF" kind="embed" id="BVD-Nj-eMf"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="LOv-8N-1bU" secondAttribute="bottom" constant="132" type="user" id="1RV-Gm-6sk"/>
                             <constraint firstItem="LOv-8N-1bU" firstAttribute="trailing" secondItem="CH6-q3-BTL" secondAttribute="trailing" type="default" id="5ik-Ov-gzh"/>
                             <constraint firstItem="LOv-8N-1bU" firstAttribute="top" secondItem="CH6-q3-BTL" secondAttribute="top" constant="131" type="user" id="BfP-zu-opL"/>
-                            <constraint firstAttribute="bottom" secondItem="RJl-0r-5gn" secondAttribute="bottom" type="user" id="DRy-oH-1gO"/>
                             <constraint firstItem="LOv-8N-1bU" firstAttribute="leading" secondItem="CH6-q3-BTL" secondAttribute="leading" type="default" id="Db6-Ho-bxM"/>
                             <constraint firstItem="dqw-hO-dAy" firstAttribute="centerX" secondItem="AMS-Zt-dAy" secondAttribute="centerX" type="default" id="JQA-Vs-QvX"/>
                             <constraint firstAttribute="bottom" secondItem="LOv-8N-1bU" secondAttribute="bottom" constant="132" type="user" id="OCk-0O-aTj"/>
-                            <constraint firstItem="RJl-0r-5gn" firstAttribute="trailing" secondItem="CH6-q3-BTL" secondAttribute="trailing" type="default" id="Ypi-ri-eUC"/>
+                            <constraint firstItem="yPz-b6-ZKH" firstAttribute="leading" secondItem="CH6-q3-BTL" secondAttribute="leading" type="default" id="SQQ-Hq-obf"/>
                             <constraint firstItem="AMS-Zt-dAy" firstAttribute="leading" secondItem="CH6-q3-BTL" secondAttribute="leading" type="default" id="Zga-jb-osl"/>
-                            <constraint firstItem="RJl-0r-5gn" firstAttribute="leading" secondItem="CH6-q3-BTL" secondAttribute="leading" type="default" id="c4g-2T-ubT"/>
                             <constraint firstItem="AMS-Zt-dAy" firstAttribute="top" secondItem="CH6-q3-BTL" secondAttribute="top" type="default" id="l0u-2t-OQG"/>
+                            <constraint firstItem="yPz-b6-ZKH" firstAttribute="trailing" secondItem="CH6-q3-BTL" secondAttribute="trailing" type="default" id="mRO-FF-YHM"/>
+                            <constraint firstItem="yPz-b6-ZKH" firstAttribute="top" secondItem="CH6-q3-BTL" secondAttribute="top" priority="1" constant="417" type="user" id="mfc-oC-Rdp"/>
+                            <constraint firstItem="yPz-b6-ZKH" firstAttribute="bottom" secondItem="CH6-q3-BTL" secondAttribute="bottom" type="user" id="ow7-dX-Ier"/>
                             <constraint firstItem="AMS-Zt-dAy" firstAttribute="trailing" secondItem="CH6-q3-BTL" secondAttribute="trailing" type="default" id="uUt-ZL-tn4"/>
                             <constraint firstItem="dqw-hO-dAy" firstAttribute="top" secondItem="CH6-q3-BTL" secondAttribute="top" constant="52" type="user" id="yTM-Wg-TKk"/>
                             <constraint firstItem="LOv-8N-1bU" firstAttribute="top" secondItem="dqw-hO-dAy" secondAttribute="bottom" constant="8" symbolic="YES" type="user" id="yXd-Vk-b8l"/>
@@ -579,7 +574,6 @@
                         <outlet property="argoNavBar" destination="AMS-Zt-dAy" id="W6n-Qv-Fdg"/>
                         <outlet property="expiration" destination="VGg-BV-yBI" id="b49-sE-b3e"/>
                         <outlet property="logo" destination="CgK-x6-ykl" id="qKb-V9-JmN"/>
-                        <outlet property="map" destination="RJl-0r-5gn" id="yxW-xN-vb4"/>
                         <outlet property="merchantName" destination="XB5-bh-CtZ" id="p9O-jf-Z8H"/>
                         <outlet property="offerDetail" destination="M1a-NP-N5g" id="Lmw-b4-l57"/>
                         <outlet property="offerName" destination="pcg-gx-mKr" id="e92-B7-0SY"/>
@@ -1271,20 +1265,6 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qoH-7S-au1" userLabel="map view">
-                                <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="map goes here" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hrN-v3-1mP">
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="1" green="0.66801874210000001" blue="0.88111001300000003" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstItem="hrN-v3-1mP" firstAttribute="centerX" secondItem="qoH-7S-au1" secondAttribute="centerX" type="default" id="Zld-pv-J3e"/>
-                                    <constraint firstAttribute="bottom" secondItem="hrN-v3-1mP" secondAttribute="bottom" constant="110" id="dPN-m9-tjy"/>
-                                </constraints>
-                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XaJ-OX-1bP">
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal">
@@ -1298,6 +1278,12 @@
                                     <action selector="disclose:" destination="DAN-qH-K6z" eventType="touchUpInside" id="xka-UC-l7x"/>
                                 </connections>
                             </button>
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5VD-2d-de6">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="Qen-in-Eic" kind="embed" id="fcb-LA-9XU"/>
+                                </connections>
+                            </containerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="30" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Eos-Th-Zk5">
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -1385,34 +1371,34 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="qoH-7S-au1" firstAttribute="bottom" secondItem="Zaq-3g-be9" secondAttribute="bottom" type="default" id="4g2-UZ-6Zv"/>
-                            <constraint firstItem="6MR-1j-0aF" firstAttribute="top" secondItem="Zaq-3g-be9" secondAttribute="top" constant="176" id="4yK-wd-Sxo"/>
+                            <constraint firstItem="XaJ-OX-1bP" firstAttribute="top" secondItem="Zaq-3g-be9" secondAttribute="top" constant="174" id="2B1-Dc-KiI"/>
                             <constraint firstItem="UfE-nD-vdB" firstAttribute="top" secondItem="Zaq-3g-be9" secondAttribute="top" constant="55" id="6DT-VJ-AdJ"/>
                             <constraint firstAttribute="trailing" secondItem="XaJ-OX-1bP" secondAttribute="trailing" constant="8" id="6Ju-GI-t6G"/>
-                            <constraint firstItem="bWv-77-Agz" firstAttribute="top" secondItem="Zaq-3g-be9" secondAttribute="top" constant="136" id="74x-L5-CQ9"/>
                             <constraint firstItem="wYD-KM-Dkx" firstAttribute="leading" secondItem="Zaq-3g-be9" secondAttribute="leading" constant="94" id="82j-Wf-6Vg"/>
                             <constraint firstItem="bWv-77-Agz" firstAttribute="leading" secondItem="aH3-hv-EsY" secondAttribute="leading" type="default" id="8vW-b8-OSS"/>
-                            <constraint firstItem="qoH-7S-au1" firstAttribute="trailing" secondItem="Zaq-3g-be9" secondAttribute="trailing" type="default" id="CwL-ur-FD0"/>
-                            <constraint firstItem="aH3-hv-EsY" firstAttribute="top" secondItem="Zaq-3g-be9" secondAttribute="top" constant="115" id="ESv-fC-DC5"/>
+                            <constraint firstItem="bWv-77-Agz" firstAttribute="top" secondItem="Zaq-3g-be9" secondAttribute="top" constant="136" id="ERD-ZB-xjh"/>
+                            <constraint firstItem="5VD-2d-de6" firstAttribute="trailing" secondItem="Zaq-3g-be9" secondAttribute="trailing" type="default" id="GXl-f5-xQA"/>
                             <constraint firstAttribute="trailing" secondItem="bWv-77-Agz" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="Gbe-mg-9wO"/>
-                            <constraint firstItem="wYD-KM-Dkx" firstAttribute="top" secondItem="Zaq-3g-be9" secondAttribute="top" constant="154" id="HMS-jT-9fD"/>
+                            <constraint firstItem="Eos-Th-Zk5" firstAttribute="top" secondItem="Zaq-3g-be9" secondAttribute="top" constant="204" id="KOt-gV-6Hn"/>
                             <constraint firstItem="QpI-ZY-ccL" firstAttribute="centerY" secondItem="UfE-nD-vdB" secondAttribute="centerY" type="default" id="La5-Zw-rSZ"/>
-                            <constraint firstItem="qoH-7S-au1" firstAttribute="top" secondItem="XaJ-OX-1bP" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="MKw-nv-9jH"/>
-                            <constraint firstItem="qoH-7S-au1" firstAttribute="leading" secondItem="Zaq-3g-be9" secondAttribute="leading" type="default" id="NHe-OJ-LQq"/>
+                            <constraint firstItem="6MR-1j-0aF" firstAttribute="top" secondItem="Zaq-3g-be9" secondAttribute="top" constant="176" id="MJb-qN-7iQ"/>
+                            <constraint firstItem="5VD-2d-de6" firstAttribute="top" secondItem="Zaq-3g-be9" secondAttribute="top" constant="207" id="Mic-RD-xnC"/>
                             <constraint firstAttribute="trailing" secondItem="QpI-ZY-ccL" secondAttribute="trailing" constant="9" id="SN5-HH-Ir8"/>
+                            <constraint firstAttribute="bottom" secondItem="5VD-2d-de6" secondAttribute="bottom" constant="-2" id="T3x-Uz-oer"/>
                             <constraint firstItem="NsM-PT-eFj" firstAttribute="top" secondItem="Zaq-3g-be9" secondAttribute="top" type="default" id="UaA-Wl-4G5"/>
                             <constraint firstItem="UfE-nD-vdB" firstAttribute="leading" secondItem="Zaq-3g-be9" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="bdI-JV-8Vp"/>
                             <constraint firstItem="Eos-Th-Zk5" firstAttribute="trailing" secondItem="Zaq-3g-be9" secondAttribute="trailing" type="default" id="deM-Ub-E6r"/>
                             <constraint firstItem="6MR-1j-0aF" firstAttribute="leading" secondItem="wYD-KM-Dkx" secondAttribute="leading" type="default" id="dfK-x7-aFA"/>
-                            <constraint firstItem="XaJ-OX-1bP" firstAttribute="top" secondItem="Zaq-3g-be9" secondAttribute="top" constant="174" id="e8O-aD-McH"/>
                             <constraint firstItem="cnH-UL-apZ" firstAttribute="leading" secondItem="Zaq-3g-be9" secondAttribute="leading" type="default" id="eCe-ab-yxe"/>
+                            <constraint firstItem="aH3-hv-EsY" firstAttribute="top" secondItem="Zaq-3g-be9" secondAttribute="top" constant="115" id="eKO-pQ-oD9"/>
                             <constraint firstItem="cnH-UL-apZ" firstAttribute="top" secondItem="Zaq-3g-be9" secondAttribute="top" constant="20" symbolic="YES" type="default" id="ggI-qw-cGp"/>
                             <constraint firstItem="NsM-PT-eFj" firstAttribute="trailing" secondItem="Zaq-3g-be9" secondAttribute="trailing" type="default" id="iZP-Jj-4A8"/>
+                            <constraint firstItem="wYD-KM-Dkx" firstAttribute="top" secondItem="Zaq-3g-be9" secondAttribute="top" constant="154" id="iqh-rw-fpN"/>
                             <constraint firstItem="cnH-UL-apZ" firstAttribute="trailing" secondItem="Zaq-3g-be9" secondAttribute="trailing" type="default" id="iuH-qr-ibk"/>
+                            <constraint firstItem="5VD-2d-de6" firstAttribute="leading" secondItem="Zaq-3g-be9" secondAttribute="leading" type="default" id="jai-CO-fd1"/>
                             <constraint firstItem="NsM-PT-eFj" firstAttribute="leading" secondItem="Zaq-3g-be9" secondAttribute="leading" type="default" id="nmd-YG-9Ay"/>
                             <constraint firstItem="Eos-Th-Zk5" firstAttribute="leading" secondItem="Zaq-3g-be9" secondAttribute="leading" type="default" id="ogj-ob-O97"/>
                             <constraint firstAttribute="trailing" secondItem="aH3-hv-EsY" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="py5-Fk-Qlx"/>
-                            <constraint firstItem="Eos-Th-Zk5" firstAttribute="top" secondItem="Zaq-3g-be9" secondAttribute="top" constant="204" id="ukV-r1-qFV"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1737,6 +1723,36 @@
             </objects>
             <point key="canvasLocation" x="1455" y="-1110"/>
         </scene>
+        <!--Merchant Detail Map Embedding-->
+        <scene sceneID="I7M-Wh-XLR">
+            <objects>
+                <viewController id="Qen-in-Eic" customClass="APMerchantDetailMapEmbedding" sceneMemberID="viewController">
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="zlA-hx-HaP">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="343"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UT0-JQ-gxW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2831" y="381"/>
+        </scene>
+        <!--Offer Details Map Embedding-->
+        <scene sceneID="epL-4b-2UR">
+            <objects>
+                <viewController id="0j7-T1-mVF" customClass="APOfferDetailsMapEmbedding" sceneMemberID="viewController">
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gIh-b6-xBU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="131"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dCa-75-jGT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1470" y="-435"/>
+        </scene>
     </scenes>
     <resources>
         <image name="appIcon.png" width="57" height="57"/>
@@ -1755,6 +1771,204 @@
         <image name="kImageTransactionExpander.png" width="387" height="20"/>
         <image name="kImageTransactionTop.png" width="387" height="307"/>
     </resources>
+    <classes>
+        <class className="APArgoAccountViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APArgoAccountViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="argoNavBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="availableCredit" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="creditBalance" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="minimumPayment" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="paymentDueDate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="transactionButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="APErrorViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APErrorViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="bottomMessage" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="mainMessage" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
+            </relationships>
+        </class>
+        <class className="APHistoryCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APHistoryCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="amount" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="date" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="name" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="APHistoryViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APHistoryViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="sort:" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="argoNavBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="transactionsTable" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="APLocationViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APLocationViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="argoNavBar" candidateClass="UINavigationBar"/>
+            </relationships>
+        </class>
+        <class className="APLoginViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APLoginViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="argoNavBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="password" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="username" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="APMainViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APMainViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="blackTapNavBackground" candidateClass="UIView"/>
+                <relationship kind="outlet" name="embeddingContainer" candidateClass="UIView"/>
+                <relationship kind="outlet" name="tabNavigator" candidateClass="APTabNavigator"/>
+            </relationships>
+        </class>
+        <class className="APMasterViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APMasterViewController.h"/>
+        </class>
+        <class className="APMenuCell" superclassName="UICollectionViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APMenuCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="title" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="APMenuViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APMenuViewController.h"/>
+        </class>
+        <class className="APMerchantDetailCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APMerchantDetailCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="credit" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="points" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="redeemButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="APMerchantDetailMapEmbedding" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APMerchantDetailMapEmbedding.h"/>
+        </class>
+        <class className="APMerchantDetailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APMerchantDetailViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="disclose:"/>
+                <relationship kind="outlet" name="cityState" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="discloseButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="mapViewPlaceHolder" candidateClass="UIView"/>
+                <relationship kind="outlet" name="merchantName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="merchantPoints" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="orangeNavBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="phoneNumber" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="pointsTable" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="streetAddr" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="urlAddr" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="APOfferDetailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APOfferDetailViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="argoNavBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="expiration" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="logo" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="map" candidateClass="UIView"/>
+                <relationship kind="outlet" name="merchantName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="offerDetail" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="offerName" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="APOfferDetailsMapEmbedding" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APOfferDetailsMapEmbedding.h"/>
+        </class>
+        <class className="APOffersCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APOffersCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="businessName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="expiration" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="logo" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="offerDescription" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="APOffersViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APOffersViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="argoNavBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="offersTable" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="APRewardsCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APRewardsCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="activity" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="logo" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="merchantName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="points" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="redeemButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="status" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="value" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="APRewardsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APRewardsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="argPoints" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="rewardsTable" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="APSettingsViewController" superclassName="VSSettingsExtensions">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APSettingsViewController.h"/>
+        </class>
+        <class className="APTab" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APTab.h"/>
+            <relationships>
+                <relationship kind="outlet" name="image" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="label" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="APTabNavigator" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APTabNavigator.h"/>
+            <relationships>
+                <relationship kind="outlet" name="location" candidateClass="APTab"/>
+                <relationship kind="outlet" name="offers" candidateClass="APTab"/>
+                <relationship kind="outlet" name="scan" candidateClass="APTab"/>
+            </relationships>
+        </class>
+        <class className="APTranasctionViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/APTranasctionViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="cancelButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="grandTotal" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="merchantItem" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="merchantName" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="IASKAppSettingsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/IASKAppSettingsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="delegate"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="UICollectionReusableView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
+        </class>
+        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
+        </class>
+        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+        <class className="VSSettingsExtensions" superclassName="IASKAppSettingsViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/VSSettingsExtensions.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

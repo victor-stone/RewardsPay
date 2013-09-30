@@ -7,13 +7,16 @@
 //
 
 #import "APStrings.h"
+#import <GoogleMaps/GoogleMaps.h>
 
 @interface APLocationViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UINavigationBar *argoNavBar;
 
 @end
 
-@implementation APLocationViewController
+@implementation APLocationViewController {
+    GMSMapView *mapView_;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -31,6 +34,7 @@ APLOGRELEASE
     [super viewDidLoad];
 	[self addHomeButton:_argoNavBar];
 }
+
 
 - (void)didReceiveMemoryWarning
 {

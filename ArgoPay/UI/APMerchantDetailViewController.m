@@ -10,6 +10,35 @@
 #import "APStrings.h"
 #import "APPopup.h"
 #import "APAccount.h"
+#import <GoogleMaps/GoogleMaps.h>
+
+@interface APMerchantDetailMapEmbedding : UIViewController
+
+@end
+
+@implementation APMerchantDetailMapEmbedding {
+    GMSMapView *mapView_;
+}
+
+
+- (void)loadView {
+    // Create a GMSCameraPosition that tells the map to display the
+    // coordinate -33.86,151.20 at zoom level 6.
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-33.86
+                                                            longitude:151.20
+                                                                 zoom:6];
+    mapView_ = [GMSMapView mapWithFrame:CGRectZero camera:camera];
+    mapView_.myLocationEnabled = YES;
+    self.view = mapView_;
+    
+    // Creates a marker in the center of the map.
+    GMSMarker *marker = [[GMSMarker alloc] init];
+    marker.position = CLLocationCoordinate2DMake(-33.86, 151.20);
+    marker.title = @"Sydney";
+    marker.snippet = @"Australia";
+    marker.map = mapView_;
+}
+@end
 
 @interface APMerchantDetailCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *points;
@@ -18,8 +47,7 @@
 @end
 
 
-@implementation APMerchantDetailCell
-
+@implementation APMerchantDetailCell 
 @end
 
 @interface APMerchantDetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
@@ -33,6 +61,7 @@
 @property (weak, nonatomic) IBOutlet UINavigationBar *orangeNavBar;
 @property (weak, nonatomic) IBOutlet UITableView *pointsTable;
 @property (weak, nonatomic) IBOutlet UIButton *discloseButton;
+@property (weak, nonatomic) IBOutlet UIView *mapViewPlaceHolder;
 
 @property (nonatomic,strong) APMerchant * merchant;
 @end
@@ -55,6 +84,7 @@ APLOGRELEASE
         [self commitMerchant];
     
 }
+
 
 -(void)commitMerchant
 {

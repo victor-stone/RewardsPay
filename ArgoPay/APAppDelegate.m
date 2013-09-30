@@ -11,6 +11,8 @@
 #import "IASKSettingsReader.h"
 #import "APAccount.h"
 #import "APPopup.h"
+#import <GoogleMaps/GoogleMaps.h>
+#import "GoogleMapsKey.h"
 
 @implementation APMasterViewController
 
@@ -29,6 +31,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [GMSServices provideAPIKey:GOOGLE_MAPS_API_KEY];
+    
     [self registerUserDefaults];
     [self registerForNotifications];
     // This has to happen here to prime the 'currentAccount' object
