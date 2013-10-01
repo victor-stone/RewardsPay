@@ -177,7 +177,7 @@ static APRemoteAPI * _sharedRemoteAPI;
 #endif
     AFHTTPClient *client = [APRemoteAPI clientForSubDomain:self.subDomain];
     
-    APLOG(kDebugNetwork, @"Posting: %@ %@", self.command, self.remotableProperties);
+    APLOG(kDebugNetwork, @"Posting: %@{%@} %@", self.command, self.payloadName, self.remotableProperties);
     
     void (^parseJSON)(NSDictionary *,APRemoteAPIRequestBlock) = ^(NSDictionary *responseObject,APRemoteAPIRequestBlock block)
     {

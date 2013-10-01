@@ -75,9 +75,12 @@ APKEYEDSTRING(kImageQR)
 APKEYEDSTRING(kImageRewards)
 APKEYEDSTRING(kImageSort)
 APKEYEDSTRING(kImageSettings)
+APKEYEDSTRING(kImageWhiteSq)
+#define SELECTEDIMG(name) [name stringByAppendingString:@"-selected"]
 
 APKEYEDSTRING(kDebugFire)
 APKEYEDSTRING(kDebugLifetime)
 APKEYEDSTRING(kDebugNetwork)
 APKEYEDSTRING(kDebugViews)
 APKEYEDSTRING(kDebugUser)
+APKEYEDSTRING(kDebugLocation)

@@ -40,5 +40,6 @@
 #import "UIViewController+ArgoPay.h"
 #import "NSObject+KeyPaths.h"
 #import "NSString+APNetwork.h"
+#import "VSImageTweaks.h"
 
 #endif

@@ -1,5 +1,5 @@
 ArgoPay API Documentation
-Version 2013-09-26 17:00:00
+Version 2013-09-30 17:10:00
 
 Security Model:
 A consumer logs in either when creating a new record with ConsumerAdd, or ConsumerLogin
@@ -164,21 +164,33 @@ Future:
                            (SortBy specifies the sort order (D)istance, (C)ategory)
                            (CategoryID specific a specific Category ID)
     >Lat, Long, Distance, Limit, SortBy, CategoryID
-    <Status, Message, Locations:{MLocID, Name, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, ImageURL, Website}
+    <Status, Message, Locations:{MLocID, Name, Category, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, ImageURL, Website}
+
+   /MerchantLocationDetail (Displays the detail for a Merchant)
+                           (Shows all rewards and offers available for a merchant location
+                           (AToken: Optional if AToken is valid, then we also return consumer based data also.)
+                           (MLocID: Required.   Specifies a MLocID from previous call)
+    >AToken, MLocID
+    <MLocID, Name, Category, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, ImageURL, Website, ConsumerPoints, 
+      Offers: {OfferID, Type, Selected, DateFrom, DateTo, DaysToUse, Count, AmountDiscount, AmountMinimum, PointBonus, PointMultiplier, ArgoBonus, ArgoMultiplier, 
+               Description, LongDescription},
+      Rewards: {RewardID, DateFrom, Selected, Selectable, DateTo, AmountReward, AmountMinimum, MultipleUse, PointsRequired,
+                Description, LongDescription}
+
 
 
 -Offers
    /MerchantLocationOfferDiscountCreate
-    > MToken, MLocID, DateFrom, DateTo, DaysToUse, Count, AmountDiscount, AmountMinimum
+    > MToken, MLocID, DateFrom, DateTo, DaysToUse, Count, AmountDiscount, AmountMinimum, Description, LongDescription
     < Status, Message, OfferID
 
    /MerchantLocationOfferBonusCreate
-    > MToken, MLocID, DateFrom, DateTo, DaysToUse, Count, PointBonus, PointMultiplier, ArgoBonus, ArgoMultiplier
+    > MToken, MLocID, DateFrom, DateTo, DaysToUse, Count, PointBonus, PointMultiplier, ArgoBonus, ArgoMultiplier, Description, LongDescription
     < Status, Mesage, OfferID
 
    /MerchantLocationOfferList (Type D is discount, B is Bonus)
     > MToken, MLocID
-    < Status, Message, OfferList {OfferID, Type, DateFrom, DateTo, DaysToUse, Count, AmountDiscount, AmountMinimum, PointBonus, PointMultiplier, ArgoBonus, ArgoMultiplier}
+    < Status, Message, OfferList {OfferID, Type, DateFrom, DateTo, DaysToUse, Count, AmountDiscount, AmountMinimum, PointBonus, PointMultiplier, ArgoBonus, ArgoMultiplier, Description, LongDescription}
 
    /MerchantLocationOfferDelete
     > MToken, MLocID, OfferID
@@ -188,8 +200,8 @@ Future:
                                  (SortBy is (N)one, W-Newest First, (R)eady to use, (A)vailable to Select, (E)xpiring Soon)
                                  (Selected means that the offer has already been selected by the consumer)
     > AToken, Lat, Long, Distance, Limit, SortBy
-    < Status, Message, Offers {OfferID, Type, Selected, DateFrom, DateTo, DaysToUse, Count, AmountDiscount, AmountMinimum, PointBonus, PointMultiplier, ArgoBonus, ArgoMultiplier, 
-       Name, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, ImageURL, Website}
+    < Status, Message, Offers: {OfferID, Type, Selected, DateFrom, DateTo, DaysToUse, Count, AmountDiscount, AmountMinimum, PointBonus, PointMultiplier, ArgoBonus, ArgoMultiplier, 
+       MLocID, Name, Category, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, LongDescription, ImageURL, Website}
 
    /ConsActivateOffer
     >AToken, OfferID
@@ -197,12 +209,12 @@ Future:
 
 -Rewards
    /MerchantLocationRewardAdd
-    > MToken, MLocID, DateFrom, DateTo, AmountReward, AmountMinimum, PointsRequired, MultipleUse
+    > MToken, MLocID, DateFrom, DateTo, AmountReward, AmountMinimum, PointsRequired, MultipleUse, Description, LongDescription
     < Status, Message, RewardID
 
    /MerchantLocationRewardList (Type D is discount, B is Bonus)
     > MToken, MLocID
-    < Status, Message, RewardList {RewardID, DateFrom, DateTo, AmountReward, AmountMinimum, MultipleUse, PointsRequired}
+    < Status, Message, RewardList {RewardID, DateFrom, DateTo, AmountReward, AmountMinimum, MultipleUse, PointsRequired, Description, LongDescription}
 
    /MerchantLocationRewardDelete
     > MToken, MLocID, RewardID
@@ -211,9 +223,10 @@ Future:
    /ConsumerGetAvailableRewards (Limit is Quantity of records to return)
                                 (SortBy is (N)one, W-Newest First, (R)eady to use, (A)vailable to Select, (E)xpiring Soon)
                                 (Selected means that the offer has already been selected by the consumer)
-    > AToken, Lat, Long, Distance, Limit, SortBy 
-    < Status, Message, Rewards {RewardID, DateFrom, Selected, DateTo, AmountReward, AmountMinimum, MultipleUse, PointsRequired
-        Name, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, ImageURL, Website}
+                                (Redeemable means only offers that the consumer can now redeem instead of all rewards (Y/N))
+    > AToken, Lat, Long, Distance, Redeemable, SortBy 
+    < Status, Message, Rewards {RewardID, DateFrom, Selected, Selectable, DateTo, AmountReward, AmountMinimum, MultipleUse, PointsRequired
+        MLocID, Name, Category, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, LongDescription, ImageURL, Website}
 
    /ConsActivateReward
     >AToken, RewardID
@@ -271,7 +284,7 @@ Future:
 
    /ConsumerStatementSummary
    >AToken
-   <Status, Message, AmountAvailable, AmountOutstanding, LastTransDate, LastPayDate, ArgoPoints
+   <Status, Message, AmountAvailable, AmountOutstanding, LastTransDate, LastPayDate, NextPayDate, NetPayAmount, ArgoPoints
  
    /ConsumerStatementDetail
    >AToken, DateFrom, DateTo

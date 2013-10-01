@@ -24,6 +24,8 @@ APLOGRELEASE
     _grandTotal.text = [NSString stringWithFormat:@"%.2f",[_statusResponse.TotalAmount floatValue]];
     _merchantName.text = _statusResponse.MerchName;
     _merchantItem.text = @"Something"; // [_statusResponse.Amounts[0] valueForKey:@"Desc"]; // this can't be right
+    
+    [_cancelButton setBackgroundImage:kImageWhiteSq inset:14 tint:[UIColor orangeColor]];
 }
 
 -(void)userAction:(NSString *)type

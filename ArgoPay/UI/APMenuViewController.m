@@ -75,7 +75,8 @@ APLOGRELEASE
 {
     APMenuCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCellIDMenu forIndexPath:indexPath];
     APMenuItem * mi = menuItems()[indexPath.row];
-    [cell.imageView setImage:[UIImage imageNamed:mi.image]];
+    cell.imageView.image = [UIImage imageNamed:mi.image];
+    cell.imageView.highlightedImage = [UIImage imageNamed:SELECTEDIMG(mi.image)];
     cell.title.text = mi.label;
     return cell;
 }

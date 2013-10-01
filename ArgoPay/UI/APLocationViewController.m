@@ -22,6 +22,7 @@
 @end
 
 @interface APLocationListViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@property (weak, nonatomic) IBOutlet UITableView *locationsTable;
 @property (weak, nonatomic) IBOutlet UINavigationBar *argoNavBar;
 @end
 
@@ -44,6 +45,16 @@ APLOGRELEASE
     }];
     
     [self addRightButton:_argoNavBar button:bbi];
+    [self fetchLocations];
+}
+
+-(void)fetchLocations
+{
+    APMerchantNearMe *request = [APMerchantNearMe new];
+    [request performRequest:^(NSArray * data, NSError *err) {
+        _locations = data;
+        [_locationsTable reloadData];
+        }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -57,7 +68,7 @@ APLOGRELEASE
     APMerchantLocation * location = _locations[indexPath.row];
     cell.businessName.text = location.MercName;
     cell.category.text = location.MerchType;
-
+    return cell;
 }
 
 @end

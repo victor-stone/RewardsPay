@@ -33,14 +33,14 @@ APREMOTECMD(ConsumerLogin)
 APREMOTECMD(MerchantLocationRewardList)
 APREMOTECMD(ConsumerStatementSummary)
 APREMOTECMD(ConsumerStatementDetail)
-APREMOTECMD(MerchantLocationSearch)
+APREMOTECMD(ConsumerMerchantsNear)
 
 // Payloads
 APREMOTEPAYLOAD(Offers)
 APREMOTEPAYLOAD(Rewards)
 APREMOTEPAYLOAD(RewardList)
 APREMOTEPAYLOAD(Transactions)
-APREMOTEPAYLOAD(Locations)
+APREMOTEPAYLOAD(MerchantLocations)
 
 //
 // Values

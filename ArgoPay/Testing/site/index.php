@@ -379,24 +379,21 @@ switch($_REQUEST['cmd'] )
         
     case 'ConsumerMerchantsNear':
     {
-        $location1 = array( 'MerchName' => 'Chilly Willy',
+        $location1 = array( 'MercName' => 'Chilly Willy',
                             'MerchType' => 'Old Movies',
-                           'MToken' => 400,
-                           'MLoc' => 1000,
+                           'MerchantID' => 400,
                             'Lat' => 40.686219,
                             'Long' => -73.990934
                            );
-        $location2 = array( 'MerchName' => 'Premium Crackers',
+        $location2 = array( 'MercName' => 'Premium Crackers',
                              'MerchType' => 'Snacks & Munchies',
-                           'MToken' => 401,
-                           'MLoc' => 1001,
+                           'MerchantID' => 400,
                              'Lat' => 40.692481,
                            'Long' => -73.991527 );
         
-        $location3 = array( 'MerchName' => 'Strats R US',
+        $location3 = array( 'MercName' => 'Strats R US',
                             'MerchType' => 'Fiddlers & Pipers',
-                           'MToken' => 402,
-                           'MLoc' => 1001,
+                           'MerchantID' => 400,
                              'Lat' => 40.684462,
                            'Long' => -73.977285 );
         
