@@ -63,7 +63,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *offerName;
 @property (weak, nonatomic) IBOutlet UITextView *offerDetail;
 @property (weak, nonatomic) IBOutlet UINavigationBar *argoNavBar;
-@property (weak, nonatomic) IBOutlet UIView *map;
 @property (nonatomic,strong) APOffer *offer;
 @end
 
@@ -82,6 +81,7 @@
     [_logo setImageWithURL:[NSURL URLWithString:offer.ImageURL]];
     _merchantName.text = offer.Name;
     _offerName.text = offer.Description;
+    _offerDetail.text = offer.LongDescription;
     _expiration.text = [NSString stringWithFormat:NSLocalizedString(@"Expires: %@", @"offer detail"),[offer formatDateField:@"DateTo"]];
 }
 @end
@@ -139,7 +139,7 @@ APLOGRELEASE
 -(void)fetchOffers:(NSString *)sort
 {
     APPopup *popup = [APPopup withNetActivity:self.view];
-    APRequestOffers *request = [[APRequestOffers alloc] init];
+    APRequestGetAvailableOffers *request = [APRequestGetAvailableOffers new];
     APAccount *account = [APAccount currentAccount];
     request.AToken = account.AToken;
     request.Distance = @(20.0);

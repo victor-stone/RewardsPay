@@ -27,7 +27,12 @@
 
 @end
 
-@interface APAccountSummaryRequest : APRemoteCommand
+/*
+ /ConsumerStatementSummary
+ >AToken
+ <AmountAvailable, AmountOutstanding, LastTransDate, LastPayDate, NextPayDate, NetPayAmount, ArgoPoints
+ */
+@interface APRequestStatementSummary : APRemoteRequest
 @property (nonatomic,strong) NSString *AToken;
 @end
 
@@ -35,9 +40,11 @@
 @interface APAccountSummary : APRemoteObject
 @property (nonatomic,strong) NSNumber *AmountAvailable;
 @property (nonatomic,strong) NSNumber *AmountOutstanding;
-@property (nonatomic,strong) NSNumber *ArgoPoints;
 @property (nonatomic,strong) NSString *LastTransDate;
 @property (nonatomic,strong) NSString *LastPayDate;
+@property (nonatomic,strong) NSString *NextPayDate;
+@property (nonatomic,strong) NSNumber *NetPayAmount;
+@property (nonatomic,strong) NSNumber *ArgoPoints;
 @end
 
 
@@ -47,7 +54,7 @@
  <Status, Message, Transactions {Date, Type, Amount, AmountUnpaid, Description}
 */
 
-@interface APStatementRequest : APRemoteCommand
+@interface APRequestStatementDetail : APRemoteRequest
 @property (nonatomic,strong) NSString *AToken;
 @property (nonatomic,strong) NSString *DateFrom;
 @property (nonatomic,strong) NSString *DateTo;

@@ -20,16 +20,17 @@ typedef void (^APRemoteAPIRequestBlock)(id data, NSError *err);
 
 @end
 
-@interface APRemoteCommand : APRemoteObject
+@interface APRemoteRequest : APRemoteObject
 -(id)initWithCmd:(NSString *)cmd subDomain:(NSString *)subDomain;
 @property (readonly,nonatomic) NSDictionary *remotableProperties;
 @property (readonly,nonatomic) NSString *command;
 @property (readonly,nonatomic) NSString *subDomain;
 @property (readonly,nonatomic) Class payloadClass;
 @property (readonly,nonatomic) NSString *payloadName;
+-(NSDictionary *)paths;
 @end
 
-@interface APRemoteCommand (perform)
+@interface APRemoteRequest (perform)
 -(void)performRequest:(APRemoteAPIRequestBlock)block;
 @end
 

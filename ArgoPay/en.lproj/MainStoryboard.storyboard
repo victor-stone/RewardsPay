@@ -579,17 +579,17 @@
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="XB5-bh-CtZ">
                                         <constraints>
                                             <constraint firstAttribute="height" constant="33" id="SJc-jp-jiX"/>
-                                            <constraint firstAttribute="width" constant="174" id="u0I-2X-ZFa"/>
+                                            <constraint firstAttribute="width" constant="174" id="wMU-s3-gDe"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" preferredMaxLayoutWidth="174" translatesAutoresizingMaskIntoConstraints="NO" id="pcg-gx-mKr">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Everything I do' is goin' be funky from now on. And this is big." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" preferredMaxLayoutWidth="174" translatesAutoresizingMaskIntoConstraints="NO" id="pcg-gx-mKr">
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="38" id="bJm-Qe-q4l"/>
+                                            <constraint firstAttribute="height" constant="38" id="Ddr-WQ-D5h"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>

@@ -11,7 +11,7 @@
 #import "APAccount.h"
 #import "APRemoteStrings.h"
 
-@implementation APRequestRewards
+@implementation APRequestGetAvailableRewards
 
 -(id)init
 {
@@ -39,7 +39,7 @@
 @implementation APArgoPointsReward
 @end
 
-@implementation APActivateReward
+@implementation APRequestActivateReward
 -(id)init
 {
     return [super initWithCmd:kRemoteCmdConsActivateReward

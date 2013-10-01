@@ -8,63 +8,49 @@
 
 #import "APMerchant.h"
 #import "APRemoteStrings.h"
+#import "APOffer.h"
+#import "APArgoPointsReward.h"
 
 @implementation APMerchant
 
 @end
 
-@implementation APMerchantRewardListRequest
+@implementation APRequestMerchantLocationSearch
 
 -(id)init
 {
-    return [super initWithCmd:kRemoteCmdMerchantLocationRewardList
+    return [super initWithCmd:kRemoteCmdMerchantLocationSearch
                     subDomain:kRemoteSubDomainOffers];
 }
 
 -(Class)payloadClass
 {
-    return [APMerchantReward class];
+    return [APMerchant class];
 }
 
 -(NSString *)payloadName
 {
-    return kRemotePayloadRewardList;
+    return kRemotePayloadLocations;
 }
-
 @end
 
-@implementation APMerchantReward
-
-@end
-
-@implementation APMerchantRewardRedeemd
+@implementation APRequestMerchantLocationDetail
 
 -(id)init
 {
-    return [super initWithCmd:kRemoteCmdConsActivateReward
-                    subDomain:kRemoteSubDomainOffers];
-}
-@end
-
-@implementation APMerchantNearMe
-
--(id)init
-{
-    return [super initWithCmd:kRemoteCmdConsumerMerchantsNear
+    return [super initWithCmd:kRemoteCmdMerchantLocationDetail
                     subDomain:kRemoteSubDomainOffers];
 }
 
--(Class)payloadClass
+-(NSDictionary *)paths
 {
-    return [APMerchantLocation class];
-}
-
--(NSString *)payloadName
-{
-    return kRemotePayloadMerchantLocations;
+    return @{ kRemotePayloadROOT: [APMerchantDetail class],
+              kRemotePayloadOffers: [APOffer class],
+              kRemotePayloadRewards: [APArgoPointsReward class]
+              };
 }
 @end
 
-@implementation APMerchantLocation
 
+@implementation APMerchantDetail
 @end

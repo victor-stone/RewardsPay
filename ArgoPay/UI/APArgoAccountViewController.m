@@ -40,7 +40,7 @@
     _minimumPayment.text = empty;
     
     APAccount *account = [APAccount currentAccount];
-    APAccountSummaryRequest *request = [[APAccountSummaryRequest alloc] init];
+    APRequestStatementSummary *request = [[APRequestStatementSummary alloc] init];
     request.AToken = account.AToken;
     
     APPopup *popup = [APPopup withNetActivity:self.view];
@@ -52,10 +52,10 @@
 
 -(void)setSummary:(APAccountSummary *)summary
 {
-    _creditBalance.text = [NSString stringWithFormat:@"$%.2f",[summary.AmountAvailable floatValue]];
-    _availableCredit.text = [NSString stringWithFormat:@"$%.2f",[summary.AmountOutstanding floatValue]];
-    _paymentDueDate.text = [summary formatDateField:@"LastPayDate"];
-    _minimumPayment.text = [NSString stringWithFormat:@"$%.2f",[summary.AmountOutstanding floatValue]];
+    _creditBalance.text = [NSString stringWithFormat:@"$%.2f",[summary.AmountOutstanding floatValue]];
+    _availableCredit.text = [NSString stringWithFormat:@"$%.2f",[summary.AmountAvailable floatValue]];
+    _paymentDueDate.text = [summary formatDateField:@"NextPayDate"];
+    _minimumPayment.text = [NSString stringWithFormat:@"$%.2f",[summary.NetPayAmount floatValue]];
 }
 
 - (IBAction)seeTransaction:(id)sender

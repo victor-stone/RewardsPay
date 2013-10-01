@@ -11,6 +11,7 @@
 #import "APPopup.h"
 #import "APAccount.h"
 #import <GoogleMaps/GoogleMaps.h>
+#import "APArgoPointsReward.h"
 
 @interface APMerchantDetailMapEmbedding : UIViewController
 
@@ -61,14 +62,12 @@
 @property (weak, nonatomic) IBOutlet UINavigationBar *orangeNavBar;
 @property (weak, nonatomic) IBOutlet UITableView *pointsTable;
 @property (weak, nonatomic) IBOutlet UIButton *discloseButton;
-@property (weak, nonatomic) IBOutlet UIView *mapViewPlaceHolder;
 
-@property (nonatomic,strong) APMerchant * merchant;
+@property (nonatomic,strong) NSString * MLocID;
 @end
 
 @implementation APMerchantDetailViewController {
-    bool _loaded;
-    bool _showingPoints;
+    bool _showingRewards;
     NSArray * _rewards;
 }
 
@@ -78,53 +77,52 @@ APLOGRELEASE
 {
     [super viewDidLoad];
 	[self addBackButton:_orangeNavBar];
-    _loaded = true;
     _pointsTable.alpha = 0;
-    if( _merchant )
-        [self commitMerchant];
+    _merchantName.text = nil;
+    _merchantPoints.text = nil;
+    _streetAddr.text = nil;
+    _cityState.text = nil;
+    _phoneNumber.text = nil;
+    _urlAddr.text = nil;
+    
+    if( _MLocID )
+        self.MLocID = _MLocID;
     
 }
 
-
--(void)commitMerchant
+-(void)setMLocID:(NSString *)MLocID
 {
-    _merchantName.text = _merchant.Name;
-    _merchantPoints.text = @"200pts"; // [NSString stringWithFormat:NSLocalizedString(@"%dpts","MerchantDetail"),[_merchant.credits integerValue]];
-    _streetAddr.text = _merchant.Addr1;
-    _cityState.text = [NSString stringWithFormat:@"%@, %@", _merchant.City, _merchant.State];
-    _phoneNumber.text = _merchant.Tel;
-    _urlAddr.text = [_merchant.Website stringByReplacingOccurrencesOfString:@"http://" withString:@""];
-    [self fetchRewardPoints];
-    
-}
-
--(void)fetchRewardPoints
-{
-    APMerchantRewardListRequest * request = [APMerchantRewardListRequest new];
-    request.MToken = @"fakeToken";
-    request.MLocID = @"fakeLocID";
-    [request performRequest:^(NSArray *rewards, NSError *err) {
-        if( err )
-        {
-            [self showError:err];
-        }
-        else
-        {
-            _rewards = rewards;
-            [_pointsTable reloadData];
-        }
-    }];
-}
-
--(void)setMerchant:(APMerchant *)merchant
-{
-    _merchant = merchant;
-    [self commitMerchant];
+    _MLocID = MLocID;
+    if( _merchantName )
+    {
+        APRequestMerchantLocationDetail *request = [APRequestMerchantLocationDetail new];
+        APAccount *account = [APAccount currentAccount];
+        request.AToken = account.AToken;
+        request.MLocID = _MLocID;
+        [request performRequest:^(APMerchantDetail *merchantDetail, NSError *err) {
+            if(err)
+            {
+                [self showError:err];
+            }
+            else
+            {
+                _merchantName.text = merchantDetail.Name;
+                _merchantPoints.text = [NSString stringWithFormat:@"%dpts",[merchantDetail.ConsumerPoints integerValue] ];
+                _streetAddr.text = merchantDetail.Addr1;
+                _cityState.text = [NSString stringWithFormat:@"%@, %@", merchantDetail.City, merchantDetail.State];
+                _phoneNumber.text = merchantDetail.Tel;
+                _urlAddr.text = [merchantDetail.Website stringByReplacingOccurrencesOfString:@"http://" withString:@""];
+                _rewards = merchantDetail.Rewards;
+                [_pointsTable reloadData];
+            }
+        }];
+        
+    }
 }
 
 - (IBAction)disclose:(id)sender
 {
-    if( _showingPoints )
+    if( _showingRewards )
     {
         [UIView animateWithDuration:0.4 animations:^{
             _pointsTable.alpha = 0;
@@ -134,20 +132,9 @@ APLOGRELEASE
     }
     else
     {
-        if( _rewards )
-        {
-            [self expandTable];
-        }
-        else
-        {
-            // points haven't arrived yet, try again later
-            [NSObject performBlock:^{
-                [self disclose:sender];
-            } afterDelay:0.6];
-            return;
-        }
+        [self expandTable];
     }
-    _showingPoints = !_showingPoints;
+    _showingRewards = !_showingRewards;
 }
 
 -(void)expandTable
@@ -176,8 +163,8 @@ APLOGRELEASE
         av.alpha = 1.0;
     }];
     
-    APMerchantReward * reward = _rewards[button.tag];
-    APMerchantRewardRedeemd *request = [APMerchantRewardRedeemd new];
+    APArgoPointsReward * reward = _rewards[button.tag];
+    APRequestActivateReward *request = [APRequestActivateReward new];    
     APAccount *account = [APAccount currentAccount];
     request.AToken = account.AToken;
     request.RewardID = reward.RewardID;
@@ -189,7 +176,8 @@ APLOGRELEASE
         }
         else
         {
-            [self fetchRewardPoints];
+            // sigh, for now just refresh the whole page
+            self.MLocID = _MLocID;
         }
     }];
     
@@ -198,10 +186,8 @@ APLOGRELEASE
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     APMerchantDetailCell * cell = [tableView dequeueReusableCellWithIdentifier:kCellIDMerchantDetail forIndexPath:indexPath];
-    APMerchantReward * points = _rewards[indexPath.row];
-    NSInteger credits = 200;
-    NSInteger pts = [points.PointsRequired integerValue];
-    if( credits >= pts )
+    APArgoPointsReward * reward = _rewards[indexPath.row];
+    if( [reward.Selectable isRemoteYES] )
     {
         cell.redeemButton.hidden = NO;
         cell.redeemButton.alpha = 1.0;
@@ -213,8 +199,8 @@ APLOGRELEASE
         cell.redeemButton.hidden = YES;
     }
     
-    cell.points.text = [NSString stringWithFormat:NSLocalizedString(@"%dpts","MerchantDetailCell"), pts];
-    cell.credit.text = [NSString stringWithFormat:@"$%d credit",[points.AmountReward integerValue]];
+    cell.points.text = [NSString stringWithFormat:NSLocalizedString(@"%dpts","MerchantDetailCell"), [reward.PointsRequired integerValue]];
+    cell.credit.text = [NSString stringWithFormat:@"$%d credit",[reward.AmountReward integerValue]];
     return cell;
 }
 

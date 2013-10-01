@@ -25,22 +25,23 @@ APREMOTESTRINGV(SubDomain, Customer,    customer)
 // Commands
 APREMOTECMD(ConsumerGetAvailableOffers)
 APREMOTECMD(ConsumerGetAvailableRewards)
-APREMOTECMD(ConsActivateReward)
 APREMOTECMD(ConsumerTransactionStart)
 APREMOTECMD(ConsumerTransactionStatus)
 APREMOTECMD(ConsumerTransactionApprove)
 APREMOTECMD(ConsumerLogin)
-APREMOTECMD(MerchantLocationRewardList)
 APREMOTECMD(ConsumerStatementSummary)
 APREMOTECMD(ConsumerStatementDetail)
-APREMOTECMD(ConsumerMerchantsNear)
+APREMOTECMD(MerchantLocationSearch)
+APREMOTECMD(MerchantLocationDetail)
+APREMOTECMD(ConsActivateReward)
+APREMOTECMD(ConsActivateOffer)
 
 // Payloads
+APREMOTEPAYLOAD(ROOT)
 APREMOTEPAYLOAD(Offers)
 APREMOTEPAYLOAD(Rewards)
-APREMOTEPAYLOAD(RewardList)
 APREMOTEPAYLOAD(Transactions)
-APREMOTEPAYLOAD(MerchantLocations)
+APREMOTEPAYLOAD(Locations)
 
 //
 // Values
@@ -63,5 +64,9 @@ APREMOTESTRINGV(Value, SortByNewest,            W);
 APREMOTESTRINGV(Value, SortByReadyToUse,        R);
 APREMOTESTRINGV(Value, SortByAvailableToSelect, A);
 APREMOTESTRINGV(Value, SortByExpiringSoon,      E);
+
+// MerchantLocationSearch.SortBy
+APREMOTESTRINGV(Value, Distance, D);
+APREMOTESTRINGV(Value, Category, C);
 
 #endif

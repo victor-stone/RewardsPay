@@ -16,12 +16,6 @@
 
 #import "APRemoteStrings.h"
 
-// TODO: temp including for mockup
-#import "APArgoPointsReward.h"
-#import "APMerchant.h"
-#import "APTransaction.h"
-#import "APOffer.h"
-
 @interface APRemoteAPI : NSObject
 
 +(id)sharedInstance;
@@ -116,7 +110,7 @@ static APRemoteAPI * _sharedRemoteAPI;
 
 @end
 
-@implementation APRemoteCommand (perform)
+@implementation APRemoteRequest (perform)
 
 #ifdef DEBUG
 
@@ -181,25 +175,78 @@ static APRemoteAPI * _sharedRemoteAPI;
     
     void (^parseJSON)(NSDictionary *,APRemoteAPIRequestBlock) = ^(NSDictionary *responseObject,APRemoteAPIRequestBlock block)
     {
-        Class klass = self.payloadClass;
-        NSString *payloadName = self.payloadName;
-        if( payloadName )
+        //
+        // Terminology: 'objectify' means map a NSDictionary to some
+        //              derivation of APRemoteObject
+        //
+        // This is NOT a general routine for parsing json objects
+        //
+        // It assumes the shape of response object is one of these:
+        //
+        // 1. A flat object ('Root')
+        //
+        // 1a. A flat object that has some members that are NSArrays
+        //     that need to be objectified
+        //
+        // 2. An object with a single array and the caller is only
+        //    interested in that array
+        //
+        // For case (1) the self.paths property will have
+        // the flat object's Class under the ROOT key.
+        //
+        // For case (1a) the self.paths propety will also have
+        // the name of members it cares about and relevent Class
+        // objects for the array elements.
+        //
+        // For case (2) the self.paths property will NOT have a ROOT
+        // key and simply the name of the root object's member
+        // that has the relevant array.
+        //
+        APRemoteObject *rootObject = nil;
+        NSDictionary   *paths      = self.paths;
+        
+
+        Class klass = paths[kRemotePayloadROOT];
+        if( klass )
         {
-            NSMutableArray *remotableObjects = [NSMutableArray new];
-            NSArray *dictionaries = [responseObject valueForKey:payloadName];
-            for( NSDictionary *dictionary in dictionaries)
-            {
-                APRemoteObject *instance = [[klass alloc] initWithDictionary:dictionary];
-                DOVALIDATION(instance);
-                [remotableObjects addObject:instance];
-            }
-            block( remotableObjects,nil);
+            // Case (1), maybe (1a)
+            // The 'responseObject' is the object we want to return
+            rootObject = [[klass alloc] initWithDictionary:responseObject];
         }
-        else
+        
+        for( NSString *payloadName in paths )
         {
-            APRemoteObject *instance = [[klass alloc] initWithDictionary:responseObject];
-            DOVALIDATION(instance);
-            block(instance,nil);
+            if( payloadName != kRemotePayloadROOT )
+            {
+                // may be case (1a), maybe (2)
+                klass = paths[payloadName];
+                NSArray *dictionaries = [responseObject valueForKey:payloadName];
+                NSMutableArray *remotableObjects = [NSMutableArray new];
+                for( NSDictionary *dictionary in dictionaries)
+                {
+                    APRemoteObject *instance = [[klass alloc] initWithDictionary:dictionary];
+                    DOVALIDATION(instance);
+                    [remotableObjects addObject:instance];
+                }
+                if( rootObject )
+                {
+                    // definitely case (1a)
+                    [rootObject setValue:remotableObjects forKey:payloadName];
+                }
+                else
+                {
+                    // definitely case (2)
+                    block( remotableObjects, nil );
+                    // we're done
+                    break;
+                }
+            }
+        }
+
+        if( rootObject )
+        {
+            DOVALIDATION(rootObject);
+            block(rootObject,nil);
         }
     };
     

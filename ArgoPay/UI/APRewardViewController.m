@@ -11,6 +11,7 @@
 #import "APPopup.h"
 #import "APAccount.h"
 #import "APRemoteStrings.h"
+#import "APLocation.h"
 
 @interface APRewardsCell : UITableViewCell
 @property (weak,nonatomic) IBOutlet UIImageView *logo;
@@ -60,7 +61,7 @@ APLOGRELEASE
 
     APAccount *account = [APAccount currentAccount];
     
-    APAccountSummaryRequest *summaryReq = [APAccountSummaryRequest new];
+    APRequestStatementSummary *summaryReq = [APRequestStatementSummary new];
     summaryReq.AToken = account.AToken;
     [summaryReq performRequest:^(APAccountSummary *summary, NSError *err) {
         if( err )
@@ -69,30 +70,35 @@ APLOGRELEASE
             _argPoints.text = [NSString stringWithFormat:@"%d",[summary.ArgoPoints integerValue]];
     }];
     
-    APRequestRewards *request = [[APRequestRewards alloc] init];
+    APRequestGetAvailableRewards *request = [APRequestGetAvailableRewards new];
     request.AToken = account.AToken;
     request.Distance = @(20.0);
-    request.Lat = @(343.0032);
-    request.Long = @(-893.32099);
     request.SortBy = _currentSort;
-    [request performRequest:^(id data, NSError *err) {
-        if( err )
-        {
-            [self showError:err];
-        }
-        else
-        {
-            _rewards = data;
-            [_rewardsTable reloadData];
-            [popup dismiss];
-        }
+    [[APLocation sharedInstance] currentLocation:^{
+        //
+        int WHAT_TO_DO_HERE = 1;
+    } gotLocation:^(CLLocationCoordinate2D loc) {
+        request.Lat = @(loc.latitude);
+        request.Long = @(loc.longitude);
+        [request performRequest:^(id data, NSError *err) {
+            if( err )
+            {
+                [self showError:err];
+            }
+            else
+            {
+                _rewards = data;
+                [_rewardsTable reloadData];
+                [popup dismiss];
+            }
+        }];
     }];
 }
 
 -(void)redeemReward:(UIButton *)button
 {
     APArgoPointsReward * reward = _rewards[button.tag];
-    APActivateReward *request = [APActivateReward new];
+    APRequestActivateReward *request = [APRequestActivateReward new];
     APAccount *account = [APAccount currentAccount];
     request.AToken = account.AToken;
     request.RewardID = reward.RewardID;
@@ -122,7 +128,7 @@ APLOGRELEASE
 {
     APArgoPointsReward * reward = _rewards[indexPath.row];
     UIViewController *vc = [self presentVC:kViewMerchantDetail animated:YES completion:nil];
-    [vc setValue:reward forKey:@"merchant"];
+    [vc setValue:reward.MLocID forKey:@"MLocID"];
 }
 
 

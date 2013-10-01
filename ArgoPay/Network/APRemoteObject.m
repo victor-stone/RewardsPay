@@ -8,6 +8,7 @@
 
 #import "APRemoteObject.h"
 #import "APStrings.h"
+#import "APRemoteStrings.h"
 
 @implementation APRemoteObject {
     NSMutableDictionary * _propDict;
@@ -47,7 +48,7 @@ APLOGRELEASE
 }
 @end
 
-@implementation APRemoteCommand {
+@implementation APRemoteRequest {
     NSMutableDictionary *_shippingProperties;
 }
 
@@ -60,13 +61,13 @@ APLOGRELEASE
     _command = cmd;
     _subDomain = subDomain;
     NSMutableDictionary *props = _shippingProperties;
-    // there's some quirky bug in Blocks stuff, don't have time
-    // to chase it down now. Work around: check for case where
-    // there's only one property on the object to watch and
-    // special case:
     NSArray *propertyNames = [self keyPaths];
     if( propertyNames.count > 0 )
     {
+        // there's some quirky bug in Blocks stuff, don't have time
+        // to chase it down now. Work around: check for case where
+        // there's only one property on the object to watch and
+        // special case:
         if( propertyNames.count == 1 )
         {
             NSString *key = propertyNames[0];
@@ -101,6 +102,16 @@ APLOGRELEASE
 -(Class)payloadClass
 {
     return [APRemoteRepsonse class];
+}
+
+-(NSString *)payloadName
+{
+    return kRemotePayloadROOT;
+}
+
+-(NSDictionary *)paths
+{
+    return @{ [self payloadName]: [self payloadClass] };
 }
 
 @end

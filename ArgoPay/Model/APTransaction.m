@@ -10,7 +10,7 @@
 #import "APStrings.h"
 #import "APRemoteStrings.h"
 
-@implementation APTransactionStartRequest
+@implementation APRequestTransactionStart
 -(id)init
 {
     return [super initWithCmd:kRemoteCmdConsumerTransactionStart
@@ -26,7 +26,7 @@
 @implementation APTransactionIDResponse
 @end
 
-@implementation APTransactionStatusRequest
+@implementation APRequestTransactionStatus
 -(id)init
 {
     return [super initWithCmd:kRemoteCmdConsumerTransactionStatus
@@ -43,7 +43,7 @@
 @implementation APTransactionStatusResponse
 @end
 
-@implementation APTransactionApprovalRequest
+@implementation APRequestTransactionApprove
 -(id)init
 {
     return [super initWithCmd:kRemoteCmdConsumerTransactionApprove

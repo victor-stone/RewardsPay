@@ -13,7 +13,7 @@
  > AToken, QrData, Lat, Long, PayID
  < Status, Message, TransID 
 */
-@interface APTransactionStartRequest : APRemoteCommand
+@interface APRequestTransactionStart : APRemoteRequest
 @property (nonatomic,strong) NSString * AToken;
 @property (nonatomic,strong) NSString * QrData;
 @property (nonatomic,strong) NSString * PayID; // always null for now
@@ -25,11 +25,15 @@
 @property (nonatomic,strong) NSString *TransID;
 @end
 
-@interface APTransactionStatusRequest : APRemoteCommand
+@interface APRequestTransactionStatus : APRemoteRequest
 @property (nonatomic,strong) NSString *AToken;
 @property (nonatomic,strong) NSString *TransID;
 @end
 
+/*
+ <Status, Message, TransStatus, Amounts: {Type,Amount), TotalAmount, 
+ PayAmounts: {Desc, Amount}, MerchName, MerchLocation, MerchRegister
+ */
 @interface APTransactionStatusResponse : APRemoteObject
 @property (nonatomic,strong) NSString *TransStatus;
 @property (nonatomic,strong) NSArray *Amounts; // @{ 'Type':'', 'Amount':'' }
@@ -46,7 +50,7 @@
  >AToken, TransID, Approve (Binary [Y/N])
  <Status, Message, UserMessage
  */
-@interface APTransactionApprovalRequest : APRemoteCommand
+@interface APRequestTransactionApprove : APRemoteRequest
 @property (nonatomic,strong) NSString *AToken;
 @property (nonatomic,strong) NSString *TransID;
 @property (nonatomic,strong) NSString *Approve;

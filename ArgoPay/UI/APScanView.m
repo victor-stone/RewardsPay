@@ -38,7 +38,7 @@ APLOGRELEASE
     _delegate = delegate;
     
     [self registerForBroadcast:kNotifyTransactionUserActed
-                         block:^(APScanRequestWatcher *me, APTransactionApprovalRequest *request)
+                         block:^(APScanRequestWatcher *me, APRequestTransactionApprove *request)
      {
          [request performRequest:^(APRemoteRepsonse *response, NSError *err)
           {
@@ -104,7 +104,7 @@ APLOGRELEASE
         }
     };
     
-    APTransactionStatusRequest *request = [APTransactionStatusRequest new];
+    APRequestTransactionStatus *request = [APRequestTransactionStatus new];
     request.TransID = transID;
     [request performRequest:handleStatusReponse];
 }
@@ -114,7 +114,7 @@ APLOGRELEASE
     UIViewController *vc = [_delegate scanHostViewController];
     __block APPopup *popup = [APPopup withNetActivity:vc.view];
     
-    APTransactionStartRequest *start = [APTransactionStartRequest new];
+    APRequestTransactionStart *start = [APRequestTransactionStart new];
     [[APLocation sharedInstance] currentLocation:^{
         //
     } gotLocation:^(CLLocationCoordinate2D loc) {

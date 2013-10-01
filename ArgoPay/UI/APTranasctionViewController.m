@@ -30,7 +30,7 @@ APLOGRELEASE
 
 -(void)userAction:(NSString *)type
 {
-    APTransactionApprovalRequest *request = [APTransactionApprovalRequest new];
+    APRequestTransactionApprove *request = [APRequestTransactionApprove new];
     APAccount *account = [APAccount currentAccount];
     request.AToken = account.AToken;
     request.Approve = type;

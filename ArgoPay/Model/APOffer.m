@@ -9,7 +9,7 @@
 #import "APOffer.h"
 #import "APRemoteStrings.h"
 
-@implementation APRequestOffers
+@implementation APRequestGetAvailableOffers
 
 -(id)init
 {
@@ -38,4 +38,14 @@
 
 @end
 
+@implementation APRequestActivateOffer
+
+-(id)init
+{
+    return [super initWithCmd:kRemoteCmdConsActivateOffer
+                    subDomain:kRemoteSubDomainOffers];
+}
+
+
+@end
 

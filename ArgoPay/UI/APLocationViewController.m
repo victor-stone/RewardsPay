@@ -11,6 +11,7 @@
 #import "APMerchant.h"
 #import "APRemoteStrings.h"
 #import <CoreLocation/CoreLocation.h>
+#import "APLocation.h"
 
 @interface APLocationCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *businessName;
@@ -50,24 +51,40 @@ APLOGRELEASE
 
 -(void)fetchLocations
 {
-    APMerchantNearMe *request = [APMerchantNearMe new];
-    [request performRequest:^(NSArray * data, NSError *err) {
-        _locations = data;
-        [_locationsTable reloadData];
+    APRequestMerchantLocationSearch * request = [APRequestMerchantLocationSearch new];
+    request.SortBy = kRemoteValueDistance;
+    request.Distance = @(20);
+    [[APLocation sharedInstance] currentLocation:^{
+        int WHAT_TO_DO_HERE = 1;
+    } gotLocation:^(CLLocationCoordinate2D loc) {
+        request.Long = @(loc.longitude);
+        request.Lat = @(loc.latitude);
+        [request performRequest:^(NSArray * data, NSError *err) {
+            if( err )
+            {
+                [self showError:err];
+            }
+            else
+            {
+                _locations = data;
+                [_locationsTable reloadData];
+            }
         }];
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [_locations count];
 }
+
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     APLocationCell * cell = [tableView dequeueReusableCellWithIdentifier:kCellIDLocation forIndexPath:indexPath];
-    APMerchantLocation * location = _locations[indexPath.row];
-    cell.businessName.text = location.MercName;
-    cell.category.text = location.MerchType;
+    APMerchant * merchant = _locations[indexPath.row];
+    cell.businessName.text = merchant.Name;
+    cell.category.text = merchant.Category;
     return cell;
 }
 

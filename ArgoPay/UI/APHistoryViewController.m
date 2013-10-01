@@ -44,7 +44,7 @@
 {
     APPopup *popup = [APPopup withNetActivity:self.view];
     APAccount *account = [APAccount currentAccount];
-    APStatementRequest *request = [[APStatementRequest alloc] init];
+    APRequestStatementDetail *request = [[APRequestStatementDetail alloc] init];
     request.AToken = account.AToken;
     request.DateFrom = @"1970-01-02 00:00:00";
     request.DateTo   = @"2970-01-02 00:00:00";

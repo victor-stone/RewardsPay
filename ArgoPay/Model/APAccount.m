@@ -15,7 +15,7 @@
  > Email, Password, InToken
  < Status, Message, AToken, AccountID
  */
-@interface APAccountLogin : APRemoteCommand
+@interface APRequestLogin : APRemoteRequest
 @property (nonatomic,strong) NSString *Email;
 @property (nonatomic,strong) NSString *Password;
 @property (nonatomic,strong) NSString *InToken;
@@ -35,7 +35,7 @@ static APAccount * __currentAccount;
     password:(NSString *)password
        block:(APRemoteAPIRequestBlock)block
 {
-    APAccountLogin *loginRequest = [APAccountLogin new];
+    APRequestLogin *loginRequest = [APRequestLogin new];
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
     loginRequest.Email      = loginEmail ?: [settings stringForKey:kSettingUserLoginName];
     loginRequest.Password   = password ?: [settings stringForKey:kSettingUserLoginPassword];
@@ -105,7 +105,7 @@ static APAccount * __currentAccount;
 }
 @end
 
-@implementation APAccountLogin
+@implementation APRequestLogin
 
 -(id)init
 {
@@ -119,7 +119,7 @@ static APAccount * __currentAccount;
 }
 @end
 
-@implementation APAccountSummaryRequest
+@implementation APRequestStatementSummary
 
 -(id)init
 {
@@ -136,7 +136,7 @@ static APAccount * __currentAccount;
 @implementation APAccountSummary
 @end
 
-@implementation APStatementRequest
+@implementation APRequestStatementDetail
 
 -(id)init
 {

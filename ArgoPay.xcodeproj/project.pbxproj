@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		570EC1CF17F64DFC00CBA207 /* NSObject+KeyPaths.m in Sources */ = {isa = PBXBuildFile; fileRef = 570EC1CE17F64DFC00CBA207 /* NSObject+KeyPaths.m */; };
-		570EC1D117F7345C00CBA207 /* MerchantLocationRewardList.js in Resources */ = {isa = PBXBuildFile; fileRef = 570EC1D017F7345C00CBA207 /* MerchantLocationRewardList.js */; };
 		570EC1D317F7412500CBA207 /* kImageAccountBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 570EC1D217F7412500CBA207 /* kImageAccountBg.png */; };
 		570EC1D617F741C800CBA207 /* APArgoAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 570EC1D517F741C800CBA207 /* APArgoAccountViewController.m */; };
 		570EC1F217F74FED00CBA207 /* ConsumerStatementSummary.js in Resources */ = {isa = PBXBuildFile; fileRef = 570EC1F117F74FED00CBA207 /* ConsumerStatementSummary.js */; };
@@ -22,6 +21,17 @@
 		574B2DF217EC9BEF008E17EE /* APRemoteAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 574B2DF117EC9BEF008E17EE /* APRemoteAPI.m */; };
 		574B2DF517ECA097008E17EE /* APDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 574B2DF417ECA097008E17EE /* APDebug.m */; };
 		57597A0117F4825F0074346E /* kImageSort.png in Resources */ = {isa = PBXBuildFile; fileRef = 57597A0017F4825F0074346E /* kImageSort.png */; };
+		576A2F5117FB33B600E53CA3 /* MerchantLocationDetail.js in Resources */ = {isa = PBXBuildFile; fileRef = 576A2F4F17FB33B500E53CA3 /* MerchantLocationDetail.js */; };
+		576A2F5217FB33B600E53CA3 /* MerchantLocationSearch.js in Resources */ = {isa = PBXBuildFile; fileRef = 576A2F5017FB33B600E53CA3 /* MerchantLocationSearch.js */; };
+		576A2F5D17FB601800E53CA3 /* ArgoCredit.png in Resources */ = {isa = PBXBuildFile; fileRef = 576A2F5417FB601800E53CA3 /* ArgoCredit.png */; };
+		576A2F5E17FB601800E53CA3 /* History.png in Resources */ = {isa = PBXBuildFile; fileRef = 576A2F5517FB601800E53CA3 /* History.png */; };
+		576A2F5F17FB601800E53CA3 /* MerchantDetail.png in Resources */ = {isa = PBXBuildFile; fileRef = 576A2F5617FB601800E53CA3 /* MerchantDetail.png */; };
+		576A2F6017FB601800E53CA3 /* OfferDetail.png in Resources */ = {isa = PBXBuildFile; fileRef = 576A2F5717FB601800E53CA3 /* OfferDetail.png */; };
+		576A2F6117FB601800E53CA3 /* Offers.png in Resources */ = {isa = PBXBuildFile; fileRef = 576A2F5817FB601800E53CA3 /* Offers.png */; };
+		576A2F6217FB601800E53CA3 /* Places..png in Resources */ = {isa = PBXBuildFile; fileRef = 576A2F5917FB601800E53CA3 /* Places..png */; };
+		576A2F6317FB601800E53CA3 /* Rewards.png in Resources */ = {isa = PBXBuildFile; fileRef = 576A2F5A17FB601800E53CA3 /* Rewards.png */; };
+		576A2F6417FB601800E53CA3 /* SignIn.png in Resources */ = {isa = PBXBuildFile; fileRef = 576A2F5B17FB601800E53CA3 /* SignIn.png */; };
+		576A2F6517FB601800E53CA3 /* Transaction.png in Resources */ = {isa = PBXBuildFile; fileRef = 576A2F5C17FB601800E53CA3 /* Transaction.png */; };
 		578BB57D17F208FE009E2F45 /* APOffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 578BB57C17F208FE009E2F45 /* APOffer.m */; };
 		578BB5BB17F22CFA009E2F45 /* AFNetworking.strings in Resources */ = {isa = PBXBuildFile; fileRef = 578BB5B717F22CFA009E2F45 /* AFNetworking.strings */; };
 		578BB5BC17F22CFA009E2F45 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 578BB5B917F22CFA009E2F45 /* Localizable.strings */; };
@@ -201,7 +211,6 @@
 		570CD13717F9358D007B36D1 /* GoogleMapsKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GoogleMapsKey.h; sourceTree = "<group>"; };
 		570EC1CD17F64DFC00CBA207 /* NSObject+KeyPaths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+KeyPaths.h"; sourceTree = "<group>"; };
 		570EC1CE17F64DFC00CBA207 /* NSObject+KeyPaths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+KeyPaths.m"; sourceTree = "<group>"; };
-		570EC1D017F7345C00CBA207 /* MerchantLocationRewardList.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MerchantLocationRewardList.js; sourceTree = "<group>"; };
 		570EC1D217F7412500CBA207 /* kImageAccountBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageAccountBg.png; sourceTree = "<group>"; };
 		570EC1D517F741C800CBA207 /* APArgoAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APArgoAccountViewController.m; sourceTree = "<group>"; };
 		570EC1F117F74FED00CBA207 /* ConsumerStatementSummary.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ConsumerStatementSummary.js; sourceTree = "<group>"; };
@@ -236,6 +245,17 @@
 		574B2DF317ECA097008E17EE /* APDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APDebug.h; sourceTree = "<group>"; };
 		574B2DF417ECA097008E17EE /* APDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APDebug.m; sourceTree = "<group>"; };
 		57597A0017F4825F0074346E /* kImageSort.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageSort.png; sourceTree = "<group>"; };
+		576A2F4F17FB33B500E53CA3 /* MerchantLocationDetail.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MerchantLocationDetail.js; sourceTree = "<group>"; };
+		576A2F5017FB33B600E53CA3 /* MerchantLocationSearch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MerchantLocationSearch.js; sourceTree = "<group>"; };
+		576A2F5417FB601800E53CA3 /* ArgoCredit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArgoCredit.png; sourceTree = "<group>"; };
+		576A2F5517FB601800E53CA3 /* History.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = History.png; sourceTree = "<group>"; };
+		576A2F5617FB601800E53CA3 /* MerchantDetail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MerchantDetail.png; sourceTree = "<group>"; };
+		576A2F5717FB601800E53CA3 /* OfferDetail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = OfferDetail.png; sourceTree = "<group>"; };
+		576A2F5817FB601800E53CA3 /* Offers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Offers.png; sourceTree = "<group>"; };
+		576A2F5917FB601800E53CA3 /* Places..png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Places..png; sourceTree = "<group>"; };
+		576A2F5A17FB601800E53CA3 /* Rewards.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rewards.png; sourceTree = "<group>"; };
+		576A2F5B17FB601800E53CA3 /* SignIn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SignIn.png; sourceTree = "<group>"; };
+		576A2F5C17FB601800E53CA3 /* Transaction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Transaction.png; sourceTree = "<group>"; };
 		578BB57B17F208FE009E2F45 /* APOffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APOffer.h; sourceTree = "<group>"; };
 		578BB57C17F208FE009E2F45 /* APOffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APOffer.m; sourceTree = "<group>"; };
 		578BB5B517F22C9F009E2F45 /* run_genstrings.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = run_genstrings.sh; sourceTree = "<group>"; };
@@ -577,6 +597,7 @@
 		571D75D817EB46E700F0B869 /* specs */ = {
 			isa = PBXGroup;
 			children = (
+				576A2F5317FB601800E53CA3 /* ScreenToAPIImages */,
 				57C2EC0A17F3483A003B3CA3 /* ArgoMessages.txt */,
 				57287ED317F8B41700C37D2E /* DEMO presentation v.3.docx */,
 				571D75D917EB46E700F0B869 /* ArgoPay UX note 091113.docx */,
@@ -594,6 +615,22 @@
 				571D75DF17EB46E700F0B869 /* scope.pdf */,
 			);
 			path = work_scope;
+			sourceTree = "<group>";
+		};
+		576A2F5317FB601800E53CA3 /* ScreenToAPIImages */ = {
+			isa = PBXGroup;
+			children = (
+				576A2F5417FB601800E53CA3 /* ArgoCredit.png */,
+				576A2F5517FB601800E53CA3 /* History.png */,
+				576A2F5617FB601800E53CA3 /* MerchantDetail.png */,
+				576A2F5717FB601800E53CA3 /* OfferDetail.png */,
+				576A2F5817FB601800E53CA3 /* Offers.png */,
+				576A2F5917FB601800E53CA3 /* Places..png */,
+				576A2F5A17FB601800E53CA3 /* Rewards.png */,
+				576A2F5B17FB601800E53CA3 /* SignIn.png */,
+				576A2F5C17FB601800E53CA3 /* Transaction.png */,
+			);
+			path = ScreenToAPIImages;
 			sourceTree = "<group>";
 		};
 		578BB5B417F22C9F009E2F45 /* bin */ = {
@@ -1036,6 +1073,8 @@
 		57ADDAAD17F5F33F00F23689 /* stubs */ = {
 			isa = PBXGroup;
 			children = (
+				576A2F4F17FB33B500E53CA3 /* MerchantLocationDetail.js */,
+				576A2F5017FB33B600E53CA3 /* MerchantLocationSearch.js */,
 				570EC1F617F7638D00CBA207 /* ConsumerStatementDetail.js */,
 				570EC1F117F74FED00CBA207 /* ConsumerStatementSummary.js */,
 				57ADDAAE17F5F33F00F23689 /* ConsActivateOffer.js */,
@@ -1046,7 +1085,6 @@
 				57ADDAB317F5F33F00F23689 /* ConsumerTransactionApprove.js */,
 				57ADDAB417F5F33F00F23689 /* ConsumerTransactionStart.js */,
 				57ADDAB517F5F33F00F23689 /* ConsumerTransactionStatus.js */,
-				570EC1D017F7345C00CBA207 /* MerchantLocationRewardList.js */,
 			);
 			path = stubs;
 			sourceTree = "<group>";
@@ -1143,8 +1181,9 @@
 				57A223ED17E90626000B52E9 /* InfoPlist.strings in Resources */,
 				57A223F517E90626000B52E9 /* Default.png in Resources */,
 				570EC1F217F74FED00CBA207 /* ConsumerStatementSummary.js in Resources */,
+				576A2F5117FB33B600E53CA3 /* MerchantLocationDetail.js in Resources */,
+				576A2F5217FB33B600E53CA3 /* MerchantLocationSearch.js in Resources */,
 				570EC1F717F7638E00CBA207 /* ConsumerStatementDetail.js in Resources */,
-				570EC1D117F7345C00CBA207 /* MerchantLocationRewardList.js in Resources */,
 				57A223F717E90626000B52E9 /* Default@2x.png in Resources */,
 				57ADDAB617F5F33F00F23689 /* ConsActivateOffer.js in Resources */,
 				57ADDAB717F5F33F00F23689 /* ConsActivateReward.js in Resources */,
@@ -1238,6 +1277,15 @@
 				57DA31A417FA296A00A6978A /* kImageTransactionTop@2x.png in Resources */,
 				57DA31AA17FA458900A6978A /* kImageWhiteSq.png in Resources */,
 				57DA31AB17FA458900A6978A /* kImageWhiteSq@2x.png in Resources */,
+				576A2F5D17FB601800E53CA3 /* ArgoCredit.png in Resources */,
+				576A2F5E17FB601800E53CA3 /* History.png in Resources */,
+				576A2F5F17FB601800E53CA3 /* MerchantDetail.png in Resources */,
+				576A2F6017FB601800E53CA3 /* OfferDetail.png in Resources */,
+				576A2F6117FB601800E53CA3 /* Offers.png in Resources */,
+				576A2F6217FB601800E53CA3 /* Places..png in Resources */,
+				576A2F6317FB601800E53CA3 /* Rewards.png in Resources */,
+				576A2F6417FB601800E53CA3 /* SignIn.png in Resources */,
+				576A2F6517FB601800E53CA3 /* Transaction.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
