@@ -199,8 +199,8 @@ APLOGRELEASE
         cell.redeemButton.hidden = YES;
     }
     
-    cell.points.text = [NSString stringWithFormat:NSLocalizedString(@"%dpts","MerchantDetailCell"), [reward.PointsRequired integerValue]];
-    cell.credit.text = [NSString stringWithFormat:@"$%d credit",[reward.AmountReward integerValue]];
+    cell.points.text = [NSString stringWithFormat:NSLocalizedString(@"%dpts","MerchantDetailCell"), [reward.AmountReward integerValue]];
+    cell.credit.text = [NSString stringWithFormat:@"$%d credit",[reward.PointsRequired integerValue]];
     return cell;
 }
 

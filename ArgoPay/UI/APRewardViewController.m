@@ -75,8 +75,7 @@ APLOGRELEASE
     request.Distance = @(20.0);
     request.SortBy = _currentSort;
     [[APLocation sharedInstance] currentLocation:^{
-        //
-        int WHAT_TO_DO_HERE = 1;
+#warning Need to work out what to do when location fails.
     } gotLocation:^(CLLocationCoordinate2D loc) {
         request.Lat = @(loc.latitude);
         request.Long = @(loc.longitude);

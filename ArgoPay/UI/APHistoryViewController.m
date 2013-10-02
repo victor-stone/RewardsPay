@@ -78,7 +78,7 @@
     APStatementLine * item = _historyItems[indexPath.row];
     cell.date.text = [item formatDateField:@"Date" style:NSDateFormatterShortStyle];
     cell.name.text = item.Description;
-    cell.amount = [NSString stringWithFormat:@"$%.2f", [item.Amount floatValue]] ;
+    cell.amount.text = [NSString stringWithFormat:@"$%.2f", [item.Amount floatValue]] ;
     return cell;
 }
 

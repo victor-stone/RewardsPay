@@ -260,7 +260,7 @@
 	return !boxedResult || [boxedResult boolValue];
 }
 
-- (UITextAlignment)textAlignment
+- (NSTextAlignment)textAlignment
 {
     if ([_specifierDict[kIASKTextLabelAlignment] isEqualToString:kIASKTextLabelAlignmentLeft]) {
         return NSTextAlignmentLeft;

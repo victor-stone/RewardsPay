@@ -214,6 +214,7 @@ APLOGRELEASE
     cell.offerDescription.text = offer.Description;
     cell.expiration.text = [NSString stringWithFormat:NSLocalizedString(@"Expires in %u days","OfferListingCell"),[offer.DaysToUse integerValue]];
     cell.accessoryType = [offer.Selected isRemoteYES] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+    [cell.imageView setImageWithURL:[NSURL URLWithString:offer.ImageURL]];
     return cell;
 }
 
