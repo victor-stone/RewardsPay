@@ -75,7 +75,9 @@ APLOGRELEASE
 {
     APMenuCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCellIDMenu forIndexPath:indexPath];
     APMenuItem * mi = menuItems()[indexPath.row];
-    cell.imageView.image = [UIImage imageNamed:mi.image];
+    NSString *path;
+    path = [[NSBundle mainBundle] pathForResource:mi.image ofType:@"png"];
+    cell.imageView.image = [UIImage imageWithContentsOfFile:path];
     cell.imageView.highlightedImage = [UIImage imageNamed:SELECTEDIMG(mi.image)];
     cell.title.text = mi.label;
     return cell;

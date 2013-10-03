@@ -35,8 +35,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <containerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ays-II-wps">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="572"/>
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ays-II-wps">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="410"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <segue destination="oS9-Q0-BIf" kind="embed" identifier="kSegueMainEmbedding" id="kvM-sW-axX"/>
@@ -179,14 +179,14 @@
                                 </connections>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="vAA-jJ-LOd" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="18C-Ne-Ig6"/>
                             <constraint firstItem="Ays-II-wps" firstAttribute="leading" secondItem="vAA-jJ-LOd" secondAttribute="leading" id="2ek-yI-bNp"/>
                             <constraint firstItem="Ays-II-wps" firstAttribute="top" secondItem="3" secondAttribute="top" id="73S-Uv-1nu"/>
                             <constraint firstItem="Ays-II-wps" firstAttribute="trailing" secondItem="vAA-jJ-LOd" secondAttribute="trailing" id="MMf-gn-Z96"/>
+                            <constraint firstAttribute="bottom" secondItem="Ays-II-wps" secondAttribute="bottom" constant="70" id="VbG-h7-0WD"/>
                             <constraint firstAttribute="bottom" secondItem="vAA-jJ-LOd" secondAttribute="bottom" id="dR5-iA-n8w"/>
-                            <constraint firstItem="2Hj-ce-Xpi" firstAttribute="top" secondItem="Ays-II-wps" secondAttribute="bottom" constant="47" id="mLn-fN-8Uv"/>
                             <constraint firstAttribute="trailing" secondItem="vAA-jJ-LOd" secondAttribute="trailing" id="oAK-0D-eTB"/>
                         </constraints>
                     </view>
@@ -327,7 +327,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JMW-vx-dze" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="657" y="-73"/>
+            <point key="canvasLocation" x="657" y="37"/>
         </scene>
         <!--Offers View Controller - Offers-->
         <scene sceneID="euQ-Vc-l4h">
@@ -338,7 +338,7 @@
                         <viewControllerLayoutGuide type="bottom" id="zmZ-ce-4rJ"/>
                     </layoutGuides>
                     <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="MU0-WA-BZU">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="572"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="410"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="95" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="O14-HH-ZCs">
@@ -1639,8 +1639,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jjK-et-rmU">
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jjK-et-rmU">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="WEv-hA-iBB"/>
+                                    <constraint firstAttribute="height" constant="44" id="WGn-7l-Git"/>
+                                </constraints>
                                 <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="barTintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <items>
@@ -1709,6 +1713,7 @@
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="jjK-et-rmU" firstAttribute="leading" secondItem="T68-VD-Qam" secondAttribute="leading" id="0CW-mZ-2bU"/>
                             <constraint firstItem="jjK-et-rmU" firstAttribute="top" secondItem="T68-VD-Qam" secondAttribute="top" id="Xse-hd-YZy"/>
                         </constraints>
                     </view>
@@ -1932,7 +1937,7 @@
         <image name="kImageButtonBg.png" width="100" height="80"/>
         <image name="kImageErrorBalloon.png" width="397" height="253"/>
         <image name="kImageErrorBang.png" width="140" height="143"/>
-        <image name="kImageHelp.png" width="66" height="71"/>
+        <image name="kImageHelp.png" width="57" height="57"/>
         <image name="kImageLocation.png" width="30" height="30"/>
         <image name="kImageMerchantListCellBg.png" width="301" height="51"/>
         <image name="kImageMerchantTop.png" width="320" height="191"/>
