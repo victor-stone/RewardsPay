@@ -7,9 +7,9 @@
 //
 
 
-#ifdef DEBUG
-
 #define APENABLED(key)  ([[NSUserDefaults standardUserDefaults] boolForKey:key] != NO)
+
+#ifdef DEBUG
 
 #define APLOG(key,fmt,...) APDebug(key,fmt,__VA_ARGS__);
 #define APDUMPVIEW(view) APDebugDumpView(view);
@@ -21,7 +21,7 @@ void APDebugDumpView(UIView *view);
 #else
 
 #define APLOG(...)
-#deifne APDUMPVIEW(view)
+#define APDUMPVIEW(view)
 #define APLOGRELEASE
 #define APAPPEARDUMP
 

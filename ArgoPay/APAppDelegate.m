@@ -143,7 +143,7 @@
              kSettingUserLoginName: @"",
              kSettingUserLoginPassword: @"",
              kSettingSlidingCameraView: @(YES)
-#ifdef DEBUG
+#ifdef ALLOW_DEBUG_SETTINGS
              ,
              kSettingDebugNetworkStubbed: @"file",
              kSettingDebugLocalhostAddr: @"testingargo.192.168.1.3.xip.io",

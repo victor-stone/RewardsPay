@@ -99,7 +99,7 @@ static APLocation *__sharedLocation;
     NSDate* eventDate = location.timestamp;
     NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
 
-    APDebug(kDebugLocation, @"Got location: lat:%f long:%f time:%@ now:%@ recency: %G",
+    APLOG(kDebugLocation, @"Got location: lat:%f long:%f time:%@ now:%@ recency: %G",
             location.coordinate.latitude,
             location.coordinate.longitude,
             eventDate,

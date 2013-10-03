@@ -28,7 +28,7 @@
                                                                                           action:@selector(done:)];
         self.navigationItem.leftBarButtonItem  = bbi;
 
-#ifndef DEBUG
+#ifndef ALLOW_DEBUG_SETTINGS
         [self setHiddenKeys:[NSSet setWithArray:@[kSettingDebug]] animated:NO];
 #endif
     }

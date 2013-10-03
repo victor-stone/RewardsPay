@@ -41,7 +41,7 @@ static APRemoteAPI * _sharedRemoteAPI;
 
 +(NSString *)baseURLForSubDomain:(NSString *)scope
 {
-#ifdef DEBUG
+#ifdef ALLOW_DEBUG_SETTINGS
     NSString * protocol = APENABLED(kSettingDebugNetworkSSL) ? @"https" : @"http";
     NSString * base = [[NSUserDefaults standardUserDefaults] stringForKey:kSettingDebugNetworkStubbed];
     if( [base isEqualToString:@"localhost"] )
@@ -63,7 +63,7 @@ static APRemoteAPI * _sharedRemoteAPI;
 {
     NSString *urlString = [self baseURLForSubDomain:subDomain];
     NSURL * url = [NSURL URLWithString:urlString];
-#ifdef DEBUG
+#ifdef ALLOW_DEBUG_SETTINGS
     if( url.isFileURL )
         return nil;
 #endif
@@ -112,7 +112,7 @@ static APRemoteAPI * _sharedRemoteAPI;
 
 @implementation APRemoteRequest (perform)
 
-#ifdef DEBUG
+#ifdef ALLOW_DEBUG_SETTINGS
 
 #define DOVALIDATION(obj) [self validateReceipt:obj]
 
@@ -143,7 +143,7 @@ static APRemoteAPI * _sharedRemoteAPI;
 
 #endif
 
-#ifdef DEBUG
+#ifdef ALLOW_DEBUG_SETTINGS
 
 -(void)performRequest:(APRemoteAPIRequestBlock)block
 {
@@ -172,6 +172,7 @@ static APRemoteAPI * _sharedRemoteAPI;
     AFHTTPClient *client = [APRemoteAPI clientForSubDomain:self.subDomain];
     
     APLOG(kDebugNetwork, @"Posting: %@{%@} %@", self.command, self.payloadName, self.remotableProperties);
+    NSLog(@"Posting: %@{%@} %@", self.command, self.payloadName, self.remotableProperties);
     
     void (^parseJSON)(NSDictionary *,APRemoteAPIRequestBlock) = ^(NSDictionary *responseObject,APRemoteAPIRequestBlock block)
     {
@@ -250,11 +251,12 @@ static APRemoteAPI * _sharedRemoteAPI;
         }
     };
     
-#ifdef DEBUG
+#ifdef ALLOW_DEBUG_SETTINGS
     if( !client )
     {
         NSString * path = [[NSBundle mainBundle] pathForResource:self.command ofType:@"js"];
         APLOG(kDebugNetwork, @"Using JSON file stubs: %@",path);
+        NSLog( @"Using JSON file stubs: %@",path);
         
         NSData *data = [NSData dataWithContentsOfFile:path];
         NSError * err = nil;

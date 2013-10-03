@@ -190,7 +190,7 @@
     [oldView removeFromSuperview];
     [_embeddingContainer addSubview:newView];
 	[UIView commitAnimations];
-    
+
     [dest didMoveToParentViewController:src];
     _currentEmbeddedVC = dest;
     

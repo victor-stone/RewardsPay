@@ -12,6 +12,8 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 
+#define ALLOW_DEBUG_SETTINGS 1
+
 #define VS_CONNECTIVITY_HOST_NAME "argopay.com"
 #define _AFNETWORKING_PIN_SSL_CERTIFICATES_ 1
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>title</key>
+	<string>ArgoPay</string>
+	<key>bundle-version</key>
+	<string>1.0</string>
+	<key>bundle-identifier</key>
+	<string>com.ArgoPay.ArgoPay</string>
+	<key>full-size-image</key>
+	<string>http://timbregroove.org/apps/appIcon@2x.png</string>
+	<key>display-image</key>
+	<string>http://timbregroove.org/apps/appIcon.png</string>
+	<key>URL</key>
+	<string>http://timbregroove.org/apps/ArgoPay.ipa</string>
+</dict>
+</plist>

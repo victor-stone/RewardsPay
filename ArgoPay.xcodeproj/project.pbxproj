@@ -198,6 +198,7 @@
 		57E7B84317EA044600205BCB /* kImagePopupBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 57E7B84217EA044600205BCB /* kImagePopupBG.png */; };
 		57E7B84617EA1BA400205BCB /* APPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E7B84517EA1BA400205BCB /* APPopup.m */; };
 		57E7B84D17EA5C0000205BCB /* APTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E7B84C17EA5C0000205BCB /* APTransaction.m */; };
+		57FD23A117FE0773004A50D8 /* WirelessManifest.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57FD23A017FE0773004A50D8 /* WirelessManifest.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -512,6 +513,7 @@
 		57E7B84517EA1BA400205BCB /* APPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPopup.m; sourceTree = "<group>"; };
 		57E7B84B17EA5C0000205BCB /* APTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APTransaction.h; sourceTree = "<group>"; };
 		57E7B84C17EA5C0000205BCB /* APTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APTransaction.m; sourceTree = "<group>"; };
+		57FD23A017FE0773004A50D8 /* WirelessManifest.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = WirelessManifest.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -753,6 +755,7 @@
 				57A223F617E90626000B52E9 /* Default@2x.png */,
 				57A223F817E90626000B52E9 /* Default-568h@2x.png */,
 				57E7B83417E9F01000205BCB /* about.html */,
+				57FD23A017FE0773004A50D8 /* WirelessManifest.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1152,6 +1155,11 @@
 				CLASSPREFIX = AP;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = ArgoPay;
+				TargetAttributes = {
+					57A223DE17E90626000B52E9 = {
+						DevelopmentTeam = F52Y74Z9XA;
+					};
+				};
 			};
 			buildConfigurationList = 57A223DA17E90626000B52E9 /* Build configuration list for PBXProject "ArgoPay" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1204,6 +1212,7 @@
 				57DA317C17FA213500A6978A /* kImageAccount@2x.png in Resources */,
 				570EC1D317F7412500CBA207 /* kImageAccountBg.png in Resources */,
 				57DA317D17FA213500A6978A /* kImageAccountBg@2x.png in Resources */,
+				57FD23A117FE0773004A50D8 /* WirelessManifest.plist in Resources */,
 				57A224A317E913B3000B52E9 /* kImageBack.png in Resources */,
 				57A224A417E913B3000B52E9 /* kImageBack@2x.png in Resources */,
 				57A224A617E913B3000B52E9 /* kImageBanner.png in Resources */,
@@ -1437,13 +1446,14 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ArgoPay Inc.";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -1453,6 +1463,8 @@
 		57A2240317E90626000B52E9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../gmapInit\"",
@@ -1467,6 +1479,7 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1475,6 +1488,8 @@
 		57A2240417E90626000B52E9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../gmapInit\"",
@@ -1489,6 +1504,7 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
