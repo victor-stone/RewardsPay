@@ -78,6 +78,7 @@ APLOGRELEASE
     NSString *path;
     path = [[NSBundle mainBundle] pathForResource:mi.image ofType:@"png"];
     cell.imageView.image = [UIImage imageWithContentsOfFile:path];
+    path = [[NSBundle mainBundle] pathForResource:mi.image ofType:@"png"];
     cell.imageView.highlightedImage = [UIImage imageNamed:SELECTEDIMG(mi.image)];
     cell.title.text = mi.label;
     return cell;
