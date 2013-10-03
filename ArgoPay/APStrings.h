@@ -66,6 +66,7 @@ APKEYEDSTRING(kImageLocation)
 APKEYEDSTRING(kImageLocationCircle)
 APKEYEDSTRING(kImageLogin)
 APKEYEDSTRING(kImageLogout)
+APKEYEDSTRING(kImageLogoutHome)
 APKEYEDSTRING(kImageMapList);
 APKEYEDSTRING(kImageMapView);
 APKEYEDSTRING(kImageOffers)

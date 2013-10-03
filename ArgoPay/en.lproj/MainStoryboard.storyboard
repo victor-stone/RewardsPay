@@ -53,6 +53,10 @@
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="kImageOffers.png" translatesAutoresizingMaskIntoConstraints="NO" id="hhN-cV-ppg">
                                                         <rect key="frame" x="29" y="14" width="30" height="30"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="30" id="HQd-XE-wCS"/>
+                                                            <constraint firstAttribute="width" constant="30" id="Ycz-ve-EIp"/>
+                                                        </constraints>
                                                     </imageView>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Offers" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NNT-l6-Fzd">
                                                         <rect key="frame" x="20" y="44" width="47" height="21"/>
@@ -86,6 +90,10 @@
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="kImageLocation.png" translatesAutoresizingMaskIntoConstraints="NO" id="GiX-Re-k0q">
                                                         <rect key="frame" x="38" y="14" width="30" height="30"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="30" id="bul-Wf-WEJ"/>
+                                                            <constraint firstAttribute="height" constant="30" id="xnA-xQ-see"/>
+                                                        </constraints>
                                                     </imageView>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Places" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tD4-y2-bnR">
                                                         <rect key="frame" x="20" y="44" width="66" height="21"/>
@@ -734,10 +742,10 @@
             </objects>
             <point key="canvasLocation" x="1068" y="-961"/>
         </scene>
-        <!--Menu View Controller - Home-->
+        <!--Home View Controller - Home-->
         <scene sceneID="QVj-M2-w6K">
             <objects>
-                <viewController storyboardIdentifier="kViewHome" title="Home" useStoryboardIdentifierAsRestorationIdentifier="YES" id="J4c-CJ-Shm" customClass="APMenuViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="kViewHome" title="Home" useStoryboardIdentifierAsRestorationIdentifier="YES" id="J4c-CJ-Shm" customClass="APHomeViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5I1-ms-Tx6"/>
                         <viewControllerLayoutGuide type="bottom" id="byu-fh-Q93"/>
@@ -836,7 +844,7 @@
                             <tableViewSection headerTitle="" id="eWT-Wf-JvB">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="tZh-XX-S4K" style="IBUITableViewCellStyleDefault" id="Lr7-pP-1WK">
-                                        <rect key="frame" x="0.0" y="99" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="35" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Lr7-pP-1WK" id="3SK-1U-X8w">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -856,7 +864,7 @@
                             <tableViewSection headerTitle="" id="yXn-Ls-vuo">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="i8j-Ia-sZO" style="IBUITableViewCellStyleDefault" id="eAA-HB-2ds">
-                                        <rect key="frame" x="0.0" y="163" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="99" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eAA-HB-2ds" id="BhR-1r-wNo">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -876,7 +884,7 @@
                             <tableViewSection headerTitle="" id="I3B-xW-Fhw">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="qUK-SN-bWg" style="IBUITableViewCellStyleDefault" id="scD-Pz-QYa">
-                                        <rect key="frame" x="0.0" y="227" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="163" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="scD-Pz-QYa" id="BSk-CQ-PIs">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -896,7 +904,7 @@
                             <tableViewSection headerTitle="" id="4dP-dy-R6t">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="YBF-Lw-JpT" style="IBUITableViewCellStyleDefault" id="I7k-cc-YuL">
-                                        <rect key="frame" x="0.0" y="291" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="227" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I7k-cc-YuL" id="fxZ-9P-ynI">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -916,7 +924,7 @@
                             <tableViewSection headerTitle="" id="3fw-Dc-PfE">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="lta-4B-2jE" style="IBUITableViewCellStyleDefault" id="L45-xU-FX8">
-                                        <rect key="frame" x="0.0" y="355" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="291" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="L45-xU-FX8" id="fBU-E7-fVW">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -1931,7 +1939,6 @@
     </scenes>
     <resources>
         <image name="appIcon.png" width="57" height="57"/>
-        <image name="appIcon.png" width="57" height="57"/>
         <image name="kImageAccountBg.png" width="300" height="220"/>
         <image name="kImageBanner.png" width="320" height="113"/>
         <image name="kImageBlackSq.png" width="50" height="50"/>
@@ -1939,10 +1946,10 @@
         <image name="kImageErrorBalloon.png" width="397" height="253"/>
         <image name="kImageErrorBang.png" width="140" height="143"/>
         <image name="kImageHelp.png" width="57" height="57"/>
-        <image name="kImageLocation.png" width="30" height="30"/>
+        <image name="kImageLocation.png" width="64" height="66"/>
         <image name="kImageMerchantListCellBg.png" width="301" height="51"/>
         <image name="kImageMerchantTop.png" width="320" height="191"/>
-        <image name="kImageOffers.png" width="30" height="30"/>
+        <image name="kImageOffers.png" width="64" height="66"/>
         <image name="kImageQR.png" width="30" height="30"/>
         <image name="kImageRewardsTop.png" width="320" height="281"/>
         <image name="kImageSettings.png" width="57" height="57"/>

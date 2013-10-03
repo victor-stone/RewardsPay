@@ -18,14 +18,17 @@
 
 @end
 
-@interface APMenuViewController : UIViewController<UICollectionViewDataSource>
+@interface APHomeViewController : UIViewController<UICollectionViewDataSource>
 
 @end
+
+typedef void (^APMenuItemBlock)(UIViewController *vc);
 
 @interface APMenuItem : NSObject
 @property (nonatomic,strong) NSString * image;
 @property (nonatomic,strong) NSString * label;
 @property (nonatomic,strong) NSString * navVC;
+@property (nonatomic,strong) APMenuItemBlock block;
 @end
 
 @implementation APMenuItem
@@ -36,6 +39,17 @@
     mi.image = image;
     mi.label = label;
     mi.navVC = navVC;
+    mi.block = nil;
+    return mi;
+}
+
++(id)miWithImage:(NSString *)image label:(NSString *)label block:(APMenuItemBlock)block
+{
+    APMenuItem * mi = [APMenuItem new];
+    mi.image = image;
+    mi.label = label;
+    mi.navVC = nil;
+    mi.block = [block copy];
     return mi;
 }
 
@@ -47,7 +61,7 @@ static NSArray *menuItems()
     
     if( !_items )
     {
-        _items = @[ [APMenuItem miWithImage:kImageSettings label: NSLocalizedString(@"Settings","menu") vc:kViewSettings],
+        _items = @[ [APMenuItem miWithImage:kImageHelp label: NSLocalizedString(@"Settings","menu") vc:kViewSettings],
                     [APMenuItem miWithImage:kImageHistory label: NSLocalizedString(@"History","menu") vc:kViewHistory],
                     [APMenuItem miWithImage:kImageAccount label: NSLocalizedString(@"ArgoCredit","menu") vc:kViewAccount],
                     [APMenuItem miWithImage:kImageRewards label: NSLocalizedString(@"Rewards","menu") vc:kViewRewards]];
@@ -56,7 +70,7 @@ static NSArray *menuItems()
     return _items;
 }
 
-@implementation APMenuViewController
+@implementation APHomeViewController
 
 APLOGRELEASE
 
@@ -77,8 +91,9 @@ APLOGRELEASE
     APMenuItem * mi = menuItems()[indexPath.row];
     NSString *path;
     path = [[NSBundle mainBundle] pathForResource:mi.image ofType:@"png"];
-    cell.imageView.image = [UIImage imageWithContentsOfFile:path];
-    path = [[NSBundle mainBundle] pathForResource:mi.image ofType:@"png"];
+    NSData * data;
+    data = [NSData dataWithContentsOfFile:path];
+    cell.imageView.image = [UIImage imageWithData:data];
     cell.imageView.highlightedImage = [UIImage imageNamed:SELECTEDIMG(mi.image)];
     cell.title.text = mi.label;
     return cell;
