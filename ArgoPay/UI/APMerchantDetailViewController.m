@@ -76,6 +76,7 @@ APLOGRELEASE
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self argoPayIize];
 	[self addBackButton:_orangeNavBar];
     _pointsTable.alpha = 0;
     _merchantName.text = nil;

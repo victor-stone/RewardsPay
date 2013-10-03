@@ -66,9 +66,10 @@ void * kDismissBlockKey = &kDismissBlockKey;
 -(UIBarButtonItem *)barButtonForText:(NSString *)text
                                block:(APMenuBlock)block
 {
-    UIBarButtonItem * bbi = [[UIBarButtonItem alloc] initWithTitle:text style:UIBarButtonItemStylePlain
-                                                                          target:self
-                                                                          action:@selector(invokeMenuItem:)];
+    UIBarButtonItem * bbi = [[UIBarButtonItem alloc] initWithTitle:text
+                                                             style:UIBarButtonItemStylePlain
+                                                            target:self
+                                                            action:@selector(invokeMenuItem:)];
     NSMutableDictionary * _map = self.targetMap;
     _map[@(bbi.hash)] = [block copy];
     return bbi;
@@ -189,6 +190,7 @@ void * kDismissBlockKey = &kDismissBlockKey;
     if( title )
     {
         bbBack = [self barButtonForText:title block:block];
+
         [bbBack setTitle:title];
     }
     else
@@ -198,7 +200,7 @@ void * kDismissBlockKey = &kDismissBlockKey;
         
     }
     
-    [bbBack setTintColor:[UIColor colorWithRed:0.8 green:0.6 blue:0.0 alpha:1.0]];
+    [bbBack setTintColor:[UIColor whiteColor]]; // colorWithRed:0.8 green:0.6 blue:0.0 alpha:1.0]];
     UIImage *image = [UIImage imageNamed:kImageBack];
     [bbBack setBackgroundImage:image forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
      bar.topItem.leftBarButtonItem = bbBack;
@@ -249,4 +251,25 @@ void * kDismissBlockKey = &kDismissBlockKey;
     [host presentViewController:vc animated:YES completion:nil];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)iOrientation {
+    return (iOrientation == UIInterfaceOrientationPortrait);
+}
+
+-(void)argoPayIize
+{
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        UIView *view = [[UIView alloc] initWithFrame:(CGRect){ 0, 0, 320, 20 }];
+        view.backgroundColor = [UIColor orangeColor];
+        [self.view addSubview:view];
+        
+        for( NSLayoutConstraint *lcx in self.view.constraints )
+        {
+            if( lcx.secondItem == self.view && lcx.firstAttribute == NSLayoutAttributeTop )
+            {
+                lcx.constant += 20;
+                break;
+            }
+        }
+    }
+}
 @end

@@ -33,4 +33,7 @@ typedef void (^APDismissBlock)(UIViewController* dismissing);
 -(void)showError:(NSError *)error dismissBlock:(APDismissBlock)block;
 
 -(UIViewController *)presentVC:(NSString *)vcName animated:(BOOL)animated completion:(void (^)())block;
+
+-(void)argoPayIize;
+
 @end

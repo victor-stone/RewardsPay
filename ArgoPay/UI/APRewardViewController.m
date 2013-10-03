@@ -45,6 +45,7 @@ APLOGRELEASE
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+    [self argoPayIize];
     [self addBackButton:_navBar];
     _argPoints.text = @"";
     _currentSort = kRemoteValueSortByNewest;

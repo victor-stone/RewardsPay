@@ -26,6 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self argoPayIize];
     [self addBackButton:_argoNavBar];
     
     UIImage * bg = [[UIImage imageNamed:kImageButtonBg]

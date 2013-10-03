@@ -92,11 +92,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self argoPayIize];
 	[_tabNavigator wireUp:self];
     _lastNavTab = _tabNavigator.offers.vcNav;
     self.title = _tabNavigator.offers.label.text;
     _scanWatcher = [[APScanRequestWatcher alloc] initWithDelegate:self];
     [self registerForEvents];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -163,6 +165,7 @@
 -(void)slideInView:(NSString *)vcName
 {
     UIViewController * dest = [self.storyboard instantiateViewControllerWithIdentifier:vcName];
+    
     UIViewController * src = self;
     [_currentEmbeddedVC willMoveToParentViewController:nil];
     [_currentEmbeddedVC removeFromParentViewController];

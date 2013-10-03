@@ -735,8 +735,8 @@
 				570CD13817F93596007B36D1 /* Maps */,
 				57A2247317E90F47000B52E9 /* UI */,
 				57A2240517E90F27000B52E9 /* Vendor */,
-				57A2248717E913B3000B52E9 /* glyphs */,
 				57A223E917E90626000B52E9 /* Supporting Files */,
+				57A2248717E913B3000B52E9 /* glyphs */,
 				578BB5B417F22C9F009E2F45 /* bin */,
 				5793E3DE17EB7CC7004B0838 /* Testing */,
 			);
@@ -1477,6 +1477,7 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1498,6 +1499,7 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

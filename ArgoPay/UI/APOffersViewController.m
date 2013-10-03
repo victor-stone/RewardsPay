@@ -70,6 +70,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self argoPayIize];
 	[self addBackButton:_argoNavBar];
     if( _offer )
         self.offer = _offer;

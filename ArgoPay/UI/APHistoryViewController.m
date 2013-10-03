@@ -34,6 +34,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self argoPayIize];
     [self addBackButton:_argoNavBar];
 
     [self fetchHistory:nil];

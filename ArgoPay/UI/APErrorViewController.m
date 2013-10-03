@@ -19,6 +19,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self argoPayIize];
     self.errorObj = _errorObj;
     [self addBackButton:_navBar];
 }

@@ -22,6 +22,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self argoPayIize];
     [self addBackButton:_argoNavBar];
     [_username becomeFirstResponder];
 }
