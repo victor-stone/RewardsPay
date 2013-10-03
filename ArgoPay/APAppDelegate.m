@@ -26,10 +26,6 @@
 @end
 
 
-@interface UIImage (undoc)
-+(void)_flushSharedImageCache;
-@end
-
 @implementation APAppDelegate {
     id _notifyObserver;
     bool _showingNotConnectedView;
@@ -38,8 +34,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [UIImage _flushSharedImageCache];
-    
     [self registerUserDefaults];
     [self registerForNotifications];
     

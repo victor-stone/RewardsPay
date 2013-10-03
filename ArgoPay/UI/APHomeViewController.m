@@ -8,6 +8,7 @@
 
 #import "APStrings.h"
 #import "APPopup.h"
+#import "APAccount.h"
 
 @interface APMenuCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -61,10 +62,16 @@ static NSArray *menuItems()
     
     if( !_items )
     {
-        _items = @[ [APMenuItem miWithImage:kImageHelp label: NSLocalizedString(@"Settings","menu") vc:kViewSettings],
+        _items = @[ [APMenuItem miWithImage:kImageHelp    label: NSLocalizedString(@"Settings","menu") vc:kViewSettings],
                     [APMenuItem miWithImage:kImageHistory label: NSLocalizedString(@"History","menu") vc:kViewHistory],
                     [APMenuItem miWithImage:kImageAccount label: NSLocalizedString(@"ArgoCredit","menu") vc:kViewAccount],
-                    [APMenuItem miWithImage:kImageRewards label: NSLocalizedString(@"Rewards","menu") vc:kViewRewards]];
+                    [APMenuItem miWithImage:kImageRewards label: NSLocalizedString(@"Rewards","menu") vc:kViewRewards],
+                    [APMenuItem miWithImage:kImageLogoutHome label:NSLocalizedString(@"Logout", "menu") block:^(UIViewController *vc) {
+                        [[APAccount currentAccount] logUserOut];
+                        [APPopup msgWithParent:vc.view
+                                          text:NSLocalizedString(@"You have been logged out", @"Log out button")
+                                  dismissBlock:^{ [vc navigateTo:kViewOffers];}];}]
+                    ];
     }
     
     return _items;
@@ -104,10 +111,18 @@ APLOGRELEASE
 didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     APMenuItem * mi = menuItems()[indexPath.row];
-    [self presentVC:mi.navVC animated:YES
-              completion:^{
-                  //
-              }];
+    if( mi.block )
+    {
+        mi.block(self);
+    }
+    else
+    {
+        [self presentVC:mi.navVC
+               animated:YES
+             completion:^{
+                 //
+             }];
+    }
 }
 
 
