@@ -255,9 +255,12 @@ void * kDismissBlockKey = &kDismissBlockKey;
     return (iOrientation == UIInterfaceOrientationPortrait);
 }
 
--(void)argoPayIize
+-(void)argoPayIze
 {
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        
+        [self setNeedsStatusBarAppearanceUpdate];
+        
         UIView *view = [[UIView alloc] initWithFrame:(CGRect){ 0, 0, 320, 20 }];
         view.backgroundColor = [UIColor orangeColor];
         [self.view addSubview:view];
@@ -270,6 +273,8 @@ void * kDismissBlockKey = &kDismissBlockKey;
                 break;
             }
         }
+
     }
 }
+
 @end

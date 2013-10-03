@@ -73,10 +73,15 @@
 
 APLOGRELEASE
 
+-(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self argoPayIize];
+    [self argoPayIze];
 	[self addBackButton:_orangeNavBar];
     _pointsTable.alpha = 0;
     _merchantName.text = nil;

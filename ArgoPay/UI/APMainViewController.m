@@ -89,10 +89,15 @@
     UIViewController * _scanner;
 }
 
+-(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self argoPayIize];
+    [self argoPayIze];
 	[_tabNavigator wireUp:self];
     _lastNavTab = _tabNavigator.offers.vcNav;
     self.title = _tabNavigator.offers.label.text;

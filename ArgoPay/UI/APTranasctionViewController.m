@@ -17,10 +17,15 @@
 
 APLOGRELEASE
 
+-(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self argoPayIize];
+    [self argoPayIze];
     _grandTotal.text = [NSString stringWithFormat:@"%.2f",[_statusResponse.TotalAmount floatValue]];
     _merchantName.text = _statusResponse.MerchName;
     _merchantItem.text = @"Something"; // [_statusResponse.Amounts[0] valueForKey:@"Desc"]; // this can't be right

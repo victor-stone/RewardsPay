@@ -67,10 +67,16 @@
 @end
 
 @implementation APOfferDetailViewController
+
+-(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self argoPayIize];
+    [self argoPayIze];
 	[self addBackButton:_argoNavBar];
     if( _offer )
         self.offer = _offer;

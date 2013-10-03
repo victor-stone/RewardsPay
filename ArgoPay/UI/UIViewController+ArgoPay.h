@@ -34,6 +34,6 @@ typedef void (^APDismissBlock)(UIViewController* dismissing);
 
 -(UIViewController *)presentVC:(NSString *)vcName animated:(BOOL)animated completion:(void (^)())block;
 
--(void)argoPayIize;
+-(void)argoPayIze;
 
 @end

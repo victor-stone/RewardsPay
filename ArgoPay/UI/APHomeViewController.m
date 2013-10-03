@@ -62,14 +62,14 @@ static NSArray *menuItems()
     
     if( !_items )
     {
-        _items = @[ [APMenuItem miWithImage:kImageHelp    label: NSLocalizedString(@"Settings","menu") vc:kViewSettings],
-                    [APMenuItem miWithImage:kImageHistory label: NSLocalizedString(@"History","menu") vc:kViewHistory],
-                    [APMenuItem miWithImage:kImageAccount label: NSLocalizedString(@"ArgoCredit","menu") vc:kViewAccount],
-                    [APMenuItem miWithImage:kImageRewards label: NSLocalizedString(@"Rewards","menu") vc:kViewRewards],
-                    [APMenuItem miWithImage:kImageLogoutHome label:NSLocalizedString(@"Logout", "menu") block:^(UIViewController *vc) {
+        _items = @[ [APMenuItem miWithImage:kImageHelp       label: NSLocalizedString(@"Settings","menu") vc:kViewSettings],
+                    [APMenuItem miWithImage:kImageHistory    label: NSLocalizedString(@"History","menu") vc:kViewHistory],
+                    [APMenuItem miWithImage:kImageAccount    label: NSLocalizedString(@"ArgoCredit","menu") vc:kViewAccount],
+                    [APMenuItem miWithImage:kImageRewards    label: NSLocalizedString(@"Rewards","menu") vc:kViewRewards],
+                    [APMenuItem miWithImage:kImageLogoutHome label: NSLocalizedString(@"Logout", "menu") block:^(UIViewController *vc) {
                         [[APAccount currentAccount] logUserOut];
                         [APPopup msgWithParent:vc.view
-                                          text:NSLocalizedString(@"You have been logged out", @"Log out button")
+                                          text:NSLocalizedString(@"You have been logged out", @"from menu")
                                   dismissBlock:^{ [vc navigateTo:kViewOffers];}];}]
                     ];
     }
@@ -96,11 +96,7 @@ APLOGRELEASE
 {
     APMenuCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCellIDMenu forIndexPath:indexPath];
     APMenuItem * mi = menuItems()[indexPath.row];
-    NSString *path;
-    path = [[NSBundle mainBundle] pathForResource:mi.image ofType:@"png"];
-    NSData * data;
-    data = [NSData dataWithContentsOfFile:path];
-    cell.imageView.image = [UIImage imageWithData:data];
+    cell.imageView.image = [UIImage imageNamed:mi.image];
     cell.imageView.highlightedImage = [UIImage imageNamed:SELECTEDIMG(mi.image)];
     cell.title.text = mi.label;
     return cell;
@@ -120,7 +116,7 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
         [self presentVC:mi.navVC
                animated:YES
              completion:^{
-                 //
+                 [collectionView deselectItemAtIndexPath:indexPath animated:NO];
              }];
     }
 }

@@ -25,7 +25,6 @@
 
 @end
 
-
 @implementation APAppDelegate {
     id _notifyObserver;
     bool _showingNotConnectedView;
@@ -52,6 +51,18 @@
     // Otherwise calls to +currentAccount will return nil
     [self attemptLogin];
     return YES;
+}
+
+-(void)setupAppearances
+{
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        [[UINavigationBar appearance] setTitleTextAttributes:
+         [NSDictionary dictionaryWithObjectsAndKeys:
+          [UIColor whiteColor], UITextAttributeTextColor,
+          [UIColor blackColor], UITextAttributeTextShadowColor,
+          [NSValue valueWithUIOffset:UIOffsetMake(0, 0)], UITextAttributeTextShadowOffset,
+          nil]];
+    }
 }
 
 -(APMasterViewController *)masterVC

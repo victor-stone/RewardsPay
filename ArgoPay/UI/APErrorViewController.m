@@ -16,10 +16,15 @@
 
 @implementation APErrorViewController
 
+-(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self argoPayIize];
+    [self argoPayIze];
     self.errorObj = _errorObj;
     [self addBackButton:_navBar];
 }

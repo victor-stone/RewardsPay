@@ -23,10 +23,15 @@
 
 @implementation APArgoAccountViewController
 
+-(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self argoPayIize];
+    [self argoPayIze];
     [self addBackButton:_argoNavBar];
     
     UIImage * bg = [[UIImage imageNamed:kImageButtonBg]

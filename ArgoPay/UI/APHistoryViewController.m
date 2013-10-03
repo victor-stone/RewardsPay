@@ -31,10 +31,15 @@
     NSArray *_historyItems;
 }
 
+-(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self argoPayIize];
+    [self argoPayIze];
     [self addBackButton:_argoNavBar];
 
     [self fetchHistory:nil];

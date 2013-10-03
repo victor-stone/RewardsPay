@@ -42,10 +42,15 @@
 
 APLOGRELEASE
 
+-(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    [self argoPayIize];
+    [self argoPayIze];
     [self addBackButton:_navBar];
     _argPoints.text = @"";
     _currentSort = kRemoteValueSortByNewest;
