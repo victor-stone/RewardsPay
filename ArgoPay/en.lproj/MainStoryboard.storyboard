@@ -224,6 +224,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="barTintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </textAttributes>
                                 <items>
                                     <navigationItem title="Places" id="FX4-6d-Zqm"/>
                                 </items>
@@ -428,6 +431,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="barTintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </textAttributes>
                                 <items>
                                     <navigationItem title="Offers" id="LuM-EX-Csa"/>
                                 </items>
@@ -471,6 +477,7 @@
                                 <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="barTintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <offsetWrapper key="textShadowOffset" horizontal="0.0" vertical="0.0"/>
                                 </textAttributes>
                                 <items>
@@ -626,6 +633,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="barTintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </textAttributes>
                                 <items>
                                     <navigationItem title="Offer Detail" id="wQg-6t-eZJ"/>
                                 </items>
@@ -1022,6 +1032,9 @@
                                 </constraints>
                                 <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="barTintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </textAttributes>
                                 <items>
                                     <navigationItem title="Approve Transaction" id="0Jr-Zr-lJy"/>
                                 </items>
@@ -1112,6 +1125,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="321" height="44"/>
                                 <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="barTintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </textAttributes>
                                 <items>
                                     <navigationItem title="Error" id="4v8-BL-CRm"/>
                                 </items>
@@ -1191,6 +1207,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="barTintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </textAttributes>
                                 <items>
                                     <navigationItem title="Rewards" id="ob3-V7-bnz"/>
                                 </items>
@@ -1272,6 +1291,7 @@
                                     <constraint firstAttribute="trailing" secondItem="QXh-zR-m1q" secondAttribute="trailing" constant="8" id="Pzg-CB-Ger"/>
                                     <constraint firstItem="QXh-zR-m1q" firstAttribute="baseline" secondItem="3j0-ci-uzt" secondAttribute="baseline" id="WEA-A8-tH2"/>
                                     <constraint firstItem="crf-ig-4vD" firstAttribute="centerX" secondItem="rJw-62-7ow" secondAttribute="centerX" id="c7h-uG-JpO"/>
+                                    <constraint firstItem="3j0-ci-uzt" firstAttribute="top" secondItem="rJw-62-7ow" secondAttribute="top" constant="14" id="dp5-rR-XJa"/>
                                     <constraint firstItem="crf-ig-4vD" firstAttribute="top" secondItem="3j0-ci-uzt" secondAttribute="bottom" constant="8" symbolic="YES" id="gdc-fG-Olc"/>
                                     <constraint firstItem="QXh-zR-m1q" firstAttribute="leading" secondItem="3j0-ci-uzt" secondAttribute="trailing" constant="26" id="mYL-pf-ePj"/>
                                     <constraint firstAttribute="height" constant="78" id="zdw-qV-hIk"/>
@@ -1382,22 +1402,20 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="brX-nM-kga" firstAttribute="top" secondItem="hUy-ef-Uy3" secondAttribute="bottom" id="1TV-YE-TnI"/>
                             <constraint firstItem="Swh-AM-SEe" firstAttribute="leading" secondItem="YVk-4i-TTz" secondAttribute="leading" id="3x3-JQ-3Ie"/>
                             <constraint firstItem="lSj-ja-96S" firstAttribute="leading" secondItem="rJw-62-7ow" secondAttribute="leading" id="6l0-R4-7et"/>
-                            <constraint firstItem="hUy-ef-Uy3" firstAttribute="top" secondItem="rJw-62-7ow" secondAttribute="bottom" constant="31" id="7HX-7A-ZAj"/>
                             <constraint firstAttribute="trailing" secondItem="lSj-ja-96S" secondAttribute="trailing" id="8Hi-Rd-yEa"/>
-                            <constraint firstItem="hUy-ef-Uy3" firstAttribute="top" secondItem="YVk-4i-TTz" secondAttribute="top" constant="153" id="9cR-ZA-Dej"/>
+                            <constraint firstAttribute="bottom" secondItem="hUy-ef-Uy3" secondAttribute="bottom" id="Dks-05-AEZ"/>
                             <constraint firstItem="rJw-62-7ow" firstAttribute="trailing" secondItem="Swh-AM-SEe" secondAttribute="trailing" id="GnH-9e-N5p"/>
                             <constraint firstItem="lSj-ja-96S" firstAttribute="top" secondItem="Swh-AM-SEe" secondAttribute="bottom" constant="77" id="HPc-ML-Gj8"/>
-                            <constraint firstItem="rJw-62-7ow" firstAttribute="leading" secondItem="hUy-ef-Uy3" secondAttribute="leading" id="MfF-9U-COs"/>
                             <constraint firstItem="lSj-ja-96S" firstAttribute="trailing" secondItem="rJw-62-7ow" secondAttribute="trailing" id="WQu-tl-hmN"/>
+                            <constraint firstItem="hUy-ef-Uy3" firstAttribute="trailing" secondItem="lSj-ja-96S" secondAttribute="trailing" id="cMF-Tm-7nJ"/>
                             <constraint firstItem="rJw-62-7ow" firstAttribute="leading" secondItem="Swh-AM-SEe" secondAttribute="leading" id="dzF-9t-g1T"/>
-                            <constraint firstItem="hUy-ef-Uy3" firstAttribute="top" secondItem="lSj-ja-96S" secondAttribute="bottom" constant="2" id="hmh-yB-A9R"/>
+                            <constraint firstItem="hUy-ef-Uy3" firstAttribute="top" secondItem="lSj-ja-96S" secondAttribute="bottom" constant="2" id="eEV-7v-7WX"/>
+                            <constraint firstItem="hUy-ef-Uy3" firstAttribute="leading" secondItem="lSj-ja-96S" secondAttribute="leading" id="gNW-Rq-6CZ"/>
                             <constraint firstItem="Swh-AM-SEe" firstAttribute="top" secondItem="YVk-4i-TTz" secondAttribute="top" id="hvl-wz-HWC"/>
-                            <constraint firstItem="rJw-62-7ow" firstAttribute="trailing" secondItem="hUy-ef-Uy3" secondAttribute="trailing" id="maZ-rQ-3sl"/>
                             <constraint firstItem="rJw-62-7ow" firstAttribute="top" secondItem="Swh-AM-SEe" secondAttribute="bottom" id="pp5-We-U3f"/>
                         </constraints>
                     </view>
@@ -1427,6 +1445,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="barTintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </textAttributes>
                                 <items>
                                     <navigationItem title="Merchant Detail" id="Yy0-Wn-Qwv"/>
                                 </items>
@@ -1666,6 +1687,9 @@
                                 </constraints>
                                 <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="barTintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </textAttributes>
                                 <items>
                                     <navigationItem title="ArgoCredit" id="T24-o6-aWQ"/>
                                 </items>
@@ -1827,6 +1851,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <color key="tintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="barTintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </textAttributes>
                                 <items>
                                     <navigationItem title="Recent Transactions" id="wie-Rj-QPd">
                                         <barButtonItem key="backBarButtonItem" title="Back" id="eJJ-Q0-u9j"/>
