@@ -39,6 +39,9 @@
 @property (nonatomic,strong) NSNumber *AmountMinimum;
 @property (nonatomic,strong) NSString *MultipleUse;
 @property (nonatomic,strong) NSNumber *PointsRequired;
+-(BOOL)isFetching; // UI Runtime stuff (don't make a property which will confuse the JSON verifier)
+-(void)setFetchingON;
+-(void)setFetchingOFF;
 @end
 
 @interface APRequestActivateReward : APRemoteRequest

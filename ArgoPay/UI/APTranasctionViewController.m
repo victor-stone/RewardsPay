@@ -28,9 +28,10 @@ APLOGRELEASE
     [self argoPayIze];
     _grandTotal.text = [NSString stringWithFormat:@"%.2f",[_statusResponse.TotalAmount floatValue]];
     _merchantName.text = _statusResponse.MerchName;
-    _merchantItem.text = @"Something"; // [_statusResponse.Amounts[0] valueForKey:@"Desc"]; // this can't be right
+    _merchantCategory.text = _statusResponse.Category;
     
-    [_cancelButton setBackgroundImage:kImageWhiteSq inset:14 tint:[UIColor orangeColor]];
+    _cancelButton.layer.masksToBounds = YES;
+    _cancelButton.layer.cornerRadius = 8.0;
 }
 
 -(void)userAction:(NSString *)type

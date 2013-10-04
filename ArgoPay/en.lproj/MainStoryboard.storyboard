@@ -1041,17 +1041,12 @@
                             </navigationBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uO0-Xo-i2G">
                                 <rect key="frame" x="204" y="61" width="105" height="51"/>
+                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="105" id="Vlu-4q-zI7"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
-                                <state key="normal" title="Cancel">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <state key="normal" title="Cancel"/>
                                 <connections>
                                     <action selector="cancelPayment:" destination="Aan-T8-BMv" eventType="touchUpInside" id="0tL-PK-zfC"/>
                                 </connections>
@@ -1101,8 +1096,8 @@
                     <connections>
                         <outlet property="cancelButton" destination="uO0-Xo-i2G" id="jll-LQ-v8m"/>
                         <outlet property="grandTotal" destination="g5g-gr-nQc" id="iqH-MU-pEi"/>
-                        <outlet property="merchantItem" destination="GXo-Fv-Kd4" id="b7R-IU-7wB"/>
-                        <outlet property="merchantName" destination="4Nj-Aa-xSN" id="utG-lH-dOZ"/>
+                        <outlet property="merchantCategory" destination="4Nj-Aa-xSN" id="QUd-w1-npc"/>
+                        <outlet property="merchantName" destination="GXo-Fv-Kd4" id="lSs-4K-5q7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EHs-cM-Rza" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1355,7 +1350,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="PbE-yL-8TN">
+                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="PbE-yL-8TN">
                                                     <rect key="frame" x="277" y="16" width="20" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="20" id="nER-YF-2C5"/>
@@ -1585,6 +1580,10 @@
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="HDS-ny-5eA">
+                                                    <rect key="frame" x="259" y="5" width="20" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1602,6 +1601,7 @@
                                             <constraint firstItem="VSi-Qc-Z4O" firstAttribute="trailing" secondItem="ePL-WI-hzH" secondAttribute="trailing" id="xGg-sF-biv"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="activity" destination="HDS-ny-5eA" id="baf-Ve-YHg"/>
                                             <outlet property="credit" destination="itH-wx-6M8" id="4UN-4X-Y0b"/>
                                             <outlet property="points" destination="pv0-bY-g5C" id="ZRg-bJ-vWO"/>
                                             <outlet property="redeemButton" destination="VSi-Qc-Z4O" id="XhS-La-eaK"/>
@@ -1976,7 +1976,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="appIcon.png" width="57" height="57"/>
         <image name="appIcon.png" width="57" height="57"/>
         <image name="kImageBanner.png" width="320" height="113"/>
         <image name="kImageBlackSq.png" width="50" height="50"/>

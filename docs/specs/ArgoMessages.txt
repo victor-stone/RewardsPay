@@ -1,5 +1,5 @@
 ArgoPay API Documentation
-Version 2013-09-30 17:10:00
+Version 2013-10-04 15:50:00
 
 Security Model:
 A consumer logs in either when creating a new record with ConsumerAdd, or ConsumerLogin
@@ -254,7 +254,7 @@ Future:
                               (PayAmounts is the payment methods [Charge, reward, offer])
                               (The totals both will always add up to TotalAmount)
     >AToken, TransID
-    <Status, Message, TransStatus, Amounts: {Type,Amount), TotalAmount, PayAmounts: {Desc, Amount}, MerchName, MerchLocation, MerchRegister
+    <Status, Message, TransStatus, Amounts: {Type,Amount), TotalAmount, PayAmounts: {Desc, Amount}, MerchName, MerchLocation, Category, MerchRegister
 
    /ConsumerTransactionApprove (Approves or denies a transaction)
     >AToken, TransID, Approve (Binary [Y/N])

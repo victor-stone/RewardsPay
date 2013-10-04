@@ -18,6 +18,7 @@ APKEYEDSTRING(kNotifyUserSettingChanged)
 APKEYEDSTRING(kSettingUserLoginName)
 APKEYEDSTRING(kSettingUserLoginPassword)
 APKEYEDSTRING(kSettingUserArgoPoints)
+APKEYEDSTRING(kSettingUserUniqueID)
 
 APKEYEDSTRING(kSettingSlidingCameraView)
 

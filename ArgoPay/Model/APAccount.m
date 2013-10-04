@@ -39,7 +39,7 @@ static APAccount * __currentAccount;
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
     loginRequest.Email      = loginEmail ?: [settings stringForKey:kSettingUserLoginName];
     loginRequest.Password   = password ?: [settings stringForKey:kSettingUserLoginPassword];
-    loginRequest.InToken    = @"Hey Reed, What exactly should I be sending here?";
+    loginRequest.InToken    = [[NSUserDefaults standardUserDefaults] stringForKey:kSettingUserUniqueID];
 
     APLOG(kDebugUser, @"Attemping login with username: %@ password: %@", loginRequest.Email, loginRequest.Password);
     

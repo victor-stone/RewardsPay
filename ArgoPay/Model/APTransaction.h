@@ -42,6 +42,7 @@
 @property (nonatomic,strong) NSString *MerchName;
 @property (nonatomic,strong) NSString *MerchLocation;
 @property (nonatomic,strong) NSString *MerchRegister;
+@property (nonatomic,strong) NSString *Category;
 @end
 
 /*

@@ -103,6 +103,11 @@ APLOGRELEASE
 -(void)redeemReward:(UIButton *)button
 {
     APArgoPointsReward * reward = _rewards[button.tag];
+    [reward setFetchingON];
+    NSArray *ip = @[[NSIndexPath indexPathForRow:button.tag inSection:0]];
+    [_rewardsTable reloadRowsAtIndexPaths:ip
+                         withRowAnimation:UITableViewRowAnimationFade];
+    
     APRequestActivateReward *request = [APRequestActivateReward new];
     APAccount *account = [APAccount currentAccount];
     request.AToken = account.AToken;
@@ -116,8 +121,12 @@ APLOGRELEASE
         {
             if( response.UserMessage.length > 0 )
             {
+                [reward setFetchingOFF];
+                reward.Selectable = kRemoteValueNO;
+                [_rewardsTable reloadRowsAtIndexPaths:ip
+                                     withRowAnimation:UITableViewRowAnimationFade];
+                
                 [APPopup msgWithParent:self.view text:response.UserMessage];
-                [self fetchRewards:NO];
             }
         }
     }];
@@ -149,17 +158,24 @@ APLOGRELEASE
 
     [cell.logo setImageWithURL:[NSURL URLWithString:reward.ImageURL] placeholderImage:[UIImage imageNamed:@"appIcon"]];
 
-    if( [reward.Selected isRemoteYES] == NO )
+    if( [reward isFetching] == YES )
     {
         cell.status.hidden = YES;
+        cell.activity.hidden = NO;
+        [cell.redeemButton setTitle:@"" forState:UIControlStateNormal];
+        [cell.activity startAnimating];
+    }
+    else if( [reward.Selectable isRemoteYES] )
+    {
         cell.activity.hidden = YES;
-        [cell.activity stopAnimating];
         cell.redeemButton.hidden = NO;
         cell.redeemButton.tag = indexPath.row;
+        [cell.redeemButton setTitle:NSLocalizedString(@"Redeem","Reward listing") forState:UIControlStateNormal];
         [cell.redeemButton addTarget:self action:@selector(redeemReward:) forControlEvents:UIControlEventTouchUpInside];
     }
     else
     {
+        cell.activity.hidden = YES;
         cell.status.hidden = NO;
         cell.redeemButton.hidden = YES;
     }

@@ -142,7 +142,8 @@
     return @{
              kSettingUserLoginName: @"",
              kSettingUserLoginPassword: @"",
-             kSettingSlidingCameraView: @(YES)
+             kSettingSlidingCameraView: @(YES),
+             kSettingUserUniqueID: [[NSProcessInfo processInfo] globallyUniqueString]
 #ifdef ALLOW_DEBUG_SETTINGS
              ,
              kSettingDebugNetworkStubbed: @"file",
@@ -151,7 +152,6 @@
              kSettingDebugNetworkDelay: @"1.0",
              kSettingDebugNetworkSSL: @(NO),
              kDebugNetwork:@(YES)
-
 #endif
              };
 }

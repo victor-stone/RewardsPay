@@ -1,1 +1,1 @@
-{"Status":0,"Message":"","UserMessage":"You can cancelled the transaction."}
+{"Status":0,"Message":"","UserMessage":"You have cancelled the transaction."}

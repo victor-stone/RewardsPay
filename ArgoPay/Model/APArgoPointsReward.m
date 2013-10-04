@@ -36,7 +36,22 @@
 
 @end
 
-@implementation APArgoPointsReward
+@implementation APArgoPointsReward {
+    BOOL _isFetching;
+}
+-(BOOL)isFetching
+{
+    return _isFetching == YES;
+}
+-(void)setFetchingON
+{
+    _isFetching = YES;
+}
+-(void)setFetchingOFF
+{
+    _isFetching = NO;
+}
+
 @end
 
 @implementation APRequestActivateReward

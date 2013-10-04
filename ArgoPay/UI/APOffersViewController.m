@@ -153,7 +153,7 @@ APLOGRELEASE
     request.SortBy = sort;
 
     [[APLocation sharedInstance] currentLocation:^{
-        //
+#warning Need to work out what do when location fails.
     } gotLocation:^(CLLocationCoordinate2D loc) {
         request.Lat = @(loc.latitude);
         request.Long = @(loc.longitude);
@@ -206,9 +206,42 @@ APLOGRELEASE
     APAccount *account = [APAccount currentAccount];
     if( account.isLoggedIn )
     {
-        UIViewController *vc = [self presentVC:kViewOfferDetail animated:YES completion:nil];
+        void (^showDialog)(APOffer * offer) = ^(APOffer * offer)
+        {
+            UIViewController *vc = [self presentVC:kViewOfferDetail animated:YES completion:nil];
+            [vc setValue:offer forKey:@"offer"];
+        };
+        
         APOffer * offer = _offers[indexPath.row];
-        [vc setValue:offer forKey:@"offer"];
+        if( [offer.Selected isRemoteYES] == NO )
+        {
+            APPopup *popup = [APPopup withNetActivity:self.view];
+            APRequestActivateOffer *request = [APRequestActivateOffer new];
+            APAccount * account = [APAccount currentAccount];
+            request.AToken = account.AToken;
+            request.OfferID = offer.OfferID;
+            [request performRequest:^(APRemoteRepsonse *response, NSError *err) {
+                [popup dismiss];
+                if( err )
+                {
+                    [self showError:err];
+                }
+                else
+                {
+                    [NSObject performBlock:^{
+                        offer.Selected = kRemoteValueYES;
+                        [tableView reloadRowsAtIndexPaths:@[indexPath]
+                                         withRowAnimation:UITableViewRowAnimationNone];
+                        showDialog(offer);
+                    } afterDelay:0.1];
+                }
+            }];
+        }
+        else
+        {
+            showDialog(offer);
+        }
+        
     }
 }
 

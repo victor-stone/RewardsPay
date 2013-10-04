@@ -44,6 +44,7 @@
 @interface APMerchantDetailCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *points;
 @property (weak, nonatomic) IBOutlet UILabel *credit;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activity;
 @property (weak, nonatomic) IBOutlet UIButton *redeemButton;
 @end
 
@@ -119,7 +120,15 @@ APLOGRELEASE
                 _phoneNumber.text = merchantDetail.Tel;
                 _urlAddr.text = [merchantDetail.Website stringByReplacingOccurrencesOfString:@"http://" withString:@""];
                 _rewards = merchantDetail.Rewards;
-                [_pointsTable reloadData];
+                if( _showingRewards )
+                {
+                    [_pointsTable reloadSections:[NSIndexSet indexSetWithIndex:0]
+                                withRowAnimation:UITableViewRowAnimationMiddle];
+                }
+                else
+                {
+                    [_pointsTable reloadData];
+                }
             }
         }];
         
@@ -158,24 +167,18 @@ APLOGRELEASE
 
 -(void)redeemCredit:(UIButton *)button
 {
-    UIActivityIndicatorView *av = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    CGRect frame = button.frame;
-    av.frame = frame;
-    av.alpha = 0;
-    [av startAnimating];
-    [button.superview addSubview:av];
-    [UIView animateWithDuration:0.3 animations:^{
-        button.alpha = 0;
-        av.alpha = 1.0;
-    }];
+    APArgoPointsReward      *reward  = _rewards[button.tag];
+    [reward setFetchingON];
+    [_pointsTable reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:button.tag inSection:0]]
+                        withRowAnimation:UITableViewRowAnimationNone];
     
-    APArgoPointsReward * reward = _rewards[button.tag];
-    APRequestActivateReward *request = [APRequestActivateReward new];    
-    APAccount *account = [APAccount currentAccount];
-    request.AToken = account.AToken;
+    APRequestActivateReward *request = [APRequestActivateReward new];
+    APAccount               *account = [APAccount currentAccount];
+    
+    request.AToken   = account.AToken;
     request.RewardID = reward.RewardID;
+    
     [request performRequest:^(APRemoteRepsonse *response, NSError *err) {
-        [av removeFromSuperview];
         if( err )
         {
             [self showError:err];
@@ -193,11 +196,20 @@ APLOGRELEASE
 {
     APMerchantDetailCell * cell = [tableView dequeueReusableCellWithIdentifier:kCellIDMerchantDetail forIndexPath:indexPath];
     APArgoPointsReward * reward = _rewards[indexPath.row];
-    if( [reward.Selectable isRemoteYES] )
+    cell.activity.hidden = YES;
+    
+    if( [reward isFetching] )
     {
         cell.redeemButton.hidden = NO;
-        cell.redeemButton.alpha = 1.0;
+        cell.activity.hidden = NO;
+        [cell.activity startAnimating];
+        [cell.redeemButton setTitle:@"" forState:UIControlStateNormal];
+    }
+    else if( [reward.Selectable isRemoteYES] )
+    {
+        cell.redeemButton.hidden = NO;
         cell.redeemButton.tag = indexPath.row;
+        [cell.redeemButton setTitle:NSLocalizedString(@"Redeem", @"merchant detail reward") forState:UIControlStateNormal];
         [cell.redeemButton addTarget:self action:@selector(redeemCredit:) forControlEvents:UIControlEventTouchUpInside];
     }
     else

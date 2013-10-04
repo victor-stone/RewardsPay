@@ -464,6 +464,7 @@ switch($_REQUEST['cmd'] )
         $value['MerchName'] = 'Whooley Bully';
         $value['MerchLocation'] = 'DontCareVille, NY';
         $value['MerchRegister'] = 'Henry';
+        $value['Category'] = 'Snakes, Snacks & Snark';
         
         break;
     }
@@ -478,7 +479,7 @@ switch($_REQUEST['cmd'] )
         if( strcmp( $parameters->Approve, 'Y' ) == 0 )
             $value['UserMessage'] = 'You have spent wisely. Honest. Thanks for using ArgoPay!';
         else
-            $value['UserMessage'] = 'You can cancelled the transaction.';
+            $value['UserMessage'] = 'You have cancelled the transaction.';
         break;
     }
 
