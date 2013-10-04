@@ -110,6 +110,53 @@ function addRewards()
                      'Website' => 'http://chicken.com'
                      );
     
+    /*
+     $m_reward_1 = array(
+     'RewardID' => '800',
+     'DateFrom' => '2013/10/01 01:01:01',
+     'DateTo' => '2013/11/01 01:01:01',
+     'AmountReward' => 800,
+     'AmountMinimum' => 200,
+     'MultipleUse' => 0,
+     'PointsRequired' => 50
+     );
+     $m_reward_2 = array(
+     'RewardID' => '801',
+     'DateFrom' => '2013/10/01 01:01:01',
+     'DateTo' => '2013/11/01 01:01:01',
+     'AmountReward' => 800,
+     'AmountMinimum' => 200,
+     'MultipleUse' => 0,
+     'PointsRequired' => 100
+     );
+     $m_reward_3 = array(
+     'RewardID' => '802',
+     'DateFrom' => '2013/10/01 01:01:01',
+     'DateTo' => '2013/11/01 01:01:01',
+     'AmountReward' => 800,
+     'AmountMinimum' => 200,
+     'MultipleUse' => 0,
+     'PointsRequired' => 200
+     );
+     $m_reward_4 = array(
+     'RewardID' => '803',
+     'DateFrom' => '2013/10/01 01:01:01',
+     'DateTo' => '2013/11/01 01:01:01',
+     'AmountReward' => 800,
+     'AmountMinimum' => 200,
+     'MultipleUse' => 0,
+     'PointsRequired' => 300
+     );
+     $m_reward_5 = array(
+     'RewardID' => '804',
+     'DateFrom' => '2013/10/01 01:01:01',
+     'DateTo' => '2013/11/01 01:01:01',
+     'AmountReward' => 800,
+     'AmountMinimum' => 400,
+     'MultipleUse' => 0,
+     'PointsRequired' => 80
+     );
+     */
     return array( $reward1, $reward2, $reward3 );
     
 }
@@ -121,9 +168,9 @@ function addOffers()
     (SortBy is (N)one, W-Newest First, (R)eady to use, (A)vailable to Select, (E)xpiring Soon)
     (Selected means that the offer has already been selected by the consumer)
     > AToken, Lat, Long, Distance, Limit, SortBy
-    < Status, Message, Offers: {OfferID, Type, Selected, DateFrom, DateTo, DaysToUse, Count, 
+    < Status, Message, Offers: {OfferID, Type, Selected, DateFrom, DateTo, DaysToUse, Count,
      AmountDiscount, AmountMinimum, PointBonus, PointMultiplier, ArgoBonus, ArgoMultiplier,
-        MLocID, Name, Category, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description, 
+        MLocID, Name, Category, Addr1, Addr2, City, State, Zip, Tel, Lat, Long, Description,
      LongDescription, ImageURL, Website}
      */
     
@@ -281,11 +328,12 @@ switch($_REQUEST['cmd'] )
     {
         $merch1 = array(
                          'LongDescription' => 'This is 1 the loooong description that is foobar.',
-                         
+                         'MLocID' => '101',
                          'Description' => 'Everything I do is goin be funky from now on',
                          'Category' => 'Category1',
                          'Name' => 'Funky Cleaners',
                          'Addr1' => '1234 First Ave.',
+                         'Addr2' => 'addr2 for 1',
                          'City' => 'CityField',
                          'Lat' => 39.067884,
                          'Long' => -77.080239,
@@ -300,12 +348,14 @@ switch($_REQUEST['cmd'] )
                          'LongDescription' => 'This is 2 the loooong description that is foobar.',
                          
                          'Description' => 'Everything I do is goin be funky from now on',
-                         
+                        'MLocID' => '102',
+
                         'Category' => 'Category2',
                          'Name' => 'World Around You',
                          'Addr1' => '1234 First Ave.',
                          'City' => 'CityField',
                          'Lat' => 39.067884,
+                        'Addr2' => 'addr2 for 2',
                          'Long' => -77.080239,
                          'State' => 'ST',
                          'Zip' => '30009',
@@ -316,12 +366,14 @@ switch($_REQUEST['cmd'] )
         
         $merch3 = array(
                          'LongDescription' => 'This is 3 the loooong description that is foobar.',
-                         
+                        'MLocID' => '102',
+                        
                          'Description' => 'Everything I do is goin be funky from now on',
                         'Category' => 'Category3',
                         
                          'Name' => 'World Around You',
                          'Addr1' => '1234 First Ave.',
+                        'Addr2' => 'addr2 for 3',
                          'City' => 'CityField',
                          'Lat' => 39.067884,
                          'Long' => -77.080239,
@@ -383,67 +435,6 @@ switch($_REQUEST['cmd'] )
         break;
     }
         
-    case 'MerchantLocationRewardList':
-    {
-        
-        /*
-        (Type D is discount, B is Bonus)
-        > MToken, MLocID
-        < Status, Message, RewardList {RewardID, DateFrom, DateTo, AmountReward, AmountMinimum, MultipleUse, PointsRequired}
-         */
-        $m_reward_1 = array(
-                         'RewardID' => '800',
-                         'DateFrom' => '2013/10/01 01:01:01',
-                         'DateTo' => '2013/11/01 01:01:01',
-                         'AmountReward' => 800,
-                         'AmountMinimum' => 200,
-                         'MultipleUse' => 0,
-                         'PointsRequired' => 50
-                         );
-        $m_reward_2 = array(
-                         'RewardID' => '801',
-                         'DateFrom' => '2013/10/01 01:01:01',
-                         'DateTo' => '2013/11/01 01:01:01',
-                         'AmountReward' => 800,
-                         'AmountMinimum' => 200,
-                         'MultipleUse' => 0,
-                         'PointsRequired' => 100
-                         );
-        $m_reward_3 = array(
-                         'RewardID' => '802',
-                         'DateFrom' => '2013/10/01 01:01:01',
-                         'DateTo' => '2013/11/01 01:01:01',
-                         'AmountReward' => 800,
-                         'AmountMinimum' => 200,
-                         'MultipleUse' => 0,
-                         'PointsRequired' => 200
-                         );
-        $m_reward_4 = array(
-                         'RewardID' => '803',
-                         'DateFrom' => '2013/10/01 01:01:01',
-                         'DateTo' => '2013/11/01 01:01:01',
-                         'AmountReward' => 800,
-                         'AmountMinimum' => 200,
-                         'MultipleUse' => 0,
-                         'PointsRequired' => 300
-                         );
-        $m_reward_5 = array(
-                         'RewardID' => '804',
-                         'DateFrom' => '2013/10/01 01:01:01',
-                         'DateTo' => '2013/11/01 01:01:01',
-                         'AmountReward' => 800,
-                         'AmountMinimum' => 400,
-                         'MultipleUse' => 0,
-                         'PointsRequired' => 80
-                         );
-        $params = array( $m_reward_1, $m_reward_2, $m_reward_3, $m_reward_4, $m_reward_5  );
-        
-        $value['RewardList'] = $params;
-
-        break;
-        
-    }
-
     case 'ConsumerTransactionStart':
     {
         /*
@@ -503,7 +494,7 @@ switch($_REQUEST['cmd'] )
         $value['LastTransDate'] = '2013-09-02 03:40:12';
         $value['LastPayDate'] = '2013-09-22 03:40:12';
         $value['NextPayDate'] = '2013-09-11 03:40:12';
-        $valeu['NetPayAmount'] = 222.99;
+        $value['NetPayAmount'] = 222.99;
         $value['ArgoPoints'] = 678;
         break;
     }

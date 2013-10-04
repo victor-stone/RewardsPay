@@ -13,7 +13,7 @@
 
 void APDebug(NSString *key,NSString *format,...)
 {
-    if( [key isEqualToString:kDebugLocation] || [key isEqualToString:kDebugNetwork] || APENABLED(key) )
+    if( [key isEqualToString:kDebugFire] || APENABLED(key) )
     {
         va_list ap;
         va_start (ap, format);

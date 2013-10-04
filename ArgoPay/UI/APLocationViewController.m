@@ -85,6 +85,8 @@ APLOGRELEASE
     APMerchant * merchant = _locations[indexPath.row];
     cell.businessName.text = merchant.Name;
     cell.category.text = merchant.Category;
+    cell.layer.masksToBounds = YES;
+    cell.layer.cornerRadius = 15.0;
     return cell;
 }
 

@@ -270,6 +270,7 @@ void * kDismissBlockKey = &kDismissBlockKey;
             if( lcx.secondItem == self.view && lcx.firstAttribute == NSLayoutAttributeTop )
             {
                 lcx.constant += 20;
+                APLOG(kDebugViews, @"Shifting %@ in %@",lcx.firstItem, self);
                 break;
             }
         }

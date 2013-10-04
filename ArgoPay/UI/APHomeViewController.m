@@ -62,7 +62,7 @@ static NSArray *menuItems()
     
     if( !_items )
     {
-        _items = @[ [APMenuItem miWithImage:kImageHelp       label: NSLocalizedString(@"Settings","menu") vc:kViewSettings],
+        _items = @[ [APMenuItem miWithImage:kImageSettings   label: NSLocalizedString(@"Settings","menu") vc:kViewSettings],
                     [APMenuItem miWithImage:kImageHistory    label: NSLocalizedString(@"History","menu") vc:kViewHistory],
                     [APMenuItem miWithImage:kImageAccount    label: NSLocalizedString(@"ArgoCredit","menu") vc:kViewAccount],
                     [APMenuItem miWithImage:kImageRewards    label: NSLocalizedString(@"Rewards","menu") vc:kViewRewards],

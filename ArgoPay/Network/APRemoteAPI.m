@@ -172,7 +172,6 @@ static APRemoteAPI * _sharedRemoteAPI;
     AFHTTPClient *client = [APRemoteAPI clientForSubDomain:self.subDomain];
     
     APLOG(kDebugNetwork, @"Posting: %@{%@} %@", self.command, self.payloadName, self.remotableProperties);
-    NSLog(@"Posting: %@{%@} %@", self.command, self.payloadName, self.remotableProperties);
     
     void (^parseJSON)(NSDictionary *,APRemoteAPIRequestBlock) = ^(NSDictionary *responseObject,APRemoteAPIRequestBlock block)
     {
@@ -256,7 +255,6 @@ static APRemoteAPI * _sharedRemoteAPI;
     {
         NSString * path = [[NSBundle mainBundle] pathForResource:self.command ofType:@"js"];
         APLOG(kDebugNetwork, @"Using JSON file stubs: %@",path);
-        NSLog( @"Using JSON file stubs: %@",path);
         
         NSData *data = [NSData dataWithContentsOfFile:path];
         NSError * err = nil;
