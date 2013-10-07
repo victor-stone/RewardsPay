@@ -23,13 +23,13 @@ typedef enum _APStartupState {
 } APStartupState;
 
 @interface APConcurrentStartupOperation : NSOperation
+-(id)initWithAppDelegate:(APAppDelegate *)delegate;
 @end
 
 @interface APWaitForNetwork : APConcurrentStartupOperation
 @end
 
 @interface APWaitForLocationService : APConcurrentStartupOperation
--(id)initWithAppDelegate:(APAppDelegate *)delegate;
 @end
 
 @interface APWaitForLogin : APConcurrentStartupOperation
@@ -92,9 +92,9 @@ typedef enum _APStartupState {
     _startupQueue = [[NSOperationQueue alloc] init];
     _startupQueue.name = @"ArgoPay startup queue";
     
-    NSOperation * op1 = [[APWaitForNetwork alloc] init];
+    NSOperation * op1 = [[APWaitForNetwork alloc] initWithAppDelegate:self];
     NSOperation * op2 = [[APWaitForLocationService alloc] initWithAppDelegate:self];
-    NSOperation * op3 = [[APWaitForLogin alloc] init];
+    NSOperation * op3 = [[APWaitForLogin alloc] initWithAppDelegate:self];
     NSOperation * op4 = [[APStartMainApp alloc] initWithAppDelegate:self];
     
     [op2 addDependency:op1];
@@ -284,6 +284,7 @@ typedef enum _APStartupState {
     APStartupState _state;
     id _notifyObserver;
     APAppDelegate *_appDelegate;
+    id _delayedMessageBlock;
 }
     
 -(id)initWithAppDelegate:(APAppDelegate *)appDelegate
@@ -310,8 +311,21 @@ typedef enum _APStartupState {
     return YES;
 }
 
+-(void)displayDelayedMessage:(NSString *)msg
+{
+    _delayedMessageBlock = [NSObject performBlock:^{
+        [_appDelegate setLoadingMessage:msg];
+    } afterDelay:3.0];
+}
+
 -(void)dealloc
 {
+    if( _delayedMessageBlock )
+    {
+        [NSObject cancelBlock:_delayedMessageBlock];
+        _delayedMessageBlock = nil;
+    }
+    
     if( _notifyObserver )
         [[NSNotificationCenter defaultCenter] removeObserver:_notifyObserver];
     APLOG(kDebugStartup, @"released: %@",self);
@@ -344,6 +358,8 @@ typedef enum _APStartupState {
 {
     [self iAmStarting];
     
+    [self displayDelayedMessage:@"Connecting to Internet..."];
+    
     __weak APWaitForNetwork * me = self;
     
     _notifyObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kReachabilityChangedNotification
@@ -366,14 +382,11 @@ typedef enum _APStartupState {
 @implementation APWaitForLocationService
 #define kLocationAttemptDelay 4.0
 
--(id)initWithAppDelegate:(APAppDelegate *)delegate
-{
-    return [super initWithAppDelegate:delegate];
-}
-
 -(void)start
 {
     [self iAmStarting];
+    
+    [self displayDelayedMessage:@"Waiting for location information..."];
     
     [GMSServices provideAPIKey:GOOGLE_MAPS_API_KEY];
     
@@ -388,7 +401,7 @@ typedef enum _APStartupState {
         else
         {
             NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-            APDebug(kDebugStartup, @"Got location: %G, %G", loc.longitude, loc.latitude);
+            APLOG(kDebugStartup, @"Got location: %G, %G", loc.longitude, loc.latitude);
             [defaults setDouble:loc.latitude forKey:kSettingUserLastLat];
             [defaults setDouble:loc.longitude forKey:kSettingUserLastLong];
             [self iAmDone];
@@ -403,6 +416,8 @@ typedef enum _APStartupState {
 -(void)main
 {
     [self iAmStarting];
+    
+    [self displayDelayedMessage:@"Attempting to log in..."];
     
     [APAccount login:nil password:nil block:^(id data, NSError *err) {
         if( err && ( !((err.code == kAPERROR_MISSINGLOGINFIELDS) && (err.domain == kAPMobileErrorDomain)) ) )

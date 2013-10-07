@@ -165,7 +165,18 @@ static APLocation *__sharedLocation;
 didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
     APLOG(kDebugLocation,@"Status change in delegate to: %d",status);
-    _currentStatus = status;
+    if( _currentStatus != status )
+    {
+        // Restart the manager if we are moving in or out of
+        // authorized state
+        if( (_currentStatus == kCLAuthorizationStatusAuthorized) ||
+           (status == kCLAuthorizationStatusAuthorized) )
+        {
+            [self stopService];
+            _currentStatus = status;
+            [self startService];
+        }
+    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager
