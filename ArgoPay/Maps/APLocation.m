@@ -137,11 +137,18 @@ static APLocation *__sharedLocation;
     if( _useSignificant )
     {
         [_manager stopMonitoringSignificantLocationChanges];
-        // The significant updater does NOT pump a new
-        // location the next time we restart UNLESS we
-        // completely rebuild the location manager...
-        // 
-        _manager = nil;
+        //
+        // We might be shutting off to let the "allow location"
+        // dialog to come to the front
+        //
+        if( _currentStatus == kCLAuthorizationStatusAuthorized )
+        {
+            // The significant updater does NOT pump a new
+            // location the next time we restart UNLESS we
+            // completely rebuild the location manager...
+            //
+            _manager = nil;
+        }
     }
     else
     {
