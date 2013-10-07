@@ -13,37 +13,8 @@
 #import "APPopup.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import "APLocation.h"
+#import "APMerchantMap.h"
 
-@interface APOfferDetailsMapEmbedding : UIViewController
-@property (nonatomic) CLLocationCoordinate2D location;
-@property (nonatomic,strong) NSString *pinTitle;
-@property (nonatomic,strong) NSString *pinSnippet;
-@end
-
-@implementation APOfferDetailsMapEmbedding
-
-- (void)loadView {
-    // Create a GMSCameraPosition that tells the map to display the
-    // coordinate -33.86,151.20 at zoom level 6.
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:_location.latitude
-                                                            longitude:_location.longitude
-                                                                 zoom:13];
-    GMSMapView *mapView;
-    mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
-    mapView.myLocationEnabled = YES;
-    mapView.settings.myLocationButton = YES;
-    
-    self.view = mapView;
-    
-    // Creates a marker in the center of the map.
-    GMSMarker *marker = [[GMSMarker alloc] init];
-    marker.position   = _location;
-    marker.title      = _pinTitle;
-    marker.snippet    = _pinSnippet;
-    marker.map        = mapView;
-}
-
-@end
 
 @interface APOffersCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *logo;
@@ -66,7 +37,9 @@
 @property (nonatomic,strong) APOffer *offer;
 @end
 
-@implementation APOfferDetailViewController
+@implementation APOfferDetailViewController {
+    __weak  APMerchantDetailMapEmbedding * _map;    
+}
 
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
@@ -82,9 +55,19 @@
         self.offer = _offer;
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    _map = segue.destinationViewController;
+    if( _offer )
+        _map.merchant = _offer;
+}
+
+
 -(void)setOffer:(APOffer *)offer
 {
     _offer = offer;
+    if( _map )
+        _map.merchant = offer;
     [_logo setImageWithURL:[NSURL URLWithString:offer.ImageURL]];
     _merchantName.text = offer.Name;
     _offerName.text = offer.Description;

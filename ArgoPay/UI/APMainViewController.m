@@ -29,6 +29,7 @@
 @property (weak,nonatomic) IBOutlet UIImageView * image;
 @property (weak,nonatomic) IBOutlet UILabel *label;
 @property (nonatomic,strong) NSString *vcNav;
+@property (nonatomic) BOOL highlighted;
 @end
 
 @interface APTabNavigator : UIView
@@ -55,6 +56,14 @@
                                                                         }];
     [self addGestureRecognizer:tgr];
 }
+
+-(void)setHighlighted:(BOOL)highlighted
+{
+    _image.highlighted = highlighted;
+    _label.highlighted = highlighted;
+    _highlighted = highlighted;
+}
+
 @end
 
 
@@ -74,6 +83,13 @@
     if( _scan.vcNav == vcName )
         return nil;
     return _location.label.text;
+}
+
+-(void)highlightTab:(NSString *)vcName
+{
+    _offers.highlighted = _offers.vcNav == vcName;
+    _location.highlighted = _location.vcNav == vcName;
+    _scan.highlighted = _scan.vcNav == vcName;
 }
 @end
 
@@ -101,6 +117,7 @@
 	[_tabNavigator wireUp:self];
     _lastNavTab = _tabNavigator.offers.vcNav;
     self.title = _tabNavigator.offers.label.text;
+    _tabNavigator.offers.highlighted = YES;
     _scanWatcher = [[APScanRequestWatcher alloc] initWithDelegate:self];
     [self registerForEvents];
 
@@ -139,6 +156,7 @@
         [UIView animateWithDuration:duration animations:^{
             _scanner.view.frame = rc;
         } completion:^(BOOL finished) {
+            [_tabNavigator highlightTab:_lastNavTab];
             [_scanner.view removeFromSuperview];
             [_scanner willMoveToParentViewController:nil];
             [_scanner removeFromParentViewController];
@@ -149,6 +167,7 @@
     }
     else
     {
+        [_tabNavigator highlightTab:_tabNavigator.scan.vcNav];
         _scanner = [_scanWatcher request];
         [_scanner willMoveToParentViewController:self];
         [self addChildViewController:_scanner];
@@ -196,6 +215,7 @@
     
     _lastNavTab = vcName;
     self.title = dest.title; // see: UIViewControler:addBackButton
+    [_tabNavigator highlightTab:vcName];
     
 #ifdef DEBUG
     if( APENABLED(kDebugViews) )

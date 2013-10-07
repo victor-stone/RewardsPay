@@ -12,6 +12,8 @@
 		570EC1F217F74FED00CBA207 /* ConsumerStatementSummary.js in Resources */ = {isa = PBXBuildFile; fileRef = 570EC1F117F74FED00CBA207 /* ConsumerStatementSummary.js */; };
 		570EC1F517F75ACA00CBA207 /* APHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 570EC1F417F75ACA00CBA207 /* APHistoryViewController.m */; };
 		570EC1F717F7638E00CBA207 /* ConsumerStatementDetail.js in Resources */ = {isa = PBXBuildFile; fileRef = 570EC1F617F7638D00CBA207 /* ConsumerStatementDetail.js */; };
+		5713970E18034EB3002F4D3E /* kImageLocation-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 5713970C18034EB3002F4D3E /* kImageLocation-selected.png */; };
+		5713970F18034EB3002F4D3E /* kImageOffers-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 5713970D18034EB3002F4D3E /* kImageOffers-selected.png */; };
 		571D75C717EB3D0A00F0B869 /* kImageTransactionBottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 571D75C417EB3D0A00F0B869 /* kImageTransactionBottom.png */; };
 		571D75C817EB3D0A00F0B869 /* kImageTransactionExpander.png in Resources */ = {isa = PBXBuildFile; fileRef = 571D75C517EB3D0A00F0B869 /* kImageTransactionExpander.png */; };
 		571D75C917EB3D0A00F0B869 /* kImageTransactionTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 571D75C617EB3D0A00F0B869 /* kImageTransactionTop.png */; };
@@ -202,6 +204,9 @@
 		570EC1F117F74FED00CBA207 /* ConsumerStatementSummary.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ConsumerStatementSummary.js; sourceTree = "<group>"; };
 		570EC1F417F75ACA00CBA207 /* APHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APHistoryViewController.m; sourceTree = "<group>"; };
 		570EC1F617F7638D00CBA207 /* ConsumerStatementDetail.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ConsumerStatementDetail.js; sourceTree = "<group>"; };
+		5713970C18034EB3002F4D3E /* kImageLocation-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageLocation-selected.png"; sourceTree = "<group>"; };
+		5713970D18034EB3002F4D3E /* kImageOffers-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageOffers-selected.png"; sourceTree = "<group>"; };
+		5713971018036896002F4D3E /* APMerchantMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APMerchantMap.h; sourceTree = "<group>"; };
 		571D75C417EB3D0A00F0B869 /* kImageTransactionBottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageTransactionBottom.png; sourceTree = "<group>"; };
 		571D75C517EB3D0A00F0B869 /* kImageTransactionExpander.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageTransactionExpander.png; sourceTree = "<group>"; };
 		571D75C617EB3D0A00F0B869 /* kImageTransactionTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageTransactionTop.png; sourceTree = "<group>"; };
@@ -901,6 +906,7 @@
 				570EC1F417F75ACA00CBA207 /* APHistoryViewController.m */,
 				578BB5BE17F248F4009E2F45 /* APRewardViewController.m */,
 				57A2247617E90F47000B52E9 /* APLocationViewController.m */,
+				5713971018036896002F4D3E /* APMerchantMap.h */,
 				57E08D0E17EF7FAF00E22B1A /* APMerchantDetailViewController.m */,
 				57A2247917E90F47000B52E9 /* APOffersViewController.m */,
 				57A2247A17E90F47000B52E9 /* APScanView.h */,
@@ -1074,6 +1080,8 @@
 		57FD23A217FF0D5A004A50D8 /* HomeScreen */ = {
 			isa = PBXGroup;
 			children = (
+				5713970C18034EB3002F4D3E /* kImageLocation-selected.png */,
+				5713970D18034EB3002F4D3E /* kImageOffers-selected.png */,
 				57DA315D17FA210500A6978A /* kImageAccount-selected.png */,
 				57DA315E17FA210600A6978A /* kImageAccount-selected@2x.png */,
 				57A2248917E913B3000B52E9 /* kImageAccount.png */,
@@ -1192,6 +1200,7 @@
 				57FD285017FF161B004A50D8 /* kImageBack@2x.png in Resources */,
 				57ADDAB717F5F33F00F23689 /* ConsActivateReward.js in Resources */,
 				57ADDAB817F5F33F00F23689 /* ConsumerGetAvailableOffers.js in Resources */,
+				5713970E18034EB3002F4D3E /* kImageLocation-selected.png in Resources */,
 				57ADDAB917F5F33F00F23689 /* ConsumerGetAvailableRewards.js in Resources */,
 				579C817017FD91690046BC9B /* kImageLocation.png in Resources */,
 				57ADDABA17F5F33F00F23689 /* ConsumerLogin.js in Resources */,
@@ -1234,6 +1243,7 @@
 				57FD23A917FF1573004A50D8 /* kImageQR.png in Resources */,
 				57DA318717FA213500A6978A /* kImageHistory-selected@2x.png in Resources */,
 				57FD284F17FF161B004A50D8 /* kImageBack.png in Resources */,
+				5713970F18034EB3002F4D3E /* kImageOffers-selected.png in Resources */,
 				57A224AA17E913B3000B52E9 /* kImageHistory.png in Resources */,
 				57DA318817FA213500A6978A /* kImageHistory@2x.png in Resources */,
 				57FD285817FF161B004A50D8 /* kImageMapList@2x.png in Resources */,

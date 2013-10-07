@@ -29,6 +29,7 @@
 
 @implementation APLocationListViewController {
     NSArray *_locations;
+    CLLocation *_userLocation;
 }
 
 APLOGRELEASE
@@ -62,6 +63,7 @@ APLOGRELEASE
         }
         else
         {
+            _userLocation = [[CLLocation alloc] initWithLatitude:loc.latitude longitude:loc.longitude];
             request.Long = @(loc.longitude);
             request.Lat = @(loc.latitude);
             [request performRequest:^(NSArray * data, NSError *err) {
@@ -90,6 +92,12 @@ APLOGRELEASE
 {
     APLocationCell * cell = [tableView dequeueReusableCellWithIdentifier:kCellIDLocation forIndexPath:indexPath];
     APMerchant * merchant = _locations[indexPath.row];
+    CLLocationDegrees bizlat = [merchant.Lat doubleValue];
+    CLLocationDegrees bizlong = [merchant.Long doubleValue];
+    CLLocation *bizLocation = [[CLLocation alloc] initWithLatitude:bizlat longitude:bizlong];
+    CLLocationDistance distance = [_userLocation distanceFromLocation:bizLocation] / 1000;
+    APLOG(kDebugLocation, @"Biz location: {%f,%f} distance: %.1fkm", bizlat, bizlong, distance);
+    cell.distance.text = [NSString stringWithFormat:@"%.1fkm",distance];
     cell.businessName.text = merchant.Name;
     cell.category.text = merchant.Category;
     cell.layer.masksToBounds = YES;

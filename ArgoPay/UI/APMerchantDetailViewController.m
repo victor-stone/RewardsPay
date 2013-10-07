@@ -12,32 +12,47 @@
 #import "APAccount.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import "APArgoPointsReward.h"
-
-@interface APMerchantDetailMapEmbedding : UIViewController
-
-@end
+#import "APMerchantMap.h"
 
 @implementation APMerchantDetailMapEmbedding {
     GMSMapView *mapView_;
 }
 
-
-- (void)loadView {
-    // Create a GMSCameraPosition that tells the map to display the
-    // coordinate -33.86,151.20 at zoom level 6.
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-33.86
-                                                            longitude:151.20
-                                                                 zoom:6];
+- (void)loadView
+{
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    CLLocationDegrees mlat  = [defaults doubleForKey:kSettingUserLastLat];
+    CLLocationDegrees mlong = [defaults doubleForKey:kSettingUserLastLong];
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:mlat
+                                                            longitude:mlong
+                                                                 zoom:13];
     mapView_ = [GMSMapView mapWithFrame:CGRectZero camera:camera];
-    mapView_.myLocationEnabled = YES;
     self.view = mapView_;
-    
-    // Creates a marker in the center of the map.
-    GMSMarker *marker = [[GMSMarker alloc] init];
-    marker.position = CLLocationCoordinate2DMake(-33.86, 151.20);
-    marker.title = @"Sydney";
-    marker.snippet = @"Australia";
-    marker.map = mapView_;
+    if( _merchant )
+        [self setMerchant:_merchant];
+}
+
+-(void)setMerchant:(APMerchant *)merchant
+{
+    _merchant = merchant;
+    if( mapView_ )
+    {
+        CLLocationDegrees mlat  = [_merchant.Lat doubleValue];
+        CLLocationDegrees mlong = [_merchant.Long doubleValue];
+        APLOG(kDebugLocation, @"Creating map for %@ at %.3f, %.3f", _merchant.Name, mlat, mlong);
+
+        CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(mlat,mlong);
+        [mapView_ moveCamera:[GMSCameraUpdate setTarget:coord]];
+        // Creates a marker in the center of the map.
+        GMSMarker *marker = [[GMSMarker alloc] init];
+        marker.position = coord;
+        marker.title = _merchant.Name;
+        marker.snippet = _merchant.Description;
+        marker.map = mapView_;
+        
+        mapView_.myLocationEnabled = YES;
+        mapView_.settings.myLocationButton = YES;
+    }
 }
 @end
 
@@ -70,6 +85,8 @@
 @implementation APMerchantDetailViewController {
     bool _showingRewards;
     NSArray * _rewards;
+    APMerchant *_merchant;
+    __weak  APMerchantDetailMapEmbedding * _map;
 }
 
 APLOGRELEASE
@@ -113,6 +130,7 @@ APLOGRELEASE
             }
             else
             {
+                [_map performSelectorOnMainThread:@selector(setMerchant:) withObject:merchantDetail waitUntilDone:NO];
                 _merchantName.text = merchantDetail.Name;
                 _merchantPoints.text = [NSString stringWithFormat:@"%dpts",[merchantDetail.ConsumerPoints integerValue] ];
                 _streetAddr.text = merchantDetail.Addr1;
@@ -133,6 +151,11 @@ APLOGRELEASE
         }];
         
     }
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    _map = segue.destinationViewController;
 }
 
 - (IBAction)disclose:(id)sender

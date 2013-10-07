@@ -361,7 +361,6 @@ typedef enum _APStartupState {
                                                                          queue:nil
                                                                     usingBlock:^(NSNotification *note)
                        {
-                           
                            Reachability *reachability = note.object;
                            APLOG(kDebugStartup, @"Got connection type: %d", reachability.currentReachabilityStatus);
                            if( reachability.currentReachabilityStatus != NotReachable )
@@ -392,14 +391,9 @@ typedef enum _APStartupState {
             APLOG(kDebugStartup, @"Operation location failed, retrying",0);
             return YES;
         }
-        else
-        {
-            NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-            APLOG(kDebugStartup, @"Got location: %G, %G", loc.longitude, loc.latitude);
-            [defaults setDouble:loc.latitude forKey:kSettingUserLastLat];
-            [defaults setDouble:loc.longitude forKey:kSettingUserLastLong];
-            [self iAmDone];
-        }
+
+        APLOG(kDebugStartup, @"Got location: %G, %G", loc.longitude, loc.latitude);
+        [self iAmDone];
         return NO;
     }];
     
@@ -418,7 +412,7 @@ typedef enum _APStartupState {
         {
             [_appDelegate setLoadingMessage:err.localizedDescription];
         }
-        else
+        //else
         {
             [self iAmDone];
         }

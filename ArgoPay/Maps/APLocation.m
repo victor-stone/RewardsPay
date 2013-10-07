@@ -219,6 +219,9 @@ didChangeAuthorizationStatus:(CLAuthorizationStatus)status
     if ( !_lastLocation || (abs(howRecent) < kLocationGoesStaleAfterSeconds) )
     {
         _lastLocation = location;
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setDouble:location.coordinate.latitude forKey:kSettingUserLastLat];
+        [defaults setDouble:location.coordinate.longitude forKey:kSettingUserLastLong];
         for( APLocationBlock block in _waitingBlocks )
         {
             CLLocationCoordinate2D coord = location.coordinate;
