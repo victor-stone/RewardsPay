@@ -20,12 +20,6 @@
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 
-// 7.0 and above
-#define IS_DEVICE_RUNNING_IOS_7_AND_ABOVE() ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending)
-
-// 6.0, 6.0.x, 6.1, 6.1.x
-#define IS_DEVICE_RUNNING_IOS_6_OR_BELOW() ([[[UIDevice currentDevice] systemVersion] compare:@"6.2" options:NSNumericSearch] != NSOrderedDescending)
-
 #import "APDebug.h"
 #import "APError.h"
 #import "APAppDelegate.h"

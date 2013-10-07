@@ -15,21 +15,12 @@ APLOGRELEASE
 
 +(id)popupWithParent:(UIView *)parent text:(NSString *)text flags:(VSPopupFlags)flags
 {
-    UIImage * bg = [[UIImage imageNamed:kImagePopupBG]
-                    resizableImageWithCapInsets:UIEdgeInsetsMake(kBGInset,kBGInset,kBGInset,kBGInset)
-                    resizingMode:UIImageResizingModeStretch];
-    
-    return [[APPopup alloc] initWithParent:parent flags:flags textOrView:text bg:bg];
+    return [[APPopup alloc] initWithParent:parent flags:flags textOrView:text];
 }
 
 +(id)withNetActivity:(UIView *)parent
 {
-#define kBlackBGInset 13
-    
-    UIImage * bg = [[UIImage imageNamed:kImageBlackSq]
-                    resizableImageWithCapInsets:UIEdgeInsetsMake(kBlackBGInset,kBlackBGInset,kBlackBGInset,kBlackBGInset)
-                    resizingMode:UIImageResizingModeStretch];
-    return [[APPopup alloc] initWithParent:parent flags:kPopupActivity textOrView:@"Connecting..." bg:bg];
+    return [[APPopup alloc] initWithParent:parent flags:kPopupActivity textOrView:@"Connecting..."];
 }
 
 +(id)msgWithParent:(UIView *)parent text:(NSString *)text
@@ -46,17 +37,12 @@ APLOGRELEASE
 
 +(id)errorWithParent:(UIView *)parent error:(NSError *)err
 {
-    UIImage * bg = [[UIImage imageNamed:kImageErrorBalloon]
-                    resizableImageWithCapInsets:UIEdgeInsetsMake(kErrorPopupInsetTop,kErrorPopupInsetLeft,
-                                                                 kErrorPopupInsetBottom, kErrorPopupInsetRight)
-                    resizingMode:UIImageResizingModeStretch];
-    
-    return [[APPopup alloc] initWithParent:parent flags:kPopupCloseOnAnyTap textOrView:[err localizedDescription] bg:bg];
+    return [[APPopup alloc] initWithParent:parent flags:kPopupCloseOnAnyTap textOrView:[err localizedDescription]];
 }
 
--(id)initWithParent:(UIView *)parent flags:(VSPopupFlags)flags textOrView:(id)textOrView bg:(UIImage *)background
+-(id)initWithParent:(UIView *)parent flags:(VSPopupFlags)flags textOrView:(id)textOrView
 {
-    return [super initWithParent:parent flags:flags textOrView:textOrView bg:background];
+    return [super initWithParent:parent flags:flags textOrView:textOrView];
 }
 
 @end

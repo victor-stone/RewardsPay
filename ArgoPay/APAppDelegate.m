@@ -106,8 +106,6 @@ typedef enum _APStartupState {
     _reachability = [Reachability reachabilityWithHostName:@VS_CONNECTIVITY_HOST_NAME];
     [_reachability startNotifier];
     
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDebugLocation];
-    
     return YES;
 }
 
@@ -218,11 +216,7 @@ typedef enum _APStartupState {
              ,
              kSettingDebugNetworkStubbed: @"file",
              kSettingDebugLocalhostAddr: @"testingargo.192.168.1.3.xip.io",
-             kSettingDebugStrictJSON: @(NO),
-             kSettingDebugNetworkDelay: @"1.0",
-             kSettingDebugNetworkSSL: @(NO),
-             kDebugStartup:@(YES),
-             kDebugNetwork:@(YES)
+             kSettingDebugNetworkDelay: @"1.0"
 #endif
              };
 }

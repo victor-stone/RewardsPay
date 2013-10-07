@@ -11,7 +11,7 @@
 					<key>kind</key>
 					<string>software-package</string>
 					<key>url</key>
-					<string>https://timbregroove.org/apps/ArgoPay.ipa</string>
+					<string>http://timbregroove.org/apps/ipa/ArgoPay.ipa</string>
 				</dict>
 				<dict>
 					<key>kind</key>
@@ -39,7 +39,7 @@
 				<key>kind</key>
 				<string>software</string>
 				<key>subtitle</key>
-				<string>Nightly Build (Sunday Oct. 6, 2013) 1.0.1</string>
+				<string>Build 1.0.4</string>
 				<key>title</key>
 				<string>ArgoPay</string>
 			</dict>

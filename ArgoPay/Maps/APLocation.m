@@ -8,6 +8,8 @@
 
 #import "APLocation.h"
 #import "APStrings.h"
+#import "NSObject+VSBroadcasting.h"
+#import "NSObject+BlocksKit.h"
 
 #define kLocationGoesStaleAfterSeconds 60000
 #define kLocationTimeOut 20.0
@@ -124,12 +126,26 @@ static APLocation *__sharedLocation;
 {
     if( _running )
     {
-        APLOG(kDebugLocation, @"Stopping manager", 0);
-        _running = false;
-        if( _useSignificant )
-            [_manager stopMonitoringSignificantLocationChanges];
-        else
-            [_manager stopUpdatingLocation];
+        [self performSelectorOnMainThread:@selector(_stopService) withObject:nil waitUntilDone:YES];
+    }
+}
+
+-(void)_stopService
+{
+    APLOG(kDebugLocation, @"Stopping manager", 0);
+    _running = false;
+    if( _useSignificant )
+    {
+        [_manager stopMonitoringSignificantLocationChanges];
+        // The significant updater does NOT pump a new
+        // location the next time we restart UNLESS we
+        // completely rebuild the location manager...
+        // 
+        _manager = nil;
+    }
+    else
+    {
+        [_manager stopUpdatingLocation];
     }
 }
 

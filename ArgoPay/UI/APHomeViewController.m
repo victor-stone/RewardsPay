@@ -62,10 +62,11 @@ static NSArray *menuItems()
     
     if( !_items )
     {
-        _items = @[ [APMenuItem miWithImage:kImageSettings   label: NSLocalizedString(@"Settings","menu") vc:kViewSettings],
-                    [APMenuItem miWithImage:kImageHistory    label: NSLocalizedString(@"History","menu") vc:kViewHistory],
+        _items = @[
                     [APMenuItem miWithImage:kImageAccount    label: NSLocalizedString(@"ArgoCredit","menu") vc:kViewAccount],
-                    [APMenuItem miWithImage:kImageRewards    label: NSLocalizedString(@"Rewards","menu") vc:kViewRewards],
+                    [APMenuItem miWithImage:kImageSettings   label: NSLocalizedString(@"Settings","menu") vc:kViewSettings],
+                    [APMenuItem miWithImage:kImageHistory    label: NSLocalizedString(@"History","menu") vc:kViewHistory],
+                    [APMenuItem miWithImage:kImageRewards    label: NSLocalizedString(@"My Rewards","menu") vc:kViewRewards],
                     [APMenuItem miWithImage:kImageLogoutHome label: NSLocalizedString(@"Logout", "menu") block:^(UIViewController *vc) {
                         [[APAccount currentAccount] logUserOut];
                         [APPopup msgWithParent:vc.view

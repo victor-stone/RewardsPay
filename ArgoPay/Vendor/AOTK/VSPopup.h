@@ -13,8 +13,19 @@ extern NSString * kVSNotificationPopupDismissed;
 #endif
 
 #ifndef kPopupInsetPadding
-#define kPopupInsetPadding 10
+#define kPopupInsetPadding 20
 #endif
+
+#ifndef kPopupBorderSize
+#define kPopupBorderSize 3
+#endif
+
+#ifndef kPopupHeightFudge
+#define kPopupHeightFudge 10
+#endif
+
+#define kPopupGutter        (kPopupInsetPadding*2)
+#define kPopupBorderPadding (kPopupBorderSize*2)
 
 typedef void (^VSPopupDismissBlock)();
 
@@ -35,8 +46,7 @@ typedef enum _VSPopupFlags {
 
 -(id)initWithParent:(UIView *)parent
               flags:(VSPopupFlags)flags
-         textOrView:(id)textOrView
-                 bg:(UIImage *)background;
+         textOrView:(id)textOrView;
 
 -(void)present;
 -(void)present:(VSPopupDismissBlock)dismissBlock;

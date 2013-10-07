@@ -146,6 +146,16 @@
 			<key>Title</key>
 			<string>Start Up</string>
 		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>DefaultValue</key>
+			<string>NO</string>
+			<key>Key</key>
+			<string>kDebugLocation</string>
+			<key>Title</key>
+			<string>Location</string>
+		</dict>
 	</array>
 	<key>StringsTable</key>
 	<string>Root</string>

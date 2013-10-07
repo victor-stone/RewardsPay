@@ -33,7 +33,6 @@ APLOGRELEASE
 -(id)initWithParent:(UIView *)parent
               flags:(VSPopupFlags)flags
          textOrView:(id)textOrView
-                 bg:(UIImage *)background
 {
     self = [super initWithFrame:[UIScreen mainScreen].bounds];
     if( !self )
@@ -52,79 +51,86 @@ APLOGRELEASE
     CGFloat bgAlpha = ( (flags & kPopupActivity) != 0 ) ? 0.2 : 0.8;
     self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:bgAlpha];
     
-    CGRect rcX =  self.frame;
-    CGRect imgFrame = CGRectInset(rcX, rcX.size.width * 0.25, rcX.size.height * 0.3);
+    CGFloat x,y,w,h;
+    CGRect temp;
     
+    CGRect WHOLE_SCREEN =  self.frame;
+    
+    w = WHOLE_SCREEN.size.width * 0.65;
+    x = w / 4.0;
+    y = WHOLE_SCREEN.size.height * 0.23;
+    h = 60.0; // random, set later;
+    
+    UIView * backView = [[UIView alloc] initWithFrame:(CGRect){ {x,y}, {w,h} }];
+    backView.layer.cornerRadius = 8.0;
+    backView.layer.masksToBounds = NO;
+    backView.backgroundColor = [UIColor orangeColor];
+    [self addSubview:backView];
+    
+    UIView *innerView = [[UIView alloc] initWithFrame:(CGRect){ {3.0, 3.0}, { 20,20} }]; // w,h random
+    innerView.backgroundColor = [UIColor whiteColor];
+    innerView.layer.masksToBounds = YES;
+    innerView.layer.cornerRadius = 8.0;
+    [backView addSubview:innerView];
+    
+    backView.layer.shadowColor = [UIColor blackColor].CGColor;
+    backView.layer.shadowOpacity = 1.0;
+    backView.layer.shadowOffset = CGSizeMake(8.0, 8.0);
+    backView.layer.shadowRadius = 2.0;
+
     UIView * view = nil;
-    BOOL isText = NO;
+    CGPoint org = (CGPoint){ kPopupInsetPadding, kPopupInsetPadding };
     if( [textOrView isKindOfClass:[NSString class]] )
     {
-        CGFloat width = imgFrame.size.width * 0.8;
         NSString * text = textOrView;
-        UILabel * label = [[UILabel alloc] initWithFrame:(CGRect){ 0, 0, width, 10 }];
+        UILabel * label = [[UILabel alloc] initWithFrame:(CGRect){ org, {w - kPopupGutter, 10} }];
         label.numberOfLines = 0;
         label.lineBreakMode = NSLineBreakByWordWrapping;
         label.textAlignment = NSTextAlignmentCenter;
-        label.backgroundColor = [UIColor clearColor];
+        label.backgroundColor =  [UIColor clearColor];
         label.textColor = [UIColor blackColor];
         label.text = text;
         [label sizeToFit];
-        CGRect tframe = label.frame;
-        CGSize sz = self.bounds.size;
-        sz.width /= 2.0;
-        sz.height /= 2.0;
-        tframe.origin = (CGPoint){ sz.width - (width/2.0), sz.height - (tframe.size.height/2.0) };
-        label.frame = tframe;
-        isText = YES;
+        
         view = label;
+        h = label.frame.size.height + kPopupGutter;
     }
     else
     {
         view = textOrView;
-        CGSize vrc = view.frame.size;
-        if( vrc.height + vrc.width == 0 )
-            view.frame = CGRectInset(imgFrame, rcX.size.width * 0.1, rcX.size.height * 0.1 );
+        CGSize sz = view.frame.size;
+        if( (sz.height == 0) || (sz.width == 0) )
+            sz = (CGSize){ w - kPopupGutter, h - kPopupGutter };
+        view.frame = (CGRect){ org, sz };
     }
 
-    [self addSubview:view];
-    
-    UIEdgeInsets inset = background.capInsets;
-    CGRect rc = view.frame;
-    imgFrame  =  CGRectInset(view.frame, -((inset.left+inset.right)+kPopupInsetPadding), -((inset.top+inset.bottom)+kPopupInsetPadding));
+    [innerView addSubview:view];
     
     UIActivityIndicatorView * activity = nil;
     if( (flags & kPopupActivity) != 0 )
     {
         activity = [[UIActivityIndicatorView alloc]
-                    initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+                    initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         
+        activity.backgroundColor = [UIColor whiteColor];
         CGRect aframe = activity.frame;
-        aframe.origin.y = (rc.origin.y + rc.size.height) + (aframe.size.height * 2);
-        aframe.origin.x = (self.bounds.size.width / 2.0) - (aframe.size.width * 1);
+        temp = view.frame;
+        aframe.origin.y = temp.origin.y + temp.size.height + kPopupGutter;
+        aframe.origin.x = (w / 2.0) - (aframe.size.width / 2.0);
         activity.frame = aframe;
         [activity startAnimating];
-        [self addSubview:activity];
-        imgFrame.size.height += (aframe.size.height * 3.0);
-        if( isText )
-        {
-            ((UILabel *)view).textColor = [UIColor whiteColor];
-        }
+        [innerView addSubview:activity];
+        h += (kPopupGutter + aframe.size.height + kPopupGutter);
         _animationSpeed = 0.35;
     }
     else
     {
+        h += kPopupHeightFudge;
         _animationSpeed = 0.6;
     }
-    
-    UIImageView * imgView = [[UIImageView alloc] initWithFrame:imgFrame];
-    imgView.image = background;
-    imgView.layer.shadowColor = [UIColor blackColor].CGColor;
-    imgView.layer.shadowOpacity = 0.7f;
-    imgView.layer.shadowOffset = CGSizeMake(14.0f, 14.0f);
-    imgView.layer.shadowRadius = 5.0f;
-    imgView.layer.masksToBounds = NO;
-    
-    [self insertSubview:imgView atIndex:0];
+
+    backView.frame = (CGRect){ {x,y}, {w,h} };
+    innerView.frame = (CGRect){ {kPopupBorderSize,kPopupBorderSize}, {w-kPopupBorderPadding,h-kPopupBorderPadding} };
     
     [parent addSubview:self];
     
