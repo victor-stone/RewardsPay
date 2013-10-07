@@ -19,6 +19,12 @@ APKEYEDSTRING(kSettingUserLoginName)
 APKEYEDSTRING(kSettingUserLoginPassword)
 APKEYEDSTRING(kSettingUserArgoPoints)
 APKEYEDSTRING(kSettingUserUniqueID)
+APKEYEDSTRING(kSettingUserLastLat)
+APKEYEDSTRING(kSettingUserLastLong)
+APKEYEDSTRING(kSettingUserFirstInvoke)
+
+APKEYEDSTRING(kSettingSystemBuildNumber)
+APKEYEDSTRING(kSettingFrequentGPS)
 
 APKEYEDSTRING(kSettingSlidingCameraView)
 
@@ -86,3 +92,4 @@ APKEYEDSTRING(kDebugNetwork)
 APKEYEDSTRING(kDebugViews)
 APKEYEDSTRING(kDebugUser)
 APKEYEDSTRING(kDebugLocation)
+APKEYEDSTRING(kDebugStartup)

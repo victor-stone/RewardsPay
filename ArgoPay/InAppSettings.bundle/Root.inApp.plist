@@ -58,11 +58,7 @@
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 			<key>File</key>
-			<string>about.html</string>
-			<key>IASKViewControllerClass</key>
-			<string>IASKAppSettingsWebViewController</string>
-			<key>IASKViewControllerSelector</key>
-			<string>initWithFile:key:</string>
+			<string>About</string>
 			<key>Title</key>
 			<string>About</string>
 			<key>IASKTextAlignment</key>

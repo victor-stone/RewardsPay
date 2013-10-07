@@ -10,14 +10,16 @@
 #import "APStrings.h"
 
 #define kLocationGoesStaleAfterSeconds 60000
+#define kLocationTimeOut 20.0
 
 @implementation APLocation {
-    CLLocationCoordinate2D _lastKnownSpot;
-    bool _dataArrived;
+    CLLocation *_lastLocation;
     bool _running;
     CLLocationManager * _manager;
-    NSDate *_lastRetrieved;
     NSMutableArray *_waitingBlocks;
+    CLAuthorizationStatus _currentStatus;
+    BOOL _useSignificant;
+    id _timeOutBlock;
 }
 
 static APLocation *__sharedLocation;
@@ -31,64 +33,139 @@ static APLocation *__sharedLocation;
     return __sharedLocation;
 }
 
++(BOOL)appIsAuthorized
+{
+    if ( [CLLocationManager locationServicesEnabled] && ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized))
+        return YES;
+    return NO;
+}
+
 -(id)init
 {
     if( (self = [super init]) == nil )
         return nil;
     
     _waitingBlocks = [NSMutableArray new];
-    _manager = [[CLLocationManager alloc] init];
-    _manager.delegate = self;
-    APLOG(kDebugLocation, @"Initializing location delegate", 0);
+    _useSignificant = ![[NSUserDefaults standardUserDefaults] boolForKey:kSettingFrequentGPS];
+    
+    [self registerForBroadcast:kNotifyUserSettingChanged block:^(APLocation *me, NSDictionary *settings) {
+        for( NSString *key in settings )
+        {
+            if( [key isEqualToString:kSettingFrequentGPS] )
+            {
+                BOOL newSetting = ![settings[key] boolValue];
+                if( newSetting != _useSignificant )
+                {
+                    APLOG(kDebugLocation, @"User set _useSignificant to: %d", newSetting);
+                    _useSignificant = newSetting;
+                    if( me->_running )
+                    {
+                        [me stopService];
+                        _manager = nil;
+                        [me startService];
+                    }
+                }
+            }
+        }
+    }];
     return self;
 }
 
--(void)start
+-(void)setLocationTimeOut
 {
-    _dataArrived = false;
-    APLOG(kDebugLocation, @"Starting location delegate", 0);
-    [_manager startMonitoringSignificantLocationChanges];
-    _running = true;
+    [self cancelTimeOut];
+    if( 0 ) // && (_currentStatus == kCLAuthorizationStatusNotDetermined) || !_useSignificant )
+    {
+        APLOG(kDebugLocation, @"Setting timer",0);
+        __weak APLocation *me = self;
+        CLLocationManager *manager = _manager;
+        _timeOutBlock = [NSObject performBlock:^{
+            APLOG(kDebugLocation, @"Timed out!",0);
+            [me locationManager:manager didFailWithError:[APError errorWithCode:kAPERROR_GPSTIMEOUT]];
+        } afterDelay:kLocationTimeOut];
+    }
 }
 
--(void)stop
+-(void)cancelTimeOut
+{
+    if( _timeOutBlock )
+    {
+        APLOG(kDebugLocation, @"cancelling timer", 0);
+        [NSObject cancelBlock:_timeOutBlock];
+        _timeOutBlock = nil;
+    }
+}
+
+-(void)startService
+{
+    [self performSelectorOnMainThread:@selector(_startService) withObject:nil waitUntilDone:YES];
+}
+
+-(void)_startService
+{
+    if( !_manager )
+    {
+        _manager = [[CLLocationManager alloc] init];
+        _manager.delegate = self;
+        APLOG(kDebugLocation, @"Initializing manager", 0);
+    }
+    
+    _lastLocation = nil;
+    APLOG(kDebugLocation, @"Starting updates (significant: %d)", _useSignificant);
+    if( _useSignificant )
+        [_manager startMonitoringSignificantLocationChanges];
+    else
+        [_manager startUpdatingLocation];
+    _running = true;
+    [self setLocationTimeOut];
+}
+
+-(void)stopService
 {
     if( _running )
     {
-        APLOG(kDebugLocation, @"Stopping location delegate", 0);
+        APLOG(kDebugLocation, @"Stopping manager", 0);
         _running = false;
-        [_manager stopMonitoringSignificantLocationChanges];
+        if( _useSignificant )
+            [_manager stopMonitoringSignificantLocationChanges];
+        else
+            [_manager stopUpdatingLocation];
     }
 }
 
--(void)currentLocation:(APNoLocationYetBlock)noLocation
-           gotLocation:(APLocationBlock)gotBlock
+-(void)currentLocation:(APLocationBlock)gotBlock
 {
-    _lastKnownSpot = (CLLocationCoordinate2D){ 40, -70 };
-    gotBlock(_lastKnownSpot);
-    /*
-    NSTimeInterval timeSinceLastLocation = abs([_lastRetrieved timeIntervalSinceNow] );
-    
-    APLOG(kDebugLocation, @"Requesting location: dataArrived: %d timeSinceLast: %G", _dataArrived, timeSinceLastLocation);
 
-    if( _dataArrived && (timeSinceLastLocation <= kLocationGoesStaleAfterSeconds) )
+    if( _lastLocation )
     {
-        APLOG(kDebugLocation, @"Calling(1) with: lat:%f long:%f", _lastKnownSpot.latitude, _lastKnownSpot.longitude);
-        gotBlock(_lastKnownSpot);
+        CLLocationCoordinate2D coord = _lastLocation.coordinate;
+        APLOG(kDebugLocation, @"Calling(1) with: lat:%f long:%f", coord.latitude, coord.longitude);
+        gotBlock(coord,nil);
     }
     else
     {
-        if( _running )
+        if( _currentStatus == kCLAuthorizationStatusAuthorized || _currentStatus == kCLAuthorizationStatusNotDetermined )
         {
-            noLocation();
+            APLOG(kDebugLocation, @"Queing request with status: %d", _currentStatus);
             [_waitingBlocks addObject:[gotBlock copy]];
+            if( !_running )
+                [self startService];
         }
         else
         {
-            [self start];
+            APLOG(kDebugLocation, @"request dropped status: %d", _currentStatus);
+            APError *error = [APError errorWithCode:kAPERROR_NOGPS];
+            if( gotBlock((CLLocationCoordinate2D){0,0},error) )
+                [_waitingBlocks addObject:[gotBlock copy]];
         }
     }
-     */
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    APLOG(kDebugLocation,@"Status change in delegate to: %d",status);
+    _currentStatus = status;
 }
 
 - (void)locationManager:(CLLocationManager *)manager
@@ -99,42 +176,59 @@ static APLocation *__sharedLocation;
     NSDate* eventDate = location.timestamp;
     NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
 
-    APLOG(kDebugLocation, @"Got location: lat:%f long:%f time:%@ now:%@ recency: %G",
+    APLOG(kDebugLocation, @"Got: lat:%f long:%f time:%@ recency: %G",
             location.coordinate.latitude,
             location.coordinate.longitude,
             eventDate,
-            [NSDate date],
             howRecent);
     
-    if (abs(howRecent) < kLocationGoesStaleAfterSeconds )
+    if ( !_lastLocation || (abs(howRecent) < kLocationGoesStaleAfterSeconds) )
     {
-        _lastRetrieved = [NSDate date];
-        _lastKnownSpot = location.coordinate;
-        _dataArrived = true;
+        _lastLocation = location;
         for( APLocationBlock block in _waitingBlocks )
         {
-            APLOG(kDebugLocation, @"Calling(2) with: lat:%f long:%f", _lastKnownSpot.latitude, _lastKnownSpot.longitude);
-            block(_lastKnownSpot);
+            CLLocationCoordinate2D coord = location.coordinate;
+            APLOG(kDebugLocation, @"Calling(2) with: lat:%f long:%f", coord.latitude, coord.longitude);
+            block(coord,nil);
         }
-        _waitingBlocks = [NSMutableArray new];
-        [self stop];
+        [_waitingBlocks removeAllObjects];
     }
 }
 
 - (void)locationManagerDidPauseLocationUpdates:(CLLocationManager *)manager
 {
-    APLOG(kDebugLocation, @"Location manager paused updates", 0);
+    APLOG(kDebugLocation, @"Manager paused updates", 0);
 }
 
 - (void)locationManagerDidResumeLocationUpdates:(CLLocationManager *)manager
 {
-    APLOG(kDebugLocation, @"Location manager resumed updates", 0);
+    APLOG(kDebugLocation, @"Manager resumed updates", 0);
 }
 
 - (void)locationManager:(CLLocationManager *)manager
        didFailWithError:(NSError *)error
 {
-    APLOG(kDebugLocation, @"Location manager failed with error: %@", error);
+    [self cancelTimeOut];
+    APLOG(kDebugLocation, @"Manager failed with error: %@", error);
+    [self stopService];
+    NSArray *copyOfBlocks = [NSArray arrayWithArray:_waitingBlocks];
+    APError *aperror = error.domain == kAPErrorDomain ? (APError *)error : [APError errorWithCode:kAPERROR_GPSSYSTEM];
+    for( APLocationBlock block in copyOfBlocks )
+    {
+        CLLocationCoordinate2D coord = (CLLocationCoordinate2D){ 0, 0, };
+        APLOG(kDebugLocation, @"Calling with error", 0);
+        if( block(coord,aperror) == NO )
+           [_waitingBlocks removeObject:block];
+    }
+    
+    if( _waitingBlocks.count > 0 )
+    {
+        APLOG(kDebugLocation, @"Attempting with restart",0);
+        [NSObject performBlock:^{
+            [self startService];
+        } afterDelay:3.0];
+    }
+
 }
 
 

@@ -19,6 +19,9 @@ extern NSString *const kAPServerErrorKey;
 #define KAPERROR_GENERIC            kAPERROR_BASE
 #define kAPERROR_MISSINGLOGINFIELDS (kAPERROR_BASE + 1)
 #define kAPERROR_NONETCONNECTION    (kAPERROR_BASE + 2)
+#define kAPERROR_NOGPS              (kAPERROR_BASE + 3)
+#define kAPERROR_GPSTIMEOUT         (kAPERROR_BASE + 4)
+#define kAPERROR_GPSSYSTEM          (kAPERROR_BASE + 5)
 
 @interface APError : NSError
 +(id)errorWithCode:(NSUInteger)code;

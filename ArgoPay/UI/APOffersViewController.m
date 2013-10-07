@@ -152,23 +152,30 @@ APLOGRELEASE
     request.Distance = @(20.0);
     request.SortBy = sort;
 
-    [[APLocation sharedInstance] currentLocation:^{
-#warning Need to work out what do when location fails.
-    } gotLocation:^(CLLocationCoordinate2D loc) {
-        request.Lat = @(loc.latitude);
-        request.Long = @(loc.longitude);
-        [request performRequest:^(id data, NSError *err) {
-            [popup dismiss];
-            if( err )
-            {
-                [self showError:err];
-            }
-            else
-            {
-                _offers = data;
-                [_offersTable reloadData];
-            }
-        }];
+    [[APLocation sharedInstance] currentLocation:^BOOL(CLLocationCoordinate2D loc, APError *error) {
+        if( error )
+        {
+            [self showError:error];
+            return YES;
+        }
+        else
+        {
+            request.Lat = @(loc.latitude);
+            request.Long = @(loc.longitude);
+            [request performRequest:^(id data, NSError *err) {
+                [popup dismiss];
+                if( err )
+                {
+                    [self showError:err];
+                }
+                else
+                {
+                    _offers = data;
+                    [_offersTable reloadData];
+                }
+            }];
+        }
+        return NO;
     }];
 }
 

@@ -15,6 +15,7 @@
 		571D75C717EB3D0A00F0B869 /* kImageTransactionBottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 571D75C417EB3D0A00F0B869 /* kImageTransactionBottom.png */; };
 		571D75C817EB3D0A00F0B869 /* kImageTransactionExpander.png in Resources */ = {isa = PBXBuildFile; fileRef = 571D75C517EB3D0A00F0B869 /* kImageTransactionExpander.png */; };
 		571D75C917EB3D0A00F0B869 /* kImageTransactionTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 571D75C617EB3D0A00F0B869 /* kImageTransactionTop.png */; };
+		57240C11180218A70045E07C /* icons_work.txt in Resources */ = {isa = PBXBuildFile; fileRef = 57240C10180218A70045E07C /* icons_work.txt */; };
 		57287ECF17F886FE00C37D2E /* kImageBlackSq.png in Resources */ = {isa = PBXBuildFile; fileRef = 57287ECE17F886FE00C37D2E /* kImageBlackSq.png */; };
 		57287ED217F8B3B000C37D2E /* NSString+APNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 57287ED117F8B3B000C37D2E /* NSString+APNetwork.m */; };
 		574B2DF217EC9BEF008E17EE /* APRemoteAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 574B2DF117EC9BEF008E17EE /* APRemoteAPI.m */; };
@@ -30,7 +31,6 @@
 		5793E3E417EB7E98004B0838 /* APRemoteObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5793E3E317EB7E98004B0838 /* APRemoteObject.m */; };
 		5793E3E717EB7F24004B0838 /* APMerchant.m in Sources */ = {isa = PBXBuildFile; fileRef = 5793E3E617EB7F24004B0838 /* APMerchant.m */; };
 		5793E3EA17EB7FBF004B0838 /* APArgoPointsReward.m in Sources */ = {isa = PBXBuildFile; fileRef = 5793E3E917EB7FBF004B0838 /* APArgoPointsReward.m */; };
-		5793E3EC17EBBE23004B0838 /* kImageRewardsTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 5793E3EB17EBBE23004B0838 /* kImageRewardsTop.png */; };
 		5793E3EE17EBC38A004B0838 /* kImageButtonBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 5793E3ED17EBC38A004B0838 /* kImageButtonBg.png */; };
 		579C817017FD91690046BC9B /* kImageLocation.png in Resources */ = {isa = PBXBuildFile; fileRef = 579C816F17FD91690046BC9B /* kImageLocation.png */; };
 		579C817217FD91890046BC9B /* kImageOffers.png in Resources */ = {isa = PBXBuildFile; fileRef = 579C817117FD91890046BC9B /* kImageOffers.png */; };
@@ -125,6 +125,7 @@
 		57ADDABB17F5F33F00F23689 /* ConsumerTransactionApprove.js in Resources */ = {isa = PBXBuildFile; fileRef = 57ADDAB317F5F33F00F23689 /* ConsumerTransactionApprove.js */; };
 		57ADDABC17F5F33F00F23689 /* ConsumerTransactionStart.js in Resources */ = {isa = PBXBuildFile; fileRef = 57ADDAB417F5F33F00F23689 /* ConsumerTransactionStart.js */; };
 		57ADDABD17F5F33F00F23689 /* ConsumerTransactionStatus.js in Resources */ = {isa = PBXBuildFile; fileRef = 57ADDAB517F5F33F00F23689 /* ConsumerTransactionStatus.js */; };
+		57AEDC941800633D00042F7F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 57AEDC931800633D00042F7F /* Reachability.m */; };
 		57DA312D17F9478400A6978A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57DA312C17F9478400A6978A /* CoreData.framework */; };
 		57DA312F17F9479000A6978A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57DA312E17F9479000A6978A /* CoreLocation.framework */; };
 		57DA313117F9479A00A6978A /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57DA313017F9479A00A6978A /* CoreText.framework */; };
@@ -155,7 +156,6 @@
 		57DA319417FA213500A6978A /* kImageRewards-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 57DA317717FA213200A6978A /* kImageRewards-selected.png */; };
 		57DA319517FA213500A6978A /* kImageRewards-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57DA317817FA213300A6978A /* kImageRewards-selected@2x.png */; };
 		57DA319617FA213500A6978A /* kImageRewards@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57DA317917FA213400A6978A /* kImageRewards@2x.png */; };
-		57DA319E17FA296A00A6978A /* kImageRewardsTop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57DA319717FA294700A6978A /* kImageRewardsTop@2x.png */; };
 		57DA319F17FA296A00A6978A /* kImageSettings-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 57DA319817FA294A00A6978A /* kImageSettings-selected.png */; };
 		57DA31A017FA296A00A6978A /* kImageSettings-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57DA319917FA295000A6978A /* kImageSettings-selected@2x.png */; };
 		57DA31A117FA296A00A6978A /* kImageSettings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57DA319A17FA295600A6978A /* kImageSettings@2x.png */; };
@@ -174,7 +174,6 @@
 		57E7B84317EA044600205BCB /* kImagePopupBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 57E7B84217EA044600205BCB /* kImagePopupBG.png */; };
 		57E7B84617EA1BA400205BCB /* APPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E7B84517EA1BA400205BCB /* APPopup.m */; };
 		57E7B84D17EA5C0000205BCB /* APTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E7B84C17EA5C0000205BCB /* APTransaction.m */; };
-		57FD23A117FE0773004A50D8 /* WirelessManifest.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57FD23A017FE0773004A50D8 /* WirelessManifest.plist */; };
 		57FD23A717FF1573004A50D8 /* kImageQR-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 57FD23A317FF1573004A50D8 /* kImageQR-selected.png */; };
 		57FD23A817FF1573004A50D8 /* kImageQR-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57FD23A417FF1573004A50D8 /* kImageQR-selected@2x.png */; };
 		57FD23A917FF1573004A50D8 /* kImageQR.png in Resources */ = {isa = PBXBuildFile; fileRef = 57FD23A517FF1573004A50D8 /* kImageQR.png */; };
@@ -224,6 +223,8 @@
 		571D75DD17EB46E700F0B869 /* ArgoPay-Fig1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ArgoPay-Fig1.jpg"; sourceTree = "<group>"; };
 		571D75DE17EB46E700F0B869 /* ArgoPay-Fig2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ArgoPay-Fig2.jpg"; sourceTree = "<group>"; };
 		571D75DF17EB46E700F0B869 /* scope.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = scope.pdf; sourceTree = "<group>"; };
+		57240C0F1801C8A20045E07C /* ArgoPay.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ArgoPay.plist; sourceTree = "<group>"; };
+		57240C10180218A70045E07C /* icons_work.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = icons_work.txt; sourceTree = "<group>"; };
 		57287ECE17F886FE00C37D2E /* kImageBlackSq.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageBlackSq.png; sourceTree = "<group>"; };
 		57287ED017F8B3B000C37D2E /* NSString+APNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+APNetwork.h"; sourceTree = "<group>"; };
 		57287ED117F8B3B000C37D2E /* NSString+APNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+APNetwork.m"; sourceTree = "<group>"; };
@@ -249,7 +250,6 @@
 		5793E3E617EB7F24004B0838 /* APMerchant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMerchant.m; sourceTree = "<group>"; };
 		5793E3E817EB7FBF004B0838 /* APArgoPointsReward.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APArgoPointsReward.h; sourceTree = "<group>"; };
 		5793E3E917EB7FBF004B0838 /* APArgoPointsReward.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APArgoPointsReward.m; sourceTree = "<group>"; };
-		5793E3EB17EBBE23004B0838 /* kImageRewardsTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageRewardsTop.png; sourceTree = "<group>"; };
 		5793E3ED17EBC38A004B0838 /* kImageButtonBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageButtonBg.png; sourceTree = "<group>"; };
 		579C816F17FD91690046BC9B /* kImageLocation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageLocation.png; sourceTree = "<group>"; };
 		579C817117FD91890046BC9B /* kImageOffers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageOffers.png; sourceTree = "<group>"; };
@@ -420,6 +420,8 @@
 		57ADDAB317F5F33F00F23689 /* ConsumerTransactionApprove.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ConsumerTransactionApprove.js; sourceTree = "<group>"; };
 		57ADDAB417F5F33F00F23689 /* ConsumerTransactionStart.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ConsumerTransactionStart.js; sourceTree = "<group>"; };
 		57ADDAB517F5F33F00F23689 /* ConsumerTransactionStatus.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ConsumerTransactionStatus.js; sourceTree = "<group>"; };
+		57AEDC931800633D00042F7F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		57AEDC951800634A00042F7F /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		57C2EC0A17F3483A003B3CA3 /* ArgoMessages.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ArgoMessages.txt; sourceTree = "<group>"; };
 		57C2EC0C17F35DC3003B3CA3 /* APRemoteStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APRemoteStrings.h; sourceTree = "<group>"; };
 		57C2ED3317F3FAA2003B3CA3 /* _.htaccess */ = {isa = PBXFileReference; lastKnownFileType = text; path = _.htaccess; sourceTree = "<group>"; };
@@ -458,7 +460,6 @@
 		57DA317717FA213200A6978A /* kImageRewards-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageRewards-selected.png"; sourceTree = "<group>"; };
 		57DA317817FA213300A6978A /* kImageRewards-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageRewards-selected@2x.png"; sourceTree = "<group>"; };
 		57DA317917FA213400A6978A /* kImageRewards@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageRewards@2x.png"; sourceTree = "<group>"; };
-		57DA319717FA294700A6978A /* kImageRewardsTop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageRewardsTop@2x.png"; sourceTree = "<group>"; };
 		57DA319817FA294A00A6978A /* kImageSettings-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageSettings-selected.png"; sourceTree = "<group>"; };
 		57DA319917FA295000A6978A /* kImageSettings-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageSettings-selected@2x.png"; sourceTree = "<group>"; };
 		57DA319A17FA295600A6978A /* kImageSettings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageSettings@2x.png"; sourceTree = "<group>"; };
@@ -483,7 +484,6 @@
 		57E7B84517EA1BA400205BCB /* APPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPopup.m; sourceTree = "<group>"; };
 		57E7B84B17EA5C0000205BCB /* APTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APTransaction.h; sourceTree = "<group>"; };
 		57E7B84C17EA5C0000205BCB /* APTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APTransaction.m; sourceTree = "<group>"; };
-		57FD23A017FE0773004A50D8 /* WirelessManifest.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = WirelessManifest.plist; sourceTree = "<group>"; };
 		57FD23A317FF1573004A50D8 /* kImageQR-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageQR-selected.png"; sourceTree = "<group>"; };
 		57FD23A417FF1573004A50D8 /* kImageQR-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageQR-selected@2x.png"; sourceTree = "<group>"; };
 		57FD23A517FF1573004A50D8 /* kImageQR.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageQR.png; sourceTree = "<group>"; };
@@ -554,6 +554,7 @@
 				571D75CB17EB46E700F0B869 /* artist_psd */,
 				571D75D817EB46E700F0B869 /* specs */,
 				571D75DC17EB46E700F0B869 /* work_scope */,
+				57240C10180218A70045E07C /* icons_work.txt */,
 			);
 			name = Documentation;
 			path = docs;
@@ -743,7 +744,7 @@
 				57A223F617E90626000B52E9 /* Default@2x.png */,
 				57A223F817E90626000B52E9 /* Default-568h@2x.png */,
 				57E7B83417E9F01000205BCB /* about.html */,
-				57FD23A017FE0773004A50D8 /* WirelessManifest.plist */,
+				57240C0F1801C8A20045E07C /* ArgoPay.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -791,6 +792,8 @@
 			children = (
 				57A2241B17E90F27000B52E9 /* NSObject+VSBroadcasting.h */,
 				57A2241C17E90F27000B52E9 /* NSObject+VSBroadcasting.m */,
+				57AEDC951800634A00042F7F /* Reachability.h */,
+				57AEDC931800633D00042F7F /* Reachability.m */,
 				57A224E917E92124000B52E9 /* VSConnectivity.h */,
 				57A224EA17E92124000B52E9 /* VSConnectivity.m */,
 				57A224EE17E92D1A000B52E9 /* VSSettings.h */,
@@ -937,8 +940,6 @@
 				57DA317117FA212200A6978A /* kImageMerchantTop@2x.png */,
 				57E7B84217EA044600205BCB /* kImagePopupBG.png */,
 				57DA317417FA212F00A6978A /* kImagePopupBG@2x.png */,
-				5793E3EB17EBBE23004B0838 /* kImageRewardsTop.png */,
-				57DA319717FA294700A6978A /* kImageRewardsTop@2x.png */,
 				571D75C417EB3D0A00F0B869 /* kImageTransactionBottom.png */,
 				57DA319C17FA295F00A6978A /* kImageTransactionBottom@2x.png */,
 				571D75C517EB3D0A00F0B869 /* kImageTransactionExpander.png */,
@@ -1212,7 +1213,6 @@
 				57DA317B17FA213500A6978A /* kImageAccount-selected@2x.png in Resources */,
 				57A224A117E913B3000B52E9 /* kImageAccount.png in Resources */,
 				57DA317C17FA213500A6978A /* kImageAccount@2x.png in Resources */,
-				57FD23A117FE0773004A50D8 /* WirelessManifest.plist in Resources */,
 				57FD23AA17FF1573004A50D8 /* kImageQR@2x.png in Resources */,
 				57FD23A717FF1573004A50D8 /* kImageQR-selected.png in Resources */,
 				57A224A617E913B3000B52E9 /* kImageBanner.png in Resources */,
@@ -1244,6 +1244,7 @@
 				57DA318E17FA213500A6978A /* kImageMerchantTop@2x.png in Resources */,
 				57FD285217FF161B004A50D8 /* kImageHome@2x.png in Resources */,
 				57FD23A817FF1573004A50D8 /* kImageQR-selected@2x.png in Resources */,
+				57240C11180218A70045E07C /* icons_work.txt in Resources */,
 				57E7B84317EA044600205BCB /* kImagePopupBG.png in Resources */,
 				57DA319117FA213500A6978A /* kImagePopupBG@2x.png in Resources */,
 				579C817917FD94480046BC9B /* kImageLogoutHome.png in Resources */,
@@ -1254,8 +1255,6 @@
 				57FD285B17FF161B004A50D8 /* kImageSort.png in Resources */,
 				57DA319617FA213500A6978A /* kImageRewards@2x.png in Resources */,
 				579C817817FD94480046BC9B /* kImageLogoutHome-selected@2x.png in Resources */,
-				5793E3EC17EBBE23004B0838 /* kImageRewardsTop.png in Resources */,
-				57DA319E17FA296A00A6978A /* kImageRewardsTop@2x.png in Resources */,
 				57DA319F17FA296A00A6978A /* kImageSettings-selected.png in Resources */,
 				57DA31A017FA296A00A6978A /* kImageSettings-selected@2x.png in Resources */,
 				57A224B717E913B3000B52E9 /* kImageSettings.png in Resources */,
@@ -1337,6 +1336,7 @@
 				57E7B84617EA1BA400205BCB /* APPopup.m in Sources */,
 				57E7B84D17EA5C0000205BCB /* APTransaction.m in Sources */,
 				5793E3E417EB7E98004B0838 /* APRemoteObject.m in Sources */,
+				57AEDC941800633D00042F7F /* Reachability.m in Sources */,
 				5793E3E717EB7F24004B0838 /* APMerchant.m in Sources */,
 				5793E3EA17EB7FBF004B0838 /* APArgoPointsReward.m in Sources */,
 				574B2DF217EC9BEF008E17EE /* APRemoteAPI.m in Sources */,

@@ -1,0 +1,125 @@
+The following is breakdown of the icon work needed as 
+of Oct. 6, 2013. Final version MUST be submitted no
+later than Oct. 12, 2013.
+
+All images must be in PNG format. All must have 
+transparent background (except for the Launch Screens.)
+
+App Icons:
+========================= 
+
+The "app icon" is the icon that the user taps on the home
+screen to start the app. The same image is used in the
+Settings app, as well as Spotlight search.
+
+App icon sizes are discussed in some detail here:
+http://mrgan.tumblr.com/post/708404794/ios-app-icon-sizes
+
+ArgoPay wants all the image to be the same: the ArgoPay
+Logo with a transparent background.
+
+The current placeholder is a version of the logo but it 
+has a white background.
+
+The sized needed are in the left column below along
+with a reference for where they are going to be used.
+
+Please use the name in the right column when submitting
+the final icons.
+
+Home Screen                                 Name 
+--------------                              --------------------
+57x57 (iPhone iOS6 Non-retina)              appIcon.png
+114x114 (iPhone iOS6 Retina)                appIcon@2x.png
+120x120 (iOS7)                              appIcon120.png
+
+Spotlight/Settings
+---------------------
+29x29 (iPhone iOS6 Non-retina)              appIcon29.png
+58x58 (iPhone iOS6 Retina)                  appIcon58.png
+80x80 (iOS7)                                appIcon80.png
+
+Launch Screen
+===============
+
+The launch (or "splash" screen") is displayed by iOS while
+the app is loading/launching. There are 3 sizes needed by 
+iOS. Please use the names on the right when submitting
+the final versions.
+
+320x480 (non-retina)                        Default.png
+640x960 (retina)                            Default@2x.png
+640x1136 (retina 4-inch)                    Default-568h@2x.png
+
+
+Navigation Bar Items
+=======================
+
+These items will appear in the navigation bar at the top of the screen
+along with the title of the screen (under the status bar which has
+the batter life, connectivity info, etc.)
+
+Artist should be familiar with Apple guidelines
+https://developer.apple.com/library/ios/documentation/UserExperience/Conceptual/MobileHIG/Bars.html
+
+There are placeholder icons but the artist is required to
+create new ones based on industry standard representations
+of the relevant functionality (e.g. log in, sort, home, etc.)
+
+The current placeholder icons are all over the map with regard
+to size. All of these must be replaced with icons that are
+exactly these sizes:
+
+20x20 (non-retina)
+40x40 (retina aka: @2x version)
+
+The 40x40 version of any given icon does NOT have to be identical 
+to its corresponding smaller version and in fact, should have more 
+detail than the 20x20 equivalent version when that makes esthetic
+sense.
+
+The icons should be (mainly) white as they will be silhouetted by
+iOS once placed in the navigation bar.
+ 
+Please use the naming convention of the placeholder icons:
+
+kImageNAME.png    - for the 20x20 version
+kImageNAME@2x.png - for the 40x40 version
+
+Where 'NAME' is the exact name (case sensitive!) given in the 
+list below:
+
+kImageBack.png    - A replica of the iOS 'Back' button
+kImageHome.png    - Takes the user to the 'home' screen
+kImageLogin.png   - Displays the log in screen
+kImageLogout.png  - Logs the user out and notifies the user
+kImageMapView.png - Display a map of nearby business with 'pins'
+                    representing the locations
+kImageMapList.png - Display list version of the screen above
+kImageSort.png    - Display a list of sort options for the current
+                    list
+                    
+Miscellaneous Screens
+========================
+There is one screen that has two pieces of graphics:
+
+kImageTransactionTop.png
+kImageTransactionBottom.png
+
+With their @2x counterparts.
+
+These PNG files were (hastily) cut out of the original
+"transaction.psd" file that can be found in this ZIP
+archive. As you can see the images are fuzzy and not
+"clean." 
+
+Please replace these PNGs with their equivalents keeping
+the EXACT sizes in the PNG.
+
+
+
+
+
+
+
+

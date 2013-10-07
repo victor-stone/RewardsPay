@@ -115,22 +115,31 @@ APLOGRELEASE
     __block APPopup *popup = [APPopup withNetActivity:vc.view];
     
     APRequestTransactionStart *start = [APRequestTransactionStart new];
-    [[APLocation sharedInstance] currentLocation:^{
-        //
-    } gotLocation:^(CLLocationCoordinate2D loc) {
-        APAccount *account = [APAccount currentAccount];
-        start.AToken = account.AToken;
-        start.QrData = result.text;
-        start.Lat = @(loc.latitude);
-        start.Long = @(loc.longitude);
-        [start performRequest:^(APTransactionIDResponse *idResponse, NSError *err) {
-            [NSObject performBlock:^{
-                if( err )
-                    [vc showError:err];
-                else
-                    [self handleTransaction:popup transID:idResponse.TransID];
+    [[APLocation sharedInstance] currentLocation:^BOOL(CLLocationCoordinate2D loc, APError *error) {
+        if( error )
+        {
+            [self performBlock:^(id sender) {
+                [vc showError:error];
             } afterDelay:0.1];
-        }];
+            return YES;
+        }
+        else
+        {
+            APAccount *account = [APAccount currentAccount];
+            start.AToken = account.AToken;
+            start.QrData = result.text;
+            start.Lat = @(loc.latitude);
+            start.Long = @(loc.longitude);
+            [start performRequest:^(APTransactionIDResponse *idResponse, NSError *err) {
+                [NSObject performBlock:^{
+                    if( err )
+                        [vc showError:err];
+                    else
+                        [self handleTransaction:popup transID:idResponse.TransID];
+                } afterDelay:0.1];
+            }];
+        }
+        return NO;
     }];
 }
 

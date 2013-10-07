@@ -21,6 +21,8 @@ NSString * kVSNotificationConnectionTypeChanged = @"kVSNotificationConnectionTyp
  */
 void connectivity_callback(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void *info)
 {
+    NSLog(@"Info: %p", info);
+    
     VSConnectivity * conn = (__bridge VSConnectivity *)info;
     
 	if ((flags & kSCNetworkFlagsReachable) && !(flags & kSCNetworkFlagsConnectionRequired) && !(flags & kSCNetworkReachabilityFlagsIsWWAN))
@@ -52,10 +54,13 @@ void connectivity_callback(SCNetworkReachabilityRef target, SCNetworkReachabilit
         {
             SCNetworkReachabilityContext ctx = { 0 };
             ctx.info = (__bridge void *)self;
+            NSLog(@"Self ptr: %p", ctx.info);
             Boolean success = SCNetworkReachabilitySetCallback(reachability, connectivity_callback, &ctx);
             
             if (success)
             {
+                NSLog(@"Thread: %@", [NSThread currentThread]);
+                
                 SCNetworkReachabilityScheduleWithRunLoop(reachability, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
             }
         }

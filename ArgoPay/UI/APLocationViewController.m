@@ -54,22 +54,29 @@ APLOGRELEASE
     APRequestMerchantLocationSearch * request = [APRequestMerchantLocationSearch new];
     request.SortBy = kRemoteValueDistance;
     request.Distance = @(20);
-    [[APLocation sharedInstance] currentLocation:^{
-#warning Need to work out what to do when location fails.
-    } gotLocation:^(CLLocationCoordinate2D loc) {
-        request.Long = @(loc.longitude);
-        request.Lat = @(loc.latitude);
-        [request performRequest:^(NSArray * data, NSError *err) {
-            if( err )
-            {
-                [self showError:err];
-            }
-            else
-            {
-                _locations = data;
-                [_locationsTable reloadData];
-            }
-        }];
+    [[APLocation sharedInstance] currentLocation:^BOOL(CLLocationCoordinate2D loc, APError *error) {
+        if( error )
+        {
+            [self showError:error];
+            return YES; // right?
+        }
+        else
+        {
+            request.Long = @(loc.longitude);
+            request.Lat = @(loc.latitude);
+            [request performRequest:^(NSArray * data, NSError *err) {
+                if( err )
+                {
+                    [self showError:err];
+                }
+                else
+                {
+                    _locations = data;
+                    [_locationsTable reloadData];
+                }
+            }];
+        }
+        return NO;
     }];
 }
 

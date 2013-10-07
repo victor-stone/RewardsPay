@@ -26,7 +26,19 @@ NSString *const kAPServerErrorKey = @"kAPServerErrorKey";
             break;
             
         case kAPERROR_NONETCONNECTION:
-            msg = NSLocalizedString(@"This app requires a network connection.", @"Network error");
+            msg = NSLocalizedString(@"ArgoPay requires a network connection.", @"Network error");
+            break;
+            
+        case kAPERROR_NOGPS:
+            msg = NSLocalizedString(@"ArgoPay requires that you allow us access to your current location. Go the Settings app and change the settings at\nPrivacy->Location", @"GPS error");
+            break;
+            
+        case kAPERROR_GPSTIMEOUT:
+            msg = NSLocalizedString(@"Location data taking too long.", @"GPS error");
+            break;
+            
+        case kAPERROR_GPSSYSTEM:
+            msg = NSLocalizedString(@"Locations service is reporting an error", @"GPS error");
             break;
             
         default:

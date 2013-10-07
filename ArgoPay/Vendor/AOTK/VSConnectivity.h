@@ -34,6 +34,7 @@ typedef enum _VSConnectType {
  * ```
  */
 @interface VSConnectivity : NSObject
+-(id)initWithHost:(NSString *)host;
 @property (nonatomic) VSConnectType connectionType;
 @end
 

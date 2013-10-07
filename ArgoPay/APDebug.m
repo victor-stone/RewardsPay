@@ -18,7 +18,7 @@ void APDebug(NSString *key,NSString *format,...)
         va_list ap;
         va_start (ap, format);
         NSString * str = [[NSString alloc] initWithFormat:format arguments:ap];
-        printf("APLog: %s\n",[str UTF8String]);
+        printf("APLog:%s %s\n",[key UTF8String],[str UTF8String]);
         va_end (ap);
     }
 }
