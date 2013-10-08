@@ -204,8 +204,6 @@ typedef enum _APStartupState {
 -(NSDictionary *)factoryUserDefaultSettings
 {
     return @{
-             kSettingUserLoginName: @"",
-             kSettingUserLoginPassword: @"",
              kSettingSlidingCameraView: @(YES),
              kSettingUserFirstInvoke: @(YES),
              kSettingUserUniqueID: [[NSProcessInfo processInfo] globallyUniqueString],

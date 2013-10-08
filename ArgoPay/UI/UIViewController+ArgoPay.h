@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define kBarButtonSize 30
+#define kBarButtonSize 20
 
 typedef void (^APMenuBlock)(id,id);
 typedef void (^APDismissBlock)(UIViewController* dismissing);

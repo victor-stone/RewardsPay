@@ -9,26 +9,47 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "VSPopup.h"
+#if DEBUG
 #import "APDebug.h" // AP additions...
 #import "APStrings.h"
-
+#endif
 NSString * kVSNotificationPopupDismissed = @"kVSNotificationPopupDismissed";
 
+@interface VSPopupBackView : UIView {
+    bool _doneOnce;
+}
+@end
+@implementation VSPopupBackView
+
+- (id<CAAction>)actionForLayer:(CALayer *)theLayer
+                        forKey:(NSString *)theKey {
+
+    CATransition *theAnimation = nil;
+    
+    if (!_doneOnce && [theKey isEqualToString:kCAOnOrderIn] ) {
+        
+        theAnimation = [[CATransition alloc] init];
+        theAnimation.duration = 0.2;
+        theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+        theAnimation.type = kCATransitionPush;
+        theAnimation.subtype = kCATransitionFromRight;
+        _doneOnce = YES;
+    }
+    return theAnimation;
+}
+
+
+
+@end
 @implementation VSPopup {
     VSPopupDismissBlock _dismissBlock;
     CGFloat _animationSpeed;
+    __weak UIView * _contentView;
 }
 
+#if DEBUG
 APLOGRELEASE
-
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
+#endif
 
 -(id)initWithParent:(UIView *)parent
               flags:(VSPopupFlags)flags
@@ -61,22 +82,21 @@ APLOGRELEASE
     y = WHOLE_SCREEN.size.height * 0.23;
     h = 60.0; // random, set later;
     
-    UIView * backView = [[UIView alloc] initWithFrame:(CGRect){ {x,y}, {w,h} }];
-    backView.layer.cornerRadius = 8.0;
-    backView.layer.masksToBounds = NO;
-    backView.backgroundColor = [UIColor orangeColor];
-    [self addSubview:backView];
+    UIView * contentView = [[VSPopupBackView alloc] initWithFrame:(CGRect){ {x,y}, {w,h} }];
+    contentView.backgroundColor = [UIColor orangeColor];
+
+    contentView.layer.cornerRadius = 8.0;
+    contentView.layer.masksToBounds = NO;
     
-    UIView *innerView = [[UIView alloc] initWithFrame:(CGRect){ {3.0, 3.0}, { 20,20} }]; // w,h random
-    innerView.backgroundColor = [UIColor whiteColor];
-    innerView.layer.masksToBounds = YES;
-    innerView.layer.cornerRadius = 8.0;
-    [backView addSubview:innerView];
-    
-    backView.layer.shadowColor = [UIColor blackColor].CGColor;
-    backView.layer.shadowOpacity = 1.0;
-    backView.layer.shadowOffset = CGSizeMake(8.0, 8.0);
-    backView.layer.shadowRadius = 2.0;
+    contentView.layer.shadowColor = [UIColor blackColor].CGColor;
+    contentView.layer.shadowOpacity = 1.0;
+    contentView.layer.shadowOffset = CGSizeMake(8.0, 8.0);
+    contentView.layer.shadowRadius = 2.0;
+
+    CALayer *innerLayer = [CALayer layer];
+    innerLayer.backgroundColor = [UIColor whiteColor].CGColor;
+    innerLayer.cornerRadius = contentView.layer.cornerRadius;
+    [contentView.layer addSublayer:innerLayer];
 
     UIView * view = nil;
     CGPoint org = (CGPoint){ kPopupInsetPadding, kPopupInsetPadding };
@@ -104,7 +124,8 @@ APLOGRELEASE
         view.frame = (CGRect){ org, sz };
     }
 
-    [innerView addSubview:view];
+    [contentView addSubview:view];
+    _contentView = contentView;
     
     UIActivityIndicatorView * activity = nil;
     if( (flags & kPopupActivity) != 0 )
@@ -119,7 +140,7 @@ APLOGRELEASE
         aframe.origin.x = (w / 2.0) - (aframe.size.width / 2.0);
         activity.frame = aframe;
         [activity startAnimating];
-        [innerView addSubview:activity];
+        [contentView addSubview:activity];
         h += (kPopupGutter + aframe.size.height + kPopupGutter);
         _animationSpeed = 0.35;
     }
@@ -129,9 +150,10 @@ APLOGRELEASE
         _animationSpeed = 0.6;
     }
 
-    backView.frame = (CGRect){ {x,y}, {w,h} };
-    innerView.frame = (CGRect){ {kPopupBorderSize,kPopupBorderSize}, {w-kPopupBorderPadding,h-kPopupBorderPadding} };
-    
+    contentView.frame = (CGRect){ {x,y}, {w,h} };
+    innerLayer.frame =(CGRect){ {kPopupBorderSize,kPopupBorderSize}, {w-kPopupBorderPadding,h-kPopupBorderPadding} };
+   
+    [self addSubview:contentView];
     [parent addSubview:self];
     
     if( (flags & kPopupNoAutoShow) == 0 )
@@ -153,13 +175,22 @@ APLOGRELEASE
     [self present];
 }
 
+-(void)_dismiss
+{
+    
+}
 -(void)dismiss
 {
+    CGRect rc = _contentView.frame;
+    rc.origin.x = -300;
     [UIView animateWithDuration:_animationSpeed animations:^{
         self.alpha = 0.0;
+        _contentView.frame = rc;
+
     } completion:^(BOOL finished) {
         [self broadcast:kVSNotificationPopupDismissed payload:self];
         [self removeFromSuperview];
+        
         if( _dismissBlock )
         {
             _dismissBlock();

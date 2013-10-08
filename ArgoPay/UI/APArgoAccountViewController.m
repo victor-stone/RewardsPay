@@ -17,11 +17,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *minimumPayment;
 @property (weak, nonatomic) IBOutlet UIButton *transactionButton;
 @property (weak, nonatomic) IBOutlet UINavigationBar *argoNavBar;
+@property (weak, nonatomic) IBOutlet UIView *infoContainer;
 
 @property (nonatomic,strong) APAccountSummary *summary;
 @end
 
-@implementation APArgoAccountViewController
+@implementation APArgoAccountViewController {
+    bool _didLayerWork;
+}
 
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
@@ -56,6 +59,26 @@
     }];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if( !_didLayerWork )
+    {
+        CALayer *layer = _infoContainer.layer;
+        CGRect rc = _infoContainer.bounds;
+        layer.backgroundColor = [UIColor orangeColor].CGColor;
+        layer.cornerRadius = 8.0;
+        layer.masksToBounds = YES;
+        CALayer *innerLayer = [CALayer layer];
+        innerLayer.backgroundColor = [UIColor whiteColor].CGColor;
+        innerLayer.cornerRadius = layer.cornerRadius;
+        innerLayer.frame = CGRectInset(rc, 2,2);
+        innerLayer.masksToBounds = YES;
+        [layer addSublayer:innerLayer];
+        
+        _didLayerWork = true;
+    }
+}
 -(void)setSummary:(APAccountSummary *)summary
 {
     _creditBalance.text = [NSString stringWithFormat:@"$%.2f",[summary.AmountOutstanding floatValue]];

@@ -44,19 +44,28 @@ void * kDismissBlockKey = &kDismissBlockKey;
 {
     UIButton * button = [[UIButton alloc] initWithFrame:(CGRect){0,0,kBarButtonSize,kBarButtonSize}];
     button.showsTouchWhenHighlighted = YES;
+
     if( title )
     {
         UIFont *font = button.titleLabel.font;
-        [button.titleLabel setFont:[UIFont fontWithName:font.familyName size:kBarButtonSize*0.4]];
+        [button.titleLabel setFont:[UIFont fontWithName:font.familyName size:kBarButtonSize*0.55]];
         [button setTitle:title forState:UIControlStateNormal];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        button.titleLabel.minimumScaleFactor = 0.7;
     }
-    
-    if( imgName )
+    // ugh
+    if( imgName == kImageBack )
+    {
+        UIImage * image = [UIImage imageNamed:imgName];
+        [button setImage:image forState:UIControlStateNormal];
+        [button setImageEdgeInsets:UIEdgeInsetsMake(0, 4, 0, 0)];
+    }
+    else if( imgName )
     {
         UIImage * image = [UIImage imageNamed:imgName];
         [button setBackgroundImage:image forState:UIControlStateNormal];
     }
+    [button sizeToFit];
     [button addTarget:self action:@selector(invokeMenuItem:) forControlEvents:UIControlEventTouchUpInside];
     NSMutableDictionary * _map = self.targetMap;
     _map[@(button.hash)] = [block copy];
@@ -189,9 +198,7 @@ void * kDismissBlockKey = &kDismissBlockKey;
     
     if( title )
     {
-        bbBack = [self barButtonForText:title block:block];
-
-        [bbBack setTitle:title];
+        bbBack = [self barButtonForImage:kImageBack title:title block:block];
     }
     else
     {
@@ -199,10 +206,7 @@ void * kDismissBlockKey = &kDismissBlockKey;
                            block:block];
         
     }
-    
-    [bbBack setTintColor:[UIColor whiteColor]]; // colorWithRed:0.8 green:0.6 blue:0.0 alpha:1.0]];
-    UIImage *image = [UIImage imageNamed:kImageBack];
-    [bbBack setBackgroundImage:image forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [bbBack setTintColor:[UIColor whiteColor]];
      bar.topItem.leftBarButtonItem = bbBack;
 }
 

@@ -37,6 +37,7 @@
 @implementation APRewardsViewController {
     NSArray *_rewards;
     NSString *_currentSort;
+    APPopup * _popup;
 }
 
 
@@ -60,10 +61,11 @@ APLOGRELEASE
 
 -(void)fetchRewards:(BOOL)withUI;
 {
-    APPopup * popup = nil;
-    
-    if( withUI )
-        popup = [APPopup withNetActivity:self.view];
+    if( withUI && !_popup )
+    {
+        APDebug(kDebugFire, @"doing popup");
+        _popup = [APPopup withNetActivity:self.view];
+    }
 
     APAccount *account = [APAccount currentAccount];
     
@@ -99,7 +101,8 @@ APLOGRELEASE
                 {
                     _rewards = data;
                     [_rewardsTable reloadData];
-                    [popup dismiss];
+                    [_popup dismiss];
+                    _popup = nil;
                 }
             }];
             return NO;
@@ -163,7 +166,7 @@ APLOGRELEASE
     cell.points.text = [NSString stringWithFormat:@"%d",[reward.PointsRequired intValue]];
     cell.value.text = [NSString stringWithFormat:@"$%.0f", [reward.AmountReward floatValue]];
 
-    [cell.logo setImageWithURL:[NSURL URLWithString:reward.ImageURL] placeholderImage:[UIImage imageNamed:@"appIcon"]];
+    [cell.logo setImageWithURL:[NSURL URLWithString:reward.ImageURL] placeholderImage:[UIImage imageNamed:kImageLogo]];
 
     if( [reward isFetching] == YES )
     {

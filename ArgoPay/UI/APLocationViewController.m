@@ -84,14 +84,20 @@ APLOGRELEASE
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [_locations count];
+    return [_locations count] * 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if( (indexPath.row & 1) == 0 )
+    {
+        return [tableView dequeueReusableCellWithIdentifier:@"kCellIDLocationSpacer" forIndexPath:indexPath];
+    }
     APLocationCell * cell = [tableView dequeueReusableCellWithIdentifier:kCellIDLocation forIndexPath:indexPath];
-    APMerchant * merchant = _locations[indexPath.row];
+    cell.contentView.layer.cornerRadius = 5.0;
+    
+    APMerchant * merchant = _locations[indexPath.row/2];
     CLLocationDegrees bizlat = [merchant.Lat doubleValue];
     CLLocationDegrees bizlong = [merchant.Long doubleValue];
     CLLocation *bizLocation = [[CLLocation alloc] initWithLatitude:bizlat longitude:bizlong];
@@ -107,10 +113,20 @@ APLOGRELEASE
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    APMerchant * merchant = _locations[indexPath.row];
+    if( (indexPath.row & 1) == 0 )
+        return;
+    
+    APMerchant * merchant = _locations[indexPath.row/2];
     UIViewController *vc = [self presentVC:kViewMerchantDetail animated:YES completion:nil];
     [vc setValue:merchant.MLocID forKey:@"MLocID"];
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if( (indexPath.row & 1) == 0 )
+        return 12;
+    return tableView.rowHeight;
+    
+}
 @end

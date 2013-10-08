@@ -14,12 +14,12 @@
 #define kLocationFreshness 4.0
 
 @implementation APLocation {
-    CLLocation *_lastLocation;
-    bool _running;
-    CLLocationManager * _manager;
-    NSMutableArray *_waitingBlocks;
+    CLLocation *          _lastLocation;
+    bool                  _running;
+    CLLocationManager *   _manager;
+    NSMutableArray *      _waitingBlocks;
     CLAuthorizationStatus _currentStatus;
-    BOOL _useSignificant;
+    BOOL                  _useSignificant;
 }
 
 static APLocation *__sharedLocation;
@@ -79,7 +79,12 @@ static APLocation *__sharedLocation;
         APLOG(kDebugLocation, @"Initializing manager", 0);
     }
     
-    _lastLocation = nil;
+    // If you don't do frequent updates, you may
+    // never see another location for a while, even
+    // if you restart/reinstantiate the manager
+    if( !_useSignificant )
+        _lastLocation = nil;
+    
     APLOG(kDebugLocation, @"Starting updates (significant: %d)", _useSignificant);
     if( _useSignificant )
         [_manager startMonitoringSignificantLocationChanges];
@@ -112,6 +117,9 @@ static APLocation *__sharedLocation;
             // The significant updater does NOT pump a new
             // location the next time we restart UNLESS we
             // completely rebuild the location manager...
+            //
+            // EVEN THEN we may not see another another
+            // location for a while
             //
             _manager = nil;
         }

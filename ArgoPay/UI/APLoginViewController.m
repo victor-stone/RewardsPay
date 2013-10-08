@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *username;
 @property (weak, nonatomic) IBOutlet UITextField *password;
 @property (weak, nonatomic) IBOutlet UINavigationBar *argoNavBar;
+@property (weak, nonatomic) IBOutlet UIButton *submitButton;
 
 @end
 
@@ -30,6 +31,11 @@
     [self argoPayIze];
     [self addBackButton:_argoNavBar];
     [_username becomeFirstResponder];
+    
+    _submitButton.layer.masksToBounds = YES;
+    _submitButton.layer.cornerRadius = 8.0;
+    _submitButton.layer.backgroundColor = [UIColor colorWithRed:0 green:0.4 blue:0 alpha:1].CGColor;
+    
 }
 
 - (IBAction)forgotPassword:(id)sender
