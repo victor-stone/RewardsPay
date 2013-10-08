@@ -19,7 +19,7 @@
 					<key>needs-shine</key>
 					<true/>
 					<key>url</key>
-					<string>https://timbregroove.org/apps/appIcon@2x.png</string>
+					<string>http://timbregroove.org/apps/appIcon@2x.png</string>
 				</dict>
 				<dict>
 					<key>kind</key>
@@ -27,7 +27,7 @@
 					<key>needs-shine</key>
 					<true/>
 					<key>url</key>
-					<string>https://timbregroove.org/apps/appIcon.png</string>
+					<string>http://timbregroove.org/apps/appIcon@2x.png</string>
 				</dict>
 			</array>
 			<key>metadata</key>
@@ -39,7 +39,7 @@
 				<key>kind</key>
 				<string>software</string>
 				<key>subtitle</key>
-				<string>Build 1.0.4</string>
+				<string>Enterprise Distribution</string>
 				<key>title</key>
 				<string>ArgoPay</string>
 			</dict>

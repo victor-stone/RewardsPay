@@ -105,4 +105,12 @@ APLOGRELEASE
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    APMerchant * merchant = _locations[indexPath.row];
+    UIViewController *vc = [self presentVC:kViewMerchantDetail animated:YES completion:nil];
+    [vc setValue:merchant.MLocID forKey:@"MLocID"];
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
+
 @end

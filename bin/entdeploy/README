@@ -1,0 +1,11 @@
+Enterprise Deploy Tools
+-----------------------
+
+Archive ArgoPay.ipa to this directory.
+
+Then run entdeploy.sh from terminal shell to post build to distribution
+server.
+
+The shell script uses ftp to post files. The password for the account
+is assumed to be in ~./netrc
+

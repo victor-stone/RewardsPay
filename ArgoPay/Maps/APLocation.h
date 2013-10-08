@@ -17,7 +17,6 @@ typedef BOOL (^APLocationBlock)(CLLocationCoordinate2D loc, APError *error);
 
 +(id)sharedInstance;
 
-+(BOOL)appIsAuthorized;
 -(void)currentLocation:(APLocationBlock)gotBlock;
 -(void)startService;
 -(void)stopService;

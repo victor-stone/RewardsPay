@@ -210,7 +210,7 @@ typedef enum _APStartupState {
              kSettingUserFirstInvoke: @(YES),
              kSettingUserUniqueID: [[NSProcessInfo processInfo] globallyUniqueString],
              kSettingSystemBuildNumber: [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"],
-             kSettingFrequentGPS: @(NO)
+             kSettingFrequentGPS: @(YES)
              
 #ifdef ALLOW_DEBUG_SETTINGS
              ,
