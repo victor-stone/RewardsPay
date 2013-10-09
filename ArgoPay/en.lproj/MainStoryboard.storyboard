@@ -838,6 +838,7 @@
                             </collectionView>
                             <imageView userInteractionEnabled="NO" contentMode="top" image="kImageBanner.png" translatesAutoresizingMaskIntoConstraints="NO" id="Hfh-la-Ftz">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="ugH-J8-HIO"/>
                                 </constraints>
