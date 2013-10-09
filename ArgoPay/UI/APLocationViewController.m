@@ -14,7 +14,7 @@
 #import "APLocation.h"
 #import "APPopup.h"
 
-#define KM_TO_MILES_MULTIPLIER 0,621371192
+#define KM_TO_MILES_MULTIPLIER 0.621371192
 
 @interface APLocationCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *businessName;
@@ -33,6 +33,7 @@
 @implementation APLocationListViewController {
     NSArray *_locations;
     CLLocation *_userLocation;
+    BOOL _viewAsKM;
 }
 
 APLOGRELEASE
@@ -51,6 +52,24 @@ APLOGRELEASE
     
     [self addRightButton:_argoNavBar button:bbi];
     [self fetchLocations];
+    _viewAsKM = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingViewAsKilometer];
+    [self registerForBroadcast:kNotifyUserSettingChanged block:^(APLocationListViewController *me, NSDictionary *settings)
+     {
+         for( NSString *key in settings )
+         {
+             if( [key isEqualToString:kSettingViewAsKilometer] )
+             {
+                 BOOL newSetting = [settings[key] boolValue];
+                 if( newSetting != me->_viewAsKM )
+                 {
+                     _viewAsKM = newSetting;
+                     [NSObject performBlock:^{
+                         [me->_locationsTable reloadData];
+                     } afterDelay:0.1];
+                 }
+             }
+         }
+     }];
 }
 
 -(void)fetchLocations
@@ -113,14 +132,14 @@ APLOGRELEASE
     CLLocationDistance distance = [_userLocation distanceFromLocation:bizLocation] / 1000;
     APLOG(kDebugLocation, @"Biz location: {%f,%f} distance: %.1fkm", bizlat, bizlong, distance);
     NSString *units = nil;
-    if( [[NSUserDefaults standardUserDefaults] boolForKey:kSettingViewAsKilometer] != NO )
+    if(  _viewAsKM )
     {
-        distance *= KM_TO_MILES_MULTIPLIER;
-        units = @"ml";
+        units = @"km";
     }
     else
     {
-        units = @"km";
+        distance *= KM_TO_MILES_MULTIPLIER;
+        units = @"ml";
     }
     cell.distance.text = [NSString stringWithFormat:@"%.1f%@",distance,units];
     cell.businessName.text = merchant.Name;

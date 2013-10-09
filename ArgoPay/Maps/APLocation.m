@@ -48,14 +48,14 @@ static APLocation *__sharedLocation;
             if( [key isEqualToString:kSettingFrequentGPS] )
             {
                 BOOL newSetting = ![settings[key] boolValue];
-                if( newSetting != _useSignificant )
+                if( newSetting != me->_useSignificant )
                 {
                     APLOG(kDebugLocation, @"User set _useSignificant to: %d", newSetting);
-                    _useSignificant = newSetting;
+                    me->_useSignificant = newSetting;
                     if( me->_running )
                     {
                         [me stopService];
-                        _manager = nil;
+                        me->_manager = nil;
                         [me startService];
                     }
                 }
