@@ -1,1 +1,1 @@
-{"Status":0,"Message":"","UserMessage":"You have cancelled the transaction."}
+{"Status":0,"Message":"","UserMessage":"Your transaction has been approved. Thanks for using ArgoPay!"}

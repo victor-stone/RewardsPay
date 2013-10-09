@@ -456,15 +456,15 @@ switch($_REQUEST['cmd'] )
          MerchName, MerchLocation, MerchRegister
          */
         $value['TransStatus'] = 'A';
+        $value['PayAmounts'] =  array( array( 'Desc'=> 'Don\'t care', 'Amount'=> 32.99 ) );
         $value['Amounts'] =  array(  array( 'Type' => 'X', 'Amount'=> 20.00 ),
                                    array( 'Type'=> 'Q', 'Amount'=> 3.22 )
                                    );
-        $value['TotalAmount'] = 23.22;
-        $value['PayAmounts'] =  array( array( 'Desc'=> 'Don\'t care', 'Amount'=> 32.99 ) );
-        $value['MerchName'] = 'Whooley Bully';
+        $value['TotalAmount'] = 54.9;
+        $value['MerchName'] = 'Wine Gallery';
         $value['MerchLocation'] = 'DontCareVille, NY';
         $value['MerchRegister'] = 'Henry';
-        $value['Category'] = 'Snakes, Snacks & Snark';
+        $value['Category'] = 'Fine wines';
         
         break;
     }
@@ -476,10 +476,10 @@ switch($_REQUEST['cmd'] )
          >AToken, TransID, Approve (Binary [Y/N])
          <Status, Message, UserMessage
          */
-        if( strcmp( $parameters->Approve, 'Y' ) == 0 )
-            $value['UserMessage'] = 'You have spent wisely. Honest. Thanks for using ArgoPay!';
-        else
+        if( strcmp( $parameters->Approve, 'N' ) == 0 )
             $value['UserMessage'] = 'You have cancelled the transaction.';
+        else
+            $value['UserMessage'] = 'Your transaction has been approved. Thanks for using ArgoPay!';
         break;
     }
 

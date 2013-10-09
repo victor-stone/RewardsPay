@@ -58,7 +58,7 @@
 			<key>Type</key>
 			<string>PSMultiValueSpecifier</string>
 			<key>DefaultValue</key>
-			<string>1.0</string>
+			<string>0.0</string>
 			<key>Key</key>
 			<string>kSettingDebugNetworkDelay</string>
 			<key>Title</key>

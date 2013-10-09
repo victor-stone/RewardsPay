@@ -213,10 +213,8 @@ typedef enum _APStartupState {
              kSettingFrequentGPS: @(YES)
              
 #ifdef ALLOW_DEBUG_SETTINGS
-             ,
-             kSettingDebugNetworkStubbed: @"file",
-             kSettingDebugLocalhostAddr: @"testingargo.192.168.1.3.xip.io",
-             kSettingDebugNetworkDelay: @"1.0"
+             ,kSettingDebugNetworkStubbed: @"file"
+             ,kSettingDebugLocalhostAddr: @"testingargo.192.168.1.2.xip.io"
 #endif
              };
 }

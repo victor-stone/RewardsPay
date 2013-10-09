@@ -1,10 +1,19 @@
+
 echo Build: > buildinfo.txt
 /usr/libexec/PlistBuddy -c "Print :CFBundleVersion" ../../ArgoPay/ArgoPay-Info.plist >> buildinfo.txt
 echo "<br /> Uploaded: " >> buildinfo.txt
 date >> buildinfo.txt
-ftp -u ftp://timbregr@timbregroove.org/apps/buildinfo.txt buildinfo.txt
-ftp -u ftp://timbregr@timbregroove.org/apps/appIcon.png ../../appIcon.png
-ftp -u ftp://timbregr@timbregroove.org/apps/appIcon@2x.png ../../appIcon@2x.png
-ftp -u ftp://timbregr@timbregroove.org/apps/ArgoPay.plist entdeploy.plist
-ftp -u ftp://timbregr@timbregroove.org/apps/ipa/ArgoPay.ipa ArgoPay.ipa
+
+git log -n 5 > gitlog
+grep "^[D ].*$" gitlog > buildlog.txt
+
+FTP_SITE=ftp://timbregr@timbregroove.org/apps
+FTP_IPA=ftp://timbregr@timbregroove.org/apps/ipa
+
+ftp -u $FTP_SITE/buildinfo.txt buildinfo.txt;type=A
+ftp -u $FTP_SITE/buildlog.txt  buildlog.txt;type=A
+ftp -u $FTP_SITE/appIcon.png ../../appIcon.png
+ftp -u $FTP_SITE/appIcon@2x.png ../../appIcon@2x.png
+ftp -u $FTP_SITE/ArgoPay.plist entdeploy.plist;type=A
+ftp -u $FTP_IPA/ArgoPay.ipa ArgoPay.ipa
 
