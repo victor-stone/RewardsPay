@@ -786,7 +786,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="FN4-Sx-Yci">
-                                <rect key="frame" x="32" y="89" width="257" height="325"/>
+                                <rect key="frame" x="32" y="89" width="257" height="390"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="7" minimumInteritemSpacing="5" id="UXh-ie-hE2">
                                     <size key="itemSize" width="71" height="96"/>
@@ -850,7 +850,7 @@
                             <constraint firstItem="FN4-Sx-Yci" firstAttribute="leading" secondItem="waH-ic-Tae" secondAttribute="leading" constant="32" id="GhB-Ge-mRi"/>
                             <constraint firstAttribute="trailing" secondItem="FN4-Sx-Yci" secondAttribute="trailing" constant="31" id="XJP-7e-z5Q"/>
                             <constraint firstItem="Hfh-la-Ftz" firstAttribute="leading" secondItem="waH-ic-Tae" secondAttribute="leading" id="Ywv-0F-Cdw"/>
-                            <constraint firstItem="byu-fh-Q93" firstAttribute="top" secondItem="FN4-Sx-Yci" secondAttribute="bottom" constant="154" id="hwR-xs-ZBa"/>
+                            <constraint firstItem="byu-fh-Q93" firstAttribute="top" secondItem="FN4-Sx-Yci" secondAttribute="bottom" constant="89" id="hwR-xs-ZBa"/>
                             <constraint firstItem="Hfh-la-Ftz" firstAttribute="centerX" secondItem="waH-ic-Tae" secondAttribute="centerX" id="lGW-xY-s2h"/>
                             <constraint firstItem="Hfh-la-Ftz" firstAttribute="top" secondItem="waH-ic-Tae" secondAttribute="top" id="mPM-3t-ex9"/>
                             <constraint firstItem="Hfh-la-Ftz" firstAttribute="top" secondItem="5I1-ms-Tx6" secondAttribute="bottom" constant="-20" id="wxH-gl-DKW"/>
