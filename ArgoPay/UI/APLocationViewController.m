@@ -14,6 +14,8 @@
 #import "APLocation.h"
 #import "APPopup.h"
 
+#define KM_TO_MILES_MULTIPLIER 0,621371192
+
 @interface APLocationCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *businessName;
 @property (weak, nonatomic) IBOutlet UILabel *category;
@@ -58,6 +60,8 @@ APLOGRELEASE
     APRequestMerchantLocationSearch * request = [APRequestMerchantLocationSearch new];
     request.SortBy = kRemoteValueDistance;
     request.Distance = @(20);
+    request.CategoryID = @(0);
+    request.Limit = @(200);
     [[APLocation sharedInstance] currentLocation:^BOOL(CLLocationCoordinate2D loc, APError *error) {
         if( error )
         {
@@ -108,7 +112,17 @@ APLOGRELEASE
     CLLocation *bizLocation = [[CLLocation alloc] initWithLatitude:bizlat longitude:bizlong];
     CLLocationDistance distance = [_userLocation distanceFromLocation:bizLocation] / 1000;
     APLOG(kDebugLocation, @"Biz location: {%f,%f} distance: %.1fkm", bizlat, bizlong, distance);
-    cell.distance.text = [NSString stringWithFormat:@"%.1fkm",distance];
+    NSString *units = nil;
+    if( [[NSUserDefaults standardUserDefaults] boolForKey:kSettingViewAsKilometer] != NO )
+    {
+        distance *= KM_TO_MILES_MULTIPLIER;
+        units = @"ml";
+    }
+    else
+    {
+        units = @"km";
+    }
+    cell.distance.text = [NSString stringWithFormat:@"%.1f%@",distance,units];
     cell.businessName.text = merchant.Name;
     cell.category.text = merchant.Category;
     cell.layer.masksToBounds = YES;

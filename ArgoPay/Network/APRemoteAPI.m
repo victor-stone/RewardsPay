@@ -163,6 +163,22 @@ static APRemoteAPI * _sharedRemoteAPI;
 
 -(void)_performRequest:(APRemoteAPIRequestBlock)block
 {
+    BOOL bSendFakeData = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingDebugSendStubData];
+    if( bSendFakeData )
+    {
+        static NSDictionary * fakeData = nil;
+        
+        if( !fakeData )
+        {
+            NSString * path = [[NSBundle mainBundle] pathForResource:@"SendingStubs" ofType:@"plist"];
+            fakeData = [NSDictionary dictionaryWithContentsOfFile:path];
+        }
+        
+        NSDictionary * fakeParameters = fakeData[self.command];
+        
+        if( fakeParameters )
+            [self setValuesForKeysWithDictionary:fakeParameters];
+    }
 
 #else
 -(void)performRequest:(APRemoteAPIRequestBlock)block
@@ -270,9 +286,10 @@ static APRemoteAPI * _sharedRemoteAPI;
     [client postPath:self.command
           parameters:self.remotableProperties
              success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
-                 //APLOG(kDebugFire, @"%@", operation.responseString);
+                 APLOG(kDebugFire, @"SENT: %@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
+                 APLOG(kDebugFire, @"RECEIVED: %@", operation.responseString);
                  APRemoteRepsonse * response = [[APRemoteRepsonse alloc] initWithDictionary:responseObject];
-                 APLOG(kDebugNetwork, @"Repsonse: Status: %@\n    Msg: %@\n   UMsg: %@\n  count: %d\n rawParams:%@",
+                 APLOG(kDebugNetwork, @"Response: Status: %@\n    Msg: %@\n   UMsg: %@\n  count: %d\n rawParams:%@",
                        response.Status,
                        response.Message,
                        response.UserMessage,

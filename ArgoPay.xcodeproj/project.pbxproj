@@ -22,6 +22,13 @@
 		574B2DF517ECA097008E17EE /* APDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 574B2DF417ECA097008E17EE /* APDebug.m */; };
 		576A2F5117FB33B600E53CA3 /* MerchantLocationDetail.js in Resources */ = {isa = PBXBuildFile; fileRef = 576A2F4F17FB33B500E53CA3 /* MerchantLocationDetail.js */; };
 		576A2F5217FB33B600E53CA3 /* MerchantLocationSearch.js in Resources */ = {isa = PBXBuildFile; fileRef = 576A2F5017FB33B600E53CA3 /* MerchantLocationSearch.js */; };
+		578B3E311805CDA9005B2701 /* SendingStubs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 578B3E301805CDA9005B2701 /* SendingStubs.plist */; };
+		578B3E391805D963005B2701 /* qrcode.ANN.png in Resources */ = {isa = PBXBuildFile; fileRef = 578B3E331805D963005B2701 /* qrcode.ANN.png */; };
+		578B3E3A1805D963005B2701 /* qrcode.DAV.png in Resources */ = {isa = PBXBuildFile; fileRef = 578B3E341805D963005B2701 /* qrcode.DAV.png */; };
+		578B3E3B1805D963005B2701 /* qrcode.MEX.png in Resources */ = {isa = PBXBuildFile; fileRef = 578B3E351805D963005B2701 /* qrcode.MEX.png */; };
+		578B3E3C1805D963005B2701 /* qrcode.PET.png in Resources */ = {isa = PBXBuildFile; fileRef = 578B3E361805D963005B2701 /* qrcode.PET.png */; };
+		578B3E3D1805D963005B2701 /* qrcode.ABC.png in Resources */ = {isa = PBXBuildFile; fileRef = 578B3E371805D963005B2701 /* qrcode.ABC.png */; };
+		578B3E3E1805D963005B2701 /* qrcode.JOE.png in Resources */ = {isa = PBXBuildFile; fileRef = 578B3E381805D963005B2701 /* qrcode.JOE.png */; };
 		578BB57D17F208FE009E2F45 /* APOffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 578BB57C17F208FE009E2F45 /* APOffer.m */; };
 		578BB5BB17F22CFA009E2F45 /* AFNetworking.strings in Resources */ = {isa = PBXBuildFile; fileRef = 578BB5B717F22CFA009E2F45 /* AFNetworking.strings */; };
 		578BB5BC17F22CFA009E2F45 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 578BB5B917F22CFA009E2F45 /* Localizable.strings */; };
@@ -240,14 +247,19 @@
 		574B2DF417ECA097008E17EE /* APDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APDebug.m; sourceTree = "<group>"; };
 		576A2F4F17FB33B500E53CA3 /* MerchantLocationDetail.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MerchantLocationDetail.js; sourceTree = "<group>"; };
 		576A2F5017FB33B600E53CA3 /* MerchantLocationSearch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MerchantLocationSearch.js; sourceTree = "<group>"; };
+		578B3E301805CDA9005B2701 /* SendingStubs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SendingStubs.plist; sourceTree = "<group>"; };
+		578B3E331805D963005B2701 /* qrcode.ANN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qrcode.ANN.png; sourceTree = "<group>"; };
+		578B3E341805D963005B2701 /* qrcode.DAV.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qrcode.DAV.png; sourceTree = "<group>"; };
+		578B3E351805D963005B2701 /* qrcode.MEX.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qrcode.MEX.png; sourceTree = "<group>"; };
+		578B3E361805D963005B2701 /* qrcode.PET.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qrcode.PET.png; sourceTree = "<group>"; };
+		578B3E371805D963005B2701 /* qrcode.ABC.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qrcode.ABC.png; sourceTree = "<group>"; };
+		578B3E381805D963005B2701 /* qrcode.JOE.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qrcode.JOE.png; sourceTree = "<group>"; };
 		578BB57B17F208FE009E2F45 /* APOffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APOffer.h; sourceTree = "<group>"; };
 		578BB57C17F208FE009E2F45 /* APOffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APOffer.m; sourceTree = "<group>"; };
 		578BB5B517F22C9F009E2F45 /* run_genstrings.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = run_genstrings.sh; sourceTree = "<group>"; };
 		578BB5B817F22CFA009E2F45 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AFNetworking.strings; sourceTree = "<group>"; };
 		578BB5BA17F22CFA009E2F45 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		578BB5BE17F248F4009E2F45 /* APRewardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APRewardViewController.m; sourceTree = "<group>"; };
-		5793E3DF17EB7CC7004B0838 /* qrcode.17094104.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qrcode.17094104.png; sourceTree = "<group>"; };
-		5793E3E017EB7CC7004B0838 /* qrcode.17094497.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qrcode.17094497.png; sourceTree = "<group>"; };
 		5793E3E217EB7E98004B0838 /* APRemoteObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APRemoteObject.h; sourceTree = "<group>"; };
 		5793E3E317EB7E98004B0838 /* APRemoteObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APRemoteObject.m; sourceTree = "<group>"; };
 		5793E3E517EB7F24004B0838 /* APMerchant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMerchant.h; sourceTree = "<group>"; };
@@ -618,6 +630,19 @@
 			path = work_scope;
 			sourceTree = "<group>";
 		};
+		578B3E321805D939005B2701 /* qr */ = {
+			isa = PBXGroup;
+			children = (
+				578B3E331805D963005B2701 /* qrcode.ANN.png */,
+				578B3E341805D963005B2701 /* qrcode.DAV.png */,
+				578B3E351805D963005B2701 /* qrcode.MEX.png */,
+				578B3E361805D963005B2701 /* qrcode.PET.png */,
+				578B3E371805D963005B2701 /* qrcode.ABC.png */,
+				578B3E381805D963005B2701 /* qrcode.JOE.png */,
+			);
+			path = qr;
+			sourceTree = "<group>";
+		};
 		578BB5B417F22C9F009E2F45 /* bin */ = {
 			isa = PBXGroup;
 			children = (
@@ -632,10 +657,10 @@
 		5793E3DE17EB7CC7004B0838 /* Testing */ = {
 			isa = PBXGroup;
 			children = (
+				578B3E321805D939005B2701 /* qr */,
 				57ADDAAD17F5F33F00F23689 /* stubs */,
 				57C2ED3217F3FAA2003B3CA3 /* site */,
-				5793E3DF17EB7CC7004B0838 /* qrcode.17094104.png */,
-				5793E3E017EB7CC7004B0838 /* qrcode.17094497.png */,
+				578B3E301805CDA9005B2701 /* SendingStubs.plist */,
 			);
 			path = Testing;
 			sourceTree = "<group>";
@@ -1245,6 +1270,7 @@
 				57ADDAB817F5F33F00F23689 /* ConsumerGetAvailableOffers.js in Resources */,
 				5713970E18034EB3002F4D3E /* kImageLocation-selected.png in Resources */,
 				57ADDAB917F5F33F00F23689 /* ConsumerGetAvailableRewards.js in Resources */,
+				578B3E391805D963005B2701 /* qrcode.ANN.png in Resources */,
 				579C817017FD91690046BC9B /* kImageLocation.png in Resources */,
 				57ADDABA17F5F33F00F23689 /* ConsumerLogin.js in Resources */,
 				57C6C9541804931D007AB199 /* Default-568h@2x.png in Resources */,
@@ -1252,6 +1278,7 @@
 				57F89F0F1804B19D00A80461 /* kImageLocation-selected@2x.png in Resources */,
 				570EC1F717F7638E00CBA207 /* ConsumerStatementDetail.js in Resources */,
 				570EC1F217F74FED00CBA207 /* ConsumerStatementSummary.js in Resources */,
+				578B3E3A1805D963005B2701 /* qrcode.DAV.png in Resources */,
 				57ADDABB17F5F33F00F23689 /* ConsumerTransactionApprove.js in Resources */,
 				579C817717FD94480046BC9B /* kImageLogoutHome-selected.png in Resources */,
 				57ADDABC17F5F33F00F23689 /* ConsumerTransactionStart.js in Resources */,
@@ -1272,9 +1299,12 @@
 				57C6C95718049417007AB199 /* kImageLogo@2x.png in Resources */,
 				5793E3EE17EBC38A004B0838 /* kImageButtonBg.png in Resources */,
 				57DA317F17FA213500A6978A /* kImageButtonBg@2x.png in Resources */,
+				578B3E3D1805D963005B2701 /* qrcode.ABC.png in Resources */,
 				57FD285717FF161B004A50D8 /* kImageMapList.png in Resources */,
 				579E4E2617F0C6B900D03437 /* kImageErrorBalloon.png in Resources */,
+				578B3E3B1805D963005B2701 /* qrcode.MEX.png in Resources */,
 				579E4E2717F0C6B900D03437 /* kImageErrorBang.png in Resources */,
+				578B3E3C1805D963005B2701 /* qrcode.PET.png in Resources */,
 				57DA318317FA213500A6978A /* kImageHelp-selected.png in Resources */,
 				57FD285117FF161B004A50D8 /* kImageHome.png in Resources */,
 				57DA318417FA213500A6978A /* kImageHelp-selected@2x.png in Resources */,
@@ -1295,10 +1325,12 @@
 				57FD285217FF161B004A50D8 /* kImageHome@2x.png in Resources */,
 				57FD23A817FF1573004A50D8 /* kImageQR-selected@2x.png in Resources */,
 				579C817917FD94480046BC9B /* kImageLogoutHome.png in Resources */,
+				578B3E311805CDA9005B2701 /* SendingStubs.plist in Resources */,
 				57DA319417FA213500A6978A /* kImageRewards-selected.png in Resources */,
 				57DA319517FA213500A6978A /* kImageRewards-selected@2x.png in Resources */,
 				57FD285417FF161B004A50D8 /* kImageLogin@2x.png in Resources */,
 				57A224B617E913B3000B52E9 /* kImageRewards.png in Resources */,
+				578B3E3E1805D963005B2701 /* qrcode.JOE.png in Resources */,
 				57FD285B17FF161B004A50D8 /* kImageSort.png in Resources */,
 				57DA319617FA213500A6978A /* kImageRewards@2x.png in Resources */,
 				579C817817FD94480046BC9B /* kImageLogoutHome-selected@2x.png in Resources */,

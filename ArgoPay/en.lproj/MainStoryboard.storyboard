@@ -807,8 +807,8 @@
                                                 </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="an8-Yv-EZF">
                                                     <rect key="frame" x="10" y="79" width="77" height="21"/>
-                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="12"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <fontDescription key="fontDescription" name="Verdana-Bold" family="Verdana" pointSize="11"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -836,22 +836,23 @@
                                     <outlet property="delegate" destination="J4c-CJ-Shm" id="rCE-Ju-ca5"/>
                                 </connections>
                             </collectionView>
-                            <imageView userInteractionEnabled="NO" contentMode="center" image="kImageBanner.png" translatesAutoresizingMaskIntoConstraints="NO" id="Hfh-la-Ftz">
-                                <rect key="frame" x="-3" y="21" width="326" height="88"/>
+                            <imageView userInteractionEnabled="NO" contentMode="top" image="kImageBanner.png" translatesAutoresizingMaskIntoConstraints="NO" id="Hfh-la-Ftz">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="88" id="ugH-J8-HIO"/>
+                                    <constraint firstAttribute="height" constant="50" id="ugH-J8-HIO"/>
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="FN4-Sx-Yci" firstAttribute="top" secondItem="Hfh-la-Ftz" secondAttribute="bottom" constant="8" symbolic="YES" id="7gR-HI-Aj4"/>
+                            <constraint firstItem="FN4-Sx-Yci" firstAttribute="top" secondItem="Hfh-la-Ftz" secondAttribute="bottom" constant="67" id="7gR-HI-Aj4"/>
                             <constraint firstItem="FN4-Sx-Yci" firstAttribute="leading" secondItem="waH-ic-Tae" secondAttribute="leading" constant="9" id="GhB-Ge-mRi"/>
                             <constraint firstAttribute="trailing" secondItem="FN4-Sx-Yci" secondAttribute="trailing" constant="7" id="XJP-7e-z5Q"/>
-                            <constraint firstItem="Hfh-la-Ftz" firstAttribute="leading" secondItem="waH-ic-Tae" secondAttribute="leading" constant="-3" id="Ywv-0F-Cdw"/>
+                            <constraint firstItem="Hfh-la-Ftz" firstAttribute="leading" secondItem="waH-ic-Tae" secondAttribute="leading" id="Ywv-0F-Cdw"/>
                             <constraint firstItem="byu-fh-Q93" firstAttribute="top" secondItem="FN4-Sx-Yci" secondAttribute="bottom" constant="87" id="hwR-xs-ZBa"/>
                             <constraint firstItem="Hfh-la-Ftz" firstAttribute="centerX" secondItem="waH-ic-Tae" secondAttribute="centerX" id="lGW-xY-s2h"/>
-                            <constraint firstItem="Hfh-la-Ftz" firstAttribute="top" secondItem="5I1-ms-Tx6" secondAttribute="bottom" constant="1" id="wxH-gl-DKW"/>
+                            <constraint firstItem="Hfh-la-Ftz" firstAttribute="top" secondItem="waH-ic-Tae" secondAttribute="top" id="mPM-3t-ex9"/>
+                            <constraint firstItem="Hfh-la-Ftz" firstAttribute="top" secondItem="5I1-ms-Tx6" secondAttribute="bottom" constant="-20" id="wxH-gl-DKW"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -2011,7 +2012,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="kImageBanner.png" width="320" height="113"/>
+        <image name="kImageBanner.png" width="320" height="50"/>
         <image name="kImageErrorBalloon.png" width="397" height="253"/>
         <image name="kImageErrorBang.png" width="140" height="143"/>
         <image name="kImageHelp.png" width="57" height="57"/>

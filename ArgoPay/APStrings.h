@@ -25,6 +25,7 @@ APKEYEDSTRING(kSettingUserFirstInvoke)
 
 APKEYEDSTRING(kSettingSystemBuildNumber)
 APKEYEDSTRING(kSettingFrequentGPS)
+APKEYEDSTRING(kSettingViewAsKilometer)
 
 APKEYEDSTRING(kSettingSlidingCameraView)
 
@@ -34,6 +35,7 @@ APKEYEDSTRING(kSettingDebugNetworkDelay)
 APKEYEDSTRING(kSettingDebugNetworkSSL)
 APKEYEDSTRING(kSettingDebugLocalhostAddr)
 APKEYEDSTRING(kSettingDebugStrictJSON)
+APKEYEDSTRING(kSettingDebugSendStubData)
 
 APKEYEDSTRING(kViewAccount)
 APKEYEDSTRING(kViewError)

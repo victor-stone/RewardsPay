@@ -82,6 +82,7 @@ static NSArray *menuItems()
 
 APLOGRELEASE
 
+
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return [menuItems() count];

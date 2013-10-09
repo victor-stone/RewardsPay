@@ -57,7 +57,7 @@
 @property (nonatomic,strong) NSNumber *Distance;
 @property (nonatomic,strong) NSNumber *Limit;
 @property (nonatomic,strong) NSString *SortBy; // 'D'istance, 'C'ategory
-@property (nonatomic,strong) NSString *Category; 
+@property (nonatomic,strong) NSNumber *CategoryID;
 @end
 
 /*

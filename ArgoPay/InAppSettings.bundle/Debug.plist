@@ -40,6 +40,16 @@
 			<key>DefaultValue</key>
 			<string>NO</string>
 			<key>Key</key>
+			<string>kSettingDebugSendStubData</string>
+			<key>Title</key>
+			<string>Send fake data</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>DefaultValue</key>
+			<string>NO</string>
+			<key>Key</key>
 			<string>kSettingDebugNetworkSSL</string>
 			<key>Title</key>
 			<string>Use SLL</string>

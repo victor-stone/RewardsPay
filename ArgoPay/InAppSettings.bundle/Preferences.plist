@@ -14,6 +14,16 @@
 			<key>DefaultValue</key>
 			<string>YES</string>
 			<key>Key</key>
+			<string>kSettingViewAsKilometer</string>
+			<key>Title</key>
+			<string>View distances as kilometer</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>DefaultValue</key>
+			<string>YES</string>
+			<key>Key</key>
 			<string>kSettingSlidingCameraView</string>
 			<key>Title</key>
 			<string>Animated camera</string>
