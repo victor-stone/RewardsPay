@@ -9,6 +9,7 @@
 #import "APPopup.h"
 #import "APStrings.h"
 
+
 @implementation APPopup
 
 APLOGRELEASE
@@ -20,7 +21,8 @@ APLOGRELEASE
 
 +(id)withNetActivity:(UIView *)parent
 {
-    return [[APPopup alloc] initWithParent:parent flags:kPopupActivity textOrView:@"Connecting..."];
+    NSString *str = NSLocalizedString(@"Connecting...", @"popup");
+    return [[APPopup alloc] initWithParent:parent flags:kPopupActivity | kPopupDelay textOrView:str];
 }
 
 +(id)msgWithParent:(UIView *)parent text:(NSString *)text

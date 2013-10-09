@@ -39,12 +39,13 @@ typedef enum _APStartupState {
 -(id)initWithAppDelegate:(APAppDelegate *)delegate;
 @end
 
-@interface APMasterViewController : UIViewController
+@interface APStartupViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activity;
 @property (weak, nonatomic) IBOutlet UILabel *message;
 @end
 
 
-@implementation APMasterViewController {
+@implementation APStartupViewController {
     id _notifyObserver;
 }
 
@@ -52,8 +53,8 @@ typedef enum _APStartupState {
 {
     [super viewDidLoad];
     [self argoPayIze];
-    [APPopup withNetActivity:self.view];
-    __weak APMasterViewController *me = self;
+    [_activity startAnimating];
+    __weak APStartupViewController *me = self;
     _notifyObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kReachabilityChangedNotification
                                                                         object:nil
                                                                          queue:nil
@@ -63,7 +64,8 @@ typedef enum _APStartupState {
                            Reachability *reachability = note.object;
                            if( reachability.currentReachabilityStatus == NotReachable )
                            {
-                               me.message.text = @"Your phone doesn't seem to be connected to the Internet. Please connect in Settings and then return to ArgoPay.";
+                               NSString * msg = NSLocalizedString(@"Your phone doesn't seem to be connected to the Internet. Please connect in Settings and then return to ArgoPay.", @"startup");
+                               me.message.text = msg;
                            }
                        }];
 }
@@ -111,9 +113,9 @@ typedef enum _APStartupState {
 
 -(void)setLoadingMessage:(NSString *)msg
 {
-    if( [_window.rootViewController isKindOfClass:[APMasterViewController class]] )
+    if( [_window.rootViewController isKindOfClass:[APStartupViewController class]] )
     {
-        APMasterViewController *vc = (APMasterViewController *)_window.rootViewController;
+        APStartupViewController *vc = (APStartupViewController *)_window.rootViewController;
         [NSObject performBlock:^{
             vc.message.text = msg;
         } afterDelay:0.1];
@@ -275,7 +277,7 @@ typedef enum _APStartupState {
 @protected
     APStartupState _state;
     id _notifyObserver;
-    APAppDelegate *_appDelegate;
+    __weak APAppDelegate *_appDelegate;
     id _delayedMessageBlock;
 }
     
@@ -305,9 +307,16 @@ typedef enum _APStartupState {
 
 -(void)displayDelayedMessage:(NSString *)msg
 {
+    __weak APConcurrentStartupOperation * me = self;
     _delayedMessageBlock = [NSObject performBlock:^{
-        [_appDelegate setLoadingMessage:msg];
+        [me deliverMessage:msg];
     } afterDelay:3.0];
+}
+
+-(void)deliverMessage:(NSString *)msg
+{
+    [_appDelegate setLoadingMessage:msg];
+    _delayedMessageBlock = nil;
 }
 
 -(void)dealloc
@@ -320,6 +329,9 @@ typedef enum _APStartupState {
     
     if( _notifyObserver )
         [[NSNotificationCenter defaultCenter] removeObserver:_notifyObserver];
+    
+    _notifyObserver = nil;
+    
     APLOG(kDebugStartup, @"released: %@",self);
     APLOG(kDebugLifetime, @"released: %@", self);
 }
@@ -350,7 +362,7 @@ typedef enum _APStartupState {
 {
     [self iAmStarting];
     
-    [self displayDelayedMessage:@"Connecting to Internet..."];
+    [self displayDelayedMessage:NSLocalizedString(@"Connecting to Internet...",@"startup")];
     
     __weak APWaitForNetwork * me = self;
     
@@ -377,7 +389,7 @@ typedef enum _APStartupState {
 {
     [self iAmStarting];
     
-    [self displayDelayedMessage:@"Waiting for location information..."];
+    [self displayDelayedMessage:NSLocalizedString(@"Waiting for location information...",@"startup")];
     
     [GMSServices provideAPIKey:GOOGLE_MAPS_API_KEY];
     
@@ -403,7 +415,7 @@ typedef enum _APStartupState {
 {
     [self iAmStarting];
     
-    [self displayDelayedMessage:@"Attempting to log in..."];
+    [self displayDelayedMessage:NSLocalizedString(@"Attempting to log in...",@"startup")];
     
     [APAccount login:nil password:nil block:^(id data, NSError *err) {
         if( err && ( !((err.code == kAPERROR_MISSINGLOGINFIELDS) && (err.domain == kAPMobileErrorDomain)) ) )

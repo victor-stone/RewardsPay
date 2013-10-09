@@ -32,6 +32,9 @@
 @property (nonatomic) BOOL highlighted;
 @end
 
+@interface APScanTab : APTab
+@end
+
 @interface APTabNavigator : UIView
 @property (weak,nonatomic) IBOutlet APTab *offers;
 @property (weak,nonatomic) IBOutlet APTab *scan;
@@ -66,14 +69,48 @@
 
 @end
 
+@implementation APScanTab {
+    UIColor * _defaultColor;
+}
 
-@implementation APTabNavigator
+-(void)setHighlighted:(BOOL)highlighted
+{
+    if( !_defaultColor )
+        _defaultColor = self.backgroundColor;
+    
+    BOOL oldValue = self.highlighted;
+    if( oldValue != highlighted )
+    {
+            [super setHighlighted:highlighted];
+            if( highlighted )
+            {
+                self.backgroundColor = [UIColor whiteColor];
+                self.label.text = NSLocalizedString(@"Cancel", @"scan tab");
+                self.label.textColor = [UIColor orangeColor];
+            }
+            else
+            {
+                self.backgroundColor = _defaultColor;
+                self.label.text = NSLocalizedString(@"Scan", @"scan tab");
+                self.label.textColor = [UIColor whiteColor];
+            }
+    }
+}
+
+
+
+@end
+
+@implementation APTabNavigator {
+    UIColor *_defaultScanTabColor;
+}
 
 -(void)wireUp:(APMainViewController *)homeController
 {
     [_offers wireUp:homeController];
     [_scan wireUp:homeController];
     [_location wireUp:homeController];
+    _defaultScanTabColor = _scan.backgroundColor;
 }
 
 -(NSString *)titleForVCName:(NSString *)vcName
@@ -87,9 +124,11 @@
 
 -(void)highlightTab:(NSString *)vcName
 {
-    _offers.highlighted = _offers.vcNav == vcName;
-    _location.highlighted = _location.vcNav == vcName;
-    _scan.highlighted = _scan.vcNav == vcName;
+    [UIView animateWithDuration:0.4 animations:^{
+        _offers.highlighted = _offers.vcNav == vcName;
+        _location.highlighted = _location.vcNav == vcName;
+        _scan.highlighted = _scan.vcNav == vcName;
+    }];
 }
 @end
 
@@ -120,6 +159,10 @@
     _tabNavigator.offers.highlighted = YES;
     _scanWatcher = [[APScanRequestWatcher alloc] initWithDelegate:self];
     [self registerForEvents];
+    
+    CALayer *layer = _tabNavigator.scan.layer;
+    layer.cornerRadius = 5.0;
+    layer.masksToBounds = YES;
 
 }
 
@@ -150,13 +193,13 @@
 {
     if( _scanner )
     {
+        [_tabNavigator highlightTab:_lastNavTab];
         CGRect rc = self.view.frame;
         rc.origin.y = rc.size.height;
-        CGFloat duration = 0; // [[NSUserDefaults standardUserDefaults] boolForKey:kSettingSlidingCameraView] ? 0.5 : 0.0;
+        CGFloat duration = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingSlidingCameraView] ? 0.5 : 0.0;
         [UIView animateWithDuration:duration animations:^{
             _scanner.view.frame = rc;
         } completion:^(BOOL finished) {
-            [_tabNavigator highlightTab:_lastNavTab];
             [_scanner.view removeFromSuperview];
             [_scanner willMoveToParentViewController:nil];
             [_scanner removeFromParentViewController];
@@ -167,7 +210,6 @@
     }
     else
     {
-        [_tabNavigator highlightTab:_tabNavigator.scan.vcNav];
         _scanner = [_scanWatcher request];
         [_scanner willMoveToParentViewController:self];
         [self addChildViewController:_scanner];
@@ -181,6 +223,7 @@
         CGFloat duration = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingSlidingCameraView] ? 0.5 : 0.0;
         [UIView animateWithDuration:duration animations:^
         {
+            [_tabNavigator highlightTab:_tabNavigator.scan.vcNav];
             scannerView.frame = targetRC;
         }];
     }

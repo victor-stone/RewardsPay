@@ -672,9 +672,10 @@ willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challe
                     [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
                 } else {
                     SecTrustResultType result = 0;
+#if !defined(_NSAssertBody)
                     OSStatus status = SecTrustEvaluate(serverTrust, &result);
                     NSAssert(status == errSecSuccess, @"SecTrustEvaluate error: %ld", (long int)status);
-                    
+#endif
                     if (result == kSecTrustResultUnspecified || result == kSecTrustResultProceed) {
                         NSURLCredential *credential = [NSURLCredential credentialForTrust:serverTrust];
                         [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];

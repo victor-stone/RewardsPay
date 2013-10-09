@@ -68,11 +68,14 @@
     _offer = offer;
     if( _map )
         _map.merchant = offer;
-    [_logo setImageWithURL:[NSURL URLWithString:offer.ImageURL]];
-    _merchantName.text = offer.Name;
-    _offerName.text = offer.Description;
-    _offerDetail.text = offer.LongDescription;
-    _expiration.text = [NSString stringWithFormat:NSLocalizedString(@"Expires: %@", @"offer detail"),[offer formatDateField:@"DateTo"]];
+    if( _logo )
+    {
+        [_logo setImageWithURL:[NSURL URLWithString:offer.ImageURL] placeholderImage:[UIImage imageNamed:kImageOffers]];
+        _merchantName.text = offer.Name;
+        _offerName.text = offer.Description;
+        _offerDetail.text = offer.LongDescription;
+        _expiration.text = [NSString stringWithFormat:NSLocalizedString(@"Expires: %@", @"offer detail"),[offer formatDateField:@"DateTo"]];
+    }
 }
 @end
 
@@ -90,6 +93,7 @@
     NSArray * _sortTypes;
     UIActionSheet *_actionSheet;
     NSUInteger _numberOfButtonsShowing;
+    APPopup * _popup;
 }
 
 APLOGRELEASE
@@ -118,6 +122,8 @@ APLOGRELEASE
                     kRemoteValueSortByAvailableToSelect
                     ];
     
+    _popup = [APPopup withNetActivity:self.view];
+    
     if( !_offers )
     {
         self.view.alpha = 0.0;
@@ -128,7 +134,9 @@ APLOGRELEASE
 
 -(void)fetchOffers:(NSString *)sort
 {
-    APPopup *popup = [APPopup withNetActivity:self.view];
+    if( !_popup )
+        _popup = [APPopup withNetActivity:self.view];
+    
     APRequestGetAvailableOffers *request = [APRequestGetAvailableOffers new];
     APAccount *account = [APAccount currentAccount];
     request.AToken = account.AToken;
@@ -138,6 +146,8 @@ APLOGRELEASE
     [[APLocation sharedInstance] currentLocation:^BOOL(CLLocationCoordinate2D loc, APError *error) {
         if( error )
         {
+            [_popup dismiss];
+            _popup = nil;
             [self showError:error];
             return YES;
         }
@@ -146,7 +156,8 @@ APLOGRELEASE
             request.Lat = @(loc.latitude);
             request.Long = @(loc.longitude);
             [request performRequest:^(id data, NSError *err) {
-                [popup dismiss];
+                [_popup dismiss];
+                _popup = nil;
                 if( err )
                 {
                     [self showError:err];

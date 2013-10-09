@@ -8,14 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#define kBGInset 12
-#define kPopupInsetPadding (kBGInset + 8)
-
-#define kErrorPopupInsetTop 8
-#define kErrorPopupInsetLeft 8
-#define kErrorPopupInsetBottom 24
-#define kErrorPopupInsetRight 8
-
 #import "VSPopup.h"
 
 @interface APPopup : VSPopup
@@ -25,5 +17,4 @@
 +(id)errorWithParent:(UIView *)view error:(NSError *)err;
 +(id)withNetActivity:(UIView *)parent;
 @end
-
 

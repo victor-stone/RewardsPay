@@ -62,10 +62,7 @@ APLOGRELEASE
 -(void)fetchRewards:(BOOL)withUI;
 {
     if( withUI && !_popup )
-    {
-        APDebug(kDebugFire, @"doing popup");
         _popup = [APPopup withNetActivity:self.view];
-    }
 
     APAccount *account = [APAccount currentAccount];
     

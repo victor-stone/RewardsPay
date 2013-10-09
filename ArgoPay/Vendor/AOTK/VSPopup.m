@@ -43,8 +43,10 @@ NSString * kVSNotificationPopupDismissed = @"kVSNotificationPopupDismissed";
 @end
 @implementation VSPopup {
     VSPopupDismissBlock _dismissBlock;
-    CGFloat _animationSpeed;
-    __weak UIView * _contentView;
+    CGFloat             _animationSpeed;
+    __weak UIView *     _contentView;
+    UIView *            _delayedView;
+    id                  _cancelBlock;
 }
 
 #if DEBUG
@@ -83,20 +85,18 @@ APLOGRELEASE
     h = 60.0; // random, set later;
     
     UIView * contentView = [[VSPopupBackView alloc] initWithFrame:(CGRect){ {x,y}, {w,h} }];
-    contentView.backgroundColor = [UIColor orangeColor];
+    contentView.backgroundColor = [UIColor whiteColor];
+    CALayer *layer = contentView.layer;
 
-    contentView.layer.cornerRadius = 8.0;
-    contentView.layer.masksToBounds = NO;
+    layer.cornerRadius = 8.0;
+    layer.masksToBounds = NO;
     
-    contentView.layer.shadowColor = [UIColor blackColor].CGColor;
-    contentView.layer.shadowOpacity = 1.0;
-    contentView.layer.shadowOffset = CGSizeMake(8.0, 8.0);
-    contentView.layer.shadowRadius = 2.0;
-
-    CALayer *innerLayer = [CALayer layer];
-    innerLayer.backgroundColor = [UIColor whiteColor].CGColor;
-    innerLayer.cornerRadius = contentView.layer.cornerRadius;
-    [contentView.layer addSublayer:innerLayer];
+    layer.shadowColor = [UIColor blackColor].CGColor;
+    layer.shadowOpacity = 0.8;
+    layer.shadowOffset = CGSizeMake(8.0, 8.0);
+    layer.shadowRadius = 2.0;
+    layer.borderColor = [UIColor orangeColor].CGColor;
+    layer.borderWidth = 2.0;
 
     UIView * view = nil;
     CGPoint org = (CGPoint){ kPopupInsetPadding, kPopupInsetPadding };
@@ -125,7 +125,6 @@ APLOGRELEASE
     }
 
     [contentView addSubview:view];
-    _contentView = contentView;
     
     UIActivityIndicatorView * activity = nil;
     if( (flags & kPopupActivity) != 0 )
@@ -142,18 +141,32 @@ APLOGRELEASE
         [activity startAnimating];
         [contentView addSubview:activity];
         h += (kPopupGutter + aframe.size.height + kPopupGutter);
-        _animationSpeed = 0.35;
     }
     else
     {
         h += kPopupHeightFudge;
-        _animationSpeed = 0.6;
     }
 
+    _animationSpeed = kPopupFadeSpeed;
+
     contentView.frame = (CGRect){ {x,y}, {w,h} };
-    innerLayer.frame =(CGRect){ {kPopupBorderSize,kPopupBorderSize}, {w-kPopupBorderPadding,h-kPopupBorderPadding} };
    
-    [self addSubview:contentView];
+    // Pieces not quite fitting together here
+    // what if delay AND noShow are both on?
+    
+    if( flags & kPopupDelay )
+    {
+        _delayedView = contentView;
+        _cancelBlock = [NSObject performBlock:^{
+            [self doCancel:NO];
+        } afterDelay:kPopupDelayTime];
+    }
+    else
+    {
+        _contentView = contentView;
+        [self addSubview:contentView];
+    }
+    
     [parent addSubview:self];
     
     if( (flags & kPopupNoAutoShow) == 0 )
@@ -175,18 +188,41 @@ APLOGRELEASE
     [self present];
 }
 
+-(void)doCancel:(BOOL)cancel
+{
+    if( _cancelBlock )
+    {
+        [NSObject cancelBlock:_cancelBlock];
+        _cancelBlock = nil;
+    }
+    
+    if( cancel )
+    {
+        _delayedView = nil;
+        [self _dismiss];
+    }
+    else
+    {
+        [self addSubview:_delayedView];
+        _delayedView = nil;
+    }
+}
+
 -(void)_dismiss
 {
+    CGRect rc;
     
-}
--(void)dismiss
-{
-    CGRect rc = _contentView.frame;
-    rc.origin.x = -300;
-    [UIView animateWithDuration:_animationSpeed animations:^{
+    if( _contentView )
+    {
+        rc = _contentView.frame;
+        rc.origin.x = -300;
+    }
+    
+    [UIView animateWithDuration:(_animationSpeed * 0.5) animations:^{
         self.alpha = 0.0;
-        _contentView.frame = rc;
-
+        if( _contentView )
+            _contentView.frame = rc;
+        
     } completion:^(BOOL finished) {
         [self broadcast:kVSNotificationPopupDismissed payload:self];
         [self removeFromSuperview];
@@ -197,5 +233,10 @@ APLOGRELEASE
             _dismissBlock = nil;
         }
     }];
+}
+
+-(void)dismiss
+{
+    [self doCancel:YES];
 }
 @end

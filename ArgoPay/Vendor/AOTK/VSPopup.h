@@ -28,6 +28,14 @@ extern NSString * kVSNotificationPopupDismissed;
 #define kPopupGutter        (kPopupInsetPadding*2)
 #define kPopupBorderPadding (kPopupBorderSize*2)
 
+#ifndef kPopupDelayTime
+#define kPopupDelayTime 1.7
+#endif
+
+#ifndef kPopupFadeSpeed
+#define kPopupFadeSpeed 0.9
+#endif
+
 typedef void (^VSPopupDismissBlock)();
 
 typedef enum _VSPopupFlags {
@@ -38,7 +46,8 @@ typedef enum _VSPopupFlags {
     kPopupNoAutoShow = 1 << 3,
     kPopupAnimateIn = 1 << 4,
     kPopupAnimateOut = 1 << 5,
-    kPopupAnimate = (kPopupAnimateIn | kPopupAnimateOut)
+    kPopupAnimate = (kPopupAnimateIn | kPopupAnimateOut),
+    kPopupDelay = 1 << 6
 } VSPopupFlags;
 
 @interface VSPopup : UIView

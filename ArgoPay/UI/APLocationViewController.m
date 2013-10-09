@@ -12,6 +12,7 @@
 #import "APRemoteStrings.h"
 #import <CoreLocation/CoreLocation.h>
 #import "APLocation.h"
+#import "APPopup.h"
 
 @interface APLocationCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *businessName;
@@ -52,12 +53,15 @@ APLOGRELEASE
 
 -(void)fetchLocations
 {
+    APPopup *popup = [APPopup withNetActivity:self.view];
+    
     APRequestMerchantLocationSearch * request = [APRequestMerchantLocationSearch new];
     request.SortBy = kRemoteValueDistance;
     request.Distance = @(20);
     [[APLocation sharedInstance] currentLocation:^BOOL(CLLocationCoordinate2D loc, APError *error) {
         if( error )
         {
+            [popup dismiss];
             [self showError:error];
             return YES; // right?
         }
@@ -67,6 +71,7 @@ APLOGRELEASE
             request.Long = @(loc.longitude);
             request.Lat = @(loc.latitude);
             [request performRequest:^(NSArray * data, NSError *err) {
+                [popup dismiss];
                 if( err )
                 {
                     [self showError:err];

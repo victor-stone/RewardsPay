@@ -65,16 +65,11 @@
     if( !_didLayerWork )
     {
         CALayer *layer = _infoContainer.layer;
-        CGRect rc = _infoContainer.bounds;
-        layer.backgroundColor = [UIColor orangeColor].CGColor;
+        layer.borderColor = [UIColor orangeColor].CGColor;
+        layer.borderWidth = 2;
         layer.cornerRadius = 8.0;
         layer.masksToBounds = YES;
-        CALayer *innerLayer = [CALayer layer];
-        innerLayer.backgroundColor = [UIColor whiteColor].CGColor;
-        innerLayer.cornerRadius = layer.cornerRadius;
-        innerLayer.frame = CGRectInset(rc, 2,2);
-        innerLayer.masksToBounds = YES;
-        [layer addSublayer:innerLayer];
+        layer.backgroundColor = [UIColor whiteColor].CGColor;
         
         _didLayerWork = true;
     }
