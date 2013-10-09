@@ -16,6 +16,25 @@
 #import "APLocation.h"
 #import "APAccount.h"
 
+/**
+ *  Wrapper for ZBar VC which has a bug (missing auto release)
+ *
+ * Discussion here:
+ * 
+ * http://sourceforge.net/p/zbar/discussion/1072195/thread/df4c215a/
+ *
+ */
+@interface APZBarWrapper : ZBarReaderViewController
+@end
+@implementation APZBarWrapper
+APLOGRELEASE
+- (void) loadView
+{
+    self.view = [[UIView alloc]
+                 initWithFrame: CGRectMake(0, 0, 320, 480)];
+}
+@end
+
 @implementation APScanResult
 @end
 
@@ -40,15 +59,18 @@ APLOGRELEASE
     [self registerForBroadcast:kNotifyTransactionUserActed
                          block:^(APScanRequestWatcher *me, APRequestTransactionApprove *request)
      {
+         APLOG(kDebugScan, @"User acted, calling server with %@", request);
          [request performRequest:^(APRemoteRepsonse *response, NSError *err)
           {
-              UIViewController *vc = [_delegate scanHostViewController];
+              UIViewController *vc = [delegate scanHostViewController];
               if( err )
               {
+                  APLOG(kDebugScan, @"Server responsded with error: %@", err);
                   [vc showError:err];
               }
               else
               {
+                  APLOG(kDebugScan, @"Server responsded with: %@", response);
                   [APPopup msgWithParent:vc.view text:response.UserMessage];
               }
           }];
@@ -146,7 +168,7 @@ APLOGRELEASE
 
 -(UIViewController *)request
 {
-    ZBarReaderViewController *reader = [ZBarReaderViewController new];
+    ZBarReaderViewController *reader = [APZBarWrapper new];
     reader.wantsFullScreenLayout = NO;
     reader.readerDelegate = self;
     [reader.scanner setSymbology: 0
@@ -155,7 +177,8 @@ APLOGRELEASE
     [reader.scanner setSymbology: ZBAR_QRCODE
                           config: ZBAR_CFG_ENABLE
                               to: 1];
-    reader.readerView.zoom = 0.8;
+  //  reader.readerView.zoom = 0.8;
+    APLOG(kDebugScan, @"Returning reader %@", reader);
     return reader;
 }
 

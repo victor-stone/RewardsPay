@@ -91,3 +91,5 @@ APKEYEDSTRING(kDebugViews)
 APKEYEDSTRING(kDebugUser)
 APKEYEDSTRING(kDebugLocation)
 APKEYEDSTRING(kDebugStartup)
+APKEYEDSTRING(kDebugScan)
+

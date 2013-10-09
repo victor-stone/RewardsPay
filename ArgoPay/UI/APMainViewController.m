@@ -81,36 +81,60 @@
     BOOL oldValue = self.highlighted;
     if( oldValue != highlighted )
     {
-            [super setHighlighted:highlighted];
-            if( highlighted )
-            {
-                self.backgroundColor = [UIColor whiteColor];
-                self.label.text = NSLocalizedString(@"Cancel", @"scan tab");
-                self.label.textColor = [UIColor orangeColor];
-            }
-            else
-            {
-                self.backgroundColor = _defaultColor;
-                self.label.text = NSLocalizedString(@"Scan", @"scan tab");
-                self.label.textColor = [UIColor whiteColor];
-            }
+        [super setHighlighted:highlighted];
+        self.hidden = YES;
+        if( highlighted )
+        {
+            self.backgroundColor = [UIColor whiteColor];
+            self.label.text = NSLocalizedString(@"Cancel", @"scan tab");
+            self.label.textColor = [UIColor orangeColor];
+        }
+        else
+        {
+            self.backgroundColor = _defaultColor;
+            self.label.text = NSLocalizedString(@"Scan", @"scan tab");
+            self.label.textColor = [UIColor whiteColor];
+        }
+        self.hidden = NO;
     }
 }
 
+- (id<CAAction>)actionForLayer:(CALayer *)theLayer
+                        forKey:(NSString *)theKey {
+    
+    CATransition *theAnimation = nil;
+
+    NSString * matches = @"hidden"; // kCAOnOrderIn
+    if ( [theKey isEqualToString:matches] ) {
+        
+        theAnimation = [[CATransition alloc] init];
+        theAnimation.duration = 0.5;
+        theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+        if( self.highlighted )
+        {
+            theAnimation.type = kCATransitionMoveIn;
+            theAnimation.subtype = kCATransitionFromTop;
+        }
+        else
+        {
+            theAnimation.type = kCATransitionReveal;
+            theAnimation.subtype = kCATransitionFromBottom;
+            
+        }
+    }
+    return theAnimation;
+}
 
 
 @end
 
-@implementation APTabNavigator {
-    UIColor *_defaultScanTabColor;
-}
+@implementation APTabNavigator
 
 -(void)wireUp:(APMainViewController *)homeController
 {
     [_offers wireUp:homeController];
     [_scan wireUp:homeController];
     [_location wireUp:homeController];
-    _defaultScanTabColor = _scan.backgroundColor;
 }
 
 -(NSString *)titleForVCName:(NSString *)vcName
@@ -142,6 +166,7 @@
     
     APScanRequestWatcher * _scanWatcher;
     UIViewController * _scanner;
+    BOOL _scanTransition;
 }
 
 -(UIStatusBarStyle)preferredStatusBarStyle
@@ -191,7 +216,25 @@
 
 -(void)toggleScanner:(APScannerDoneBlock)block
 {
-    if( _scanner )
+    BOOL scannerOpen = NO;
+    BOOL inTransition = NO;
+    
+    @synchronized(self) {
+        scannerOpen = _scanner != nil;
+        inTransition = _scanTransition;
+    }
+    
+    if( inTransition )
+    {
+        APLOG(kDebugScan, @"Scan transition is under way, tap ignored", 0);
+        return;
+    }
+    
+    APLOG(kDebugScan, @"Scan tansition on",0);
+    
+    _scanTransition = YES;
+    
+    if( scannerOpen )
     {
         [_tabNavigator highlightTab:_lastNavTab];
         CGRect rc = self.view.frame;
@@ -206,6 +249,8 @@
             _scanner = nil;
             if( block )
                 block(self);
+            _scanTransition = NO;
+            APLOG(kDebugScan, @"Scan tansition OFF (1)",0);
         }];
     }
     else
@@ -219,12 +264,16 @@
         targetRC.origin.y = 0;
         rc.origin.y = rc.size.height;
         scannerView.frame = rc;
+        APLOG(kDebugScan, @"Inserting scanner view into home screen", 0);
         [self.view insertSubview:scannerView belowSubview:_tabNavigator];
         CGFloat duration = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingSlidingCameraView] ? 0.5 : 0.0;
         [UIView animateWithDuration:duration animations:^
         {
             [_tabNavigator highlightTab:_tabNavigator.scan.vcNav];
             scannerView.frame = targetRC;
+        } completion:^(BOOL finished) {
+            _scanTransition = NO;
+            APLOG(kDebugScan, @"Scan tansition OFF (2)",0);
         }];
     }
 }

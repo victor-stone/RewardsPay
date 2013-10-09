@@ -156,6 +156,16 @@
 			<key>Title</key>
 			<string>Location</string>
 		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>DefaultValue</key>
+			<string>NO</string>
+			<key>Key</key>
+			<string>kDebugScan</string>
+			<key>Title</key>
+			<string>QR Scanner</string>
+		</dict>
 	</array>
 	<key>StringsTable</key>
 	<string>Root</string>

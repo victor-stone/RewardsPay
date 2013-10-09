@@ -59,20 +59,26 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 {
 	BOOL localWiFiRef;
 	SCNetworkReachabilityRef reachabilityRef;
+    BOOL _startupSucceed;
 }
 
 - (BOOL)startNotifier
 {
-	BOOL retVal = NO;
+    [self performSelectorOnMainThread:@selector(_startNotifier) withObject:nil waitUntilDone:YES];
+    return _startupSucceed;
+}
+
+- (void)_startNotifier
+{
+    _startupSucceed = NO;
 	SCNetworkReachabilityContext context = {0, (__bridge void *)self, NULL, NULL, NULL};
 	if(SCNetworkReachabilitySetCallback(reachabilityRef, ReachabilityCallback, &context))
 	{
 		if(SCNetworkReachabilityScheduleWithRunLoop(reachabilityRef, CFRunLoopGetMain(), kCFRunLoopDefaultMode))	// DFH CFRunLoopGetCurrent()
 		{
-			retVal = YES;
+			_startupSucceed = YES;
 		}
 	}
-	return retVal;
 }
 
 - (void)stopNotifier
