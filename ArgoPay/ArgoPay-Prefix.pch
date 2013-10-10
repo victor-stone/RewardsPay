@@ -15,6 +15,9 @@
 #define ALLOW_DEBUG_SETTINGS 1
 #define DEMO_HACK 1
 
+#ifdef DEBUG
+#define DO_SLIDING_SEGUES 1
+#endif
 
 #define VS_CONNECTIVITY_HOST_NAME "argopay.com"
 #define _AFNETWORKING_PIN_SSL_CERTIFICATES_ 1

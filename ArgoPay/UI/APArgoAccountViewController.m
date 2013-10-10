@@ -84,8 +84,11 @@
 
 - (IBAction)seeTransaction:(id)sender
 {
- //   [self performForwardSlideSegue:kSegueCreditToHistory back:kSegueHistoryToCredit];
+#ifdef DO_SLIDING_SEGUES
+    [self performForwardSlideSegue:kSegueCreditToHistory back:kSegueHistoryToCredit];
+#else
     [self presentVC:kViewHistory animated:YES completion:nil];
+#endif
 }
 
 - (void)didReceiveMemoryWarning

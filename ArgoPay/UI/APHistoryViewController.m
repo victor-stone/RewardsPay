@@ -40,9 +40,11 @@
 {
     [super viewDidLoad];
     [self argoPayIze];
-   // [self addSlideBackButton:_argoNavBar];
+#if DO_SLIDING_SEGUES
+    [self addSlideBackButton:_argoNavBar];
+#else
     [self addBackButton:_argoNavBar];
-
+#endif
     [self fetchHistory:nil];
     
 }

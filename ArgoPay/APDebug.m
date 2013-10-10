@@ -45,4 +45,59 @@ void APDebugDumpView(UIView *view)
         dump = nil;
     }
 }
+
+void APDebugDumpControllers(UIViewController *vc)
+{
+    printf(" ------------ DUMPING VIEW CONTROLLERS -------------------- \n");
+    
+    if( !vc )
+        vc = [UIApplication sharedApplication].keyWindow.rootViewController;
+    
+    static void (^ dumper)(UIViewController *,NSString *);
+    
+    dumper = ^(UIViewController * vc,NSString *indent)
+    {
+        NSString * str = [NSString stringWithFormat:@"%@%@ \n%@ {\n%@   presenting: %@\n%@   presented: %@\n%@   navigation: %@\n%@ }",
+                          indent, vc,
+                          indent,
+                          indent, vc.presentingViewController,
+                          indent, vc.presentedViewController,
+                          indent, vc.navigationController,
+                          indent
+                          ];
+        printf("%s\n",[str UTF8String]);
+        
+        if( vc.presentedViewController && (vc.presentedViewController.presentingViewController == vc) )
+        {
+            dumper(vc.presentedViewController,[indent stringByAppendingString:@"   "]);
+        }
+        
+        if( [vc isKindOfClass:[UINavigationController class ]] )
+        {
+            UINavigationController * nav = (UINavigationController *)vc;
+            NSString * str = [NSString stringWithFormat:@"%@Nav[%d controllers]: {\n%@   topVC: %@\n%@   presented: %@\n%@ }",
+                              indent, [nav.viewControllers count],
+                              indent, nav.topViewController,
+                              indent, nav.presentedViewController,
+                              indent
+                              ];
+            printf("%s\n",[str UTF8String]);
+        }
+        
+        // Get the subviews of the view
+        NSArray *subVCs = [vc childViewControllers];
+        
+        // Return if there are no subviews
+        if ([subVCs count] == 0) return;
+        
+        for (UIViewController *vc in subVCs)
+        {
+            dumper(vc,[indent stringByAppendingString:@"   "]);
+        }
+    };
+    
+    dumper(vc,@"   ");
+    
+    dumper = nil;
+}
 #endif
