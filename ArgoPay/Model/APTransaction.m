@@ -13,8 +13,12 @@
 @implementation APRequestTransactionStart
 -(id)init
 {
-    return [super initWithCmd:kRemoteCmdConsumerTransactionStart
+    self = [super initWithCmd:kRemoteCmdConsumerTransactionStart
                     subDomain:kRemoteSubDomainTransaction];
+    if( self )
+        self.PayID = @(0);
+    
+    return self;
 }
 
 -(Class)payloadClass

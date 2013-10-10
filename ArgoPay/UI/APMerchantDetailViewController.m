@@ -14,6 +14,9 @@
 #import "APArgoPointsReward.h"
 #import "APMerchantMap.h"
 
+#define DEMO_HACK 1
+
+
 @implementation APMerchantDetailMapEmbedding {
     GMSMapView *mapView_;
 }
@@ -79,7 +82,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *pointsTable;
 @property (weak, nonatomic) IBOutlet UIButton *discloseButton;
 
-@property (nonatomic,strong) NSString * MLocID;
+@property (nonatomic,strong) NSNumber * MLocID;
 @end
 
 @implementation APMerchantDetailViewController {
@@ -114,7 +117,7 @@ APLOGRELEASE
     
 }
 
--(void)setMLocID:(NSString *)MLocID
+-(void)setMLocID:(NSNumber *)MLocID
 {
     _MLocID = MLocID;
     if( _merchantName )
@@ -201,6 +204,14 @@ APLOGRELEASE
     request.AToken   = account.AToken;
     request.RewardID = reward.RewardID;
     
+    
+#ifdef DEMO_HACK
+    [reward setFetchingOFF];
+    reward.Selectable = @"N";
+    [_pointsTable reloadSections:[NSIndexSet indexSetWithIndex:0]
+                withRowAnimation:UITableViewRowAnimationMiddle];
+    _merchantPoints.text = @"200pts";
+#else
     [request performRequest:^(APRemoteRepsonse *response, NSError *err) {
         if( err )
         {
@@ -212,7 +223,7 @@ APLOGRELEASE
             self.MLocID = _MLocID;
         }
     }];
-    
+#endif
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

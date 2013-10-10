@@ -1,1 +1,1 @@
-{"Status":0,"Message":"","TransID":"Some-trans-ID"}
+{"Status":0,"Message":"","TransID":1200}

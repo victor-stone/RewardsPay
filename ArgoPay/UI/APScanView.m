@@ -65,7 +65,7 @@ APLOGRELEASE
               UIViewController *vc = [delegate scanHostViewController];
               if( err )
               {
-                  APLOG(kDebugScan, @"Server responsded with error: %@", err);
+                  APLOG(kDebugScan, @"Server responded with error: %@", err);
                   [vc showError:err];
               }
               else
@@ -86,6 +86,7 @@ APLOGRELEASE
         UIViewController *vc = [_delegate scanHostViewController];
         if( err )
         {
+            [popup dismiss];
             [vc showError:err];
         }
         else
@@ -141,9 +142,10 @@ APLOGRELEASE
         if( error )
         {
             [self performBlock:^(id sender) {
+                [popup dismiss];
                 [vc showError:error];
             } afterDelay:0.1];
-            return YES;
+            return NO;
         }
         else
         {
@@ -155,9 +157,14 @@ APLOGRELEASE
             [start performRequest:^(APTransactionIDResponse *idResponse, NSError *err) {
                 [NSObject performBlock:^{
                     if( err )
+                    {
+                        [popup dismiss];
                         [vc showError:err];
+                    }
                     else
+                    {
                         [self handleTransaction:popup transID:idResponse.TransID];
+                    }
                 } afterDelay:0.1];
             }];
         }
@@ -177,7 +184,7 @@ APLOGRELEASE
     [reader.scanner setSymbology: ZBAR_QRCODE
                           config: ZBAR_CFG_ENABLE
                               to: 1];
-  //  reader.readerView.zoom = 0.8;
+    reader.readerView.zoom = 0.8;
     APLOG(kDebugScan, @"Returning reader %@", reader);
     return reader;
 }
@@ -191,6 +198,7 @@ APLOGRELEASE
     APScanResult * result = [APScanResult new];
     result.image = [info objectForKey: UIImagePickerControllerOriginalImage];
     result.text = sym.data;
+    APLOG(kDebugScan, @"Got scan result %@", result.text);
     [self closeReader:result];
 }
 

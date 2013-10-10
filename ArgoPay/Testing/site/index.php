@@ -17,6 +17,8 @@ $value = array( 'Status' => 0, 'Message' => ''
                //,'rawPostData' => $HTTP_RAW_POST_DATA, 'callingParams' => $parameters
                );
 
+$output = 0;
+
 function addRewards()
 {
     /*
@@ -264,6 +266,11 @@ function addOffers()
     return array( $offer1, $offer2, $offer3 );
 }
 
+function getDemoMerchants()
+{
+    return '{"Status": 0, "Message": "OK", "Locations": [{"Website": "", "City": "Santa Clara", "Name": "Apex Wine Gallery", "Zip": "02215", "Distance": 23.21, "ImageURL": "", "Category": "Liquor Store", "Long": "-121.97695200", "State": "MA", "MLocID": "7", "Addr1": "5105 Great America Parkway", "Lat": "37.40516100", "Addr2": "", "Description": ""}, {"Website": "", "City": "Santa Clara", "Name": "Mexican Restaurant", "Zip": "95404", "Distance": 13.25, "ImageURL": "", "Category": "Restaurant", "Long": "-121.96356900", "State": "CA", "MLocID": "4", "Addr1": "2215 Tasman Drive", "Lat": "37.24077000", "Addr2": "", "Description": ""}, {"Website": "", "City": "Santa Clara", "Name": "ABC Jewelry Store", "Zip": "95404", "Distance": 23.11, "ImageURL": "", "Category": "Jewelry", "Long": "-121.98575400", "State": "CA", "MLocID": "2", "Addr1": "4800 Patrick Henry Drive", "Lat": "37.40028700", "Addr2": "", "Description": ""}, {"Website": "", "City": "Santa Clara", "Name": "Joe\'s Restaurant", "Zip": "95404", "Distance": 23.11, "ImageURL": "", "Category": "Restaurant", "Long": "-121.97100100", "State": "CA", "MLocID": "1", "Addr1": "5151 Stars and Stripes Drive", "Lat": "37.40581200", "Addr2": "", "Description": ""}, {"Website": "", "City": "Santa Clara", "Name": "David\'s Chinese Fast Food", "Zip": "95404", "Distance": 23.51, "ImageURL": "", "Category": "Restaurant", "Long": "-121.97804000", "State": "CA", "MLocID": "5", "Addr1": "5350 Great America Parkway", "Lat": "37.40967500", "Addr2": "", "Description": ""}, {"Website": "", "City": "Santa Clara", "Name": "Anna\'s Tacos", "Zip": "95404", "Distance": 23.51, "ImageURL": "", "Category": "Restaurant", "Long": "-121.97804000", "State": "CA", "MLocID": "6", "Addr1": "5350 Great America Parkway", "Lat": "37.40967500", "Addr2": "", "Description": ""}, {"Website": "", "City": "Santa Clara", "Name": "Friendly Pet Shop", "Zip": "95404", "Distance": 23.64, "ImageURL": "", "Category": "Pets", "Long": "-121.98552700", "State": "CA", "MLocID": "3", "Addr1": "5440 Patrick Henry Drive", "Lat": "37.40885200", "Addr2": "", "Description": ""}]}';
+}
+
 switch($_REQUEST['cmd'] )
 {
     case 'ConsumerLogin':
@@ -323,8 +330,16 @@ switch($_REQUEST['cmd'] )
         $value['Rewards'] = addRewards();
         break;
     }
-     
+
     case 'MerchantLocationSearch':
+    {
+        $output = getDemoMerchants();
+        print($output);
+        exit;
+        break;
+    }
+        
+    case 'MerchantLocationSearch_OLD':
     {
         $merch1 = array(
                          'LongDescription' => 'This is 1 the loooong description that is foobar.',
@@ -416,19 +431,19 @@ switch($_REQUEST['cmd'] )
          
          */
 
-        $value['Description'] = 'Everything I do is goin be funky from now on';
-        
-        $value['Name'] = 'World Around You';
-        $value['Addr1'] = '1234 First Ave.';
-        $value['Category'] = 'Food & Pinball Machines';
-        $value['City'] =  'CityField';
-        $value['Lat'] =  39.067884;
-        $value['Long'] =  -77.080239;
-        $value['State'] =  'ST';
-        $value['Zip'] =  '30009';
-        $value['Tel'] = '301-555-1234';
+        $value['Description'] = 'Fine wines for fine occasions.';
+        //5101 Great America Pkwy  Santa Clara, CA 95054
+        $value['Name'] = 'Apex Wine Gallery';
+        $value['Addr1'] = '5101 Great America Pkwy';
+        $value['Category'] = 'Wine';
+        $value['City'] =  'Santa Clara';
+        $value['Lat'] =  37.405161;
+        $value['Long'] = -121.976592;
+        $value['State'] =  'CA';
+        $value['Zip'] =  '95054';
+        $value['Tel'] = '415-708-6000';
         $value['ImageURL'] = 'http://'. $_SERVER[HTTP_HOST] .'/_appIcon.png';
-        $value['Website'] =  'http://chicken.com';
+        $value['Website'] =  'http://apexwine.com';
         $value['ConsumerPoints'] = 340;
         $value['Offers'] = addOffers();
         $value['Rewards'] = addRewards();
@@ -442,7 +457,7 @@ switch($_REQUEST['cmd'] )
          > AToken, QrData, Lat, Long, PayID
          < Status, Message, TransID
          */
-        $value['TransID'] = 'Some-trans-ID';
+        $value['TransID'] = 1200;
         break;
     }
         
@@ -461,8 +476,8 @@ switch($_REQUEST['cmd'] )
                                    array( 'Type'=> 'Q', 'Amount'=> 3.22 )
                                    );
         $value['TotalAmount'] = 54.9;
-        $value['MerchName'] = 'Wine Gallery';
-        $value['MerchLocation'] = 'DontCareVille, NY';
+        $value['MerchName'] = 'Apex Wine Gallery';
+        $value['MerchLocation'] = 'Santa Clara, CA';
         $value['MerchRegister'] = 'Henry';
         $value['Category'] = 'Fine wines';
         

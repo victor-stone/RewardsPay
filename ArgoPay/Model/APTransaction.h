@@ -16,7 +16,7 @@
 @interface APRequestTransactionStart : APRemoteRequest
 @property (nonatomic,strong) NSString * AToken;
 @property (nonatomic,strong) NSString * QrData;
-@property (nonatomic,strong) NSString * PayID; // always null for now
+@property (nonatomic,strong) NSNumber * PayID; // always null for now
 @property (nonatomic,strong) NSNumber *Lat;
 @property (nonatomic,strong) NSNumber *Long;
 @end

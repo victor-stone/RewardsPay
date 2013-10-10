@@ -22,7 +22,7 @@
  Lat, Long, Description, ImageURL, Website}
  */
 @interface APMerchant : APRemoteObject
-@property (nonatomic,strong) NSString *MLocID;
+@property (nonatomic,strong) NSNumber *MLocID;
 @property (nonatomic,strong) NSString *Category;
 @property (nonatomic,strong) NSString *Name;
 @property (nonatomic,strong) NSString *Addr1;
@@ -83,7 +83,7 @@
 
 @interface APRequestMerchantLocationDetail  : APRemoteRequest
 @property (nonatomic,strong) NSString *AToken; // can be nil
-@property (nonatomic,strong) NSString *MLocID;
+@property (nonatomic,strong) NSNumber *MLocID;
 @end
 
 @interface APMerchantDetail  : APMerchant
