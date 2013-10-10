@@ -40,6 +40,7 @@
 {
     [super viewDidLoad];
     [self argoPayIze];
+   // [self addSlideBackButton:_argoNavBar];
     [self addBackButton:_argoNavBar];
 
     [self fetchHistory:nil];

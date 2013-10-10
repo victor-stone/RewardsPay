@@ -24,6 +24,7 @@
 		576A2F5217FB33B600E53CA3 /* MerchantLocationSearch.js in Resources */ = {isa = PBXBuildFile; fileRef = 576A2F5017FB33B600E53CA3 /* MerchantLocationSearch.js */; };
 		5774F7A318071F7600F83313 /* kImageForward@2x copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 5774F7A118071F7600F83313 /* kImageForward@2x copy.png */; };
 		5774F7A418071F7600F83313 /* kImageForward.png in Resources */ = {isa = PBXBuildFile; fileRef = 5774F7A218071F7600F83313 /* kImageForward.png */; };
+		5774F7A81807285100F83313 /* VSHoritzontalSlideSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5774F7A71807285100F83313 /* VSHoritzontalSlideSegue.m */; };
 		578B3E311805CDA9005B2701 /* SendingStubs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 578B3E301805CDA9005B2701 /* SendingStubs.plist */; };
 		578B3E391805D963005B2701 /* qrcode.ANN.png in Resources */ = {isa = PBXBuildFile; fileRef = 578B3E331805D963005B2701 /* qrcode.ANN.png */; };
 		578B3E3A1805D963005B2701 /* qrcode.DAV.png in Resources */ = {isa = PBXBuildFile; fileRef = 578B3E341805D963005B2701 /* qrcode.DAV.png */; };
@@ -252,6 +253,8 @@
 		5774F7A118071F7600F83313 /* kImageForward@2x copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageForward@2x copy.png"; sourceTree = "<group>"; };
 		5774F7A218071F7600F83313 /* kImageForward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageForward.png; sourceTree = "<group>"; };
 		5774F7A5180723BD00F83313 /* DEMO presentation v.7.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DEMO presentation v.7.docx"; sourceTree = "<group>"; };
+		5774F7A61807285100F83313 /* VSHoritzontalSlideSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSHoritzontalSlideSegue.h; sourceTree = "<group>"; };
+		5774F7A71807285100F83313 /* VSHoritzontalSlideSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSHoritzontalSlideSegue.m; sourceTree = "<group>"; };
 		578B3E301805CDA9005B2701 /* SendingStubs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SendingStubs.plist; sourceTree = "<group>"; };
 		578B3E331805D963005B2701 /* qrcode.ANN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qrcode.ANN.png; sourceTree = "<group>"; };
 		578B3E341805D963005B2701 /* qrcode.DAV.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qrcode.DAV.png; sourceTree = "<group>"; };
@@ -846,6 +849,8 @@
 				57E7B84017EA042B00205BCB /* VSPopup.m */,
 				57DA31A517FA424700A6978A /* VSImageTweaks.h */,
 				57DA31A617FA424700A6978A /* VSImageTweaks.m */,
+				5774F7A61807285100F83313 /* VSHoritzontalSlideSegue.h */,
+				5774F7A71807285100F83313 /* VSHoritzontalSlideSegue.m */,
 			);
 			path = AOTK;
 			sourceTree = "<group>";
@@ -1416,6 +1421,7 @@
 				57A2248317E90F47000B52E9 /* UIViewController+ArgoPay.m in Sources */,
 				57A2248617E90FF3000B52E9 /* APStrings.m in Sources */,
 				57A224EB17E92124000B52E9 /* VSConnectivity.m in Sources */,
+				5774F7A81807285100F83313 /* VSHoritzontalSlideSegue.m in Sources */,
 				57A224F017E92D1A000B52E9 /* VSSettings.m in Sources */,
 				57A224F317E95154000B52E9 /* APSettingsViewController.m in Sources */,
 				57E7B83B17E9FCE900205BCB /* APTranasctionViewController.m in Sources */,

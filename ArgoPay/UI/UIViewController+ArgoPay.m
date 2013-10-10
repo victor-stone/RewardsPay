@@ -181,11 +181,18 @@ void * kDismissBlockKey = &kDismissBlockKey;
     [self addBackButton:bar title:nil];
 }
 
+-(void)addSlideBackButton:(UINavigationBar *)bar
+{
+    APMenuBlock block = ^(UIViewController *me, id sender)
+    {
+        [me performBackSlideSegue:sender];
+    };
+    
+    [self addBackButton:bar title:nil block:block];
+}
+
 -(void)addBackButton:(UINavigationBar *)bar title:(NSString *)title
 {
-    if( self.presentingViewController && self.presentingViewController.title )
-        title = self.presentingViewController.title ;
-    
     APMenuBlock block = ^(UIViewController *me, id sender)
     {
         [me.presentingViewController dismissViewControllerAnimated:YES completion:^{
@@ -194,6 +201,15 @@ void * kDismissBlockKey = &kDismissBlockKey;
                 block(me);
         }];
     };
+
+    [self addBackButton:bar title:title block:block];
+}
+
+-(void)addBackButton:(UINavigationBar *)bar title:(NSString *)title block:(APMenuBlock)block
+{
+    if( self.presentingViewController && self.presentingViewController.title )
+        title = self.presentingViewController.title ;
+    
     UIBarButtonItem * bbBack = nil;
     
     if( title )

@@ -14,9 +14,6 @@
 #import "APArgoPointsReward.h"
 #import "APMerchantMap.h"
 
-#define DEMO_HACK 1
-
-
 @implementation APMerchantDetailMapEmbedding {
     GMSMapView *mapView_;
 }

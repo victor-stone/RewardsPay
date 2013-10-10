@@ -189,6 +189,21 @@ typedef enum _APStartupState {
     {
         [self broadcast:kNotifyUserSettingChanged payload:note.userInfo];
     }];
+    
+#ifdef DEMO_HACK
+    [self registerForBroadcast:kNotifyUserSettingChanged block:^(APAppDelegate *me, NSDictionary *settings)
+     {
+         for( NSString *key in settings )
+         {
+             if( [key isEqualToString:kSettingDebugNetworkStubbed] )
+             {
+                 APLOG(kDebugFire, @"Doing auto login", 0);
+                 [APAccount login:nil password:nil block:^(id data, NSError *err) {}];
+             }
+         }
+     }];
+    
+#endif
 }
 
 -(void)dealloc

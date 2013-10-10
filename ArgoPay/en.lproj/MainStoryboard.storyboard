@@ -855,6 +855,9 @@
                             <constraint firstItem="Hfh-la-Ftz" firstAttribute="top" secondItem="waH-ic-Tae" secondAttribute="top" id="mPM-3t-ex9"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <segue destination="TF4-fZ-akv" kind="custom" identifier="kSegueHomeToHistory" customClass="VSHoritzontalSlideSegue" id="GlT-2V-xcn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nHH-Jl-bf4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1727,7 +1730,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="TF4-fZ-akv" kind="modal" identifier="kSegueCreditToHistory" id="yd2-nM-EBY"/>
+                                    <action selector="seeTransaction:" destination="BWM-YL-Foz" eventType="touchUpInside" id="LoB-eP-Iwc"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="whg-zn-SQ9" userLabel="This view will be rounded at runtime">
@@ -1825,11 +1828,12 @@
                         <outlet property="infoContainer" destination="whg-zn-SQ9" id="6as-QP-fFK"/>
                         <outlet property="minimumPayment" destination="dJe-UR-sQq" id="bAt-nc-9KU"/>
                         <outlet property="paymentDueDate" destination="lq1-QC-uv8" id="Vfm-ga-5mC"/>
+                        <segue destination="TF4-fZ-akv" kind="custom" identifier="kSegueCreditToHistory" customClass="VSHoritzontalSlideSegue" id="eBv-bJ-dOp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qd4-JB-R1U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1060" y="418"/>
+            <point key="canvasLocation" x="1044" y="468"/>
         </scene>
         <!--History View Controller - Recent Transactions-->
         <scene sceneID="dga-UU-g5Y">
@@ -1914,9 +1918,7 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </textAttributes>
                                 <items>
-                                    <navigationItem title="Recent Transactions" id="wie-Rj-QPd">
-                                        <barButtonItem key="backBarButtonItem" title="Back" id="eJJ-Q0-u9j"/>
-                                    </navigationItem>
+                                    <navigationItem title="Recent Transactions" id="wie-Rj-QPd"/>
                                 </items>
                             </navigationBar>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ycf-Bu-4UJ">
@@ -1972,11 +1974,13 @@
                     <connections>
                         <outlet property="argoNavBar" destination="H2O-E6-9pq" id="t7A-as-TE5"/>
                         <outlet property="transactionsTable" destination="z9j-3o-efh" id="pF8-Ru-kiF"/>
+                        <segue destination="BWM-YL-Foz" kind="custom" identifier="kSegueHistoryToCredit" customClass="VSHoritzontalSlideSegue" id="edW-ZF-OiF"/>
+                        <segue destination="J4c-CJ-Shm" kind="custom" identifier="kSegueHistoryToHome" customClass="VSHoritzontalSlideSegue" id="c8S-vF-aGd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oay-DH-XCn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1455" y="205"/>
+            <point key="canvasLocation" x="1530" y="271"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Zhu-0G-7XA">
@@ -2059,4 +2063,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="eBv-bJ-dOp"/>
+    </inferredMetricsTieBreakers>
 </document>

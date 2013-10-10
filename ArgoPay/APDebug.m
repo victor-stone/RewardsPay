@@ -32,9 +32,14 @@ void APDebugDumpView(UIView *view)
         dump = ^(UIView *view, NSString *indent)
         {
             APDebug(kDebugFire, @"%@%@", indent, view);
-            if( ![view isKindOfClass:[UITableView class]] )
+            if( ![view isKindOfClass:[UITableView class]] &&
+                ![view isKindOfClass:[UINavigationBar class]] &&
+                ![view isKindOfClass:[UISegmentedControl class]] && 
+                ![view isKindOfClass:[UISearchBar class]])
+            {
                 for( UIView * child in view.subviews )
                     dump( child, [NSString stringWithFormat:@"%@    ",indent]);
+            }
         };
         dump(view,@"");
         dump = nil;

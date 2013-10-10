@@ -20,10 +20,11 @@ typedef void (^APDismissBlock)(UIViewController* dismissing);
                                 block:(APMenuBlock)block;
 
 -(void)addHomeButton:(UINavigationBar *)bar;
--(void)addBackButton:(UINavigationBar *)bar title:(NSString *)title;
--(void)addBackButton:(UINavigationBar *)bar;
 -(void)addLoginButton:(UINavigationBar *)bar;
 -(void)addRightButton:(UINavigationBar *)bar button:(UIBarButtonItem *)bbi;
+-(void)addBackButton:(UINavigationBar *)bar;
+-(void)addBackButton:(UINavigationBar *)bar title:(NSString *)title;
+-(void)addSlideBackButton:(UINavigationBar *)bar;
 
 -(void)setDismissBlock:(APDismissBlock)block;
 

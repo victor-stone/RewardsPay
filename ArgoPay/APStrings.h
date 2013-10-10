@@ -54,6 +54,9 @@ APKEYEDSTRING(kViewTransaction)
 
 APKEYEDSTRING(kSegueMainEmbedding)
 APKEYEDSTRING(kSegueCreditToHistory)
+APKEYEDSTRING(kSegueHistoryToCredit)
+APKEYEDSTRING(kSegueHistoryToHome);
+APKEYEDSTRING(kSegueHomeToHistory)
 
 APKEYEDSTRING(kCellIDMenu)
 APKEYEDSTRING(kCellIDReward)
