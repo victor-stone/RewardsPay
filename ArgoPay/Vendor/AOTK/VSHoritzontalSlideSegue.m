@@ -143,7 +143,7 @@ static void *kBackslideSegueNameKey = &kBackslideSegueNameKey;
         // If this segue is listed, then we are indeed a push
         if( back )
         {
-            APDebug(kDebugViews, @"Associating %@ with destination %@", back, self.destinationViewController);
+            APLOG(kDebugViews, @"Associating %@ with destination %@", back, self.destinationViewController);
             [self.destinationViewController associateValue:back withKey:kBackslideSegueNameKey];
         }
         else
