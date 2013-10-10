@@ -239,7 +239,8 @@ typedef enum _APStartupState {
 
 -(void)registerUserDefaults
 {
-    [[NSUserDefaults standardUserDefaults] registerDefaults:[self factoryUserDefaultSettings]];
+    NSDictionary * defaults = [self factoryUserDefaultSettings];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
