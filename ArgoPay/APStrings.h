@@ -53,6 +53,7 @@ APKEYEDSTRING(kViewSettings)
 APKEYEDSTRING(kViewTransaction)
 
 APKEYEDSTRING(kSegueMainEmbedding)
+APKEYEDSTRING(kSegueCreditToHistory)
 
 APKEYEDSTRING(kCellIDMenu)
 APKEYEDSTRING(kCellIDReward)

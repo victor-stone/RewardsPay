@@ -22,6 +22,8 @@
 		574B2DF517ECA097008E17EE /* APDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 574B2DF417ECA097008E17EE /* APDebug.m */; };
 		576A2F5117FB33B600E53CA3 /* MerchantLocationDetail.js in Resources */ = {isa = PBXBuildFile; fileRef = 576A2F4F17FB33B500E53CA3 /* MerchantLocationDetail.js */; };
 		576A2F5217FB33B600E53CA3 /* MerchantLocationSearch.js in Resources */ = {isa = PBXBuildFile; fileRef = 576A2F5017FB33B600E53CA3 /* MerchantLocationSearch.js */; };
+		5774F7A318071F7600F83313 /* kImageForward@2x copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 5774F7A118071F7600F83313 /* kImageForward@2x copy.png */; };
+		5774F7A418071F7600F83313 /* kImageForward.png in Resources */ = {isa = PBXBuildFile; fileRef = 5774F7A218071F7600F83313 /* kImageForward.png */; };
 		578B3E311805CDA9005B2701 /* SendingStubs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 578B3E301805CDA9005B2701 /* SendingStubs.plist */; };
 		578B3E391805D963005B2701 /* qrcode.ANN.png in Resources */ = {isa = PBXBuildFile; fileRef = 578B3E331805D963005B2701 /* qrcode.ANN.png */; };
 		578B3E3A1805D963005B2701 /* qrcode.DAV.png in Resources */ = {isa = PBXBuildFile; fileRef = 578B3E341805D963005B2701 /* qrcode.DAV.png */; };
@@ -247,6 +249,9 @@
 		574B2DF417ECA097008E17EE /* APDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APDebug.m; sourceTree = "<group>"; };
 		576A2F4F17FB33B500E53CA3 /* MerchantLocationDetail.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MerchantLocationDetail.js; sourceTree = "<group>"; };
 		576A2F5017FB33B600E53CA3 /* MerchantLocationSearch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MerchantLocationSearch.js; sourceTree = "<group>"; };
+		5774F7A118071F7600F83313 /* kImageForward@2x copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageForward@2x copy.png"; sourceTree = "<group>"; };
+		5774F7A218071F7600F83313 /* kImageForward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageForward.png; sourceTree = "<group>"; };
+		5774F7A5180723BD00F83313 /* DEMO presentation v.7.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DEMO presentation v.7.docx"; sourceTree = "<group>"; };
 		578B3E301805CDA9005B2701 /* SendingStubs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SendingStubs.plist; sourceTree = "<group>"; };
 		578B3E331805D963005B2701 /* qrcode.ANN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qrcode.ANN.png; sourceTree = "<group>"; };
 		578B3E341805D963005B2701 /* qrcode.DAV.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qrcode.DAV.png; sourceTree = "<group>"; };
@@ -613,6 +618,7 @@
 				579C817B17FD978B0046BC9B /* ScreenToAPIImages */,
 				57C2EC0A17F3483A003B3CA3 /* ArgoMessages.txt */,
 				57287ED317F8B41700C37D2E /* DEMO presentation v.3.docx */,
+				5774F7A5180723BD00F83313 /* DEMO presentation v.7.docx */,
 				571D75D917EB46E700F0B869 /* ArgoPay UX note 091113.docx */,
 				571D75DA17EB46E700F0B869 /* credit product - Account Activation.pdf */,
 				571D75DB17EB46E700F0B869 /* credit product - Manage Account.pdf */,
@@ -959,6 +965,8 @@
 		57A2248717E913B3000B52E9 /* glyphs */ = {
 			isa = PBXGroup;
 			children = (
+				5774F7A118071F7600F83313 /* kImageForward@2x copy.png */,
+				5774F7A218071F7600F83313 /* kImageForward.png */,
 				57C6C9481804883B007AB199 /* startup */,
 				57FD23AC17FF161A004A50D8 /* navBarIcons */,
 				57FD23A217FF0D5A004A50D8 /* HomeScreen */,
@@ -1270,6 +1278,7 @@
 				57ADDAB817F5F33F00F23689 /* ConsumerGetAvailableOffers.js in Resources */,
 				5713970E18034EB3002F4D3E /* kImageLocation-selected.png in Resources */,
 				57ADDAB917F5F33F00F23689 /* ConsumerGetAvailableRewards.js in Resources */,
+				5774F7A318071F7600F83313 /* kImageForward@2x copy.png in Resources */,
 				578B3E391805D963005B2701 /* qrcode.ANN.png in Resources */,
 				579C817017FD91690046BC9B /* kImageLocation.png in Resources */,
 				57ADDABA17F5F33F00F23689 /* ConsumerLogin.js in Resources */,
@@ -1344,6 +1353,7 @@
 				571D75C817EB3D0A00F0B869 /* kImageTransactionExpander.png in Resources */,
 				571D75C917EB3D0A00F0B869 /* kImageTransactionTop.png in Resources */,
 				57DA31A417FA296A00A6978A /* kImageTransactionTop@2x.png in Resources */,
+				5774F7A418071F7600F83313 /* kImageForward.png in Resources */,
 				578BB5BC17F22CFA009E2F45 /* Localizable.strings in Resources */,
 				57A223FC17E90626000B52E9 /* MainStoryboard.storyboard in Resources */,
 				576A2F5117FB33B600E53CA3 /* MerchantLocationDetail.js in Resources */,

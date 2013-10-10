@@ -102,7 +102,7 @@ APLOGRELEASE
 {
     [super viewDidLoad];
 	[self addHomeButton:_argoNavBar];
-    [self addLoginButton:_argoNavBar];
+//    [self addLoginButton:_argoNavBar];
     UIBarButtonItem * bbi = [self barButtonForImage:kImageSort
                                               title:nil
                                               block:^(APOffersViewController *me, id button) {

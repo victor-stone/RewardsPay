@@ -214,6 +214,8 @@ typedef enum _APStartupState {
              kSettingViewAsKilometer: @(YES)
              
 #ifdef ALLOW_DEBUG_SETTINGS
+             ,kSettingUserLoginName: @"igor@argopay.com"
+             ,kSettingUserLoginPassword: @"ArgoPay"
              ,kSettingDebugNetworkStubbed: @"file"
              ,kSettingDebugLocalhostAddr: @"testingargo.192.168.1.2.xip.io"
 #endif

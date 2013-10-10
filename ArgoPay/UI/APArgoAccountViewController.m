@@ -82,11 +82,12 @@
     _minimumPayment.text = [NSString stringWithFormat:@"$%.2f",[summary.NetPayAmount floatValue]];
 }
 
+/*
 - (IBAction)seeTransaction:(id)sender
 {
     [self presentVC:kViewHistory animated:YES completion:nil];
 }
-
+*/
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
