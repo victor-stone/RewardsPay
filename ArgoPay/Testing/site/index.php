@@ -10,6 +10,8 @@ $json = new Services_JSON();
 
 //convert php object to json
 
+$ICON_HOST = 'timbregroove.org/apps'; // $ICON_HOST
+
 // assumes Content-Type 'application/json'
 $parameters = $json->decode($HTTP_RAW_POST_DATA);
 
@@ -54,7 +56,7 @@ function addRewards()
                      'State' => 'ST',
                      'Zip' => '30009',
                      'Tel' => '301-555-1234',
-                     'ImageURL' => 'http://'. $_SERVER[HTTP_HOST] .'/_appIcon.png',
+                     'ImageURL' => 'http://'. $ICON_HOST .'/_appIcon.png',
                      'Website' => 'http://funkychicken.com'
                      );
     
@@ -81,7 +83,7 @@ function addRewards()
                      'State' => 'ST',
                      'Zip' => '30009',
                      'Tel' => '301-555-1234',
-                     'ImageURL' => 'http://'. $_SERVER[HTTP_HOST] .'/_appIcon.png',
+                     'ImageURL' => 'http://'. $ICON_HOST .'/_appIcon.png',
                      'Website' => 'http://chicken.com'
                      );
     
@@ -108,7 +110,7 @@ function addRewards()
                      'State' => 'ST',
                      'Zip' => '30009',
                      'Tel' => '301-555-1234',
-                     'ImageURL' => 'http://'. $_SERVER[HTTP_HOST] .'/_appIcon.png',
+                     'ImageURL' => 'http://'. $ICON_HOST .'/_appIcon.png',
                      'Website' => 'http://chicken.com'
                      );
     
@@ -190,20 +192,22 @@ function addOffers()
                     'ArgoBonus' => 33,
                     'ArgoMultiplier' => 43,
                     'MultipleUse' => 0,
-                    'LongDescription' => 'This is the loooong description that is foobar.',
+                    'LongDescription' => 'Red, white, pink? Wines are colorful but what does that mean? First, you need to know that wines are from grapes. In reality, grapes come in only two basic colors. Red and white. The pinks, also called “blush” come from leaving the red skin in contact with the grape until it takes on a pink color.',
                     
-                    'Description' => 'Everything I do is goin be funky from now on',
+                    'Description' => 'Fine wines for fine occaisions',
                     
-                    'Name' => 'Funky Cleaners',
-                    'Addr1' => '1234 First Ave.',
-                    'City' => 'CityField',
-                    'State' => 'ST',
-                    'Zip' => '30009',
-                    'Tel' => '301-555-1234',
-                    'Lat' => 39.067884,
-                    'Long' => -77.080239,
-                    'ImageURL' => 'http://'. $_SERVER[HTTP_HOST] .'/_appIcon.png',
-                    'Website' => 'http://funkychicken.com'
+                    //         //5101 Great America Pkwy  Santa Clara, CA 95054
+
+                    'Name' => 'Apex Wine Gallery',
+                    'Addr1' => '5101 Great America Pkwy',
+                    'City' => 'Santa Clara',
+                    'State' => 'CA',
+                    'Zip' => '95054',
+                    'Tel' => '415-714-6000',
+                    'Lat' =>  37.405161,
+                    'Long' => -121.976592,
+                    'ImageURL' => 'http://'. $ICON_HOST .'/_appIcon.png',
+                    'Website' => 'http://apexwine.com'
                     );
     
     $offer2 = array( 'OfferID' => 101,
@@ -220,9 +224,9 @@ function addOffers()
                     'ArgoBonus' => 33,
                     'ArgoMultiplier' => 43,
                     
-                    'Description' => 'offer2 Everything I do is goin be funky from now on',
+                    'Description' => 'One price, affordable, same day service.',
                     'LongDescription' => 'This is the 2 loooong description that is foobar.',
-                    'Name' => 'Funky2 Cleaners',
+                    'Name' => 'Funky Cleaners',
                     'Addr1' => '1234 First Ave.',
                     'City' => 'CityField',
                     'State' => 'ST',
@@ -230,7 +234,7 @@ function addOffers()
                     'Long' => -77.080239,
                     'Zip' => '30009',
                     'Tel' => '301-555-1234',
-                    'ImageURL' => 'http://'. $_SERVER[HTTP_HOST] .'/_appIcon.png',
+                    'ImageURL' => 'http://'. $ICON_HOST .'/_appIcon.png',
                     'Website' => 'http://funky2chicken.com'
                     );
     
@@ -248,10 +252,10 @@ function addOffers()
                     'PointMultiplier' => 437,
                     'ArgoBonus' => 3377,
                     'ArgoMultiplier' => 7437,
-                    'Description' => 'offer3 Everything I do is goin be funky from now on',
-                    'LongDescription' => 'This is 3 the loooong description that is foobar.',
+                    'Description' => 'Come have your birthday party at Barking Hot!',
+                    'LongDescription' => 'Come have your birthday party at Barking Hot!',
                     
-                    'Name' => 'Funky3 Hot Dogs',
+                    'Name' => 'Barking Hot Dogs',
                     'Addr1' => '1234 First Ave.',
                     'City' => 'CityField',
                     'State' => 'ST',
@@ -259,7 +263,7 @@ function addOffers()
                     'Long' => -77.080239,
                     'Zip' => '30009',
                     'Tel' => '301-555-1234',
-                    'ImageURL' => 'http://'. $_SERVER[HTTP_HOST] .'/_appIcon.png',
+                    'ImageURL' => 'http://'. $ICON_HOST .'/_appIcon.png',
                     'Website' => 'http://funkyhotdogs.com'
                     );
     
@@ -355,7 +359,7 @@ switch($_REQUEST['cmd'] )
                          'State' => 'ST',
                          'Zip' => '30009',
                          'Tel' => '301-555-1234',
-                         'ImageURL' => 'http://'. $_SERVER[HTTP_HOST] .'/_appIcon.png',
+                         'ImageURL' => 'http://'. $ICON_HOST .'/_appIcon.png',
                          'Website' => 'http://funkychicken.com'
                          );
         
@@ -375,7 +379,7 @@ switch($_REQUEST['cmd'] )
                          'State' => 'ST',
                          'Zip' => '30009',
                          'Tel' => '301-555-1234',
-                         'ImageURL' => 'http://'. $_SERVER[HTTP_HOST] .'/_appIcon.png',
+                         'ImageURL' => 'http://'. $ICON_HOST .'/_appIcon.png',
                          'Website' => 'http://chicken.com'
                          );
         
@@ -398,7 +402,7 @@ switch($_REQUEST['cmd'] )
                          'Zip' => '30009',
                          'Tel' => '301-555-1234',
                         
-                         'ImageURL' => 'http://'. $_SERVER[HTTP_HOST] .'/_appIcon.png',
+                         'ImageURL' => 'http://'. $ICON_HOST .'/_appIcon.png',
                          'Website' => 'http://chicken.com'
                          );
         
@@ -442,7 +446,7 @@ switch($_REQUEST['cmd'] )
         $value['State'] =  'CA';
         $value['Zip'] =  '95054';
         $value['Tel'] = '415-708-6000';
-        $value['ImageURL'] = 'http://'. $_SERVER[HTTP_HOST] .'/_appIcon.png';
+        $value['ImageURL'] = 'http://'. $ICON_HOST .'/_appIcon.png';
         $value['Website'] =  'http://apexwine.com';
         $value['ConsumerPoints'] = 340;
         $value['Offers'] = addOffers();
