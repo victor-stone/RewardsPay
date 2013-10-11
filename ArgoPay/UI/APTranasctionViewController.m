@@ -40,6 +40,7 @@ APLOGRELEASE
     APAccount *account = [APAccount currentAccount];
     request.AToken = account.AToken;
     request.Approve = type;
+    request.TransID = _transID;
     
     [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
         [NSObject performBlock:^{

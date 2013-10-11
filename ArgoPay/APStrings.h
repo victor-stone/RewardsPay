@@ -57,6 +57,7 @@ APKEYEDSTRING(kSegueCreditToHistory)
 APKEYEDSTRING(kSegueHistoryToCredit)
 APKEYEDSTRING(kSegueHistoryToHome);
 APKEYEDSTRING(kSegueHomeToHistory)
+APKEYEDSTRING(kSegueRewardsToMerchant)
 
 APKEYEDSTRING(kCellIDMenu)
 APKEYEDSTRING(kCellIDReward)
