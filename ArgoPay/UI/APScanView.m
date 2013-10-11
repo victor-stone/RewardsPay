@@ -129,6 +129,8 @@ APLOGRELEASE
     
     APRequestTransactionStatus *request = [APRequestTransactionStatus new];
     request.TransID = transID;
+    APAccount * account = [APAccount currentAccount];
+    request.AToken = account.AToken;
     [request performRequest:handleStatusReponse];
 }
 

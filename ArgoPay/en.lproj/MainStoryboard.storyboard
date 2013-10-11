@@ -510,7 +510,7 @@
                                     <constraint firstAttribute="width" constant="256" id="YW9-Eu-9xa"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="BLI-wt-2gI" id="hAc-Bh-4kH"/>
                                 </connections>
@@ -1413,7 +1413,6 @@
                                             <outlet property="redeemButton" destination="yhj-gK-q9s" id="OE5-zi-Quo"/>
                                             <outlet property="status" destination="SqC-o4-oud" id="ABm-J4-Seg"/>
                                             <outlet property="value" destination="kf3-Ui-1J2" id="ycv-Bb-vQl"/>
-                                            <segue destination="DAN-qH-K6z" kind="custom" identifier="kSegueRewardsToMerchant" customClass="VSHoritzontalSlideSegue" id="da8-3U-uX3"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

@@ -48,6 +48,9 @@ void APDebugDumpView(UIView *view)
 
 void APDebugDumpControllers(UIViewController *vc)
 {
+    if( !APENABLED(kDebugViews) )
+        return;
+    
     printf(" ------------ DUMPING VIEW CONTROLLERS -------------------- \n");
     
     if( !vc )
