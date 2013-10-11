@@ -53,10 +53,14 @@ APKEYEDSTRING(kViewSettings)
 APKEYEDSTRING(kViewTransaction)
 
 APKEYEDSTRING(kSegueMainEmbedding)
-APKEYEDSTRING(kSegueCreditToHistory)
-APKEYEDSTRING(kSegueHistoryToCredit)
+APKEYEDSTRING(kSegueArgoAccountToHistory)
+APKEYEDSTRING(kSegueHistoryToArgoAccount)
 APKEYEDSTRING(kSegueHistoryToHome);
 APKEYEDSTRING(kSegueHomeToHistory)
+APKEYEDSTRING(kSegueArgoCreditToHome)
+APKEYEDSTRING(kSegueHomeToArgoCredit)
+APKEYEDSTRING(kSegueOffersToOfferDetail)
+APKEYEDSTRING(kSegueOfferDetailToOffers)
 
 APKEYEDSTRING(kCellIDMenu)
 APKEYEDSTRING(kCellIDReward)

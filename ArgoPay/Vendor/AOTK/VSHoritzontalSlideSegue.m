@@ -36,15 +36,14 @@ static void *kBackslideSegueNameKey = &kBackslideSegueNameKey;
 
 -(IBAction)performBackSlideSegue:(id)sender
 {
-    APLOG(kDebugViews, @"Performing BACK seque: %@", self);
-    [self slideBetweenVC:self.presentingViewController isDismiss:YES];
-    /*
+//    [self slideBetweenVC:self.presentingViewController isDismiss:YES];
+    NSString *back = [self associatedValueForKey:kBackslideSegueNameKey];
+    APLOG(kDebugViews, @"Performing BACK %@ seque: %@", back, self);
     NSAssert(back != nil, @"Backsliding seque is blank. Did you forget to call -assignBackslideSequeName?");
-    [self performSegueWithIdentifier:back sender:sender];
-     */
+    [self performSegueWithIdentifier:back sender:sender]; // this better be an unwind segue
 }
 
--(void)slideBetweenVC:(UIViewController *)desViewController isDismiss:(BOOL)_isDismiss
+-(void)slideBetweenVC:(UIViewController *)desViewController isDismiss:(BOOL)isDismiss
 {
     UIViewController *srcViewController = self;
     
@@ -54,11 +53,11 @@ static void *kBackslideSegueNameKey = &kBackslideSegueNameKey;
     desView.transform = srcView.transform;
     desView.bounds = srcView.bounds;
     
-    BOOL _isLandscapeOrientation = UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation);
+    BOOL isLandscapeOrientation = UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation);
     
-    if(_isLandscapeOrientation)
+    if(isLandscapeOrientation)
     {
-        if(_isDismiss)
+        if(isDismiss)
         {
             desView.center = CGPointMake(srcView.center.x, srcView.center.y  - srcView.frame.size.height);
         }
@@ -69,7 +68,7 @@ static void *kBackslideSegueNameKey = &kBackslideSegueNameKey;
     }
     else
     {
-        if(_isDismiss)
+        if(isDismiss)
         {
             desView.center = CGPointMake(srcView.center.x - srcView.frame.size.width, srcView.center.y);
         }
@@ -80,50 +79,52 @@ static void *kBackslideSegueNameKey = &kBackslideSegueNameKey;
     }
     
     
+    APDUMPVIEW(nil);
+    
     NSArray *windows = [UIApplication sharedApplication].windows;
-    APLOG(kDebugViews, @"------------------------------------- DUMPING WINDOWS ----------------------------", 0);
-    for( UIWindow *window in windows )
-    {
-        APDUMPVIEW(window);
-    }
     UIWindow *mainWindow = [windows objectAtIndex:0];
+    UIView *zero = mainWindow.subviews[0];
     [mainWindow addSubview:desView];
     
     // slide newView over oldView, then remove oldView
     [UIView animateWithDuration:0.3
-                     animations:^{
-                         desView.center = CGPointMake(srcView.center.x, srcView.center.y);
-                         
-                         if(_isLandscapeOrientation)
-                         {
-                             if(_isDismiss)
-                             {
-                                 srcView.center = CGPointMake(srcView.center.x, srcView.center.y + srcView.frame.size.height);
-                             }
-                             else
-                             {
-                                 srcView.center = CGPointMake(srcView.center.x, srcView.center.y - srcView.frame.size.height);
-                             }
-                         }
-                         else
-                         {
-                             if(_isDismiss)
-                             {
-                                 srcView.center = CGPointMake(srcView.center.x + srcView.frame.size.width, srcView.center.y);
-                             }
-                             else
-                             {
-                                 srcView.center = CGPointMake(srcView.center.x - srcView.frame.size.width, srcView.center.y);
-                             }
-                         }
-                     }
-                     completion:^(BOOL finished){
-                         if( _isDismiss )
-                             [desViewController dismissViewControllerAnimated:NO completion:nil];
-                         else
-                             [srcViewController presentViewController:desViewController animated:NO completion:nil];
-                         APDUMPVCS;
-                     }];
+                     animations:^
+    {
+        zero.backgroundColor = [UIColor purpleColor];
+        
+        desView.center = CGPointMake(srcView.center.x, srcView.center.y);
+        
+        if(isLandscapeOrientation)
+        {
+            if(isDismiss)
+            {
+                srcView.center = CGPointMake(srcView.center.x, srcView.center.y + srcView.frame.size.height);
+            }
+            else
+            {
+                srcView.center = CGPointMake(srcView.center.x, srcView.center.y - srcView.frame.size.height);
+            }
+        }
+        else
+        {
+            if(isDismiss)
+            {
+                srcView.center = CGPointMake(srcView.center.x + srcView.frame.size.width, srcView.center.y);
+            }
+            else
+            {
+                srcView.center = CGPointMake(srcView.center.x - srcView.frame.size.width, srcView.center.y);
+            }
+        }
+    }
+    completion:^(BOOL finished)
+    {
+         if( isDismiss )
+             [desViewController dismissViewControllerAnimated:NO completion:nil];
+         else
+             [srcViewController presentViewController:desViewController animated:NO completion:nil];
+         //APDUMPVCS;
+     }];
     
 }
 @end
@@ -132,11 +133,25 @@ static void *kBackslideSegueNameKey = &kBackslideSegueNameKey;
 
 - (void) perform
 {
-    APDUMPVCS;
+   // APDUMPVCS;
     
-    UIViewController *desViewController = (UIViewController *)self.destinationViewController;
-    UIViewController *srcViewController = (UIViewController *)self.sourceViewController;
-    [srcViewController slideBetweenVC:desViewController isDismiss:NO];
+    UIViewController *src = (UIViewController *)self.sourceViewController;
+    UIViewController *dest = (UIViewController *)self.destinationViewController;
+    bool isDismiss = NO;
+    NSString *back = [src associatedValueForKey:kBackslideSegueNameKey];
+    if( [back isEqualToString:self.identifier] )
+    {
+        isDismiss = YES;
+    }
+    else
+    {
+        NSDictionary * segueDictionary = [src associatedValueForKey:kSlideSegueDictKey];
+        back = segueDictionary[self.identifier];
+        if( back )
+            [dest associateValue:back withKey:kBackslideSegueNameKey];
+    }
+    APLOG(kDebugViews, @"Performing (Dismiss: %d) segue from: %@ -> %@ called %@", isDismiss, src,dest,self.identifier);
+    [src slideBetweenVC:dest isDismiss:isDismiss];
 }
 
 @end

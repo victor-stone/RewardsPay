@@ -23,6 +23,9 @@
 @property (weak, nonatomic) IBOutlet UIView *embeddingContainer;
 
 -(void)navigateTo:(NSString *)vcName;
+
+-(IBAction)unwindToMain:(UIStoryboardSegue *)segue;
+
 @end
 
 @interface APTab : UIView
@@ -353,6 +356,19 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+-(IBAction)unwindToMain:(UIStoryboardSegue *)segue
+{
+    
+}
+
+-(UIStoryboardSegue *)segueForUnwindingToViewController:(UIViewController *)dest
+                                     fromViewController:(UIViewController *)src
+                                             identifier:(NSString *)identifier
+{
+    return [[VSHoritzontalSlideSegue alloc] initWithIdentifier:identifier source:src destination:dest];
+}
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

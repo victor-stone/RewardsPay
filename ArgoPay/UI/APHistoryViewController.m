@@ -10,6 +10,19 @@
 #import "APAccount.h"
 #import "APPopup.h"
 
+@interface APHistoryView  : UIView
+
+@end
+@implementation APHistoryView
+
+APLOGRELEASE
+
+-(void)removeFromSuperview
+{
+    APLOG(kDebugViews, @"Removing from superview: %@", self);
+    [super removeFromSuperview];
+}
+@end
 @interface APHistoryCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *date;
 @property (weak, nonatomic) IBOutlet UILabel *name;
@@ -116,6 +129,13 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar;                     // called when keyboard search button pressed
 {
     [searchBar resignFirstResponder];
+}
+
+-(UIStoryboardSegue *)segueForUnwindingToViewController:(UIViewController *)dest
+                                     fromViewController:(UIViewController *)src
+                                             identifier:(NSString *)identifier
+{
+    return [[VSHoritzontalSlideSegue alloc] initWithIdentifier:identifier source:src destination:dest];
 }
 
 @end

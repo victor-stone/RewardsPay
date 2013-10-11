@@ -202,6 +202,7 @@ APLOGRELEASE
     return [_offers count];
 }
 
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     APAccount *account = [APAccount currentAccount];

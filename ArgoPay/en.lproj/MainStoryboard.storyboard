@@ -47,7 +47,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Owp-bK-oJn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-318" y="-665"/>
+            <point key="canvasLocation" x="-626" y="-745"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="5">
@@ -72,10 +72,10 @@
                                 <rect key="frame" x="0.0" y="480" width="320" height="88"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfs-1r-zRA" userLabel="blackBg">
-                                        <rect key="frame" x="0.0" y="18" width="338" height="84"/>
+                                        <rect key="frame" x="0.0" y="18" width="320" height="84"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nVH-NE-W6a" userLabel="offersTapView" customClass="APTab">
-                                                <rect key="frame" x="20" y="0.0" width="87" height="80"/>
+                                                <rect key="frame" x="20" y="4" width="87" height="80"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="kImageOffers.png" highlightedImage="kImageOffers-selected.png" highlighted="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hhN-cV-ppg">
                                                         <rect key="frame" x="29" y="14" width="30" height="30"/>
@@ -112,7 +112,7 @@
                                                 </connections>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lvB-lm-dqY" userLabel="locationTapView" customClass="APTab">
-                                                <rect key="frame" x="212" y="0.0" width="106" height="80"/>
+                                                <rect key="frame" x="212" y="4" width="106" height="80"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="kImageLocation.png" highlightedImage="kImageLocation-selected.png" translatesAutoresizingMaskIntoConstraints="NO" id="GiX-Re-k0q">
                                                         <rect key="frame" x="38" y="14" width="30" height="30"/>
@@ -152,11 +152,11 @@
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="nVH-NE-W6a" firstAttribute="top" secondItem="lvB-lm-dqY" secondAttribute="top" id="B9h-Gh-F5u"/>
-                                            <constraint firstAttribute="bottom" secondItem="nVH-NE-W6a" secondAttribute="bottom" constant="4" id="M0P-tb-Uo9"/>
+                                            <constraint firstAttribute="bottom" secondItem="nVH-NE-W6a" secondAttribute="bottom" id="M0P-tb-Uo9"/>
                                             <constraint firstItem="nVH-NE-W6a" firstAttribute="bottom" secondItem="lvB-lm-dqY" secondAttribute="bottom" id="Ss6-cp-Exs"/>
-                                            <constraint firstAttribute="trailing" secondItem="lvB-lm-dqY" secondAttribute="trailing" constant="20" symbolic="YES" id="WhW-Aw-syZ"/>
+                                            <constraint firstAttribute="trailing" secondItem="lvB-lm-dqY" secondAttribute="trailing" constant="2" id="WhW-Aw-syZ"/>
                                             <constraint firstItem="nVH-NE-W6a" firstAttribute="leading" secondItem="wfs-1r-zRA" secondAttribute="leading" constant="20" symbolic="YES" id="i7O-E7-AmY"/>
-                                            <constraint firstItem="nVH-NE-W6a" firstAttribute="top" secondItem="wfs-1r-zRA" secondAttribute="top" id="kWO-kc-LWk"/>
+                                            <constraint firstItem="nVH-NE-W6a" firstAttribute="top" secondItem="wfs-1r-zRA" secondAttribute="top" constant="4" id="kWO-kc-LWk"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hjT-wZ-k4n" userLabel="scanTapView" customClass="APScanTab">
@@ -187,7 +187,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="hjT-wZ-k4n" firstAttribute="top" secondItem="vAA-jJ-LOd" secondAttribute="top" id="5lY-jz-6dz"/>
-                                    <constraint firstAttribute="trailing" secondItem="wfs-1r-zRA" secondAttribute="trailing" constant="-18" id="7Tu-Zg-Kjy"/>
+                                    <constraint firstAttribute="trailing" secondItem="wfs-1r-zRA" secondAttribute="trailing" id="7Tu-Zg-Kjy"/>
                                     <constraint firstItem="wfs-1r-zRA" firstAttribute="top" secondItem="vAA-jJ-LOd" secondAttribute="top" constant="18" id="Ex0-91-O49"/>
                                     <constraint firstItem="hjT-wZ-k4n" firstAttribute="centerX" secondItem="vAA-jJ-LOd" secondAttribute="centerX" id="K7y-Gj-Eip"/>
                                     <constraint firstAttribute="bottom" secondItem="hjT-wZ-k4n" secondAttribute="bottom" constant="-14" id="Ky1-XV-MQp"/>
@@ -220,11 +220,13 @@
                         <outlet property="blackTapNavBackground" destination="wfs-1r-zRA" id="ilS-mA-37C"/>
                         <outlet property="embeddingContainer" destination="Ays-II-wps" id="5rk-qp-dz7"/>
                         <outlet property="tabNavigator" destination="vAA-jJ-LOd" id="ldy-EG-bfj"/>
+                        <segue destination="TF4-fZ-akv" kind="custom" identifier="kSegueHomeToHistory" customClass="VSHoritzontalSlideSegue" id="Nch-SM-Nds"/>
+                        <segue destination="BWM-YL-Foz" kind="custom" identifier="kSegueHomeToArgoCredit" customClass="VSHoritzontalSlideSegue" id="Ing-7m-Xy9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="141" y="-665"/>
+            <point key="canvasLocation" x="145" y="-660"/>
         </scene>
         <!--Location List View Controller - Places-->
         <scene sceneID="Sfd-fO-MPV">
@@ -358,7 +360,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JMW-vx-dze" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="657" y="37"/>
+            <point key="canvasLocation" x="75" y="23"/>
         </scene>
         <!--Offers View Controller - Offers-->
         <scene sceneID="euQ-Vc-l4h">
@@ -474,11 +476,12 @@
                     <connections>
                         <outlet property="argoNavBar" destination="PHS-Mb-cqQ" id="So6-r5-1vy"/>
                         <outlet property="offersTable" destination="O14-HH-ZCs" id="J1r-Jj-PhG"/>
+                        <segue destination="mba-FJ-5bN" kind="custom" identifier="kSegueOffersToOfferDetail" customClass="VSHoritzontalSlideSegue" id="yMy-v2-Jhs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Rr-dj-O3U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="657" y="-646"/>
+            <point key="canvasLocation" x="647" y="-710"/>
         </scene>
         <!--Login View Controller - Sign In-->
         <scene sceneID="2AO-Ur-aOg">
@@ -739,7 +742,7 @@
                                 <rect key="frame" x="0.0" y="374" width="320" height="194"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <connections>
-                                    <segue destination="0j7-T1-mVF" kind="embed" id="BVD-Nj-eMf"/>
+                                    <segue destination="0j7-T1-mVF" kind="embed" identifier="kSegueOfferDetailToOffers" id="BVD-Nj-eMf"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -771,7 +774,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LVl-8a-LjB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1068" y="-961"/>
+            <point key="canvasLocation" x="1060" y="-871"/>
         </scene>
         <!--Home View Controller - Home-->
         <scene sceneID="QVj-M2-w6K">
@@ -787,7 +790,7 @@
                         <subviews>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="FN4-Sx-Yci">
                                 <rect key="frame" x="32" y="89" width="257" height="390"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="7" minimumInteritemSpacing="5" id="UXh-ie-hE2">
                                     <size key="itemSize" width="74" height="96"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -855,13 +858,10 @@
                             <constraint firstItem="Hfh-la-Ftz" firstAttribute="top" secondItem="waH-ic-Tae" secondAttribute="top" id="mPM-3t-ex9"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <segue destination="TF4-fZ-akv" kind="custom" identifier="kSegueHomeToHistory" customClass="VSHoritzontalSlideSegue" id="GlT-2V-xcn"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nHH-Jl-bf4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1074" y="-285"/>
+            <point key="canvasLocation" x="106" y="-1353"/>
         </scene>
         <!--Settings View Controller - Settings-->
         <scene sceneID="oKx-bA-Tiz">
@@ -1690,7 +1690,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BZP-Nn-6cZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2483" y="107"/>
+            <point key="canvasLocation" x="671" y="631"/>
         </scene>
         <!--Argo Account View Controller - ArgoCredit-->
         <scene sceneID="SQt-pn-rgu">
@@ -1828,12 +1828,14 @@
                         <outlet property="infoContainer" destination="whg-zn-SQ9" id="6as-QP-fFK"/>
                         <outlet property="minimumPayment" destination="dJe-UR-sQq" id="bAt-nc-9KU"/>
                         <outlet property="paymentDueDate" destination="lq1-QC-uv8" id="Vfm-ga-5mC"/>
-                        <segue destination="TF4-fZ-akv" kind="custom" identifier="kSegueCreditToHistory" customClass="VSHoritzontalSlideSegue" id="eBv-bJ-dOp"/>
+                        <segue destination="TF4-fZ-akv" kind="custom" identifier="kSegueArgoAccountToHistory" customClass="VSHoritzontalSlideSegue" id="eBv-bJ-dOp"/>
+                        <segue destination="nkT-Rp-SR7" kind="unwind" identifier="kSegueArgoCreditToHome" unwindAction="unwindToMain:" id="OJW-RB-fzs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qd4-JB-R1U" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="nkT-Rp-SR7" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1044" y="468"/>
+            <point key="canvasLocation" x="692" y="-48"/>
         </scene>
         <!--History View Controller - Recent Transactions-->
         <scene sceneID="dga-UU-g5Y">
@@ -1843,7 +1845,7 @@
                         <viewControllerLayoutGuide type="top" id="vbR-7i-Iq3"/>
                         <viewControllerLayoutGuide type="bottom" id="2kj-hE-DTL"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="HUU-IV-yzr">
+                    <view key="view" contentMode="scaleToFill" id="HUU-IV-yzr" customClass="APHistoryView">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
@@ -1974,13 +1976,14 @@
                     <connections>
                         <outlet property="argoNavBar" destination="H2O-E6-9pq" id="t7A-as-TE5"/>
                         <outlet property="transactionsTable" destination="z9j-3o-efh" id="pF8-Ru-kiF"/>
-                        <segue destination="BWM-YL-Foz" kind="custom" identifier="kSegueHistoryToCredit" customClass="VSHoritzontalSlideSegue" id="edW-ZF-OiF"/>
-                        <segue destination="J4c-CJ-Shm" kind="custom" identifier="kSegueHistoryToHome" customClass="VSHoritzontalSlideSegue" id="c8S-vF-aGd"/>
+                        <segue destination="TPJ-lf-aWY" kind="unwind" identifier="kSegueHistoryToHome" unwindAction="unwindToMain:" id="CSt-7Y-kx8"/>
+                        <segue destination="TPJ-lf-aWY" kind="unwind" identifier="kSegueHistoryToArgoAccount" unwindAction="unwindToArgoAccount:" id="d4s-DO-yaH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oay-DH-XCn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="TPJ-lf-aWY" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1530" y="271"/>
+            <point key="canvasLocation" x="1216" y="-135"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Zhu-0G-7XA">
@@ -2017,7 +2020,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UT0-JQ-gxW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2931" y="-55"/>
+            <point key="canvasLocation" x="1216" y="617"/>
         </scene>
         <!--Merchant Detail Map Embedding-->
         <scene sceneID="epL-4b-2UR">
@@ -2044,9 +2047,12 @@
         <image name="kImageErrorBalloon.png" width="397" height="253"/>
         <image name="kImageErrorBang.png" width="140" height="143"/>
         <image name="kImageForward.png" width="20" height="20"/>
+        <image name="kImageForward.png" width="20" height="20"/>
         <image name="kImageHelp.png" width="57" height="57"/>
         <image name="kImageLocation-selected.png" width="30" height="30"/>
+        <image name="kImageLocation-selected.png" width="30" height="30"/>
         <image name="kImageLocation.png" width="30" height="30"/>
+        <image name="kImageLogo.png" width="57" height="57"/>
         <image name="kImageLogo.png" width="57" height="57"/>
         <image name="kImageMerchantTop.png" width="320" height="191"/>
         <image name="kImageOffers-selected.png" width="30" height="30"/>

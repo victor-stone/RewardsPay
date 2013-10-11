@@ -30,6 +30,8 @@ typedef void (^APMenuItemBlock)(UIViewController *vc);
 @property (nonatomic,strong) NSString * label;
 @property (nonatomic,strong) NSString * navVC;
 @property (nonatomic,strong) APMenuItemBlock block;
+@property (nonatomic,strong) NSString *segueTo;
+@property (nonatomic,strong) NSString *segueBack;
 @end
 
 @implementation APMenuItem
@@ -41,6 +43,8 @@ typedef void (^APMenuItemBlock)(UIViewController *vc);
     mi.label = label;
     mi.navVC = navVC;
     mi.block = nil;
+    mi.segueTo = nil;
+    mi.segueBack = nil;
     return mi;
 }
 
@@ -51,6 +55,20 @@ typedef void (^APMenuItemBlock)(UIViewController *vc);
     mi.label = label;
     mi.navVC = nil;
     mi.block = [block copy];
+    mi.segueTo = nil;
+    mi.segueBack = nil;
+    return mi;
+}
+
++(id)miWithImage:(NSString *)image label:(NSString *)label segueTo:(NSString *)segueTo segueBack:(NSString *)segueBack
+{
+    APMenuItem * mi = [APMenuItem new];
+    mi.image = image;
+    mi.label = label;
+    mi.navVC = nil;
+    mi.block = nil;
+    mi.segueTo = segueTo;
+    mi.segueBack = segueBack;
     return mi;
 }
 
@@ -64,8 +82,10 @@ static NSArray *menuItems()
     {
         _items = @[
                     [APMenuItem miWithImage:kImageSettings   label: NSLocalizedString(@"Settings","menu") vc:kViewSettings],
-                    [APMenuItem miWithImage:kImageHistory    label: NSLocalizedString(@"History","menu") vc:kViewHistory],
-                    [APMenuItem miWithImage:kImageAccount    label: NSLocalizedString(@"ArgoCredit","menu") vc:kViewAccount],
+                    [APMenuItem miWithImage:kImageHistory    label: NSLocalizedString(@"History","menu")
+                                    segueTo:kSegueHomeToHistory segueBack:kSegueHistoryToHome],
+                    [APMenuItem miWithImage:kImageAccount    label: NSLocalizedString(@"ArgoCredit","menu")
+                                    segueTo:kSegueHomeToArgoCredit segueBack:kSegueArgoCreditToHome],
                     [APMenuItem miWithImage:kImageRewards    label: NSLocalizedString(@"My Rewards","menu") vc:kViewRewards],
                     [APMenuItem miWithImage:kImageLogoutHome label: NSLocalizedString(@"Logout", "menu") block:^(UIViewController *vc) {
                         [[APAccount currentAccount] logUserOut];
@@ -112,6 +132,10 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
     if( mi.block )
     {
         mi.block(self);
+    }
+    if( mi.segueTo )
+    {
+        [self.parentViewController performForwardSlideSegue:mi.segueTo back:mi.segueBack];
     }
     else
     {

@@ -27,6 +27,16 @@ void APDebugDumpView(UIView *view)
 {
     if( APENABLED(kDebugViews) )
     {
+        if( !view )
+        {
+            APLOG(kDebugViews, @"------------------------------------- DUMPING WINDOWS ----------------------------", 0);
+            NSArray *windows = [UIApplication sharedApplication].windows;
+            for( UIWindow *window in windows )
+            {
+                APDebugDumpView(window);
+            }
+        }
+        
         static void (^dump)(UIView *,NSString *) = nil;
         
         dump = ^(UIView *view, NSString *indent)
@@ -34,14 +44,16 @@ void APDebugDumpView(UIView *view)
             APDebug(kDebugFire, @"%@%@", indent, view);
             if( ![view isKindOfClass:[UITableView class]] &&
                 ![view isKindOfClass:[UINavigationBar class]] &&
-                ![view isKindOfClass:[UISegmentedControl class]] && 
+                ![view isKindOfClass:[UISegmentedControl class]] &&
+                ![view isKindOfClass:[UICollectionView class]] && 
                 ![view isKindOfClass:[UISearchBar class]])
             {
                 for( UIView * child in view.subviews )
                     dump( child, [NSString stringWithFormat:@"%@    ",indent]);
             }
         };
-        dump(view,@"");
+        if( view )
+            dump(view,@"");
         dump = nil;
     }
 }
