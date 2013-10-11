@@ -198,7 +198,7 @@ function addOffers()
                     
                     //         //5101 Great America Pkwy  Santa Clara, CA 95054
 
-                    'Name' => 'Apex Wine Gallery',
+                    'Name' => 'Apex Wine',
                     'Addr1' => '5101 Great America Pkwy',
                     'City' => 'Santa Clara',
                     'State' => 'CA',
@@ -272,7 +272,23 @@ function addOffers()
 
 function getDemoMerchants()
 {
-    return '{"Status": 0, "Message": "OK", "Locations": [{"Website": "", "City": "Santa Clara", "Name": "Apex Wine Gallery", "Zip": "02215", "Distance": 23.21, "ImageURL": "", "Category": "Liquor Store", "Long": "-121.97695200", "State": "MA", "MLocID": "7", "Addr1": "5105 Great America Parkway", "Lat": "37.40516100", "Addr2": "", "Description": ""}, {"Website": "", "City": "Santa Clara", "Name": "Mexican Restaurant", "Zip": "95404", "Distance": 13.25, "ImageURL": "", "Category": "Restaurant", "Long": "-121.96356900", "State": "CA", "MLocID": "4", "Addr1": "2215 Tasman Drive", "Lat": "37.24077000", "Addr2": "", "Description": ""}, {"Website": "", "City": "Santa Clara", "Name": "ABC Jewelry Store", "Zip": "95404", "Distance": 23.11, "ImageURL": "", "Category": "Jewelry", "Long": "-121.98575400", "State": "CA", "MLocID": "2", "Addr1": "4800 Patrick Henry Drive", "Lat": "37.40028700", "Addr2": "", "Description": ""}, {"Website": "", "City": "Santa Clara", "Name": "Joe\'s Restaurant", "Zip": "95404", "Distance": 23.11, "ImageURL": "", "Category": "Restaurant", "Long": "-121.97100100", "State": "CA", "MLocID": "1", "Addr1": "5151 Stars and Stripes Drive", "Lat": "37.40581200", "Addr2": "", "Description": ""}, {"Website": "", "City": "Santa Clara", "Name": "David\'s Chinese Fast Food", "Zip": "95404", "Distance": 23.51, "ImageURL": "", "Category": "Restaurant", "Long": "-121.97804000", "State": "CA", "MLocID": "5", "Addr1": "5350 Great America Parkway", "Lat": "37.40967500", "Addr2": "", "Description": ""}, {"Website": "", "City": "Santa Clara", "Name": "Anna\'s Tacos", "Zip": "95404", "Distance": 23.51, "ImageURL": "", "Category": "Restaurant", "Long": "-121.97804000", "State": "CA", "MLocID": "6", "Addr1": "5350 Great America Parkway", "Lat": "37.40967500", "Addr2": "", "Description": ""}, {"Website": "", "City": "Santa Clara", "Name": "Friendly Pet Shop", "Zip": "95404", "Distance": 23.64, "ImageURL": "", "Category": "Pets", "Long": "-121.98552700", "State": "CA", "MLocID": "3", "Addr1": "5440 Patrick Henry Drive", "Lat": "37.40885200", "Addr2": "", "Description": ""}]}';
+    return '{"Status": 0, "Message": "OK", "Locations": [{"Website": "http://josesmexican.com", "City": "Santa Clara", "Name": "Jose\'s Mexican Restaurant", "Zip": "95404", "Distance": 13.25, "ImageURL": "", "Category": "Restaurant", "Long": "-121.96356900", "State": "CA", "MLocID": "4", "Addr1": "2215 Tasman Drive", "Lat": "37.24077000", "Addr2": "", "Description": ""}, {"Website": "http://abcJewelry.com", "City": "Santa Clara", "Name": "ABC Jewelry Store", "Zip": "95404", "Distance": 23.11, "ImageURL": "", "Category": "Jewelry", "Long": "-121.98575400", "State": "CA", "MLocID": "2", "Addr1": "4800 Patrick Henry Drive", "Lat": "37.40028700", "Addr2": "", "Description": ""}, {"Website": "http://www.joesamerican.com/", "City": "Santa Clara", "Name": "Joe\'s Restaurant", "Zip": "95404", "Distance": 23.11, "ImageURL": "", "Category": "Restaurant", "Long": "-121.97100100", "State": "CA", "MLocID": "1", "Addr1": "5151 Stars and Stripes Drive", "Lat": "37.40581200", "Addr2": "", "Description": ""}, {"Website": "http://apexwine.com", "City": "Santa Clara", "Name": "Apex Wine", "Zip": "95404", "Distance": 23.21, "ImageURL": "", "Category": "Liquor Store", "Long": "-121.97695200", "State": "CA", "MLocID": "7", "Addr1": "5105 Great America Parkway", "Lat": "37.40516100", "Addr2": "", "Description": ""}, {"Website": "http://davidschinesefood.com", "City": "Santa Clara", "Name": "David\'s Chinese Fast Food", "Zip": "95404", "Distance": 23.51, "ImageURL": "", "Category": "Restaurant", "Long": "-121.97804000", "State": "CA", "MLocID": "5", "Addr1": "5350 Great America Parkway", "Lat": "37.40967500", "Addr2": "", "Description": ""}, {"Website": "http://annatacos.com", "City": "Santa Clara", "Name": "Anna\'s Tacos", "Zip": "95404", "Distance": 23.51, "ImageURL": "", "Category": "Restaurant", "Long": "-121.97804000", "State": "CA", "MLocID": "6", "Addr1": "5350 Great America Parkway", "Lat": "37.40967500", "Addr2": "", "Description": ""}, {"Website": "http://friendlypetshop.com", "City": "Santa Clara", "Name": "Friendly Pet Shop", "Zip": "95404", "Distance": 23.64, "ImageURL": "", "Category": "Pets", "Long": "-121.98552700", "State": "CA", "MLocID": "3", "Addr1": "5440 Patrick Henry Drive", "Lat": "37.40885200", "Addr2": "", "Description": ""}]}';
+}
+
+
+function getApexWine()
+{
+    return '{"Status": 0, "Category": "Liquor Store", "ConsumerPoints": 210, "Rewards": [{"AmountMinimum": "10.00", "DateTo": "2013-12-31", "Selected": "N", "RewardID": "1", "PointsRequired": 10, "Description": "100 Points $10 Credit", "DateFrom": "2013-01-01", "MultipleUse": "Y", "LongDescription": "100 Points $10 Credit", "DaysToUse": "7", "AmountReward": "100", "Selectable": "Y"}, {"AmountMinimum": "30.00", "DateTo": "2013-12-31", "Selected": "N", "RewardID": "1", "PointsRequired": 30, "Description": "100 Points $10 Credit", "DateFrom": "2013-01-01", "MultipleUse": "Y", "LongDescription": "100 Points $10 Credit", "DaysToUse": "7", "AmountReward": "300", "Selectable": "Y"}, {"AmountMinimum": "60.00", "DateTo": "2013-12-31", "Selected": "N", "RewardID": "1", "PointsRequired": 60, "Description": "100 Points $10 Credit", "DateFrom": "2013-01-01", "MultipleUse": "Y", "LongDescription": "100 Points $10 Credit", "DaysToUse": "7", "AmountReward": "500", "Selectable": "Y"}], "Tel": "415-888-9000", "Name": "Apex Wine", "Zip": "95404", "City": "Santa Clara", "ImageURL": "None", "Long": "-121.97695200", "State": "CA", "Offers": [], "MLocID": 7, "Addr1": "5105 Great America Parkway", "Lat": "37.40516100", "Addr2": "None", "Message": "OK", "Website": "http://apexwine.com", "Description": "Fine wines"}';
+}
+
+function getDemoOffers()
+{
+    return '{"Status": 0, "Message": "OK", "Offers": [{"Category": "Wine", "City": "Santa Clara", "Zip": "95404", "Selected": "0", "OfferID": "1", "ArgoMultiplier": "", "State": "CA", "MLocID": "7", "Type": "D", "Name": "Apex Wine", "Website": "", "Description": "10% Off Your Entire Purchase", "DateFrom": "2013-01-01", "Lat": "37.405161", "AmountDiscount": "10.00", "Count": "100", "AmountMinimum": "100.00", "DateTo": "2013-12-31", "ImageURL": "", "PointMultplier": "", "ArgoBonus": "", "Tel": "6175551212", "Long": "-121.976952", "LongDescription": "Get 10% off your entire Purchase. Enjoy some great wines at a great price.", "DaysToUse": "7", "Addr2": "", "Addr1": "5105 Great America Parkway", "PointBonus": ""}, {"Category": "Pets", "City": "Santa Clara", "Zip": "95404", "Selected": "0", "OfferID": "2", "ArgoMultiplier": "", "State": "CA", "MLocID": "3", "Type": "D", "Name": "Friendly Pet Shop", "Website": "", "Description": "30% off Saturdays", "DateFrom": "2013-01-01", "Lat": "37.408852", "AmountDiscount": "10.00", "Count": "100", "AmountMinimum": "100.00", "DateTo": "2013-12-31", "ImageURL": "", "PointMultplier": "", "ArgoBonus": "", "Tel": "6175551212", "Long": "-121.985527", "LongDescription": "Get 30% off your entire Purchase on Saturdays. Pamper your previous pets.", "DaysToUse": "30", "Addr2": "", "Addr1": "5440 Patrick Henry Drive", "PointBonus": ""}, {"Category": "Jewelry", "City": "Santa Clara", "Zip": "95404", "Selected": "0", "OfferID": "3", "ArgoMultiplier": "", "State": "CA", "MLocID": "2", "Type": "D", "Name": "ABC Jewelry Store", "Website": "", "Description": "$50 off Minimum $200 Purchase", "DateFrom": "2013-01-01", "Lat": "37.400287", "AmountDiscount": "10.00", "Count": "100", "AmountMinimum": "100.00", "DateTo": "2013-12-31", "ImageURL": "", "PointMultplier": "", "ArgoBonus": "", "Tel": "6175551212", "Long": "-121.985754", "LongDescription": "Get $50 off your Purchase of $200 or more.  Surprise your loved ones with a beautiful piece of jewelry.", "DaysToUse": "60", "Addr2": "", "Addr1": "4800 Patrick Henry Drive", "PointBonus": ""}, {"Category": "Restaurant", "City": "Santa Clara", "Zip": "95404", "Selected": "0", "OfferID": "4", "ArgoMultiplier": "", "State": "CA", "MLocID": "1", "Type": "D", "Name": "Joes Restaurant", "Website": "", "Description": "10% off Sunday Brunch", "DateFrom": "2013-01-01", "Lat": "37.405812", "AmountDiscount": "10.00", "Count": "100", "AmountMinimum": "100.00", "DateTo": "2013-12-31", "ImageURL": "", "PointMultplier": "", "ArgoBonus": "", "Tel": "6175551212", "Long": "-121.971001", "LongDescription": "Get 10% off our delicious Sunday Brunch.", "DaysToUse": "7", "Addr2": "", "Addr1": "5151 Stars and Stripes Drive", "PointBonus": ""}, {"Category": "Restaurant", "City": "Santa Clara", "Zip": "95404", "Selected": "0", "OfferID": "5", "ArgoMultiplier": "", "State": "CA", "MLocID": "4", "Type": "D", "Name": "Jose\'s Mexican Restaurant", "Website": "", "Description": "10% off Weekend Lunch", "DateFrom": "2013-01-01", "Lat": "37.24077", "AmountDiscount": "10.00", "Count": "100", "AmountMinimum": "100.00", "DateTo": "2013-12-31", "ImageURL": "", "PointMultplier": "", "ArgoBonus": "", "Tel": "6175551212", "Long": "-121.963569", "LongDescription": "Come Enjoy some great Mexican food and save 10% off during lunchtime on the weekends.", "DaysToUse": "7", "Addr2": "", "Addr1": "2215 Tasman Drive", "PointBonus": ""}]}';
+}
+
+function getDemoHistory()
+{
+    return '{"Status": 0, "Message": "OK", "Transactions": [{"Date": "2013-07-01", "Amount": "12.32", "Type": "Purchase", "Description": "Purchase at Burger Barn", "AmountUnpaid": "9.54"}, {"Date": "2013-07-05", "Amount": "13.42", "Type": "Purchase", "Description": "Purchase at Liquors are us", "AmountUnpaid": "1.25"}, {"Date": "2013-07-10", "Amount": "-17.32", "Type": "Payment", "Description": "Payment- Thank you!", "AmountUnpaid": ""}]}';
 }
 
 switch($_REQUEST['cmd'] )
@@ -312,7 +328,11 @@ switch($_REQUEST['cmd'] )
         
     case 'ConsumerGetAvailableOffers':
     {
-        $value['Offers'] = addOffers();
+        //$value['Offers'] = addOffers();
+        $output = getDemoOffers();
+        print($output);
+        exit;
+        break;
         break;
         
     }
@@ -415,7 +435,7 @@ switch($_REQUEST['cmd'] )
     case 'MerchantLocationDetail':
     {
         /*
-         /MerchantLocationDetail (Displays the detail for a Merchant)
+         /Merchantail (Displays the detail for a Merchant)
                                  (Shows all rewards and offers available for a merchant location
                                  (AToken: Optional if AToken is valid, then we also return consumer based data also.)
                                  (MLocID: Required.   Specifies a MLocID from previous call)
@@ -435,9 +455,14 @@ switch($_REQUEST['cmd'] )
          
          */
 
+        $output = getApexWine();
+        print($output);
+        exit;
+        break;
+        
         $value['Description'] = 'Fine wines for fine occasions.';
         //5101 Great America Pkwy  Santa Clara, CA 95054
-        $value['Name'] = 'Apex Wine Gallery';
+        $value['Name'] = 'Apex Wine';
         $value['Addr1'] = '5101 Great America Pkwy';
         $value['Category'] = 'Wine';
         $value['City'] =  'Santa Clara';
@@ -480,7 +505,7 @@ switch($_REQUEST['cmd'] )
                                    array( 'Type'=> 'Q', 'Amount'=> 3.22 )
                                    );
         $value['TotalAmount'] = 54.9;
-        $value['MerchName'] = 'Apex Wine Gallery';
+        $value['MerchName'] = 'Apex Wine';
         $value['MerchLocation'] = 'Santa Clara, CA';
         $value['MerchRegister'] = 'Henry';
         $value['Category'] = 'Fine wines';
@@ -513,7 +538,7 @@ switch($_REQUEST['cmd'] )
         $value['AmountOutstanding'] = 456.0;
         $value['LastTransDate'] = '2013-09-02 03:40:12';
         $value['LastPayDate'] = '2013-09-22 03:40:12';
-        $value['NextPayDate'] = '2013-09-11 03:40:12';
+        $value['NextPayDate'] = '2013-12-11 03:40:12';
         $value['NetPayAmount'] = 222.99;
         $value['ArgoPoints'] = 678;
         break;
@@ -521,6 +546,12 @@ switch($_REQUEST['cmd'] )
         
     case 'ConsumerStatementDetail':
     {
+        $output = getDemoHistory();
+        print($output);
+        exit;
+        break;
+        
+        
         /*
          /ConsumerStatementDetail
          >AToken, DateFrom, DateTo

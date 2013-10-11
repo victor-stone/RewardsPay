@@ -1,1 +1,1 @@
-{"Status":0,"Message":"","AmountAvailable":345.1,"AmountOutstanding":456,"LastTransDate":"2013-09-02 03:40:12","LastPayDate":"2013-09-22 03:40:12","NextPayDate":"2013-09-11 03:40:12","NetPayAmount":222.99,"ArgoPoints":678}
+{"Status":0,"Message":"","AmountAvailable":345.1,"AmountOutstanding":456,"LastTransDate":"2013-09-02 03:40:12","LastPayDate":"2013-09-22 03:40:12","NextPayDate":"2013-12-11 03:40:12","NetPayAmount":222.99,"ArgoPoints":678}

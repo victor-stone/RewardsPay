@@ -70,7 +70,7 @@
         _map.merchant = offer;
     if( _logo )
     {
-        [_logo setImageWithURL:[NSURL URLWithString:offer.ImageURL] placeholderImage:[UIImage imageNamed:kImageOffers]];
+        [_logo setImageWithURL:[NSURL URLWithString:offer.ImageURL] placeholderImage:[UIImage imageNamed:kImageLogo]];
         _merchantName.text = offer.Name;
         _offerName.text = offer.Description;
         _offerDetail.text = offer.LongDescription;

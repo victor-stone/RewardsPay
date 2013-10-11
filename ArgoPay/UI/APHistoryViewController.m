@@ -85,7 +85,7 @@
 {
     APHistoryCell * cell = [tableView dequeueReusableCellWithIdentifier:kCellIDHistory forIndexPath:indexPath];
     APStatementLine * item = _historyItems[indexPath.row];
-    cell.date.text = [item formatDateField:@"Date" style:NSDateFormatterShortStyle];
+    cell.date.text = item.Date; // [item formatDateField:@"Date" style:NSDateFormatterShortStyle];
     cell.name.text = item.Description;
     cell.amount.text = [NSString stringWithFormat:@"$%.2f", [item.Amount floatValue]] ;
     return cell;
