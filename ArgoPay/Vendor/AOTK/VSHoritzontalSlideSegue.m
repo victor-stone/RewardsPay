@@ -15,6 +15,7 @@
 
 static void *kSlideSegueDictKey     = &kSlideSegueDictKey;
 static void *kBackslideSegueNameKey = &kBackslideSegueNameKey;
+static void *kBackTitleKey          = &kBackTitleKey;
 
 @implementation UIViewController (SlideSegue)
 
@@ -41,6 +42,16 @@ static void *kBackslideSegueNameKey = &kBackslideSegueNameKey;
     APLOG(kDebugViews, @"Performing BACK %@ seque: %@", back, self);
     NSAssert(back != nil, @"Backsliding seque is blank. Did you forget to call -assignBackslideSequeName?");
     [self performSegueWithIdentifier:back sender:sender]; // this better be an unwind segue
+}
+
+-(void)setBackTitle:(NSString *)title
+{
+    [self associateValue:title withKey:kBackTitleKey];
+}
+
+-(NSString *)backTitle
+{
+    return [self associatedValueForKey:kBackTitleKey];
 }
 
 -(void)slideBetweenVC:(UIViewController *)desViewController isDismiss:(BOOL)isDismiss
@@ -83,14 +94,14 @@ static void *kBackslideSegueNameKey = &kBackslideSegueNameKey;
     
     NSArray *windows = [UIApplication sharedApplication].windows;
     UIWindow *mainWindow = [windows objectAtIndex:0];
-    UIView *zero = mainWindow.subviews[0];
+//    UIView *zero = mainWindow.subviews[0];
     [mainWindow addSubview:desView];
     
     // slide newView over oldView, then remove oldView
     [UIView animateWithDuration:0.3
                      animations:^
     {
-        zero.backgroundColor = [UIColor purpleColor];
+  //      zero.backgroundColor = [UIColor purpleColor];
         
         desView.center = CGPointMake(srcView.center.x, srcView.center.y);
         
@@ -151,6 +162,8 @@ static void *kBackslideSegueNameKey = &kBackslideSegueNameKey;
             [dest associateValue:back withKey:kBackslideSegueNameKey];
     }
     APLOG(kDebugViews, @"Performing (Dismiss: %d) segue from: %@ -> %@ called %@", isDismiss, src,dest,self.identifier);
+    if( !isDismiss )
+       [dest setBackTitle:src.title];
     [src slideBetweenVC:dest isDismiss:isDismiss];
 }
 

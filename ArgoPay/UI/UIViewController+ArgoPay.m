@@ -187,8 +187,9 @@ void * kDismissBlockKey = &kDismissBlockKey;
     {
         [me performBackSlideSegue:sender];
     };
+    NSString * title = [self backTitle];
     
-    [self addBackButton:bar title:nil block:block];
+    [self addBackButton:bar title:title block:block];
 }
 
 -(void)addBackButton:(UINavigationBar *)bar title:(NSString *)title
@@ -207,7 +208,7 @@ void * kDismissBlockKey = &kDismissBlockKey;
 
 -(void)addBackButton:(UINavigationBar *)bar title:(NSString *)title block:(APMenuBlock)block
 {
-    if( self.presentingViewController && self.presentingViewController.title )
+    if( !title && self.presentingViewController && self.presentingViewController.title )
         title = self.presentingViewController.title ;
     
     UIBarButtonItem * bbBack = nil;

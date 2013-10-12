@@ -34,6 +34,7 @@
     NSArray *_locations;
     CLLocation *_userLocation;
     BOOL _viewAsKM;
+
 }
 
 APLOGRELEASE
@@ -53,7 +54,8 @@ APLOGRELEASE
     [self addRightButton:_argoNavBar button:bbi];
     [self fetchLocations];
     _viewAsKM = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingViewAsKilometer];
-    [self registerForBroadcast:kNotifyUserSettingChanged block:^(APLocationListViewController *me, NSDictionary *settings)
+    [self registerForBroadcast:kNotifyUserSettingChanged
+                         block:^(APLocationListViewController *me, NSDictionary *settings)
      {
          for( NSString *key in settings )
          {
@@ -69,6 +71,12 @@ APLOGRELEASE
                  }
              }
          }
+     }];
+    
+    [self registerForBroadcast:kNotifySegue
+                         block:^(APLocationListViewController *me, UIStoryboardSegue *segue)
+     {
+         [me prepareForSegue:segue sender:nil];
      }];
 }
 
@@ -149,15 +157,31 @@ APLOGRELEASE
     return cell;
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if( [segue.identifier isEqualToString:kSegueHomeToMerchantDetail] )
+    {
+        NSIndexPath *indexPath = [_locationsTable indexPathForSelectedRow];
+        APMerchant * merchant = _locations[indexPath.row/2];
+        UIViewController * vc = segue.destinationViewController;
+        [vc setValue:merchant.MLocID forKey:@"MLocID"];
+        [_locationsTable deselectRowAtIndexPath:indexPath animated:NO];
+    }
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if( (indexPath.row & 1) == 0 )
         return;
     
+#ifdef DO_SLIDING_SEGUES
+    [self.parentViewController performForwardSlideSegue:kSegueHomeToMerchantDetail back:kSegueMerchantDetailToHome];
+#else
     APMerchant * merchant = _locations[indexPath.row/2];
     UIViewController *vc = [self presentVC:kViewMerchantDetail animated:YES completion:nil];
     [vc setValue:merchant.MLocID forKey:@"MLocID"];
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+#endif
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

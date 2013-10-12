@@ -222,6 +222,8 @@
                         <outlet property="tabNavigator" destination="vAA-jJ-LOd" id="ldy-EG-bfj"/>
                         <segue destination="TF4-fZ-akv" kind="custom" identifier="kSegueHomeToHistory" customClass="VSHoritzontalSlideSegue" id="Nch-SM-Nds"/>
                         <segue destination="BWM-YL-Foz" kind="custom" identifier="kSegueHomeToArgoCredit" customClass="VSHoritzontalSlideSegue" id="Ing-7m-Xy9"/>
+                        <segue destination="mba-FJ-5bN" kind="custom" identifier="kSegueOffersToOfferDetail" customClass="VSHoritzontalSlideSegue" id="Ca4-uE-0RR"/>
+                        <segue destination="DAN-qH-K6z" kind="custom" identifier="kSegueHomeToMerchantDetail" customClass="VSHoritzontalSlideSegue" id="00R-vC-0I6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
@@ -476,12 +478,11 @@
                     <connections>
                         <outlet property="argoNavBar" destination="PHS-Mb-cqQ" id="So6-r5-1vy"/>
                         <outlet property="offersTable" destination="O14-HH-ZCs" id="J1r-Jj-PhG"/>
-                        <segue destination="mba-FJ-5bN" kind="custom" identifier="kSegueOffersToOfferDetail" customClass="VSHoritzontalSlideSegue" id="yMy-v2-Jhs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Rr-dj-O3U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="647" y="-710"/>
+            <point key="canvasLocation" x="1100" y="-1353"/>
         </scene>
         <!--Login View Controller - Sign In-->
         <scene sceneID="2AO-Ur-aOg">
@@ -639,7 +640,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BIw-9I-kee" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="657" y="-1379"/>
+            <point key="canvasLocation" x="2517" y="-1343"/>
         </scene>
         <!--Offer Detail View Controller - Offer Details-->
         <scene sceneID="Kjx-Z4-rMt">
@@ -742,7 +743,7 @@
                                 <rect key="frame" x="0.0" y="374" width="320" height="194"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <connections>
-                                    <segue destination="0j7-T1-mVF" kind="embed" identifier="kSegueOfferDetailToOffers" id="BVD-Nj-eMf"/>
+                                    <segue destination="0j7-T1-mVF" kind="embed" identifier="kSegueEmbedOfferMap" id="BVD-Nj-eMf"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -770,11 +771,13 @@
                         <outlet property="merchantName" destination="XB5-bh-CtZ" id="p9O-jf-Z8H"/>
                         <outlet property="offerDetail" destination="M1a-NP-N5g" id="Lmw-b4-l57"/>
                         <outlet property="offerName" destination="pcg-gx-mKr" id="e92-B7-0SY"/>
+                        <segue destination="xqQ-eZ-kma" kind="unwind" identifier="kSegueOfferDetailToOffers" unwindAction="unwindToMain:" id="MgU-EM-oRd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LVl-8a-LjB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="xqQ-eZ-kma" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1060" y="-871"/>
+            <point key="canvasLocation" x="920" y="-763"/>
         </scene>
         <!--Home View Controller - Home-->
         <scene sceneID="QVj-M2-w6K">
@@ -1127,7 +1130,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EHs-cM-Rza" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1981" y="-451"/>
+            <point key="canvasLocation" x="2497" y="65"/>
         </scene>
         <!--Error View Controller-->
         <scene sceneID="0S3-Od-eFO">
@@ -1209,7 +1212,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RnR-AS-oQ9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2374" y="-617"/>
+            <point key="canvasLocation" x="2502" y="-645"/>
         </scene>
         <!--Rewards View Controller-->
         <scene sceneID="lIF-HD-UJ2">
@@ -1545,7 +1548,7 @@
                                 <rect key="frame" x="0.0" y="207" width="320" height="363"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <connections>
-                                    <segue destination="Qen-in-Eic" kind="embed" id="fcb-LA-9XU"/>
+                                    <segue destination="Qen-in-Eic" kind="embed" identifier="kSegueEmbedMerchantMap" id="fcb-LA-9XU"/>
                                 </connections>
                             </containerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="30" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Eos-Th-Zk5">
@@ -1686,11 +1689,13 @@
                         <outlet property="pointsTable" destination="Eos-Th-Zk5" id="Jsr-lA-2av"/>
                         <outlet property="streetAddr" destination="aH3-hv-EsY" id="45X-PD-XcV"/>
                         <outlet property="urlAddr" destination="6MR-1j-0aF" id="WfM-xO-Q9t"/>
+                        <segue destination="yOz-XA-wLC" kind="unwind" identifier="kSegueMerchantDetailToHome" unwindAction="unwindToMain:" id="jd9-jH-gfE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BZP-Nn-6cZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="yOz-XA-wLC" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="671" y="631"/>
+            <point key="canvasLocation" x="663" y="727"/>
         </scene>
         <!--Argo Account View Controller - ArgoCredit-->
         <scene sceneID="SQt-pn-rgu">
@@ -1835,7 +1840,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qd4-JB-R1U" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="nkT-Rp-SR7" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="692" y="-48"/>
+            <point key="canvasLocation" x="604" y="-24"/>
         </scene>
         <!--History View Controller - Recent Transactions-->
         <scene sceneID="dga-UU-g5Y">
@@ -2067,6 +2072,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="eBv-bJ-dOp"/>
+        <segue reference="Nch-SM-Nds"/>
     </inferredMetricsTieBreakers>
 </document>

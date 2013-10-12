@@ -50,16 +50,24 @@
 {
     [super viewDidLoad];
     [self argoPayIze];
-	[self addBackButton:_argoNavBar];
+#ifdef DO_SLIDING_SEGUES
+    [self addSlideBackButton:_argoNavBar];
+#else
+    [self addBackButton:_argoNavBar];
+#endif
+    
     if( _offer )
         self.offer = _offer;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    _map = segue.destinationViewController;
-    if( _offer )
-        _map.merchant = _offer;
+    if( [segue.identifier isEqualToString:kSegueEmbedOfferMap] )
+    {
+        _map = segue.destinationViewController;
+        if( _offer )
+            _map.merchant = _offer;
+    }
 }
 
 
@@ -77,6 +85,7 @@
         _expiration.text = [NSString stringWithFormat:NSLocalizedString(@"Expires: %@", @"offer detail"),[offer formatDateField:@"DateTo"]];
     }
 }
+
 @end
 
 
@@ -94,6 +103,7 @@
     UIActionSheet *_actionSheet;
     NSUInteger _numberOfButtonsShowing;
     APPopup * _popup;
+    APOffer * _selectedOffer;
 }
 
 APLOGRELEASE
@@ -102,7 +112,9 @@ APLOGRELEASE
 {
     [super viewDidLoad];
 	[self addHomeButton:_argoNavBar];
-//    [self addLoginButton:_argoNavBar];
+#if 0
+    [self addLoginButton:_argoNavBar];
+#endif
     UIBarButtonItem * bbi = [self barButtonForImage:kImageSort
                                               title:nil
                                               block:^(APOffersViewController *me, id button) {
@@ -121,6 +133,12 @@ APLOGRELEASE
                     kRemoteValueSortByReadyToUse,
                     kRemoteValueSortByAvailableToSelect
                     ];
+    
+    [self registerForBroadcast:kNotifySegue
+                         block:^(APOffersViewController *me, UIStoryboardSegue *segue)
+     {
+         [me prepareForSegue:segue sender:nil];
+     }];
     
     _popup = [APPopup withNetActivity:self.view];
     
@@ -202,6 +220,15 @@ APLOGRELEASE
     return [_offers count];
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if( [segue.identifier isEqualToString:kSegueOffersToOfferDetail] )
+    {
+        UIViewController * vc = segue.destinationViewController;
+        [vc setValue:_selectedOffer forKey:@"offer"];
+    }
+}
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -210,8 +237,13 @@ APLOGRELEASE
     {
         void (^showDialog)(APOffer * offer) = ^(APOffer * offer)
         {
+#ifdef DO_SLIDING_SEGUES
+            _selectedOffer = offer;
+            [self.parentViewController performForwardSlideSegue:kSegueOffersToOfferDetail back:kSegueOfferDetailToOffers];
+#else
             UIViewController *vc = [self presentVC:kViewOfferDetail animated:YES completion:nil];
             [vc setValue:offer forKey:@"offer"];
+#endif
         };
         
         APOffer * offer = _offers[indexPath.row];

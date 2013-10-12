@@ -100,7 +100,11 @@ APLOGRELEASE
 {
     [super viewDidLoad];
     [self argoPayIze];
+#ifdef DO_SLIDING_SEGUES
+	[self addSlideBackButton:_orangeNavBar];
+#else
 	[self addBackButton:_orangeNavBar];
+#endif
     _pointsTable.alpha = 0;
     _merchantName.text = nil;
     _merchantPoints.text = nil;
@@ -155,7 +159,8 @@ APLOGRELEASE
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    _map = segue.destinationViewController;
+    if( [segue.identifier isEqualToString:kSegueEmbedMerchantMap] )
+        _map = segue.destinationViewController;
 }
 
 - (IBAction)disclose:(id)sender

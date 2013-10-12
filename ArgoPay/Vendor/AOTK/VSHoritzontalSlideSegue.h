@@ -24,6 +24,9 @@
  */
 -(IBAction)performBackSlideSegue:(id)sender;
 
+-(void)setBackTitle:(NSString *)title;
+-(NSString *)backTitle;
+
 @end
 
 

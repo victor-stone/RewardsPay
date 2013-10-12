@@ -351,12 +351,6 @@
     }
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 -(IBAction)unwindToMain:(UIStoryboardSegue *)segue
 {
     
@@ -375,6 +369,10 @@
     if( [segue.identifier isEqualToString:kSegueMainEmbedding] )
     {
         _currentEmbeddedVC = segue.destinationViewController;
+    }
+    else
+    {
+        [self broadcast:kNotifySegue payload:segue];
     }
 }
 
