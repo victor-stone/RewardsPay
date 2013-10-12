@@ -291,6 +291,12 @@ function getDemoHistory()
     return '{"Status": 0, "Message": "OK", "Transactions": [{"Date": "2013-07-01", "Amount": "12.32", "Type": "Purchase", "Description": "Purchase at Burger Barn", "AmountUnpaid": "9.54"}, {"Date": "2013-07-05", "Amount": "13.42", "Type": "Purchase", "Description": "Purchase at Liquors are us", "AmountUnpaid": "1.25"}, {"Date": "2013-07-10", "Amount": "-17.32", "Type": "Payment", "Description": "Payment- Thank you!", "AmountUnpaid": ""}]}';
 }
 
+function getDemoRewards()
+{
+    return '{"Status": 0, "Message": "OK", "Rewards": [{"Category": "Wine", "City": "Santa Clara", "Zip": "94202", "Selected": "N", "Long": "-121.97695200", "State": "CA", "MLocID": "7", "RewardID": "1", "Name": "Apex Wine", "Website": "http://www.argopay.com", "Description": "Get $10 with for 100 Points", "DateFrom": "2013-01-01", "Lat": "37.40516100", "Selectable": "Y", "AmountMinimum": "100.00", "DateTo": "2013-12-31", "ImageURL": "imageurl", "PointsRequired": "100", "Tel": "6175551212", "Addr2": "", "AmountReward": "10.00", "Addr1": "5105 Great America Parkway"}, {"Category": "Restaurant", "City": "Santa Clara", "Zip": "94202", "Selected": "N", "Long": "-121.971001", "State": "CA", "MLocID": "7", "RewardID": "2", "Name": "Joe\'s Restaurant", "Website": "http://www.joesamerican.com", "Description": "Get $10 with for 100 Points", "DateFrom": "2013-01-01", "Lat": "37.405812", "Selectable": "Y", "AmountMinimum": "100.00", "DateTo": "2013-12-31", "ImageURL": "imageurl", "PointsRequired": "100", "Tel": "6175551212", "Addr2": "", "AmountReward": "10.00", "Addr1": "5151 Stars and Stripes Drive"}]}';
+}
+
+
 switch($_REQUEST['cmd'] )
 {
     case 'ConsumerLogin':
@@ -333,7 +339,6 @@ switch($_REQUEST['cmd'] )
         print($output);
         exit;
         break;
-        break;
         
     }
         
@@ -351,7 +356,10 @@ switch($_REQUEST['cmd'] )
         
     case 'ConsumerGetAvailableRewards':
     {
-        $value['Rewards'] = addRewards();
+       // $value['Rewards'] = addRewards();
+        $output = getDemoRewards();
+        print($output);
+        exit;
         break;
     }
 
@@ -540,7 +548,7 @@ switch($_REQUEST['cmd'] )
         $value['LastPayDate'] = '2013-09-22 03:40:12';
         $value['NextPayDate'] = '2013-12-11 03:40:12';
         $value['NetPayAmount'] = 222.99;
-        $value['ArgoPoints'] = 678;
+        $value['ArgoPoints'] = 120;
         break;
     }
         
