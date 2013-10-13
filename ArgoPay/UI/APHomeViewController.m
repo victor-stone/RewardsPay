@@ -105,7 +105,7 @@ APLOGRELEASE
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [menuItems() count];
+    return 5; //[menuItems() count];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -116,16 +116,20 @@ APLOGRELEASE
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    APMenuCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCellIDMenu forIndexPath:indexPath];
+    NSString *cellId = [NSString stringWithFormat:@"%@%d", kCellIDMenu, indexPath.row];
+    return [collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
+    /*
+    APMenuCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
     APMenuItem * mi = menuItems()[indexPath.row];
     cell.imageView.image = [UIImage imageNamed:mi.image];
     cell.imageView.highlightedImage = [UIImage imageNamed:SELECTEDIMG(mi.image)];
     cell.title.text = mi.label;
     return cell;
+     */
 }
 
 
-- (void)collectionView:(UICollectionView *)collectionView
+- (void)XXXXcollectionView:(UICollectionView *)collectionView
 didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     APMenuItem * mi = menuItems()[indexPath.row];
