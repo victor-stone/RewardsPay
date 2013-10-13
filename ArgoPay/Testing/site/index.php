@@ -288,7 +288,8 @@ function getDemoOffers()
 
 function getDemoHistory()
 {
-    return '{"Status": 0, "Message": "OK", "Transactions": [{"Date": "2013-07-01", "Amount": "12.32", "Type": "Purchase", "Description": "Purchase at Burger Barn", "AmountUnpaid": "9.54"}, {"Date": "2013-07-05", "Amount": "13.42", "Type": "Purchase", "Description": "Purchase at Liquors are us", "AmountUnpaid": "1.25"}, {"Date": "2013-07-10", "Amount": "-17.32", "Type": "Payment", "Description": "Payment- Thank you!", "AmountUnpaid": ""}]}';
+    //return '{"Status": 0, "Message": "OK", "Transactions": [{"Date": "2013-07-01", "Amount": "12.32", "Type": "Purchase", "Description": "Purchase at Burger Barn", "AmountUnpaid": "9.54"}, {"Date": "2013-07-05", "Amount": "13.42", "Type": "Purchase", "Description": "Purchase at Liquors are us", "AmountUnpaid": "1.25"}, {"Date": "2013-07-10", "Amount": "-17.32", "Type": "Payment", "Description": "Payment- Thank you!", "AmountUnpaid": ""}]}';
+    return '{"Status": 0, "Message": "OK", "Transactions": [{"Date": "2013-10-17", "Amount": "54.90", "Type": "Purchase", "Description": "Purchase: Apex Wine", "AmountUnpaid": ""}, {"Date": "2013-10-16", "Amount": "12.32", "Type": "Purchase", "Description": "Purchase: Joe\'s Restaurant", "AmountUnpaid": "9.54"}, {"Date": "2013-10-16", "Amount": "17.25", "Type": "Purchase", "Description": "Purchase: David\'s Chinese Food", "AmountUnpaid": "17.25"}, {"Date": "2013-10-16", "Amount": "21.35", "Type": "Purchase", "Description": "Purchase: Anna\'s Tacos", "AmountUnpaid": "9.54"}, {"Date": "2013-10-16", "Amount": "29.34", "Type": "Purchase", "Description": "Purchase: Friendly Pet Shop", "AmountUnpaid": "9.54"}, {"Date": "2013-10-16", "Amount": "71.20", "Type": "Purchase", "Description": "Purchase: Mexican Restaurant", "AmountUnpaid": "9.54"}, {"Date": "2013-10-05", "Amount": "101.25", "Type": "Purchase", "Description": "Purchase: ABC Jewelry Store", "AmountUnpaid": "101.25"}, {"Date": "2013-10-01", "Amount": "-17.32", "Type": "Payment", "Description": "Payment: Thank you!", "AmountUnpaid": ""}]}';
 }
 
 function getDemoRewards()
@@ -546,7 +547,7 @@ switch($_REQUEST['cmd'] )
         $value['AmountOutstanding'] = 456.0;
         $value['LastTransDate'] = '2013-09-02 03:40:12';
         $value['LastPayDate'] = '2013-09-22 03:40:12';
-        $value['NextPayDate'] = '2013-12-11 03:40:12';
+        $value['NextPayDate'] = '2013-11-01';
         $value['NetPayAmount'] = 222.99;
         $value['ArgoPoints'] = 120;
         break;

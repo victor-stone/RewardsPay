@@ -78,7 +78,7 @@
 {
     _creditBalance.text = [NSString stringWithFormat:@"$%.2f",[summary.AmountOutstanding floatValue]];
     _availableCredit.text = [NSString stringWithFormat:@"$%.2f",[summary.AmountAvailable floatValue]];
-    _paymentDueDate.text = [summary formatDateField:@"NextPayDate"];
+    _paymentDueDate.text = summary.NextPayDate; // [summary formatDateField:@"NextPayDate"];
     _minimumPayment.text = [NSString stringWithFormat:@"$%.2f",[summary.NetPayAmount floatValue]];
 }
 

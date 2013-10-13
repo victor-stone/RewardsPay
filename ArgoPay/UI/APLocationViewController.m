@@ -42,7 +42,7 @@ APLOGRELEASE
 {
     [super viewDidLoad];
 	[self addHomeButton:_argoNavBar];
-    
+
     UIBarButtonItem *bbi = [self barButtonForImage:kImageMapView
                                              title:nil
                                              block:^(APLocationListViewController *me, id sender)
@@ -129,7 +129,7 @@ APLOGRELEASE
     CLLocationDegrees bizlat = [merchant.Lat doubleValue];
     CLLocationDegrees bizlong = [merchant.Long doubleValue];
     CLLocation *bizLocation = [[CLLocation alloc] initWithLatitude:bizlat longitude:bizlong];
-    CLLocationDistance distance = [_userLocation distanceFromLocation:bizLocation] / 1000;
+    CLLocationDistance distance =  [_userLocation distanceFromLocation:bizLocation] / 1000;
     APLOG(kDebugLocation, @"Biz location: {%f,%f} distance: %.1fkm", bizlat, bizlong, distance);
     NSString *units = nil;
     if(  _viewAsKM )
