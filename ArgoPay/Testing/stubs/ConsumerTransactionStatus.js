@@ -1,1 +1,1 @@
-{"Status":0,"Message":"","TransStatus":"A","PayAmounts":[{"Desc":"Don't care","Amount":32.99}],"Amounts":[{"Type":"X","Amount":20},{"Type":"Q","Amount":3.22}],"TotalAmount":54.9,"MerchName":"Apex Wine","MerchLocation":"Santa Clara, CA","MerchRegister":"Henry","Category":"Fine wines"}
+{"Status":0,"Message":"","TransStatus":"A","PayAmounts":[{"Desc":"Don't care","Amount":32.99}],"Amounts":[{"Type":"X","Amount":20},{"Type":"Q","Amount":3.22}],"TotalAmount":54.5,"MerchName":"Apex Wine","MerchLocation":"Santa Clara, CA","MerchRegister":"Henry","Category":"Fine wines"}
