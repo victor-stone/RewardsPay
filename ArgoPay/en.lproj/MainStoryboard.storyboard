@@ -1523,6 +1523,7 @@
                     <connections>
                         <outlet property="argPoints" destination="QXh-zR-m1q" id="szv-q8-XWV"/>
                         <outlet property="rewardsTable" destination="hUy-ef-Uy3" id="SUe-xy-rnL"/>
+                        <segue destination="DAN-qH-K6z" kind="custom" identifier="kSegueRewardsToMerchant" customClass="VSHoritzontalSlideSegue" id="710-sr-yZc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KKF-Ry-s2z" userLabel="First Responder" sceneMemberID="firstResponder"/>
