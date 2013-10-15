@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 
-#import "APTransactionViewController.h"
 #import "VSNavigationViewController.h"
 #import "ZBarSDK.h"
 #import "APDebug.h"
