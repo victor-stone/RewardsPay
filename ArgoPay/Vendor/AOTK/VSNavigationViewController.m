@@ -26,7 +26,6 @@
 @interface VSNavigationViewController () <UINavigationBarDelegate> {
     UINavigationBar *_navigationBar;
     NSArray *_viewControllers;
-    BOOL _animating;
 }
 @end
 
@@ -159,8 +158,8 @@ typedef enum _VSTransitionTypeID {
 //! Returns the view controller managed by the receiver that wants to handle
 //! the specified unwind action.
 //
-//  This method is called when either unwind segue is triggered in
-//  ResultsViewController.  It is the responsibility of the parent of the
+//  This method is called when any unwind segue is triggered.
+//  It is the responsibility of the *parent* of the
 //  view controller that triggered the unwind segue to locate a
 //  view controller that responds to the unwind action for the triggered segue.
 //
@@ -187,7 +186,7 @@ typedef enum _VSTransitionTypeID {
 //
 //  This method is called if the destination of an unwind segue is a child
 //  view controller of this container.  This method returns an instance
-//  of QuizContainerFadeViewControllerSegue that transitions to the destination
+//  of segue that transitions to the destination
 //  view controller of the unwind segue (toViewController).
 //
 - (UIStoryboardSegue*)segueForUnwindingToViewController:(UIViewController *)toViewController
@@ -506,12 +505,17 @@ typedef enum _VSTransitionTypeID {
         }
     }
     
-    return ^{
-        if( oldAnimation )
-            oldAnimation();
-        if( newAnimation )
-            newAnimation();
-    };
+    if( oldAnimation || newAnimation )
+    {
+        return ^{
+            if( oldAnimation )
+                oldAnimation();
+            if( newAnimation )
+                newAnimation();
+        };
+    }
+    
+    return nil;
 }
 
 #pragma mark NavigationBar and Items
@@ -535,6 +539,9 @@ typedef enum _VSTransitionTypeID {
                                   transition:transitionName
                                        block:^(VSNavigationViewController *me, id sender)
              {
+                 if( [sender isKindOfClass:[UIStoryboardSegue class]] )
+                     return;
+                 
                  @try {
                      [top performSegueWithIdentifier:kSegueBackButtonUnwind sender:sender];
                  }
@@ -563,7 +570,9 @@ typedef enum _VSTransitionTypeID {
     if( arr )
     {
         for( VSNavActionBlock block in arr )
+        {
             block(self,sender);
+        }
     }
 }
 
@@ -626,21 +635,7 @@ typedef enum _VSTransitionTypeID {
 
 @end
 
-@interface VSNoAnimationPushSegue : VSNavigationSegue
 
-@end
-@implementation VSNoAnimationPushSegue
--(id)initWithIdentifier:(NSString *)identifier
-                 source:(UIViewController *)source
-            destination:(UIViewController *)destination
-{
-    return [self initWithIdentifier:identifier
-                             source:source
-                        destination:destination
-                             unwind:NO
-                         transition:kVSTransitionNoAnimation];
-}
-@end
 
 @implementation VSNavigationSegue
 
@@ -702,6 +697,7 @@ typedef enum _VSTransitionTypeID {
     {
         self.transition = [self.sourceViewController lastTransitionType];
         self.unwind = _unwind;
+        [containerVC invokBackItem:self];
         [containerVC popToViewController:self.destinationViewController transition:_transition];
     }
     else

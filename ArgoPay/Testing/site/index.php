@@ -343,7 +343,7 @@ switch($_REQUEST['cmd'] )
         break;
     }
 
-    case 'MerchantLocationSearch':
+    case 'MerchantLocationSearch_API':
     {
         $output = getDemoMerchants();
         print($output);
@@ -351,7 +351,7 @@ switch($_REQUEST['cmd'] )
         break;
     }
         
-    case 'MerchantLocationSearch_OLD':
+    case 'MerchantLocationSearch':
     {
         $merch1 = array(
                          'LongDescription' => 'This is 1 the loooong description that is foobar.',

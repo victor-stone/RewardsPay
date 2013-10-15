@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 
+#if 0
 #import "APScanView.h"
 #import "APStrings.h"
 #import "ZBarSDK.h"
@@ -227,3 +228,4 @@ APLOGRELEASE
 
 @end
 
+#endif

@@ -47,7 +47,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Owp-bK-oJn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2235" y="-877"/>
+            <point key="canvasLocation" x="-3157" y="-858"/>
         </scene>
         <!--Navigation View Controller-->
         <scene sceneID="Hdg-8e-SXX">
@@ -68,7 +68,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ys5-IS-3gy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1324" y="-1478"/>
+            <point key="canvasLocation" x="-1388" y="-1078"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="5">
@@ -82,11 +82,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ays-II-wps">
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ays-II-wps" customClass="VSTabNavigatorEmbed">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="498"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <segue destination="XZG-ZJ-1HU" kind="embed" identifier="kNavigatorEmbedSegue" id="3ih-BP-M4k"/>
+                                    <segue destination="XZG-ZJ-1HU" kind="embed" identifier="kNavigatorEmbedSegue" id="Q4W-hs-TaA"/>
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vAA-jJ-LOd" userLabel="navTab View" customClass="VSTabNavigator">
@@ -105,9 +105,10 @@
                                         <state key="normal" image="kImageQR.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <state key="selected" title="Close" image="kImageQR-selected.png"/>
                                         <state key="highlighted" image="kImageQR-selected.png"/>
                                         <connections>
-                                            <segue destination="y6Y-T7-7et" kind="custom" customClass="VSTabModalSegue" id="Vci-Yh-4tE"/>
+                                            <segue destination="TdH-er-4Nx" kind="custom" customClass="VSTabModalSegue" id="L0p-IE-o8C"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XY7-eb-sxc">
@@ -177,42 +178,20 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1792" y="-837"/>
-        </scene>
-        <!--Transaction View Controller-->
-        <scene sceneID="ebj-Z4-fnC">
-            <objects>
-                <viewController id="y6Y-T7-7et" customClass="APTransactionViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="i2E-tG-tWn"/>
-                        <viewControllerLayoutGuide type="bottom" id="Bow-hw-1cO"/>
-                    </layoutGuides>
-                    <view key="view" opaque="NO" contentMode="scaleToFill" id="y4s-y2-Mma">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    </view>
-                    <connections>
-                        <segue destination="TdH-er-4Nx" kind="custom" identifier="kSeguePushCamera" customClass="VSNoAnimationPushSegue" id="f4F-Ap-z6W"/>
-                        <segue destination="Aan-T8-BMv" kind="modal" identifier="kSegueTransactionBill" id="qbZ-vs-hVT"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Qcv-uC-gJE" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1123" y="-704"/>
+            <point key="canvasLocation" x="-2680" y="-850"/>
         </scene>
         <!--Camera-->
         <scene sceneID="A4r-ji-8As">
             <objects>
                 <viewController id="TdH-er-4Nx" customClass="APCamera" sceneMemberID="viewController">
                     <connections>
-                        <segue destination="LdG-RC-ZbC" kind="unwind" unwindAction="unwindFromCamera:" id="8jn-ks-GQP"/>
+                        <segue destination="LdG-RC-ZbC" kind="unwind" identifier="kSegueCameraUnwind" unwindAction="unwindFromCamera:" id="8jn-ks-GQP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KOq-zR-zVv" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="LdG-RC-ZbC" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-526" y="-739"/>
+            <point key="canvasLocation" x="-2494" y="129"/>
         </scene>
         <!--Location List View Controller - Places-->
         <scene sceneID="Sfd-fO-MPV">
@@ -332,7 +311,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JMW-vx-dze" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-757" y="613"/>
+            <point key="canvasLocation" x="-1205" y="-219"/>
         </scene>
         <!--Offers View Controller - Offers-->
         <scene sceneID="euQ-Vc-l4h">
@@ -722,10 +701,10 @@
             </objects>
             <point key="canvasLocation" x="-1354" y="505"/>
         </scene>
-        <!--Home View Controller - Home-->
+        <!--Transaction View Controller - Home-->
         <scene sceneID="QVj-M2-w6K">
             <objects>
-                <viewController storyboardIdentifier="kViewHome" title="Home" useStoryboardIdentifierAsRestorationIdentifier="YES" id="J4c-CJ-Shm" customClass="APHomeViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="kViewHome" title="Home" useStoryboardIdentifierAsRestorationIdentifier="YES" id="J4c-CJ-Shm" customClass="APTransactionViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5I1-ms-Tx6"/>
                         <viewControllerLayoutGuide type="bottom" id="byu-fh-Q93"/>
@@ -948,6 +927,9 @@
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="AKg-f1-Rv6"/>
                     <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <segue destination="Aan-T8-BMv" kind="modal" identifier="kSegueTransactionBill" modalTransitionStyle="crossDissolve" id="4oV-VI-Pq7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nHH-Jl-bf4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1137,8 +1119,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="approvePayment:" destination="Aan-T8-BMv" eventType="touchUpInside" id="dXv-qX-sTZ"/>
-                                    <segue destination="lQD-kV-55g" kind="unwind" unwindAction="unWindFromBillAccept:" id="x6J-Ki-qs1"/>
+                                    <segue destination="lQD-kV-55g" kind="unwind" identifier="kSegueTransactionBillAccept" unwindAction="unWindFromBillAccept:" id="x6J-Ki-qs1"/>
                                 </connections>
                             </button>
                             <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ztY-aR-kKk">
@@ -1164,8 +1145,7 @@
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                 <state key="normal" title="Cancel"/>
                                 <connections>
-                                    <action selector="cancelPayment:" destination="Aan-T8-BMv" eventType="touchUpInside" id="0tL-PK-zfC"/>
-                                    <segue destination="lQD-kV-55g" kind="unwind" unwindAction="unWindFromBillCancel:" id="jWC-C2-PpE"/>
+                                    <segue destination="lQD-kV-55g" kind="unwind" identifier="kSegueTransactionBillCancel" unwindAction="unWindFromBillCancel:" id="jWC-C2-PpE"/>
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Grand total:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aLl-da-ORZ">
@@ -1210,6 +1190,7 @@
                             <constraint firstItem="g5g-gr-nQc" firstAttribute="top" secondItem="4Nj-Aa-xSN" secondAttribute="bottom" constant="66" id="zfR-VI-eq8"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="jXA-1Y-hSS"/>
                     <connections>
                         <outlet property="cancelButton" destination="uO0-Xo-i2G" id="jll-LQ-v8m"/>
                         <outlet property="grandTotal" destination="g5g-gr-nQc" id="iqH-MU-pEi"/>
@@ -1220,7 +1201,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EHs-cM-Rza" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="lQD-kV-55g" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-487" y="-63"/>
+            <point key="canvasLocation" x="-619" y="-2141"/>
         </scene>
         <!--Error View Controller-->
         <scene sceneID="0S3-Od-eFO">
@@ -1523,12 +1504,11 @@
                     <connections>
                         <outlet property="argPoints" destination="QXh-zR-m1q" id="szv-q8-XWV"/>
                         <outlet property="rewardsTable" destination="hUy-ef-Uy3" id="SUe-xy-rnL"/>
-                        <segue destination="DAN-qH-K6z" kind="custom" identifier="kSegueRewardsToMerchant" customClass="VSHoritzontalSlideSegue" id="710-sr-yZc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KKF-Ry-s2z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="115" y="-850"/>
+            <point key="canvasLocation" x="-261" y="-1002"/>
         </scene>
         <!--Merchant Detail View Controller - Merchant-->
         <scene sceneID="Uaq-MT-Ocu">
@@ -1763,7 +1743,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BZP-Nn-6cZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="yOz-XA-wLC" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="679" y="-556"/>
+            <point key="canvasLocation" x="447" y="-572"/>
         </scene>
         <!--Argo Account View Controller - ArgoCredit-->
         <scene sceneID="SQt-pn-rgu">
@@ -2115,7 +2095,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="rah-rg-xnc"/>
         <segue reference="lDa-5G-cuc"/>
+        <segue reference="uVg-z6-j1p"/>
     </inferredMetricsTieBreakers>
 </document>

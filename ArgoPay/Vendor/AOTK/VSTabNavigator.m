@@ -74,8 +74,11 @@
     //  we disabled its button's ability to trigger another.
     //  See -selectButton:
     //
-    VSTabModalSegue * seg = (VSTabModalSegue *)segue;
-    seg.doSwap = _selectedTab != nil;
+    if( [segue isKindOfClass:[VSTabModalSegue class]] )
+    {
+        VSTabModalSegue * seg = (VSTabModalSegue *)segue;
+        seg.doSwap = _selectedTab != nil;
+    }
     UIViewController * dest = segue.destinationViewController;
     VSNavActionBlock block = ^(id ctx, id sender) {
         [self deSelectButton];
@@ -168,6 +171,21 @@
 
 @end
 
+@interface VSNoAnimationPushSegue : VSTabModalSegue
+
+@end
+@implementation VSNoAnimationPushSegue
+-(id)initWithIdentifier:(NSString *)identifier
+                 source:(UIViewController *)source
+            destination:(UIViewController *)destination
+{
+    return [self initWithIdentifier:identifier
+                             source:source
+                        destination:destination
+                             unwind:NO
+                         transition:kVSTransitionNoAnimation];
+}
+@end
 /*
 @interface APScanTab : UIButton
 

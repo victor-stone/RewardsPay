@@ -10,7 +10,16 @@
 
 #define kNavigatorEmbedSegue @"kNavigatorEmbedSegue"
 
+@interface VSTabNavigatorEmbed : UIView
+@end
+
 @interface VSTabNavigatorViewController : UIViewController<VSTabNavigatorDelegate>
+@property (nonatomic,weak) IBOutlet VSTabNavigatorEmbed *navigationEmbedding;
 @property (nonatomic,weak) IBOutlet VSTabNavigator *tabNavigator;
 @property (nonatomic,weak)          VSNavigationViewController  *navigationViewController;
 @end
+
+@interface UIViewController (VSTabNavigator)
+-(BOOL)underTabBar;
+@end
+

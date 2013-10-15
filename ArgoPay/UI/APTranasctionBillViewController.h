@@ -10,14 +10,3 @@
 
 @class APTransactionStatusResponse;
 
-@interface APTranasctionBillViewController : UIViewController
-
-@property (weak, nonatomic) IBOutlet UILabel *grandTotal;
-@property (weak, nonatomic) IBOutlet UILabel *merchantName;
-@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
-@property (weak, nonatomic) IBOutlet UILabel *merchantCategory;
-
-@property (nonatomic,strong) NSString *transID;
-@property (nonatomic,strong) APTransactionStatusResponse *statusResponse;
-
-@end

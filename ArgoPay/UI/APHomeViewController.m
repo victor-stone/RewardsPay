@@ -5,7 +5,7 @@
 //  Created by victor on 9/12/13.
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
-
+#import "APHomeViewController.h"
 #import "APStrings.h"
 #import "APPopup.h"
 #import "APAccount.h"
@@ -19,7 +19,7 @@
 
 @end
 
-@interface APHomeViewController : UIViewController<UICollectionViewDataSource>
+@interface APHomeViewController () <UICollectionViewDataSource>
 
 @end
 
@@ -32,6 +32,12 @@ APLOGRELEASE
     return YES;
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSLog(@"Segue on home: %@ ", segue.identifier);
+    [super prepareForSegue:segue sender:sender];
+
+}
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return 5; // TODO: Is there a way to get the number of prototype cells?

@@ -13,6 +13,7 @@
 #import "APRemoteStrings.h"
 #import "APAccount.h"
 
+/*
 @implementation APTranasctionBillViewController
 
 APLOGRELEASE
@@ -60,3 +61,4 @@ APLOGRELEASE
 }
 
 @end
+*/

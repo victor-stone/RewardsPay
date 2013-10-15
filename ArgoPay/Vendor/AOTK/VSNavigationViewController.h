@@ -76,6 +76,7 @@ typedef void (^VSNavAnimationBlock)();
 
 -(void)performBack;
 
+@property (nonatomic) BOOL animating;
 
 // For deriving:
 
