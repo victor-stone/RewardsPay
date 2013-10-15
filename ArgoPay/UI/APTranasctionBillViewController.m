@@ -8,12 +8,12 @@
 
 #import "APStrings.h"
 #import "APPopup.h"
-#import "APTranasctionViewController.h"
+#import "APTranasctionBillViewController.h"
 #import "APTransaction.h"
 #import "APRemoteStrings.h"
 #import "APAccount.h"
 
-@implementation APTranasctionViewController
+@implementation APTranasctionBillViewController
 
 APLOGRELEASE
 
@@ -25,7 +25,7 @@ APLOGRELEASE
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self argoPayIze];
+
     _grandTotal.text = [NSString stringWithFormat:@"%.2f",[_statusResponse.TotalAmount floatValue]];
     _merchantName.text = _statusResponse.MerchName;
     _merchantCategory.text = _statusResponse.Category;

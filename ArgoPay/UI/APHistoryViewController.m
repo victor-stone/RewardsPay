@@ -52,14 +52,8 @@ APLOGRELEASE
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self argoPayIze];
-#if DO_SLIDING_SEGUES
-    [self addSlideBackButton:_argoNavBar];
-#else
-    [self addBackButton:_argoNavBar];
-#endif
+
     [self fetchHistory:nil];
-    
 }
 
 -(void)fetchHistory:(NSString *)sort
@@ -129,13 +123,6 @@ APLOGRELEASE
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar;                     // called when keyboard search button pressed
 {
     [searchBar resignFirstResponder];
-}
-
--(UIStoryboardSegue *)segueForUnwindingToViewController:(UIViewController *)dest
-                                     fromViewController:(UIViewController *)src
-                                             identifier:(NSString *)identifier
-{
-    return [[VSHoritzontalSlideSegue alloc] initWithIdentifier:identifier source:src destination:dest];
 }
 
 @end

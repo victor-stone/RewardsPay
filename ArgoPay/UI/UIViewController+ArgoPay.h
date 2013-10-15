@@ -19,22 +19,6 @@ typedef void (^APDismissBlock)(UIViewController* dismissing);
                                 title:(NSString *)title
                                 block:(APMenuBlock)block;
 
--(void)addHomeButton:(UINavigationBar *)bar;
--(void)addLoginButton:(UINavigationBar *)bar;
--(void)addRightButton:(UINavigationBar *)bar button:(UIBarButtonItem *)bbi;
--(void)addBackButton:(UINavigationBar *)bar;
--(void)addBackButton:(UINavigationBar *)bar title:(NSString *)title;
--(void)addSlideBackButton:(UINavigationBar *)bar;
-
--(void)setDismissBlock:(APDismissBlock)block;
-
--(void)navigateTo:(NSString *)vcName;
-
 -(void)showError:(NSError *)error;
--(void)showError:(NSError *)error dismissBlock:(APDismissBlock)block;
-
--(UIViewController *)presentVC:(NSString *)vcName animated:(BOOL)animated completion:(void (^)())block;
-
--(void)argoPayIze;
 
 @end

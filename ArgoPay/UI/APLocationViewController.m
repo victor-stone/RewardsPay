@@ -42,7 +42,7 @@ APLOGRELEASE
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	[self addHomeButton:_argoNavBar];
+#warning Add Home Button here
     
     UIBarButtonItem *bbi = [self barButtonForImage:kImageMapView
                                              title:nil
@@ -51,7 +51,8 @@ APLOGRELEASE
         // flip to mapview
     }];
     
-    [self addRightButton:_argoNavBar button:bbi];
+    self.navigationItem.rightBarButtonItems = @[bbi];
+
     [self fetchLocations];
     _viewAsKM = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingViewAsKilometer];
     [self registerForBroadcast:kNotifyUserSettingChanged
@@ -167,21 +168,6 @@ APLOGRELEASE
         [vc setValue:merchant.MLocID forKey:@"MLocID"];
         [_locationsTable deselectRowAtIndexPath:indexPath animated:NO];
     }
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if( (indexPath.row & 1) == 0 )
-        return;
-    
-#ifdef DO_SLIDING_SEGUES
-    [self.parentViewController performForwardSlideSegue:kSegueHomeToMerchantDetail back:kSegueMerchantDetailToHome];
-#else
-    APMerchant * merchant = _locations[indexPath.row/2];
-    UIViewController *vc = [self presentVC:kViewMerchantDetail animated:YES completion:nil];
-    [vc setValue:merchant.MLocID forKey:@"MLocID"];
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
-#endif
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

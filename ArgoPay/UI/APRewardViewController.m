@@ -51,8 +51,7 @@ APLOGRELEASE
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    [self argoPayIze];
-    [self addBackButton:_navBar];
+
     _argPoints.text = @"";
     _currentSort = kRemoteValueSortByNewest;
     [self fetchRewards:YES];
@@ -145,13 +144,15 @@ APLOGRELEASE
     return [_rewards count];
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    APArgoPointsReward * reward = _rewards[indexPath.row];
-    UIViewController *vc = [self presentVC:kViewMerchantDetail animated:YES completion:nil];
-    [vc setValue:reward.MLocID forKey:@"MLocID"];
+#warning Implement prepare for segue here
+    /*
+     APArgoPointsReward * reward = _rewards[indexPath.row];
+     UIViewController *vc = [self presentVC:kViewMerchantDetail animated:YES completion:nil];
+     [vc setValue:reward.MLocID forKey:@"MLocID"];
+     */
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath

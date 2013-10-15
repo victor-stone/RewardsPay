@@ -28,8 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self argoPayIze];
-    [self addBackButton:_argoNavBar];
+
     [_username becomeFirstResponder];
     
     _submitButton.layer.masksToBounds = YES;
@@ -59,9 +58,7 @@
             UIViewController *host = self.presentingViewController;
             [NSObject performBlock:^{
                 [host dismissViewControllerAnimated:YES completion:^{
-                    [NSObject performBlock:^{
-                        [host navigateTo:kViewHome];
-                    } afterDelay:0.5];
+#warning Get to home from here...?
                 }];
             } afterDelay:0.2];
         }

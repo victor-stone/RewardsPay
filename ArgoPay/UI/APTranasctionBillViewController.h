@@ -10,7 +10,7 @@
 
 @class APTransactionStatusResponse;
 
-@interface APTranasctionViewController : UIViewController
+@interface APTranasctionBillViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UILabel *grandTotal;
 @property (weak, nonatomic) IBOutlet UILabel *merchantName;

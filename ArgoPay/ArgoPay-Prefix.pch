@@ -48,6 +48,5 @@
 #import "NSObject+KeyPaths.h"
 #import "NSString+APNetwork.h"
 #import "VSImageTweaks.h"
-#import "VSHoritzontalSlideSegue.h"
 
 #endif

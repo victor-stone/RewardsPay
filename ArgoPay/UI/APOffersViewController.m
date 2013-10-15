@@ -49,13 +49,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self argoPayIze];
-#ifdef DO_SLIDING_SEGUES
-    [self addSlideBackButton:_argoNavBar];
-#else
-    [self addBackButton:_argoNavBar];
-#endif
-    
     if( _offer )
         self.offer = _offer;
 }
@@ -111,16 +104,14 @@ APLOGRELEASE
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	[self addHomeButton:_argoNavBar];
-#if 0
-    [self addLoginButton:_argoNavBar];
-#endif
+#warning Add Home Button here
+
     UIBarButtonItem * bbi = [self barButtonForImage:kImageSort
                                               title:nil
                                               block:^(APOffersViewController *me, id button) {
                                                   [me changeFilter:button];
                                               }];
-    [self addRightButton:_argoNavBar button:bbi];
+    self.navigationItem.rightBarButtonItems = @[bbi];
     
     _sortNames = @[ NSLocalizedString(@"Newest", "Offer sort type"),
                     NSLocalizedString(@"Expiring Soon", "Offer sort type"),
@@ -211,7 +202,7 @@ APLOGRELEASE
                                           otherButtonTitles:_sortNames[0],_sortNames[1],nil];
         _numberOfButtonsShowing = 2;
     }
-    
+#warning Action sheet is being clipped, move to rootView
     [_actionSheet showInView:self.view.superview];
 }
 
@@ -225,25 +216,23 @@ APLOGRELEASE
     if( [segue.identifier isEqualToString:kSegueOffersToOfferDetail] )
     {
         UIViewController * vc = segue.destinationViewController;
-        [vc setValue:_selectedOffer forKey:@"offer"];
+        NSIndexPath * indexPath = [_offersTable indexPathForSelectedRow];
+        [vc setValue:_offers[indexPath.row] forKey:@"offer"];
     }
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+#warning Move this to prepareForSegue
+    /*
     APAccount *account = [APAccount currentAccount];
     if( account.isLoggedIn )
     {
         void (^showDialog)(APOffer * offer) = ^(APOffer * offer)
         {
-#ifdef DO_SLIDING_SEGUES
             _selectedOffer = offer;
-            [self.parentViewController performForwardSlideSegue:kSegueOffersToOfferDetail back:kSegueOfferDetailToOffers];
-#else
-            UIViewController *vc = [self presentVC:kViewOfferDetail animated:YES completion:nil];
-            [vc setValue:offer forKey:@"offer"];
-#endif
+            [self performSegueWithIdentifier:kSegueOffersToOfferDetail sender:self];
         };
         
         APOffer * offer = _offers[indexPath.row];
@@ -277,6 +266,7 @@ APLOGRELEASE
         }
         
     }
+     */
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView

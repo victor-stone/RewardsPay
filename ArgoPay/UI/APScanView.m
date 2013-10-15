@@ -12,7 +12,7 @@
 #import "APPopup.h"
 #import "APTransaction.h"
 #import "APRemoteStrings.h"
-#import "APTranasctionViewController.h"
+#import "APTranasctionBillViewController.h"
 #import "APLocation.h"
 #import "APAccount.h"
 
@@ -117,7 +117,7 @@ APLOGRELEASE
             }
             else if( [stat isEqualToString:kRemoteValueTransactionStatusReadyForApproval] )
             {
-                APTranasctionViewController * vct = [vc.storyboard instantiateViewControllerWithIdentifier:kViewTransaction];
+                APTranasctionBillViewController * vct = [vc.storyboard instantiateViewControllerWithIdentifier:kViewTransaction];
                 vct.transID = transID;
                 vct.statusResponse = response;
                 [NSObject performBlock:^{

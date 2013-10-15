@@ -21,7 +21,6 @@
 
 @property (nonatomic,strong) APAccountSummary *summary;
 
--(IBAction)unwindToArgoAccount:(UIStoryboardSegue *)segue;
 @end
 
 @implementation APArgoAccountViewController {
@@ -36,12 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self argoPayIze];
-#ifdef DO_SLIDING_SEGUES
-    [self addSlideBackButton:_argoNavBar];
-#else
-    [self addBackButton:_argoNavBar];
-#endif
+
     UIImage * bg = [[UIImage imageNamed:kImageButtonBg]
                     resizableImageWithCapInsets:UIEdgeInsetsMake(5,10,5,10)
                     resizingMode:UIImageResizingModeStretch];
@@ -86,29 +80,6 @@
     _paymentDueDate.text = [summary formatDateField:@"NextPayDate"];
     _minimumPayment.text = [NSString stringWithFormat:@"$%.2f",[summary.NetPayAmount floatValue]];
 }
-
-- (IBAction)seeTransaction:(id)sender
-{
-#ifdef DO_SLIDING_SEGUES
-    [self performForwardSlideSegue:kSegueArgoAccountToHistory back:kSegueHistoryToArgoAccount];
-#else
-    [self presentVC:kViewHistory animated:YES completion:nil];
-#endif
-}
-
--(IBAction)unwindToArgoAccount:(UIStoryboardSegue *)segue
-{
-    
-}
-
--(UIStoryboardSegue *)segueForUnwindingToViewController:(UIViewController *)dest
-                                     fromViewController:(UIViewController *)src
-                                             identifier:(NSString *)identifier
-{
-    return [[VSHoritzontalSlideSegue alloc] initWithIdentifier:identifier source:src destination:dest];
-}
-
-
 
 - (void)didReceiveMemoryWarning
 {

@@ -99,12 +99,7 @@ APLOGRELEASE
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self argoPayIze];
-#ifdef DO_SLIDING_SEGUES
-	[self addSlideBackButton:_orangeNavBar];
-#else
-	[self addBackButton:_orangeNavBar];
-#endif
+
     _pointsTable.alpha = 0;
     _merchantName.text = nil;
     _merchantPoints.text = nil;

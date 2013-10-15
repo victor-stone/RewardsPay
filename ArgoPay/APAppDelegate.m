@@ -52,7 +52,7 @@ typedef enum _APStartupState {
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    [self argoPayIze];
+
     [_activity startAnimating];
     __weak APStartupViewController *me = self;
     _notifyObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kReachabilityChangedNotification

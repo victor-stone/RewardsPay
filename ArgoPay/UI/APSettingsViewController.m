@@ -7,6 +7,17 @@
 //
 #import "VSSettings.h"
 #import "APStrings.h"
+#import "VSNavigationViewController.h"
+
+@interface APSettingNavigationController : UINavigationController
+@end
+@implementation APSettingNavigationController
+
+-(BOOL)navigationBarHidden
+{
+    return YES;
+}
+@end
 
 @interface APSettingsViewController : VSSettingsExtensions
 
@@ -15,7 +26,7 @@
 @implementation APSettingsViewController
 - (IBAction)done:(id)sender
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [[self vsNavigationController] performBack];
 }
 
 - (void)viewDidLoad

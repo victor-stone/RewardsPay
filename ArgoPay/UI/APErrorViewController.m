@@ -24,9 +24,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self argoPayIze];
     self.errorObj = _errorObj;
-    [self addBackButton:_navBar];
 }
 
 -(void)setErrorObj:(NSError *)error

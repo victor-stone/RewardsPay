@@ -66,6 +66,8 @@ APKEYEDSTRING(kSegueHomeToMerchantDetail)
 APKEYEDSTRING(kSegueMerchantDetailToHome)
 APKEYEDSTRING(kSegueEmbedMerchantMap)
 APKEYEDSTRING(kSegueEmbedOfferMap)
+APKEYEDSTRING(kSeguePushCamera)
+APKEYEDSTRING(kSegueTransactionBill)
 
 APKEYEDSTRING(kCellIDMenu)
 APKEYEDSTRING(kCellIDReward)
