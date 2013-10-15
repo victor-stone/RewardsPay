@@ -68,7 +68,7 @@ APLOGRELEASE
     self.resultText = sym.data;
     APLOG(kDebugScan, @"Got scan result %@", self.resultText);
     [self setLastTransitionType:kVSTransitionNoAnimation];
-    [self.vsNavigationController performBack];
+    [self performSegueWithIdentifier:kSegueCameraUnwind sender:self];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
