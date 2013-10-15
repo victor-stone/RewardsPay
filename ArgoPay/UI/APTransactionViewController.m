@@ -13,6 +13,11 @@
 #import "ZBarSDK.h"
 #import "APDebug.h"
 #import "APStrings.h"
+#import "APPopup.h"
+#import "APLocation.h"
+#import "APAccount.h"
+#import "APRemoteStrings.h"
+
 /**
  *  Wrapper for ZBar VC which has a bug (missing auto release)
  *
@@ -107,6 +112,109 @@ APLOGRELEASE
     
     _cancelButton.layer.masksToBounds = YES;
     _cancelButton.layer.cornerRadius = 8.0;
+}
+
+-(void)setScanResultText:(NSString *)scanResultText
+{
+    _scanResultText = scanResultText;
+    [self attemptTransaction];
+}
+
+-(void)setStatusResponse:(APTransactionStatusResponse *)statusResponse
+{
+    _statusResponse = statusResponse;
+    _grandTotal.text = [NSString stringWithFormat:@"%.2f",[_statusResponse.TotalAmount floatValue]];
+    _merchantName.text = _statusResponse.MerchName;
+    _merchantCategory.text = _statusResponse.Category;
+}
+
+-(void)handleTransaction:(APPopup *)popup transID:(NSString *)transID
+{
+    APRemoteAPIRequestBlock handleStatusReponse = ^(APTransactionStatusResponse *response, NSError *err)
+    {
+        APTranasctionBillViewController *vc = self;
+        if( err )
+        {
+            [popup dismiss];
+            [vc showError:err];
+        }
+        else
+        {
+            NSString *stat = response.TransStatus;
+            
+            if( [stat isEqualToString:kRemoteValueTransactionStatusPending] )
+            {
+                [NSObject performBlock:^{
+                    [self handleTransaction:popup transID:transID];
+                } afterDelay:0.5];
+                return;
+            }
+            
+            [popup dismiss];
+            
+            if( [stat isEqualToString:kRemoteValueTransactionStatusInsufficientFunds] )
+            {
+                [APPopup msgWithParent:vc.view text:NSLocalizedString(@"Sorry, there are insufficient funds in your ArgoPay Account to cover this purchase!", @"TransactionResponse")];
+            }
+            else if( [stat isEqualToString:kRemoteValueTransactionStatusServerCancelled] )
+            {
+                [APPopup msgWithParent:vc.view text:NSLocalizedString(@"This transaction was cancelled!", @"TransactionResponse")];
+            }
+            else if( [stat isEqualToString:kRemoteValueTransactionStatusTimeOut] )
+            {
+                [APPopup msgWithParent:vc.view text:NSLocalizedString(@"This transaction was cancelled because it was taking too long.", @"TransactionResponse")];
+            }
+            else if( [stat isEqualToString:kRemoteValueTransactionStatusReadyForApproval] )
+            {
+                vc.statusResponse = response;
+            }
+        }
+    };
+    
+    APRequestTransactionStatus *request = [APRequestTransactionStatus new];
+    request.TransID = transID;
+    APAccount * account = [APAccount currentAccount];
+    request.AToken = account.AToken;
+    [request performRequest:handleStatusReponse];
+}
+
+-(void)attemptTransaction
+{
+    __block APPopup *popup = [APPopup withNetActivity:self.view];
+    
+    APRequestTransactionStart *start = [APRequestTransactionStart new];
+    [[APLocation sharedInstance] currentLocation:^BOOL(CLLocationCoordinate2D loc, APError *error) {
+        if( error )
+        {
+            [self performBlock:^(id sender) {
+                [popup dismiss];
+                [self showError:error];
+            } afterDelay:0.1];
+            return NO;
+        }
+        else
+        {
+            APAccount *account = [APAccount currentAccount];
+            start.AToken = account.AToken;
+            start.QrData = _scanResultText;
+            start.Lat = @(loc.latitude);
+            start.Long = @(loc.longitude);
+            [start performRequest:^(APTransactionIDResponse *idResponse, NSError *err) {
+                [NSObject performBlock:^{
+                    if( err )
+                    {
+                        [popup dismiss];
+                        [self showError:err];
+                    }
+                    else
+                    {
+                        [self handleTransaction:popup transID:idResponse.TransID];
+                    }
+                } afterDelay:0.1];
+            }];
+        }
+        return NO;
+    }];
 }
 
 @end
