@@ -70,8 +70,7 @@ APLOGRELEASE
         [self addGestureRecognizer:tgr];
     }
     
-    self.alpha = 0.0;
-    CGFloat bgAlpha = ( (flags & kPopupActivity) != 0 ) ? 0.2 : 0.8;
+    CGFloat bgAlpha = 0.55; // ( (flags & kPopupActivity) != 0 ) ? 0.2 : 0.8;
     self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:bgAlpha];
     
     CGFloat x,y,w,h;
@@ -150,6 +149,7 @@ APLOGRELEASE
     _animationSpeed = kPopupFadeSpeed;
 
     contentView.frame = (CGRect){ {x,y}, {w,h} };
+    contentView.alpha = 0.0;
    
     // Pieces not quite fitting together here
     // what if delay AND noShow are both on?
@@ -178,7 +178,7 @@ APLOGRELEASE
 -(void)present
 {
     [UIView animateWithDuration:_animationSpeed animations:^{
-        self.alpha = 1.0;
+        _contentView.alpha = 1.0;
     }];
 }
 

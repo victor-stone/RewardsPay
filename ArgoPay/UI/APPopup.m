@@ -21,8 +21,16 @@ APLOGRELEASE
 
 +(id)withNetActivity:(UIView *)parent
 {
+    return [APPopup withNetActivity:parent delay:YES];
+}
+
++(id)withNetActivity:(UIView *)parent delay:(BOOL)delay
+{
     NSString *str = NSLocalizedString(@"Connecting...", @"popup");
-    return [[APPopup alloc] initWithParent:parent flags:kPopupActivity | kPopupDelay textOrView:str];
+    VSPopupFlags flags = kPopupActivity;
+    if( delay )
+        flags |= kPopupDelay;
+    return [[APPopup alloc] initWithParent:parent flags:flags textOrView:str];
 }
 
 +(id)msgWithParent:(UIView *)parent text:(NSString *)text

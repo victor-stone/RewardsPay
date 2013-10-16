@@ -34,7 +34,7 @@
  <Status, Message, TransStatus, Amounts: {Type,Amount), TotalAmount, 
  PayAmounts: {Desc, Amount}, MerchName, MerchLocation, MerchRegister
  */
-@interface APTransactionStatusResponse : APRemoteObject
+@interface APTransactionStatusResponse : APRemoteRepsonse
 @property (nonatomic,strong) NSString *TransStatus;
 @property (nonatomic,strong) NSArray *Amounts; // @{ 'Type':'', 'Amount':'' }
 @property (nonatomic,strong) NSNumber *TotalAmount;

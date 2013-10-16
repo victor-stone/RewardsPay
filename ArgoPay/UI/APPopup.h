@@ -15,6 +15,7 @@
 +(id)msgWithParent:(UIView *)parent text:(NSString *)text;
 +(id)msgWithParent:(UIView *)parent text:(NSString *)text dismissBlock:(VSPopupDismissBlock)dismissBlock;
 +(id)errorWithParent:(UIView *)view error:(NSError *)err;
-+(id)withNetActivity:(UIView *)parent;
++(id)withNetActivity:(UIView *)parent; // delay: YES
++(id)withNetActivity:(UIView *)parent delay:(BOOL)delay;
 @end
 

@@ -68,6 +68,19 @@
 
 @implementation UIViewController (VSTabNavigator)
 
+-(VSTabNavigatorViewController *)tabNavigator
+{
+    UIViewController * vc = self;
+    Class tabNavClass = [VSTabNavigatorViewController class];
+    while( vc )
+    {
+        if( [vc isKindOfClass:tabNavClass] )
+            return (VSTabNavigatorViewController *)vc;
+        vc = vc.parentViewController;
+    }
+    return nil;
+}
+
 -(BOOL)underTabBar
 {
     return NO;

@@ -76,14 +76,10 @@ APLOGRELEASE
     [self performSegueWithIdentifier:kSegueCameraUnwind sender:self];
 }
 
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-}
-
 @end
 
 /**
- *  Modal screen that waits for transaction status
+ *  Modal screen that waits for use to accept/reject payment
  */
 @interface APTranasctionBillViewController : UIViewController
 
@@ -123,14 +119,26 @@ APLOGRELEASE
  *  Handles transaction cycle
  */
 @interface APTransactionViewController : APHomeViewController
+@end
+
+// making these properties quiets warning messages about weak
+// pointers in blocks
+@interface APTransactionViewController ()
+@property (nonatomic,strong) NSString *transID;
 @property (nonatomic,strong) NSString *scanResultText;
 @property (nonatomic,strong) UIImage * scanResultImage;
 @property (nonatomic,strong) APTransactionStatusResponse *statusResponse;
+@property (nonatomic,strong) APPopup *popup;
 @end
 
 
 @implementation APTransactionViewController
 
+/**
+ *  Camera unwind segue lands here after a QR code has been scanned
+ *
+ *  @param segue Source is camera, destination is self
+ */
 -(IBAction)unwindFromCamera:(UIStoryboardSegue *)segue
 {
     APCamera * camera = segue.sourceViewController;
@@ -139,6 +147,113 @@ APLOGRELEASE
     [self attemptTransaction];
 }
 
+
+/**
+ *  Transaction entry point
+ */
+-(void)attemptTransaction
+{
+    self.popup = [APPopup withNetActivity:self.popupParent delay:NO];
+    
+    __weak APTransactionViewController * me = self;
+    
+    APRequestTransactionStart *start = [APRequestTransactionStart new];
+    
+    // Step 1. Get location
+    //
+    [[APLocation sharedInstance] currentLocation:^BOOL(CLLocationCoordinate2D loc, APError *error) {
+        if( error )
+        {
+            [NSObject performBlock:^{
+                me.popup = nil;
+                [self showError:error];
+            } afterDelay:0.1];
+            return NO;
+        }
+        else
+        {
+            // Step 2. Request a transactionID from server
+            //
+            APAccount *account = [APAccount currentAccount];
+            start.AToken = account.AToken;
+            start.QrData = _scanResultText;
+            start.Lat = @(loc.latitude);
+            start.Long = @(loc.longitude);
+            [start performRequest:^(APTransactionIDResponse *idResponse, NSError *err) {
+                [NSObject performBlock:^{
+                    if( err )
+                    {
+                        me.popup = nil;
+                        [self showError:err];
+                    }
+                    else
+                    {
+                        me.transID = idResponse.TransID;
+                        [me handleTransaction];
+                    }
+                } afterDelay:0.1];
+            }];
+        }
+        return NO;
+    }];
+}
+
+/**
+ *  Rerty-able transaction request handler
+ *
+ */
+-(void)handleTransaction
+{
+    __weak APTransactionViewController * me = self;
+    
+    // Step 3. Request a status on the transaction
+    APRequestTransactionStatus *request = [APRequestTransactionStatus new];
+    APAccount * account = [APAccount currentAccount];
+    request.AToken = account.AToken;
+    request.TransID = _transID;
+    
+    [request performRequest: ^(APTransactionStatusResponse *response, NSError *err)
+    {
+        if( err )
+        {
+            me.popup = nil;
+            [me showError:err];
+        }
+        else
+        {
+            NSString *stat = response.TransStatus;
+            
+            if( [stat isEqualToString:kRemoteValueTransactionStatusPending] )
+            {
+                [NSObject performBlock:^{
+                    [me handleTransaction];
+                } afterDelay:0.5];
+                return;
+            }
+            
+            me.popup = nil;
+            
+            if( [stat isEqualToString:kRemoteValueTransactionStatusReadyForApproval] )
+            {
+                // Step 4. Ask the user to accept/reject
+                me.statusResponse = response;
+                [me performSystemSegue:kSegueTransactionBill sender:self];
+            }
+            else
+            {
+                me.popup = [APPopup msgWithParent:me.popupParent text:response.UserMessage];
+            }
+        }
+    }];
+    
+}
+
+/**
+ *  Step 5. Pass along payment information to Bill view controller
+ *
+ *  @param segue  Source is self, destination is Bill VC
+ *  @param sender (ignored)
+ */
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if( [segue.identifier isEqualToString:kSegueTransactionBill] )
@@ -149,108 +264,73 @@ APLOGRELEASE
     [super prepareForSegue:segue sender:sender];
 }
 
--(IBAction)unWindFromBillAccept:(UIStoryboardSegue *)segue
-{
-    NSLog(@"Bill accepted");
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
+/**
+ *  Transaction Bill VC segue unwinds to here on cancel
+ *
+ *  @param segue Source is Bill VC, destination is self
+ */
 -(IBAction)unWindFromBillCancel:(UIStoryboardSegue *)segue
 {
-    NSLog(@"Bill cancelled");
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self userAction:kRemoteValueNO];
 }
 
--(void)handleTransaction:(APPopup *)popup transID:(NSString *)transID
+/**
+ *  Transaction Bill VC segue unwinds to here on accept
+ *
+ *  @param segue Source is Bill VC, destination is self
+ */
+-(IBAction)unWindFromBillAccept:(UIStoryboardSegue *)segue
 {
-    __weak APTransactionViewController * vc = self;
-    
-    APRemoteAPIRequestBlock handleStatusReponse = ^(APTransactionStatusResponse *response, NSError *err)
-    {
-        if( err )
-        {
-            [popup dismiss];
-            [vc showError:err];
-        }
-        else
-        {
-            NSString *stat = response.TransStatus;
-            
-            if( [stat isEqualToString:kRemoteValueTransactionStatusPending] )
-            {
-                [NSObject performBlock:^{
-                    [vc handleTransaction:popup transID:transID];
-                } afterDelay:0.5];
-                return;
-            }
-            
-            [popup dismiss];
-            
-            if( [stat isEqualToString:kRemoteValueTransactionStatusInsufficientFunds] )
-            {
-                [APPopup msgWithParent:vc.view text:NSLocalizedString(@"Sorry, there are insufficient funds in your ArgoPay Account to cover this purchase!", @"TransactionResponse")];
-            }
-            else if( [stat isEqualToString:kRemoteValueTransactionStatusServerCancelled] )
-            {
-                [APPopup msgWithParent:vc.view text:NSLocalizedString(@"This transaction was cancelled!", @"TransactionResponse")];
-            }
-            else if( [stat isEqualToString:kRemoteValueTransactionStatusTimeOut] )
-            {
-                [APPopup msgWithParent:vc.view text:NSLocalizedString(@"This transaction was cancelled because it was taking too long.", @"TransactionResponse")];
-            }
-            else if( [stat isEqualToString:kRemoteValueTransactionStatusReadyForApproval] )
-            {
-                vc.statusResponse = response;
-                [vc performSystemSegue:kSegueTransactionBill sender:self];
-            }
-        }
-    };
-    
-    APRequestTransactionStatus *request = [APRequestTransactionStatus new];
-    request.TransID = transID;
-    APAccount * account = [APAccount currentAccount];
-    request.AToken = account.AToken;
-    [request performRequest:handleStatusReponse];
+    [self userAction:kRemoteValueYES];
 }
 
--(void)attemptTransaction
+/**
+ *  Step 6. Inform the server of the user's choice
+ *
+ *  @param type kRemoteValueYES for accept, kRemoteValueNO for cancel
+ */
+-(void)userAction:(NSString *)type
 {
-    __block APPopup *popup = [APPopup withNetActivity:self.view];
+    __weak APTransactionViewController * me = self;
     
-    APRequestTransactionStart *start = [APRequestTransactionStart new];
-    [[APLocation sharedInstance] currentLocation:^BOOL(CLLocationCoordinate2D loc, APError *error) {
-        if( error )
-        {
-            [self performBlock:^(id sender) {
-                [popup dismiss];
-                [self showError:error];
-            } afterDelay:0.1];
-            return NO;
-        }
-        else
-        {
-            APAccount *account = [APAccount currentAccount];
-            start.AToken = account.AToken;
-            start.QrData = _scanResultText;
-            start.Lat = @(loc.latitude);
-            start.Long = @(loc.longitude);
-            [start performRequest:^(APTransactionIDResponse *idResponse, NSError *err) {
-                [NSObject performBlock:^{
-                    if( err )
-                    {
-                        [popup dismiss];
-                        [self showError:err];
-                    }
-                    else
-                    {
-                        [self handleTransaction:popup transID:idResponse.TransID];
-                    }
-                } afterDelay:0.1];
-            }];
-        }
-        return NO;
+    [self dismissViewControllerAnimated:YES completion:^{
+
+        me.popup = [APPopup withNetActivity:me.popupParent delay:NO];
+        
+        APRequestTransactionApprove *request = [APRequestTransactionApprove new];
+        APAccount *account = [APAccount currentAccount];
+        request.AToken = account.AToken;
+        request.Approve = type;
+        request.TransID = me.transID;
+        
+        [request performRequest:^(APRemoteRepsonse *response, NSError *err)
+         {
+             me.popup = nil;
+             if( err )
+             {
+                 APLOG(kDebugScan, @"Server responded with error: %@", err);
+                 [me showError:err];
+             }
+             else
+             {
+                 APLOG(kDebugScan, @"Server responsded with: %@", response);
+                 [APPopup msgWithParent:me.popupParent text:response.UserMessage dismissBlock:^{
+                     [self dismissViewControllerAnimated:YES completion:nil];
+                 }];
+             }
+         }];
     }];
 }
 
+-(void)setPopup:(APPopup *)popup
+{
+    if( _popup )
+        [_popup dismiss];
+    _popup = popup;
+}
 
+-(UIView *)popupParent
+{
+    return [self tabNavigator].view;
+}
 @end

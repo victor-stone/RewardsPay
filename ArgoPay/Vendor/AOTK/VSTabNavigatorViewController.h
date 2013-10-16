@@ -20,6 +20,7 @@
 @end
 
 @interface UIViewController (VSTabNavigator)
+-(VSTabNavigatorViewController *)tabNavigator;
 -(BOOL)underTabBar;
 @end
 
