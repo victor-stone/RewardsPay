@@ -33,7 +33,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *expiration;
 @property (weak, nonatomic) IBOutlet UILabel *offerName;
 @property (weak, nonatomic) IBOutlet UITextView *offerDetail;
-@property (weak, nonatomic) IBOutlet UINavigationBar *argoNavBar;
 @property (nonatomic,strong) APOffer *offer;
 @end
 
@@ -86,7 +85,6 @@
                                                     UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *offersTable;
-@property (weak, nonatomic) IBOutlet UINavigationBar *argoNavBar;
 @property (nonatomic,strong) NSArray * offers;
 @end
 

@@ -111,4 +111,5 @@ APKEYEDSTRING(kDebugUser)
 APKEYEDSTRING(kDebugLocation)
 APKEYEDSTRING(kDebugStartup)
 APKEYEDSTRING(kDebugScan)
+APKEYEDSTRING(kDebugNavigation)
 

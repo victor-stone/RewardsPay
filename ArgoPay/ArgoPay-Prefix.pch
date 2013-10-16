@@ -16,7 +16,8 @@
 #define DEMO_HACK 1
 
 #ifdef DEBUG
-//#define DO_SLIDING_SEGUES 1
+extern NSString *const kDebugNavigation;
+#define NAVDEBUG(...) APDebug(kDebugNavigation,__VA_ARGS__);
 #endif
 
 #define VS_CONNECTIVITY_HOST_NAME "argopay.com"

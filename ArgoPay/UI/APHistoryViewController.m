@@ -36,7 +36,6 @@ APLOGRELEASE
 @interface APHistoryViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,
                                                                 UISearchDisplayDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *transactionsTable;
-@property (weak, nonatomic) IBOutlet UINavigationBar *argoNavBar;
 @end
 
 @implementation APHistoryViewController {

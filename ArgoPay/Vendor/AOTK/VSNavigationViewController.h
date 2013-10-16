@@ -22,6 +22,14 @@
 #define VSNAV_STRING(name) extern NSString * const name;
 #endif
 
+#ifdef DEBUG
+#ifndef NAVDEBUG
+#define NAVDEBUG(...) NSLog(__VA_ARGS__)
+#endif
+#else
+#define NAVDEBUG(...)
+#endif
+
 VSNAV_STRING(kSegueRootViewController);
 VSNAV_STRING(kSegueBackButtonUnwind);
 
@@ -31,6 +39,7 @@ VSNAV_STRING(kVSTransitionFromLeft);
 VSNAV_STRING(kVSTransitionSlideUp);
 VSNAV_STRING(kVSTransitionRevealDown);
 VSNAV_STRING(kVSTransitionSlideUpSwap);
+
 
 typedef void (^VSNavActionBlock)(id,id);
 typedef void (^VSNavAnimationBlock)();
@@ -175,6 +184,7 @@ typedef void (^VSNavAnimationBlock)();
 -(NSMutableArray *)backButtonHooks;
 -(BOOL)navigationBarHidden;
 -(VSNavigationViewController *)vsNavigationController;
+-(void)performSystemSegue:(NSString *)identifier sender:(id)sender;
 @end
 
 

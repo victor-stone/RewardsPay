@@ -7,17 +7,6 @@
 //
 #import "APHomeViewController.h"
 #import "APStrings.h"
-#import "APPopup.h"
-#import "APAccount.h"
-
-@interface APMenuCell : UICollectionViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UILabel *title;
-@end
-
-@implementation APMenuCell
-
-@end
 
 @interface APHomeViewController () <UICollectionViewDataSource>
 
@@ -27,17 +16,13 @@
 
 APLOGRELEASE
 
+#warning Need a logout strategy
+
 -(BOOL)navigationBarHidden
 {
     return YES;
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    NSLog(@"Segue on home: %@ ", segue.identifier);
-    [super prepareForSegue:segue sender:sender];
-
-}
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return 5; // TODO: Is there a way to get the number of prototype cells?

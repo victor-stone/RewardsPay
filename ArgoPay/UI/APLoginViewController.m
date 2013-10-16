@@ -13,7 +13,6 @@
 @interface APLoginViewController : UIViewController<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *username;
 @property (weak, nonatomic) IBOutlet UITextField *password;
-@property (weak, nonatomic) IBOutlet UINavigationBar *argoNavBar;
 @property (weak, nonatomic) IBOutlet UIButton *submitButton;
 
 @end

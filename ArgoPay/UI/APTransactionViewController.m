@@ -92,10 +92,8 @@ APLOGRELEASE
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UILabel *merchantCategory;
 
-@property (nonatomic,strong) NSString * scanResultText;
 @property (nonatomic,strong) NSString * transID;
 @property (nonatomic,strong) APTransactionStatusResponse *statusResponse;
-
 @end
 
 @implementation APTranasctionBillViewController
@@ -106,33 +104,69 @@ APLOGRELEASE
 {
     [super viewDidLoad];
     
-    _grandTotal.text = nil;
-    _merchantName.text = nil;
-    _merchantCategory.text = nil;
-    
     _cancelButton.layer.masksToBounds = YES;
     _cancelButton.layer.cornerRadius = 8.0;
-}
-
--(void)setScanResultText:(NSString *)scanResultText
-{
-    _scanResultText = scanResultText;
-    [self attemptTransaction];
 }
 
 -(void)setStatusResponse:(APTransactionStatusResponse *)statusResponse
 {
     _statusResponse = statusResponse;
+    [self view];
     _grandTotal.text = [NSString stringWithFormat:@"%.2f",[_statusResponse.TotalAmount floatValue]];
     _merchantName.text = _statusResponse.MerchName;
     _merchantCategory.text = _statusResponse.Category;
 }
 
+@end
+
+/**
+ *  Handles transaction cycle
+ */
+@interface APTransactionViewController : APHomeViewController
+@property (nonatomic,strong) NSString *scanResultText;
+@property (nonatomic,strong) UIImage * scanResultImage;
+@property (nonatomic,strong) APTransactionStatusResponse *statusResponse;
+@end
+
+
+@implementation APTransactionViewController
+
+-(IBAction)unwindFromCamera:(UIStoryboardSegue *)segue
+{
+    APCamera * camera = segue.sourceViewController;
+    _scanResultImage = camera.resultImage;
+    _scanResultText  = camera.resultText;
+    [self attemptTransaction];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if( [segue.identifier isEqualToString:kSegueTransactionBill] )
+    {
+        APTranasctionBillViewController * bill = segue.destinationViewController;
+        bill.statusResponse = _statusResponse;
+    }
+    [super prepareForSegue:segue sender:sender];
+}
+
+-(IBAction)unWindFromBillAccept:(UIStoryboardSegue *)segue
+{
+    NSLog(@"Bill accepted");
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(IBAction)unWindFromBillCancel:(UIStoryboardSegue *)segue
+{
+    NSLog(@"Bill cancelled");
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 -(void)handleTransaction:(APPopup *)popup transID:(NSString *)transID
 {
+    __weak APTransactionViewController * vc = self;
+    
     APRemoteAPIRequestBlock handleStatusReponse = ^(APTransactionStatusResponse *response, NSError *err)
     {
-        APTranasctionBillViewController *vc = self;
         if( err )
         {
             [popup dismiss];
@@ -145,7 +179,7 @@ APLOGRELEASE
             if( [stat isEqualToString:kRemoteValueTransactionStatusPending] )
             {
                 [NSObject performBlock:^{
-                    [self handleTransaction:popup transID:transID];
+                    [vc handleTransaction:popup transID:transID];
                 } afterDelay:0.5];
                 return;
             }
@@ -167,6 +201,7 @@ APLOGRELEASE
             else if( [stat isEqualToString:kRemoteValueTransactionStatusReadyForApproval] )
             {
                 vc.statusResponse = response;
+                [vc performSystemSegue:kSegueTransactionBill sender:self];
             }
         }
     };
@@ -217,63 +252,5 @@ APLOGRELEASE
     }];
 }
 
-@end
-
-/**
- *  Handles transaction cycle
- */
-@interface APTransactionViewController : APHomeViewController
-@property (nonatomic,strong) NSString *scanResultText;
-@property (nonatomic,strong) UIImage * scanResultImage;
-
-@end
-
-
-@implementation APTransactionViewController
-
--(IBAction)unwindFromCamera:(UIStoryboardSegue *)segue
-{
-    APCamera * camera = segue.sourceViewController;
-    _scanResultImage = camera.resultImage;
-    _scanResultText  = camera.resultText;
-    [self showTransactionBill];
-}
-
--(void)showTransactionBill
-{
-    VSNavigationViewController * vc = self.vsNavigationController;
-    if( vc.animating == YES )
-    {
-        [NSObject performBlock:^{
-            NSLog(@"delaying show");
-            [self showTransactionBill];
-        } afterDelay:0.2];
-        return;
-    }
-    NSLog(@"showing now");
-    [self performSegueWithIdentifier:kSegueTransactionBill sender:self];
-}
-
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if( [segue.identifier isEqualToString:kSegueTransactionBill] )
-    {
-        APTranasctionBillViewController * bill = segue.destinationViewController;
-        bill.scanResultText = _scanResultText;
-    }
-    [super prepareForSegue:segue sender:sender];
-}
-
--(IBAction)unWindFromBillAccept:(UIStoryboardSegue *)segue
-{
-    NSLog(@"Bill accepted");
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
--(IBAction)unWindFromBillCancel:(UIStoryboardSegue *)segue
-{
-    NSLog(@"Bill cancelled");
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
 
 @end

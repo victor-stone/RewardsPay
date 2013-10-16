@@ -306,16 +306,27 @@ typedef enum _VSTransitionTypeID {
     if( _animating )
     {
         [NSObject performBlock:^{
+            NAVDEBUG(@"Animation is on, delaying presentation");
             [self setViewControllers:viewControllers transition:transition];
         } afterDelay:0.3];
     }
     else
     {
+        NAVDEBUG(@"Animation is off, going ahead with %@ on %@", transition, viewControllers.lastObject);
         [self _setViewControllers:viewControllers transition:transition];
     }
 }
 
 #pragma mark Main transition and animation
+
+#ifdef DEBUG
+-(void)setAnimating:(BOOL)animating
+{
+    _animating = animating;
+    NAVDEBUG(@"Animation is: %s", animating ? "ON" : "OFF");
+}
+#endif
+
 
 - (void)_setViewControllers:(NSArray *)viewControllers
                  transition:(VSTransitionType)transitionName
@@ -393,7 +404,7 @@ typedef enum _VSTransitionTypeID {
         else
             finishAddingViewControllers();
         
-        _animating = YES;
+        self.animating = YES;
         oldTopViewController.view.layer.shouldRasterize = YES;
         newTopViewController.view.layer.shouldRasterize = YES;
         [UIView animateWithDuration:((doAnimation) ? 0.4 : 0) delay:0 options:0 animations:^{
@@ -406,7 +417,7 @@ typedef enum _VSTransitionTypeID {
                 newAnimationDone();
             oldTopViewController.view.layer.shouldRasterize = NO;
             newTopViewController.view.layer.shouldRasterize = NO;
-            _animating = NO;
+            self.animating = NO;
         }];
     }
     else
@@ -796,6 +807,18 @@ static void * kBackButtonHooks = &kBackButtonHooks;
         vc = vc.parentViewController;
     }
     return nil;
+}
+
+-(void)performSystemSegue:(NSString *)identifier sender:(id)sender
+{
+    if( self.presentedViewController )
+    {
+        [NSObject performBlock:^{
+            [self performSystemSegue:identifier sender:sender];
+        } afterDelay:0.2];
+        return;
+    }
+    [self performSegueWithIdentifier:identifier sender:sender];
 }
 @end
 

@@ -27,7 +27,6 @@
 
 @interface APLocationListViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *locationsTable;
-@property (weak, nonatomic) IBOutlet UINavigationBar *argoNavBar;
 @end
 
 @implementation APLocationListViewController {

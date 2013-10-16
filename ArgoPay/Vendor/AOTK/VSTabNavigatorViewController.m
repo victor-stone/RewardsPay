@@ -47,7 +47,7 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSLog(@"Segue on tab navigator: %@ ", segue.identifier);
+    NAVDEBUG(@"Segue on tab navigator: %@ from: %@ to %@", segue.identifier, segue.sourceViewController, segue.destinationViewController);
     if( _navigationEmbedding )
     {
         UIViewController * vc = segue.destinationViewController;

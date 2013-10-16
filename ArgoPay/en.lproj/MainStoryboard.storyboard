@@ -723,7 +723,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="kCellIDMenu0" id="hx1-DI-vRH" customClass="APMenuCell">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="kCellIDMenu0" id="hx1-DI-vRH">
                                         <rect key="frame" x="0.0" y="0.0" width="74" height="96"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -756,12 +756,10 @@
                                             <constraint firstItem="nwF-eA-giN" firstAttribute="leading" secondItem="hx1-DI-vRH" secondAttribute="leading" constant="12" id="vg8-1n-jJM"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="imageView" destination="nwF-eA-giN" id="RnN-CJ-93x"/>
-                                            <outlet property="title" destination="an8-Yv-EZF" id="GqA-BY-KTd"/>
                                             <segue destination="HPq-fK-JKA" kind="custom" customClass="VSNavigationSegue" id="kxT-Ia-EQl"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="kCellIDMenu1" id="qe8-HV-8O5" customClass="APMenuCell">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="kCellIDMenu1" id="qe8-HV-8O5">
                                         <rect key="frame" x="91" y="0.0" width="74" height="96"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -794,12 +792,10 @@
                                             <constraint firstItem="6Cu-Y6-iQB" firstAttribute="leading" secondItem="qe8-HV-8O5" secondAttribute="leading" constant="12" id="zA3-C7-Ec9"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="imageView" destination="6Cu-Y6-iQB" id="RSz-cU-JWu"/>
-                                            <outlet property="title" destination="asC-fl-VkF" id="1fJ-eR-RJ2"/>
                                             <segue destination="TF4-fZ-akv" kind="custom" customClass="VSNavigationSegue" id="uVg-z6-j1p"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="kCellIDMenu2" id="d3P-MR-eSw" customClass="APMenuCell">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="kCellIDMenu2" id="d3P-MR-eSw">
                                         <rect key="frame" x="182" y="0.0" width="74" height="96"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -832,12 +828,10 @@
                                             <constraint firstItem="KqL-Dm-xo3" firstAttribute="leading" secondItem="d3P-MR-eSw" secondAttribute="leading" constant="12" id="s9O-HD-LiG"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="imageView" destination="KqL-Dm-xo3" id="tQU-KS-SqD"/>
-                                            <outlet property="title" destination="Vo0-n7-V5v" id="ZKh-I1-efv"/>
                                             <segue destination="BWM-YL-Foz" kind="custom" customClass="VSNavigationSegue" id="IQC-pq-uzf"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="kCellIDMenu3" id="7XD-ni-Qzg" customClass="APMenuCell">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="kCellIDMenu3" id="7XD-ni-Qzg">
                                         <rect key="frame" x="0.0" y="103" width="74" height="96"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -870,12 +864,10 @@
                                             <constraint firstItem="mnP-G4-aEY" firstAttribute="leading" secondItem="7XD-ni-Qzg" secondAttribute="leading" constant="-1" id="w5Y-1b-XCO"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="imageView" destination="rlU-xd-gMA" id="X3E-PQ-bgK"/>
-                                            <outlet property="title" destination="mnP-G4-aEY" id="YfK-Z6-0IK"/>
                                             <segue destination="cwm-m2-HBm" kind="custom" customClass="VSNavigationSegue" id="H5N-Cs-3Cz"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="kCellIDMenu4" id="r8E-cG-Ri6" customClass="APMenuCell">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="kCellIDMenu4" id="r8E-cG-Ri6">
                                         <rect key="frame" x="91" y="103" width="74" height="96"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -907,10 +899,6 @@
                                             <constraint firstItem="zOq-cN-aCN" firstAttribute="centerX" secondItem="r8E-cG-Ri6" secondAttribute="centerX" id="nYI-xp-mXn"/>
                                             <constraint firstItem="DFx-OJ-mdA" firstAttribute="top" secondItem="r8E-cG-Ri6" secondAttribute="top" constant="5" id="wfd-5T-lIk"/>
                                         </constraints>
-                                        <connections>
-                                            <outlet property="imageView" destination="DFx-OJ-mdA" id="zRF-8g-QZM"/>
-                                            <outlet property="title" destination="zOq-cN-aCN" id="CHo-3O-Ccj"/>
-                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>

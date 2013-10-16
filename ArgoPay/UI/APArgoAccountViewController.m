@@ -16,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *paymentDueDate;
 @property (weak, nonatomic) IBOutlet UILabel *minimumPayment;
 @property (weak, nonatomic) IBOutlet UIButton *transactionButton;
-@property (weak, nonatomic) IBOutlet UINavigationBar *argoNavBar;
 @property (weak, nonatomic) IBOutlet UIView *infoContainer;
 
 @property (nonatomic,strong) APAccountSummary *summary;

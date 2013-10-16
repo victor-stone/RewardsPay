@@ -7,17 +7,11 @@
 //
 #include "VSTabNavigatorViewController.h"
 
-#import "APStrings.h"
 @interface APMainViewController : VSTabNavigatorViewController
 @property (weak, nonatomic) IBOutlet UIView *orangeBox;
 @end
 
 @implementation APMainViewController
-
--(UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleLightContent;
-}
 
 - (void)viewDidLoad
 {

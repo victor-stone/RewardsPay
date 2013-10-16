@@ -100,7 +100,6 @@
 		57A2247F17E90F47000B52E9 /* APLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A2247617E90F47000B52E9 /* APLocationViewController.m */; };
 		57A2248017E90F47000B52E9 /* APHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A2247717E90F47000B52E9 /* APHomeViewController.m */; };
 		57A2248117E90F47000B52E9 /* APOffersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A2247917E90F47000B52E9 /* APOffersViewController.m */; };
-		57A2248217E90F47000B52E9 /* APScanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A2247B17E90F47000B52E9 /* APScanView.m */; };
 		57A2248317E90F47000B52E9 /* UIViewController+ArgoPay.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A2247D17E90F47000B52E9 /* UIViewController+ArgoPay.m */; };
 		57A2248617E90FF3000B52E9 /* APStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A2248517E90FF3000B52E9 /* APStrings.m */; };
 		57A224A117E913B3000B52E9 /* kImageAccount.png in Resources */ = {isa = PBXBuildFile; fileRef = 57A2248917E913B3000B52E9 /* kImageAccount.png */; };
@@ -187,7 +186,6 @@
 		57E08D1217EF896700E22B1A /* APAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E08D1117EF896700E22B1A /* APAccount.m */; };
 		57E7B83517E9F01000205BCB /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = 57E7B83417E9F01000205BCB /* about.html */; };
 		57E7B83717E9F9C400205BCB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57E7B83617E9F9C300205BCB /* QuartzCore.framework */; };
-		57E7B83B17E9FCE900205BCB /* APTranasctionBillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E7B83A17E9FCE900205BCB /* APTranasctionBillViewController.m */; };
 		57E7B84117EA042B00205BCB /* VSPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E7B84017EA042B00205BCB /* VSPopup.m */; };
 		57E7B84617EA1BA400205BCB /* APPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E7B84517EA1BA400205BCB /* APPopup.m */; };
 		57E7B84D17EA5C0000205BCB /* APTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E7B84C17EA5C0000205BCB /* APTransaction.m */; };
@@ -395,8 +393,6 @@
 		57A2247617E90F47000B52E9 /* APLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLocationViewController.m; sourceTree = "<group>"; };
 		57A2247717E90F47000B52E9 /* APHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APHomeViewController.m; sourceTree = "<group>"; };
 		57A2247917E90F47000B52E9 /* APOffersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APOffersViewController.m; sourceTree = "<group>"; };
-		57A2247A17E90F47000B52E9 /* APScanView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APScanView.h; sourceTree = "<group>"; };
-		57A2247B17E90F47000B52E9 /* APScanView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APScanView.m; sourceTree = "<group>"; };
 		57A2247C17E90F47000B52E9 /* UIViewController+ArgoPay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ArgoPay.h"; sourceTree = "<group>"; };
 		57A2247D17E90F47000B52E9 /* UIViewController+ArgoPay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ArgoPay.m"; sourceTree = "<group>"; };
 		57A2248417E90FF3000B52E9 /* APStrings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APStrings.h; sourceTree = "<group>"; };
@@ -522,8 +518,6 @@
 		57E08D1117EF896700E22B1A /* APAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APAccount.m; sourceTree = "<group>"; };
 		57E7B83417E9F01000205BCB /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
 		57E7B83617E9F9C300205BCB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		57E7B83917E9FCE900205BCB /* APTranasctionBillViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APTranasctionBillViewController.h; sourceTree = "<group>"; };
-		57E7B83A17E9FCE900205BCB /* APTranasctionBillViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APTranasctionBillViewController.m; sourceTree = "<group>"; };
 		57E7B83F17EA042B00205BCB /* VSPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSPopup.h; sourceTree = "<group>"; };
 		57E7B84017EA042B00205BCB /* VSPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSPopup.m; sourceTree = "<group>"; };
 		57E7B84417EA1BA400205BCB /* APPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPopup.h; sourceTree = "<group>"; };
@@ -986,8 +980,8 @@
 			isa = PBXGroup;
 			children = (
 				57E7B83817E9FC9E00205BCB /* Categories */,
-				57060A50180DA31F001DDC66 /* APHomeViewController.h */,
 				57A2247417E90F47000B52E9 /* APMainViewController.m */,
+				57060A50180DA31F001DDC66 /* APHomeViewController.h */,
 				57A2247717E90F47000B52E9 /* APHomeViewController.m */,
 				570EC1F417F75ACA00CBA207 /* APHistoryViewController.m */,
 				578BB5BE17F248F4009E2F45 /* APRewardViewController.m */,
@@ -995,11 +989,7 @@
 				5713971018036896002F4D3E /* APMerchantMap.h */,
 				57E08D0E17EF7FAF00E22B1A /* APMerchantDetailViewController.m */,
 				57A2247917E90F47000B52E9 /* APOffersViewController.m */,
-				57A2247A17E90F47000B52E9 /* APScanView.h */,
-				57A2247B17E90F47000B52E9 /* APScanView.m */,
 				57A224F217E95153000B52E9 /* APSettingsViewController.m */,
-				57E7B83917E9FCE900205BCB /* APTranasctionBillViewController.h */,
-				57E7B83A17E9FCE900205BCB /* APTranasctionBillViewController.m */,
 				57E7B84417EA1BA400205BCB /* APPopup.h */,
 				57E7B84517EA1BA400205BCB /* APPopup.m */,
 				579E4E2917F143A400D03437 /* APErrorViewController.m */,
@@ -1467,14 +1457,12 @@
 				57A2247F17E90F47000B52E9 /* APLocationViewController.m in Sources */,
 				57A2248017E90F47000B52E9 /* APHomeViewController.m in Sources */,
 				57A2248117E90F47000B52E9 /* APOffersViewController.m in Sources */,
-				57A2248217E90F47000B52E9 /* APScanView.m in Sources */,
 				57A2248317E90F47000B52E9 /* UIViewController+ArgoPay.m in Sources */,
 				57A2248617E90FF3000B52E9 /* APStrings.m in Sources */,
 				5795C052180C9AE5008D0A0E /* VSTabNavigatorViewController.m in Sources */,
 				57A224EB17E92124000B52E9 /* VSConnectivity.m in Sources */,
 				57A224F017E92D1A000B52E9 /* VSSettings.m in Sources */,
 				57A224F317E95154000B52E9 /* APSettingsViewController.m in Sources */,
-				57E7B83B17E9FCE900205BCB /* APTranasctionBillViewController.m in Sources */,
 				57E7B84117EA042B00205BCB /* VSPopup.m in Sources */,
 				57E7B84617EA1BA400205BCB /* APPopup.m in Sources */,
 				57E7B84D17EA5C0000205BCB /* APTransaction.m in Sources */,
