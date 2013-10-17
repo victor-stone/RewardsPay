@@ -19,6 +19,4 @@ typedef void (^APDismissBlock)(UIViewController* dismissing);
                                 title:(NSString *)title
                                 block:(APMenuBlock)block;
 
--(void)showError:(NSError *)error;
-
 @end

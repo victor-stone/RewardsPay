@@ -42,6 +42,7 @@ static void PrintReachabilityFlags(SCNetworkReachabilityFlags    flags, const ch
 
 static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void* info)
 {
+    // NSLog(@"In ReachabilityCallback");
 	#pragma unused (target, flags)
 	NSCAssert(info != NULL, @"info was NULL in ReachabilityCallback");
 	NSCAssert([(__bridge NSObject*) info isKindOfClass: [Reachability class]], @"info was wrong class in ReachabilityCallback");
@@ -50,6 +51,7 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 	// in case someon uses the Reachablity object in a different thread.
 	@autoreleasepool {
 		Reachability* noteObject = (__bridge Reachability*) info;
+        // NSLog(@"In ReachabilityCallback: Posting notification %@", info);
 		// Post a notification to notify the client that the network reachability changed.
 		[[NSNotificationCenter defaultCenter] postNotificationName: kReachabilityChangedNotification object: noteObject];
 	}
@@ -64,12 +66,14 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 
 - (BOOL)startNotifier
 {
+    // NSLog(@"Staring notifier request %@", [NSThread currentThread]);
     [self performSelectorOnMainThread:@selector(_startNotifier) withObject:nil waitUntilDone:YES];
     return _startupSucceed;
 }
 
 - (void)_startNotifier
 {
+    // NSLog(@"Staring notifier %@", [NSThread currentThread]);
     _startupSucceed = NO;
 	SCNetworkReachabilityContext context = {0, (__bridge void *)self, NULL, NULL, NULL};
 	if(SCNetworkReachabilitySetCallback(reachabilityRef, ReachabilityCallback, &context))

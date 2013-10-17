@@ -983,6 +983,7 @@
 				57A2247417E90F47000B52E9 /* APMainViewController.m */,
 				57060A50180DA31F001DDC66 /* APHomeViewController.h */,
 				57A2247717E90F47000B52E9 /* APHomeViewController.m */,
+				57F3690B180CF955009D0FAC /* APTransactionViewController.m */,
 				570EC1F417F75ACA00CBA207 /* APHistoryViewController.m */,
 				578BB5BE17F248F4009E2F45 /* APRewardViewController.m */,
 				57A2247617E90F47000B52E9 /* APLocationViewController.m */,
@@ -995,7 +996,6 @@
 				579E4E2917F143A400D03437 /* APErrorViewController.m */,
 				57ADDAA517F5DFB500F23689 /* APLoginViewController.m */,
 				570EC1D517F741C800CBA207 /* APArgoAccountViewController.m */,
-				57F3690B180CF955009D0FAC /* APTransactionViewController.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";

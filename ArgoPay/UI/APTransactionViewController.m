@@ -21,9 +21,6 @@
 /**
  *  Wrapper for ZBar VC which has a bug (missing auto release)
  *
- * Discussion here:
- *
- * http://sourceforge.net/p/zbar/discussion/1072195/thread/df4c215a/
  *
  */
 @interface APCamera : ZBarReaderViewController<ZBarReaderDelegate>
@@ -35,6 +32,11 @@
 APLOGRELEASE
 - (void) loadView
 {
+    /**
+     * Discussion here:
+     *
+     * http://sourceforge.net/p/zbar/discussion/1072195/thread/df4c215a/
+     */
     self.view = [[UIView alloc]
                  initWithFrame: CGRectMake(0, 0, 320, 480)];
 }
@@ -117,6 +119,17 @@ APLOGRELEASE
 
 /**
  *  Handles transaction cycle
+ * 
+ *  Derived from 'HomeViewController' because 
+ *  1) the transaction process throws up many different views and we 
+ *     need a way to 'root' the transaction in a central place but
+ *     this is view controller that actuall 'owns' all parts.
+ *  2) We *need* a view controller in order to take advantage of the
+ *     unwind segues to let us bounce around around between the different
+ *     views
+ *  3) putting all this in the actual HomeViewController seemed like
+ *     it would be mixing purposes and this should functionality 
+ *     should be in a separate code module
  */
 @interface APTransactionViewController : APHomeViewController
 @end
@@ -162,15 +175,7 @@ APLOGRELEASE
     // Step 1. Get location
     //
     [[APLocation sharedInstance] currentLocation:^BOOL(CLLocationCoordinate2D loc, APError *error) {
-        if( error )
-        {
-            [NSObject performBlock:^{
-                me.popup = nil;
-                [self showError:error];
-            } afterDelay:0.1];
-            return NO;
-        }
-        else
+        if( !error )
         {
             // Step 2. Request a transactionID from server
             //
@@ -179,19 +184,9 @@ APLOGRELEASE
             start.QrData = _scanResultText;
             start.Lat = @(loc.latitude);
             start.Long = @(loc.longitude);
-            [start performRequest:^(APTransactionIDResponse *idResponse, NSError *err) {
-                [NSObject performBlock:^{
-                    if( err )
-                    {
-                        me.popup = nil;
-                        [self showError:err];
-                    }
-                    else
-                    {
-                        me.transID = idResponse.TransID;
-                        [me handleTransaction];
-                    }
-                } afterDelay:0.1];
+            [start performRequest:^(APTransactionIDResponse *idResponse) {
+                me.transID = idResponse.TransID;
+                [me handleTransaction];
             }];
         }
         return NO;
@@ -212,37 +207,29 @@ APLOGRELEASE
     request.AToken = account.AToken;
     request.TransID = _transID;
     
-    [request performRequest: ^(APTransactionStatusResponse *response, NSError *err)
+    [request performRequest: ^(APTransactionStatusResponse *response)
     {
-        if( err )
+        NSString *stat = response.TransStatus;
+        
+        if( [stat isEqualToString:kRemoteValueTransactionStatusPending] )
         {
-            me.popup = nil;
-            [me showError:err];
+            [NSObject performBlock:^{
+                [me handleTransaction];
+            } afterDelay:0.5];
+            return;
+        }
+        
+        me.popup = nil;
+        
+        if( [stat isEqualToString:kRemoteValueTransactionStatusReadyForApproval] )
+        {
+            // Step 4. Ask the user to accept/reject
+            me.statusResponse = response;
+            [me performSystemSegue:kSegueTransactionBill sender:self];
         }
         else
         {
-            NSString *stat = response.TransStatus;
-            
-            if( [stat isEqualToString:kRemoteValueTransactionStatusPending] )
-            {
-                [NSObject performBlock:^{
-                    [me handleTransaction];
-                } afterDelay:0.5];
-                return;
-            }
-            
-            me.popup = nil;
-            
-            if( [stat isEqualToString:kRemoteValueTransactionStatusReadyForApproval] )
-            {
-                // Step 4. Ask the user to accept/reject
-                me.statusResponse = response;
-                [me performSystemSegue:kSegueTransactionBill sender:self];
-            }
-            else
-            {
-                me.popup = [APPopup msgWithParent:me.popupParent text:response.UserMessage];
-            }
+            me.popup = [APPopup msgWithParent:me.popupParent text:response.UserMessage];
         }
     }];
     
@@ -293,33 +280,20 @@ APLOGRELEASE
 {
     __weak APTransactionViewController * me = self;
     
-    [self dismissViewControllerAnimated:YES completion:^{
-
-        me.popup = [APPopup withNetActivity:me.popupParent delay:NO];
-        
-        APRequestTransactionApprove *request = [APRequestTransactionApprove new];
-        APAccount *account = [APAccount currentAccount];
-        request.AToken = account.AToken;
-        request.Approve = type;
-        request.TransID = me.transID;
-        
-        [request performRequest:^(APRemoteRepsonse *response, NSError *err)
-         {
-             me.popup = nil;
-             if( err )
-             {
-                 APLOG(kDebugScan, @"Server responded with error: %@", err);
-                 [me showError:err];
-             }
-             else
-             {
-                 APLOG(kDebugScan, @"Server responsded with: %@", response);
-                 [APPopup msgWithParent:me.popupParent text:response.UserMessage dismissBlock:^{
-                     [self dismissViewControllerAnimated:YES completion:nil];
-                 }];
-             }
-         }];
-    }];
+    me.popup = [APPopup withNetActivity:me.popupParent delay:NO];
+    
+    APRequestTransactionApprove *request = [APRequestTransactionApprove new];
+    APAccount *account = [APAccount currentAccount];
+    request.AToken = account.AToken;
+    request.Approve = type;
+    request.TransID = me.transID;
+    
+    [request performRequest:^(APRemoteRepsonse *response)
+     {
+         me.popup = nil;
+         APLOG(kDebugScan, @"Server responsded with: %@", response);
+         [APPopup msgWithParent:me.popupParent text:response.UserMessage dismissBlock:nil];
+     }];
 }
 
 -(void)setPopup:(APPopup *)popup

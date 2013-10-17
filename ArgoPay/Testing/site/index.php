@@ -336,10 +336,12 @@ switch($_REQUEST['cmd'] )
         
     case 'ConsumerGetAvailableRewards':
     {
-      //  $value['Rewards'] = addRewards();
+        $value['Rewards'] = addRewards();
+        /*
         $output = getDemoRewards();
         print($output);
         exit;
+         */
         break;
     }
 

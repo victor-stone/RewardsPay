@@ -55,7 +55,6 @@ APLOGRELEASE
     _argPoints.text = @"";
     _currentSort = kRemoteValueSortByNewest;
     [self fetchRewards:YES];
-    self.title = @"Rewards";
 }
 
 -(void)fetchRewards:(BOOL)withUI;
@@ -67,11 +66,8 @@ APLOGRELEASE
     
     APRequestStatementSummary *summaryReq = [APRequestStatementSummary new];
     summaryReq.AToken = account.AToken;
-    [summaryReq performRequest:^(APAccountSummary *summary, NSError *err) {
-        if( err )
-            [self showError:err];
-        else
-            _argPoints.text = [NSString stringWithFormat:@"%d",[summary.ArgoPoints integerValue]];
+    [summaryReq performRequest:^(APAccountSummary *summary) {
+        _argPoints.text = [NSString stringWithFormat:@"%d",[summary.ArgoPoints integerValue]];
     }];
     
     APRequestGetAvailableRewards *request = [APRequestGetAvailableRewards new];
@@ -80,29 +76,17 @@ APLOGRELEASE
     request.SortBy = _currentSort;
     [[APLocation sharedInstance] currentLocation:^BOOL(CLLocationCoordinate2D loc, APError *error) {
         if( error )
-        {
-            [self showError:error];
             return YES;
-        }
-        else
-        {
-            request.Lat = @(loc.latitude);
-            request.Long = @(loc.longitude);
-            [request performRequest:^(id data, NSError *err) {
-                if( err )
-                {
-                    [self showError:err];
-                }
-                else
-                {
-                    _rewards = data;
-                    [_rewardsTable reloadData];
-                    [_popup dismiss];
-                    _popup = nil;
-                }
-            }];
-            return NO;
-        }
+
+        request.Lat = @(loc.latitude);
+        request.Long = @(loc.longitude);
+        [request performRequest:^(id data) {
+            _rewards = data;
+            [_rewardsTable reloadData];
+            [_popup dismiss];
+            _popup = nil;
+        }];
+        return NO;
     }];
 }
 
@@ -118,22 +102,15 @@ APLOGRELEASE
     APAccount *account = [APAccount currentAccount];
     request.AToken = account.AToken;
     request.RewardID = reward.RewardID;
-    [request performRequest:^(APRemoteRepsonse *response, NSError *err) {
-        if( err )
+    [request performRequest:^(APRemoteRepsonse *response) {
+        if( response.UserMessage.length > 0 )
         {
-            [self showError:err];
-        }
-        else
-        {
-            if( response.UserMessage.length > 0 )
-            {
-                [reward setFetchingOFF];
-                reward.Selectable = kRemoteValueNO;
-                [_rewardsTable reloadRowsAtIndexPaths:ip
-                                     withRowAnimation:UITableViewRowAnimationFade];
-                
-                [APPopup msgWithParent:self.view text:response.UserMessage];
-            }
+            [reward setFetchingOFF];
+            reward.Selectable = kRemoteValueNO;
+            [_rewardsTable reloadRowsAtIndexPaths:ip
+                                 withRowAnimation:UITableViewRowAnimationFade];
+            
+            [APPopup msgWithParent:self.view text:response.UserMessage];
         }
     }];
 
@@ -146,12 +123,9 @@ APLOGRELEASE
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-#warning Implement prepare for segue here
-    /*
-     APArgoPointsReward * reward = _rewards[indexPath.row];
-     UIViewController *vc = [self presentVC:kViewMerchantDetail animated:YES completion:nil];
-     [vc setValue:reward.MLocID forKey:@"MLocID"];
-     */
+    APArgoPointsReward * reward = _rewards[[_rewardsTable indexPathForSelectedRow].row];
+    UIViewController *vc = segue.destinationViewController;
+    [vc setValue:reward.MLocID forKey:@"MLocID"];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView

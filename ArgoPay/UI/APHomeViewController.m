@@ -40,4 +40,8 @@ APLOGRELEASE
     return [collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
 }
 
+-(IBAction)unwindFromError:(UIStoryboardSegue *)segue
+{
+    
+}
 @end

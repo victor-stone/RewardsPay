@@ -4,8 +4,8 @@
 
 #import <Availability.h>
 
-#ifndef __IPHONE_5_0
-#warning "This project uses features only available in iOS SDK 5.0 and later."
+#ifndef __IPHONE_6_1
+#warning "This project uses features only available in iOS SDK 6.1 and later."
 #endif
 
 #ifdef __OBJC__
@@ -13,7 +13,6 @@
     #import <Foundation/Foundation.h>
 
 #define ALLOW_DEBUG_SETTINGS 1
-#define DEMO_HACK 1
 
 #ifdef DEBUG
 extern NSString *const kDebugNavigation;

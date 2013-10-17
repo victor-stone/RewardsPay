@@ -51,37 +51,9 @@ void * kDismissBlockKey = &kDismissBlockKey;
 }
 
 
--(void)showError:(NSError *)error
-{
-    [self showError:error dismissBlock:nil];
-}
-
 -(void)setDismissBlock:(APDismissBlock)block
 {
     [self associateValue:[block copy] withKey:kDismissBlockKey];
-}
-
--(void)showError:(NSError *)error dismissBlock:(APDismissBlock)block
-{
-#warning Should move this to appDelegate and new Nav system
-    APAppDelegate * ad = (APAppDelegate *)([UIApplication sharedApplication].delegate);
-    UIViewController * host = ad.window.rootViewController;
-    if( host.presentedViewController )
-        host = host.presentedViewController;
-    
-    if( [host isBeingDismissed] || [host isBeingPresented] )
-    {
-        [NSObject performBlock:^{
-            [self showError:error dismissBlock:block];
-        } afterDelay:0.3];
-        return;
-    }
-    
-    UIViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:kViewError];
-    if( block )
-        [vc setDismissBlock:block];
-    [vc setValue:error forKey:@"errorObj"];
-    [host presentViewController:vc animated:YES completion:nil];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)iOrientation {

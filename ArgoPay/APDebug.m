@@ -87,13 +87,14 @@ void APDebugDumpControllers(UIViewController *vc)
             dumper(vc.presentedViewController,[indent stringByAppendingString:@"   "]);
         }
         
-        if( [vc isKindOfClass:[UINavigationController class ]] )
+        if( [vc respondsToSelector:@selector(viewControllers)] )
         {
-            UINavigationController * nav = (UINavigationController *)vc;
+            UIViewController * topVC = [vc performSelector:@selector(topViewController) withObject:nil];
+            NSArray * children = [vc performSelector:@selector(viewControllers) withObject:nil];
             NSString * str = [NSString stringWithFormat:@"%@Nav[%d controllers]: {\n%@   topVC: %@\n%@   presented: %@\n%@ }",
-                              indent, [nav.viewControllers count],
-                              indent, nav.topViewController,
-                              indent, nav.presentedViewController,
+                              indent, [children count],
+                              indent, topVC,
+                              indent, vc.presentedViewController,
                               indent
                               ];
             printf("%s\n",[str UTF8String]);

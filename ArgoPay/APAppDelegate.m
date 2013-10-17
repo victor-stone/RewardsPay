@@ -80,8 +80,9 @@ typedef enum _APStartupState {
     id _notifyObserver;
     BOOL _showingErrorScreen;
     NSOperationQueue * _startupQueue;
-    Reachability *_reachability;
     BOOL _doneLoading;
+@package
+    Reachability *_reachability;
 }
 
 
@@ -91,7 +92,10 @@ typedef enum _APStartupState {
     [self registerUserDefaults];
     [self registerForNotifications];
     
-    _startupQueue = [[NSOperationQueue alloc] init];
+    if( launchOptions[@"logStartup"] != nil )
+        [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kDebugStartup];
+    
+    _startupQueue = [NSOperationQueue mainQueue];
     _startupQueue.name = @"ArgoPay startup queue";
     
     NSOperation * op1 = [[APWaitForNetwork alloc] initWithAppDelegate:self];
@@ -109,6 +113,30 @@ typedef enum _APStartupState {
     [_reachability startNotifier];
     
     return YES;
+}
+
+-(void)showError:(NSError *)error
+{
+    [self performSelectorOnMainThread:@selector(_showError:) withObject:error waitUntilDone:NO];
+}
+
+-(void)_showError:(NSError *)error
+{
+    UIViewController * host = _window.rootViewController;
+    if( host.presentedViewController )
+        host = host.presentedViewController;
+    
+    if( [host isBeingDismissed] || [host isBeingPresented] )
+    {
+        [NSObject performBlock:^{
+            [self _showError:error];
+        } afterDelay:0.3];
+        return;
+    }
+    
+    UIViewController * vc = [_window.rootViewController.storyboard instantiateViewControllerWithIdentifier:kViewError];
+    [vc setValue:error forKey:@"errorObj"];
+    [host presentViewController:vc animated:YES completion:nil];
 }
 
 -(void)setLoadingMessage:(NSString *)msg
@@ -161,14 +189,19 @@ typedef enum _APStartupState {
 
 -(void)registerForNotifications
 {
+    [self registerForBroadcast:kNotifySystemError
+                         block:^(APAppDelegate *me, NSError *error)
+    {
+        [me showError:error];
+    }];
+    
     [self registerForBroadcast:kVSNotificationConnectionTypeChanged
                          block:^(APAppDelegate *me, VSConnectivity *connectivity)
     {
         if( connectivity.connectionType == kConnectionNone )
         {
-            [NSObject performBlock:^{
-                [me notConnectedToNework];
-            } afterDelay:0.2];
+            APError *error = [APError errorWithCode:kAPERROR_NONETCONNECTION];
+            [me showError:error];
         }
         else
         {
@@ -190,32 +223,11 @@ typedef enum _APStartupState {
         [self broadcast:kNotifyUserSettingChanged payload:note.userInfo];
     }];
     
-#ifdef DEMO_HACK
-    [self registerForBroadcast:kNotifyUserSettingChanged block:^(APAppDelegate *me, NSDictionary *settings)
-     {
-         for( NSString *key in settings )
-         {
-             if( [key isEqualToString:kSettingDebugNetworkStubbed] )
-             {
-                 APLOG(kDebugFire, @"Doing auto login", 0);
-                 [APAccount login:nil password:nil block:^(id data, NSError *err) {}];
-             }
-         }
-     }];
-    
-#endif
 }
 
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:_notifyObserver];
-}
-
--(void)notConnectedToNework
-{
-    APError *error = [APError errorWithCode:kAPERROR_NONETCONNECTION];
-    _showingErrorScreen = true;
-    [_window.rootViewController showError:error];
 }
 
 -(NSDictionary *)factoryUserDefaultSettings
@@ -269,8 +281,11 @@ typedef enum _APStartupState {
 {
     // Called as part of the transition from the background to the inactive state; here you can
     // undo many of the changes made on entering the background.
-    [[APLocation sharedInstance] startService];
-    [_reachability startNotifier];
+    if( _doneLoading )
+    {
+        [[APLocation sharedInstance] startService];
+        [_reachability startNotifier];
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -279,8 +294,10 @@ typedef enum _APStartupState {
     // was inactive. If the application was previously in the background, optionally
     // refresh the user interface.
     if( _doneLoading  )
+    {
         [[APLocation sharedInstance] startService];
-    [_reachability startNotifier];
+        [_reachability startNotifier];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -381,21 +398,27 @@ typedef enum _APStartupState {
     
     [self displayDelayedMessage:NSLocalizedString(@"Connecting to Internet...",@"startup")];
     
-    __weak APWaitForNetwork * me = self;
-    
-    _notifyObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kReachabilityChangedNotification
-                                                                        object:nil
-                                                                         queue:nil
-                                                                    usingBlock:^(NSNotification *note)
-                       {
-                           Reachability *reachability = note.object;
-                           APLOG(kDebugStartup, @"Got connection type: %d", reachability.currentReachabilityStatus);
-                           if( reachability.currentReachabilityStatus != NotReachable )
+    if( _appDelegate->_reachability && (_appDelegate->_reachability.currentReachabilityStatus != NotReachable) )
+    {
+        [self iAmDone];
+    }
+    else
+    {
+        __weak APWaitForNetwork * me = self;
+        
+        _notifyObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kReachabilityChangedNotification
+                                                                            object:nil
+                                                                             queue:nil
+                                                                        usingBlock:^(NSNotification *note)
                            {
-                               [me iAmDone];
-                           }
-                       }];
-    
+                               Reachability *reachability = note.object;
+                               APLOG(kDebugStartup, @"Got connection type: %d", reachability.currentReachabilityStatus);
+                               if( reachability.currentReachabilityStatus != NotReachable )
+                               {
+                                   [me iAmDone];
+                               }
+                           }];
+    }
 }
 @end
 
@@ -434,15 +457,14 @@ typedef enum _APStartupState {
     
     [self displayDelayedMessage:NSLocalizedString(@"Attempting to log in...",@"startup")];
     
-    [APAccount login:nil password:nil block:^(id data, NSError *err) {
+    [APAccount login:nil password:nil block:^(id data) {
+        [self iAmDone];
+    } onError:^(NSError *err) {
         if( err && ( !((err.code == kAPERROR_MISSINGLOGINFIELDS) && (err.domain == kAPMobileErrorDomain)) ) )
         {
             [_appDelegate setLoadingMessage:err.localizedDescription];
         }
-        //else
-        {
-            [self iAmDone];
-        }
+        [self iAmDone];
     }];
 }
 @end

@@ -51,7 +51,7 @@
     request.AToken = account.AToken;
     
     APPopup *popup = [APPopup withNetActivity:self.view];
-    [request performRequest:^(APAccountSummary*summary, NSError *err) {
+    [request performRequest:^(APAccountSummary*summary) {
         self.summary = summary;
         [popup dismiss];
     }];

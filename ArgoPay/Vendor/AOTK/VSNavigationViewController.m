@@ -167,6 +167,8 @@ typedef enum _VSTransitionTypeID {
                                       fromViewController:(UIViewController *)fromViewController
                                               withSender:(id)sender
 {
+    NAVDEBUG(@"Looking for view controller for %@ from %@", NSStringFromSelector(action),fromViewController);
+    
     // Like UINavigationController, search the array of view controllers
     // managed by this container in reverse order.
     for (UIViewController *vc in [_viewControllers reverseObjectEnumerator])
@@ -193,8 +195,18 @@ typedef enum _VSTransitionTypeID {
                                      fromViewController:(UIViewController *)fromViewController
                                              identifier:(NSString *)identifier
 {
-    // VSNavigatorSegue is a UIStoryboardSegue subclass
-    // for transitioning between view controllers managed by this container.
+    NAVDEBUG(@"Looking for unwind segue called: %@", identifier);
+
+    if( [fromViewController vsNavigationController] != self )
+    {
+       UIStoryboardSegue * segue = [super segueForUnwindingToViewController:toViewController
+                                                         fromViewController:fromViewController
+                                                                 identifier:identifier];
+        
+        NAVDEBUG(@"This is not one of our controllers. System returns: %@ '%@'", segue, segue.identifier);
+        return segue;
+    }
+    
     VSNavigationSegue *unwindStoryboardSegue = [[VSNavigationSegue alloc] initWithIdentifier:identifier
                                                                                     source:fromViewController
                                                                                destination:toViewController
@@ -270,7 +282,10 @@ typedef enum _VSTransitionTypeID {
     // Check that viewController is in the navigation stack.
     NSUInteger indexOfViewController = [_viewControllers indexOfObject:viewController];
     if (indexOfViewController == NSNotFound)
+    {
+        NAVDEBUG(@"Warning Popping to non-existant view controller")
         return nil;
+    }
     
     NSArray *viewControllersThatWerePopped = [_viewControllers subarrayWithRange:NSMakeRange(indexOfViewController+1, _viewControllers.count - (indexOfViewController+1))];
     NSArray *newViewControllersArray = [_viewControllers subarrayWithRange:NSMakeRange(0, indexOfViewController+1)];
@@ -312,7 +327,7 @@ typedef enum _VSTransitionTypeID {
     }
     else
     {
-        NAVDEBUG(@"Animation is off, going ahead with %@ on %@", transition, viewControllers.lastObject);
+        NAVDEBUG(@"Animation is off, going ahead with %@", transition, viewControllers.lastObject);
         [self _setViewControllers:viewControllers transition:transition];
     }
 }
@@ -376,6 +391,8 @@ typedef enum _VSTransitionTypeID {
     // perform any animation as it would be redundant.
     if (oldTopViewController != newTopViewController)
     {
+        NAVDEBUG(@"Replacing top with : %@", newTopViewController);
+        
         VSNavAnimationBlock animation = [self animationForTransition:transitionName
                                                 oldTopViewController:oldTopViewController
                                                 newTopViewController:newTopViewController];
@@ -404,9 +421,12 @@ typedef enum _VSTransitionTypeID {
         else
             finishAddingViewControllers();
         
-        self.animating = YES;
+        BOOL bOldShouldRasterize = oldTopViewController.view.layer.shouldRasterize;
+        BOOL bNewShouldRasterize = newTopViewController.view.layer.shouldRasterize;
         oldTopViewController.view.layer.shouldRasterize = YES;
         newTopViewController.view.layer.shouldRasterize = YES;
+        
+        self.animating = YES;
         [UIView animateWithDuration:((doAnimation) ? 0.4 : 0) delay:0 options:0 animations:^{
             if( animation )
                 animation();
@@ -415,13 +435,14 @@ typedef enum _VSTransitionTypeID {
                 oldAnimationDone();
             if( newAnimationDone )
                 newAnimationDone();
-            oldTopViewController.view.layer.shouldRasterize = NO;
-            newTopViewController.view.layer.shouldRasterize = NO;
+            oldTopViewController.view.layer.shouldRasterize = bOldShouldRasterize;
+            newTopViewController.view.layer.shouldRasterize = bNewShouldRasterize;
             self.animating = NO;
         }];
     }
     else
     {
+        NAVDEBUG(@"Top controller is already on top - no animation")
         // No animation required.
         finishRemovingViewControllers();
         finishAddingViewControllers();
@@ -670,6 +691,7 @@ typedef enum _VSTransitionTypeID {
     self = [super initWithIdentifier:identifier source:source destination:destination];
     if( self )
     {
+        NAVDEBUG(@"Created segue %@ (%s)", identifier, unwind ? "unwind" : "push");
         _transition = transition;
         _unwind = unwind;
     }

@@ -34,6 +34,7 @@ static APAccount * __currentAccount;
 +(void)login:(NSString *)loginEmail
     password:(NSString *)password
        block:(APRemoteAPIRequestBlock)block
+     onError:(APRemoteAPIRequestErrorBlock)errorBlock;
 {
     APRequestLogin *loginRequest = [APRequestLogin new];
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
@@ -43,7 +44,7 @@ static APAccount * __currentAccount;
 
     APLOG(kDebugUser, @"Attemping login with username: %@ password: %@", loginRequest.Email, loginRequest.Password);
     
-    APRemoteAPIRequestBlock handleAccount = ^(APAccount *account, NSError *err) {
+    APRemoteAPIRequestBlock handleAccount = ^(APAccount *account) {
         if( !account )
         {
             APLOG(kDebugUser, @"No user account returned, creating blank", 0)
@@ -57,23 +58,17 @@ static APAccount * __currentAccount;
         __currentAccount.login = loginRequest.Email;
         __currentAccount.password = loginRequest.Password;
         if( block )
-        {
-            if( err )
-                block(nil,err);
-            else
-                block(account,nil);
-        }
-        [self broadcast:kNotifyUserLoginStatusChanged payload:account when:0.2];
+            block(account);
     };
     
     if( (loginRequest.Email.length == 0) || (loginRequest.Password.length == 0 ) )
     {
         APError *appError = [APError errorWithCode:kAPERROR_MISSINGLOGINFIELDS];
-        handleAccount(nil,appError);
+        errorBlock(appError);
     }
     else
     {
-        [loginRequest performRequest:handleAccount];
+        [loginRequest performRequest:handleAccount errorHandler:errorBlock];
     }
 }
 
@@ -95,7 +90,6 @@ static APAccount * __currentAccount;
     self.password = nil;
     [[NSUserDefaults standardUserDefaults] synchronize];
     _AToken = nil;
-    [self broadcast:kNotifyUserLoginStatusChanged payload:self when:0.2];
     APLOG(kDebugUser, @"User account logged out", 0);
 }
 

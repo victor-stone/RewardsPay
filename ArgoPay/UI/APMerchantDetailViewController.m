@@ -13,6 +13,7 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import "APArgoPointsReward.h"
 #import "APMerchantMap.h"
+#import "VSTabNavigatorViewController.h"
 
 @implementation APMerchantDetailMapEmbedding {
     GMSMapView *mapView_;
@@ -28,31 +29,28 @@
                                                                  zoom:13];
     mapView_ = [GMSMapView mapWithFrame:CGRectZero camera:camera];
     self.view = mapView_;
-    if( _merchant )
-        [self setMerchant:_merchant];
 }
 
 -(void)setMerchant:(APMerchant *)merchant
 {
     _merchant = merchant;
-    if( mapView_ )
-    {
-        CLLocationDegrees mlat  = [_merchant.Lat doubleValue];
-        CLLocationDegrees mlong = [_merchant.Long doubleValue];
-        APLOG(kDebugLocation, @"Creating map for %@ at %.3f, %.3f", _merchant.Name, mlat, mlong);
+    [self view]; // force viewDidLoad
 
-        CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(mlat,mlong);
-        [mapView_ moveCamera:[GMSCameraUpdate setTarget:coord]];
-        // Creates a marker in the center of the map.
-        GMSMarker *marker = [[GMSMarker alloc] init];
-        marker.position = coord;
-        marker.title = _merchant.Name;
-        marker.snippet = _merchant.Description;
-        marker.map = mapView_;
-        
-        mapView_.myLocationEnabled = YES;
-        mapView_.settings.myLocationButton = YES;
-    }
+    CLLocationDegrees mlat  = [_merchant.Lat doubleValue];
+    CLLocationDegrees mlong = [_merchant.Long doubleValue];
+    APLOG(kDebugLocation, @"Creating map for %@ at %.3f, %.3f", _merchant.Name, mlat, mlong);
+    
+    CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(mlat,mlong);
+    [mapView_ moveCamera:[GMSCameraUpdate setTarget:coord]];
+    // Creates a marker in the center of the map.
+    GMSMarker *marker = [[GMSMarker alloc] init];
+    marker.position = coord;
+    marker.title = _merchant.Name;
+    marker.snippet = _merchant.Description;
+    marker.map = mapView_;
+    
+    mapView_.myLocationEnabled = YES;
+    mapView_.settings.myLocationButton = YES;
 }
 @end
 
@@ -107,49 +105,39 @@ APLOGRELEASE
     _cityState.text = nil;
     _phoneNumber.text = nil;
     _urlAddr.text = nil;
-    
-    if( _MLocID )
-        self.MLocID = _MLocID;
-    
 }
 
 -(void)setMLocID:(NSNumber *)MLocID
 {
+    APPopup * popup = [APPopup withNetActivity:self.tabNavigator.view];
+    
     _MLocID = MLocID;
-    if( _merchantName )
-    {
-        APRequestMerchantLocationDetail *request = [APRequestMerchantLocationDetail new];
-        APAccount *account = [APAccount currentAccount];
-        request.AToken = account.AToken;
-        request.MLocID = _MLocID;
-        [request performRequest:^(APMerchantDetail *merchantDetail, NSError *err) {
-            if(err)
-            {
-                [self showError:err];
-            }
-            else
-            {
-                [_map performSelectorOnMainThread:@selector(setMerchant:) withObject:merchantDetail waitUntilDone:NO];
-                _merchantName.text = merchantDetail.Name;
-                _merchantPoints.text = [NSString stringWithFormat:@"%dpts",[merchantDetail.ConsumerPoints integerValue] ];
-                _streetAddr.text = merchantDetail.Addr1;
-                _cityState.text = [NSString stringWithFormat:@"%@, %@", merchantDetail.City, merchantDetail.State];
-                _phoneNumber.text = merchantDetail.Tel;
-                _urlAddr.text = [merchantDetail.Website stringByReplacingOccurrencesOfString:@"http://" withString:@""];
-                _rewards = merchantDetail.Rewards;
-                if( _showingRewards )
-                {
-                    [_pointsTable reloadSections:[NSIndexSet indexSetWithIndex:0]
-                                withRowAnimation:UITableViewRowAnimationMiddle];
-                }
-                else
-                {
-                    [_pointsTable reloadData];
-                }
-            }
-        }];
-        
-    }
+    [self view]; // force a viewDidLoad
+
+    APRequestMerchantLocationDetail *request = [APRequestMerchantLocationDetail new];
+    APAccount *account = [APAccount currentAccount];
+    request.AToken = account.AToken;
+    request.MLocID = _MLocID;
+    [request performRequest:^(APMerchantDetail *merchantDetail) {
+        [_map performSelectorOnMainThread:@selector(setMerchant:) withObject:merchantDetail waitUntilDone:NO];
+        _merchantName.text = merchantDetail.Name;
+        _merchantPoints.text = [NSString stringWithFormat:@"%dpts",[merchantDetail.ConsumerPoints integerValue] ];
+        _streetAddr.text = merchantDetail.Addr1;
+        _cityState.text = [NSString stringWithFormat:@"%@, %@", merchantDetail.City, merchantDetail.State];
+        _phoneNumber.text = merchantDetail.Tel;
+        _urlAddr.text = [merchantDetail.Website stringByReplacingOccurrencesOfString:@"http://" withString:@""];
+        _rewards = merchantDetail.Rewards;
+        if( _showingRewards )
+        {
+            [_pointsTable reloadSections:[NSIndexSet indexSetWithIndex:0]
+                        withRowAnimation:UITableViewRowAnimationMiddle];
+        }
+        else
+        {
+            [_pointsTable reloadData];
+        }
+        [popup dismiss];
+    }];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -200,27 +188,11 @@ APLOGRELEASE
     
     request.AToken   = account.AToken;
     request.RewardID = reward.RewardID;
-    
-    
-#ifdef DEMO_HACK
-    [reward setFetchingOFF];
-    reward.Selectable = @"N";
-    [_pointsTable reloadSections:[NSIndexSet indexSetWithIndex:0]
-                withRowAnimation:UITableViewRowAnimationMiddle];
-    _merchantPoints.text = @"200pts";
-#else
-    [request performRequest:^(APRemoteRepsonse *response, NSError *err) {
-        if( err )
-        {
-            [self showError:err];
-        }
-        else
-        {
-            // sigh, for now just refresh the whole page
-            self.MLocID = _MLocID;
-        }
+
+    [request performRequest:^(APRemoteRepsonse *response) {
+        // sigh, for now just refresh the whole page
+        self.MLocID = _MLocID;
     }];
-#endif
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

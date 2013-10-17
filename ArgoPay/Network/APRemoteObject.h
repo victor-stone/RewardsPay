@@ -8,7 +8,8 @@
 
 #define kRemoteArrayLimit 300
 
-typedef void (^APRemoteAPIRequestBlock)(id data, NSError *err);
+typedef void (^APRemoteAPIRequestBlock)(id data);
+typedef void (^APRemoteAPIRequestErrorBlock)(NSError *err);
 
 
 @interface APRemoteObject : NSObject
@@ -32,6 +33,7 @@ typedef void (^APRemoteAPIRequestBlock)(id data, NSError *err);
 
 @interface APRemoteRequest (perform)
 -(void)performRequest:(APRemoteAPIRequestBlock)block;
+-(void)performRequest:(APRemoteAPIRequestBlock)block errorHandler:(APRemoteAPIRequestErrorBlock)errorHandler;
 @end
 
 // Generic response

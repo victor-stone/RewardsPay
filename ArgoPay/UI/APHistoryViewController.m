@@ -10,24 +10,10 @@
 #import "APAccount.h"
 #import "APPopup.h"
 
-@interface APHistoryView  : UIView
-
-@end
-@implementation APHistoryView
-
-APLOGRELEASE
-
--(void)removeFromSuperview
-{
-    APLOG(kDebugViews, @"Removing from superview: %@", self);
-    [super removeFromSuperview];
-}
-@end
 @interface APHistoryCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *date;
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *amount;
-
 @end
 
 @implementation APHistoryCell
@@ -63,18 +49,11 @@ APLOGRELEASE
     request.AToken = account.AToken;
     request.DateFrom = @"1970-01-02 00:00:00";
     request.DateTo   = @"2970-01-02 00:00:00";
-    [request performRequest:^(NSArray *items, NSError *err) {
+    [request performRequest:^(NSArray *items) {
         [popup dismiss];
-        if( err )
-        {
-            [self showError:err];
-        }
-        else
-        {
-            _allResults = items;
-            _historyItems = [NSArray arrayWithArray:items];
-            [_transactionsTable reloadData];
-        }
+        _allResults = items;
+        _historyItems = [NSArray arrayWithArray:items];
+        [_transactionsTable reloadData];
     }];
 }
 

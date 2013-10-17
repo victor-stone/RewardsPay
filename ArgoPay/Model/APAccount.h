@@ -20,7 +20,8 @@
 +(id)currentAccount;
 +(void)login:(NSString *)loginEmail
     password:(NSString *)password
-       block:(APRemoteAPIRequestBlock)block;
+       block:(APRemoteAPIRequestBlock)block
+     onError:(APRemoteAPIRequestErrorBlock)errorBlock;
 
 -(void)logUserOut;
 @property (nonatomic,readonly) BOOL isLoggedIn;

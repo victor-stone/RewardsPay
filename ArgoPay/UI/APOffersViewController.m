@@ -14,7 +14,7 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import "APLocation.h"
 #import "APMerchantMap.h"
-
+#import "VSTabNavigatorViewController.h"
 
 @interface APOffersCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *logo;
@@ -45,37 +45,25 @@
     return UIStatusBarStyleLightContent;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    if( _offer )
-        self.offer = _offer;
-}
-
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if( [segue.identifier isEqualToString:kSegueEmbedOfferMap] )
     {
         _map = segue.destinationViewController;
-        if( _offer )
-            _map.merchant = _offer;
     }
 }
-
 
 -(void)setOffer:(APOffer *)offer
 {
     _offer = offer;
-    if( _map )
-        _map.merchant = offer;
-    if( _logo )
-    {
-        [_logo setImageWithURL:[NSURL URLWithString:offer.ImageURL] placeholderImage:[UIImage imageNamed:kImageOffers]];
-        _merchantName.text = offer.Name;
-        _offerName.text = offer.Description;
-        _offerDetail.text = offer.LongDescription;
-        _expiration.text = [NSString stringWithFormat:NSLocalizedString(@"Expires: %@", @"offer detail"),[offer formatDateField:@"DateTo"]];
-    }
+    [self view]; // force viewDidLoad
+    _map.merchant = offer;
+
+    [_logo setImageWithURL:[NSURL URLWithString:offer.ImageURL] placeholderImage:[UIImage imageNamed:kImageOffers]];
+    _merchantName.text = offer.Name;
+    _offerName.text = offer.Description;
+    _offerDetail.text = offer.LongDescription;
+    _expiration.text = [NSString stringWithFormat:NSLocalizedString(@"Expires: %@", @"offer detail"),[offer formatDateField:@"DateTo"]];
 }
 
 @end
@@ -123,12 +111,6 @@ APLOGRELEASE
                     kRemoteValueSortByAvailableToSelect
                     ];
     
-    [self registerForBroadcast:kNotifySegue
-                         block:^(APOffersViewController *me, UIStoryboardSegue *segue)
-     {
-         [me prepareForSegue:segue sender:nil];
-     }];
-    
     _popup = [APPopup withNetActivity:self.view];
     
     if( !_offers )
@@ -151,29 +133,15 @@ APLOGRELEASE
     request.SortBy = sort;
 
     [[APLocation sharedInstance] currentLocation:^BOOL(CLLocationCoordinate2D loc, APError *error) {
-        if( error )
-        {
-            [_popup dismiss];
-            _popup = nil;
-            [self showError:error];
-            return YES;
-        }
-        else
+        if( !error )
         {
             request.Lat = @(loc.latitude);
             request.Long = @(loc.longitude);
-            [request performRequest:^(id data, NSError *err) {
+            [request performRequest:^(id data) {
                 [_popup dismiss];
                 _popup = nil;
-                if( err )
-                {
-                    [self showError:err];
-                }
-                else
-                {
-                    _offers = data;
-                    [_offersTable reloadData];
-                }
+                _offers = data;
+                [_offersTable reloadData];
             }];
         }
         return NO;
@@ -200,8 +168,8 @@ APLOGRELEASE
                                           otherButtonTitles:_sortNames[0],_sortNames[1],nil];
         _numberOfButtonsShowing = 2;
     }
-#warning Action sheet is being clipped, move to rootView
-    [_actionSheet showInView:self.view.superview];
+
+    [_actionSheet showInView:self.tabNavigator.view];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -222,49 +190,21 @@ APLOGRELEASE
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-#warning Move this to prepareForSegue
-    /*
-    APAccount *account = [APAccount currentAccount];
-    if( account.isLoggedIn )
+    APOffer * offer = _offers[indexPath.row];
+    if( [offer.Selected isRemoteYES] == NO )
     {
-        void (^showDialog)(APOffer * offer) = ^(APOffer * offer)
-        {
-            _selectedOffer = offer;
-            [self performSegueWithIdentifier:kSegueOffersToOfferDetail sender:self];
-        };
-        
-        APOffer * offer = _offers[indexPath.row];
-        if( [offer.Selected isRemoteYES] == NO )
-        {
-            APPopup *popup = [APPopup withNetActivity:self.view];
-            APRequestActivateOffer *request = [APRequestActivateOffer new];
-            APAccount * account = [APAccount currentAccount];
-            request.AToken = account.AToken;
-            request.OfferID = offer.OfferID;
-            [request performRequest:^(APRemoteRepsonse *response, NSError *err) {
-                [popup dismiss];
-                if( err )
-                {
-                    [self showError:err];
-                }
-                else
-                {
-                    [NSObject performBlock:^{
-                        offer.Selected = kRemoteValueYES;
-                        [tableView reloadRowsAtIndexPaths:@[indexPath]
-                                         withRowAnimation:UITableViewRowAnimationNone];
-                        showDialog(offer);
-                    } afterDelay:0.1];
-                }
-            }];
-        }
-        else
-        {
-            showDialog(offer);
-        }
-        
+        APRequestActivateOffer *request = [APRequestActivateOffer new];
+        APAccount * account = [APAccount currentAccount];
+        request.AToken = account.AToken;
+        request.OfferID = offer.OfferID;
+        [request performRequest:^(APRemoteRepsonse *response) {
+            [NSObject performBlock:^{
+                offer.Selected = kRemoteValueYES;
+                [tableView reloadRowsAtIndexPaths:@[indexPath]
+                                 withRowAnimation:UITableViewRowAnimationNone];
+            } afterDelay:0.1];
+        }];
     }
-     */
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView

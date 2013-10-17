@@ -1866,7 +1866,7 @@
                         <viewControllerLayoutGuide type="top" id="vbR-7i-Iq3"/>
                         <viewControllerLayoutGuide type="bottom" id="2kj-hE-DTL"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="HUU-IV-yzr" customClass="APHistoryView">
+                    <view key="view" contentMode="scaleToFill" id="HUU-IV-yzr">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>

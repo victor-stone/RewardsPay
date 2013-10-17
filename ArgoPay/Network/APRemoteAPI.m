@@ -112,6 +112,11 @@ static APRemoteAPI * _sharedRemoteAPI;
 
 @implementation APRemoteRequest (perform)
 
+-(void)performRequest:(APRemoteAPIRequestBlock)block
+{
+    [self performRequest:block errorHandler:nil];
+}
+
 #ifdef ALLOW_DEBUG_SETTINGS
 
 #define DOVALIDATION(obj) [self validateReceipt:obj]
@@ -121,7 +126,7 @@ static APRemoteAPI * _sharedRemoteAPI;
     if( [self.command isEqualToString:kRemoteCmdConsumerLogin] )
         return obj;
     
-    BOOL strict = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingDebugStrictJSON];
+    BOOL strict = APENABLED(kSettingDebugStrictJSON);
     NSArray *keyPaths = [obj keyPaths];
     
     for( NSString *key in keyPaths )
@@ -137,34 +142,25 @@ static APRemoteAPI * _sharedRemoteAPI;
     return self;
 }
 
-#else
-
-#define DOVALIDATION(obj)
-
-#endif
-
-#ifdef ALLOW_DEBUG_SETTINGS
-
--(void)performRequest:(APRemoteAPIRequestBlock)block
+-(void)performRequest:(APRemoteAPIRequestBlock)block errorHandler:(APRemoteAPIRequestErrorBlock)errorHandler
 {
     CGFloat delay = [[NSUserDefaults standardUserDefaults] floatForKey:kSettingDebugNetworkDelay];
     if( delay > 0.001 )
     {
         APLOG(kDebugNetwork, @"Network bakedin delay: %f", delay);
         [NSObject performBlock:^{
-            [self _performRequest:block];
+            [self _performRequest:block errorHandler:errorHandler];
         } afterDelay:delay];
     }
     else
     {
-        [self _performRequest:block];
+        [self _performRequest:block errorHandler:errorHandler];
     }
 }
 
--(void)_performRequest:(APRemoteAPIRequestBlock)block
+-(void)_performRequest:(APRemoteAPIRequestBlock)block errorHandler:(APRemoteAPIRequestErrorBlock)errorHandler
 {
-    BOOL bSendFakeData = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingDebugSendStubData];
-    if( bSendFakeData )
+    if( APENABLED(kSettingDebugSendStubData) )
     {
         static NSDictionary * fakeData = nil;
         
@@ -181,10 +177,14 @@ static APRemoteAPI * _sharedRemoteAPI;
     }
 
 #else
--(void)performRequest:(APRemoteAPIRequestBlock)block
+    
+#define DOVALIDATION(obj)
+
+-(void)_performRequest:(APRemoteAPIRequestBlock)block errorHandler:(APRemoteAPIRequestErrorBlock)errorHandler
 {
 
 #endif
+    
     AFHTTPClient *client = [APRemoteAPI clientForSubDomain:self.subDomain];
     
     APLOG(kDebugNetwork, @"Posting: %@{%@} %@", self.command, self.payloadName, self.remotableProperties);
@@ -192,7 +192,7 @@ static APRemoteAPI * _sharedRemoteAPI;
     void (^parseJSON)(NSDictionary *,APRemoteAPIRequestBlock) = ^(NSDictionary *responseObject,APRemoteAPIRequestBlock block)
     {
         //
-        // Terminology: 'objectify' means map a NSDictionary to some
+        // Terminology: 'objectify' means map a JSON derived NSDictionary to some
         //              derivation of APRemoteObject
         //
         // This is NOT a general routine for parsing json objects
@@ -220,7 +220,6 @@ static APRemoteAPI * _sharedRemoteAPI;
         //
         APRemoteObject *rootObject = nil;
         NSDictionary   *paths      = self.paths;
-        
 
         Class klass = paths[kRemotePayloadROOT];
         if( klass )
@@ -252,7 +251,7 @@ static APRemoteAPI * _sharedRemoteAPI;
                 else
                 {
                     // definitely case (2)
-                    block( remotableObjects, nil );
+                    block( remotableObjects );
                     // we're done
                     break;
                 }
@@ -262,7 +261,7 @@ static APRemoteAPI * _sharedRemoteAPI;
         if( rootObject )
         {
             DOVALIDATION(rootObject);
-            block(rootObject,nil);
+            block(rootObject);
         }
     };
     
@@ -276,38 +275,64 @@ static APRemoteAPI * _sharedRemoteAPI;
         NSError * err = nil;
         id jsonObj = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
         if( err )
-            block(nil,err);
+        {
+            if( errorHandler )
+            {
+                errorHandler(err);
+            }
+            else
+            {
+                [self broadcast:kNotifySystemError payload:err];
+            }
+        }
         else
+        {
             parseJSON(jsonObj,block);
+        }
         return;
     }
 #endif
     
     [client postPath:self.command
           parameters:self.remotableProperties
-             success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
-                 //APLOG(kDebugFire, @"SENT: %@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
-                 APLOG(kDebugNetwork, @"RECEIVED: %@", operation.responseString);
-                 APRemoteRepsonse * response = [[APRemoteRepsonse alloc] initWithDictionary:responseObject];
-                 APLOG(kDebugNetwork, @"Response: Status: %@\n    Msg: %@\n   UMsg: %@\n  count: %d\n rawParams:%@",
-                       response.Status,
-                       response.Message,
-                       response.UserMessage,
-                       [[responseObject allKeys] count],
-                       responseObject[@"rawPostData"]
-                       );
-                 if( [response.Status integerValue] != 0 )
-                 {
-                     APError *error = [[APError alloc] initWithMsg:response.Message serverStatus:[response.Status integerValue]];
-                     block(nil,error);
-                 }
-                 else
-                 {
-                     parseJSON(responseObject,block);
-                 }
-             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                 APLOG(kDebugFire, @"Network error: %@\nResponse text: %@", error, operation.responseString);
-                 block(nil,error);
-             }];
+             success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject)
+    {
+        //APLOG(kDebugNetwork, @"SENT: %@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
+        //APLOG(kDebugNetwork, @"RECEIVED: %@", operation.responseString);
+        APRemoteRepsonse * response = [[APRemoteRepsonse alloc] initWithDictionary:responseObject];
+        APLOG(kDebugNetwork, @"Response: Status: %@\n    Msg: %@\n   UMsg: %@\n  count: %d\n rawParams:%@",
+              response.Status,
+              response.Message,
+              response.UserMessage,
+              [[responseObject allKeys] count],
+              responseObject[@"rawPostData"]
+              );
+        if( [response.Status integerValue] != 0 )
+        {
+            APError *error = [[APError alloc] initWithMsg:response.Message serverStatus:[response.Status integerValue]];
+            if( errorHandler )
+            {
+                errorHandler(error);
+            }
+            else
+            {
+                [self broadcast:kNotifySystemError payload:error];
+            }
+        }
+        else
+        {
+            parseJSON(responseObject,block);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        APLOG(kDebugFire, @"Network error: %@\nResponse text: %@", error, operation.responseString);
+        if( errorHandler )
+        {
+            errorHandler(error);
+        }
+        else
+        {
+            [self broadcast:kNotifySystemError payload:error];
+        }
+    }];
 }
 @end

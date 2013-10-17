@@ -73,11 +73,6 @@ APLOGRELEASE
          }
      }];
     
-    [self registerForBroadcast:kNotifySegue
-                         block:^(APLocationListViewController *me, UIStoryboardSegue *segue)
-     {
-         [me prepareForSegue:segue sender:nil];
-     }];
 }
 
 -(void)fetchLocations
@@ -90,28 +85,14 @@ APLOGRELEASE
     request.CategoryID = @(0);
     request.Limit = @(200);
     [[APLocation sharedInstance] currentLocation:^BOOL(CLLocationCoordinate2D loc, APError *error) {
-        if( error )
-        {
-            [popup dismiss];
-            [self showError:error];
-            return YES; // right?
-        }
-        else
+        if( !error )
         {
             _userLocation = [[CLLocation alloc] initWithLatitude:loc.latitude longitude:loc.longitude];
             request.Long = @(loc.longitude);
             request.Lat = @(loc.latitude);
-            [request performRequest:^(NSArray * data, NSError *err) {
-                [popup dismiss];
-                if( err )
-                {
-                    [self showError:err];
-                }
-                else
-                {
-                    _locations = data;
-                    [_locationsTable reloadData];
-                }
+            [request performRequest:^(NSArray * data) {
+                _locations = data;
+                [_locationsTable reloadData];
             }];
         }
         return NO;

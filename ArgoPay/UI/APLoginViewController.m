@@ -46,21 +46,18 @@
     [_password resignFirstResponder];
     [_username resignFirstResponder];
     
-    [APAccount login:_username.text password:_password.text block:^(APAccount *account, NSError *err) {
-        if( err )
-        {
-            [popup dismiss];
-            [self showError:err];
-        }
-        else
-        {
+    [APAccount login:_username.text
+            password:_password.text
+               block:^(APAccount *account)
+    {
             UIViewController *host = self.presentingViewController;
             [NSObject performBlock:^{
                 [host dismissViewControllerAnimated:YES completion:^{
 #warning Get to home from here...?
                 }];
             } afterDelay:0.2];
-        }
+    } onError:^(NSError *err) {
+#warning handle login error 
     }];
 }
 
