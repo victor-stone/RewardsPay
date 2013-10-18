@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 #include "VSTabNavigatorViewController.h"
-#import "APDebug.h"
 #import "APStrings.h"
 
 @interface APMainViewController : VSTabNavigatorViewController

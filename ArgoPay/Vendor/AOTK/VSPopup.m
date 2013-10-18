@@ -149,7 +149,6 @@ APLOGRELEASE
     _animationSpeed = kPopupFadeSpeed;
 
     contentView.frame = (CGRect){ {x,y}, {w,h} };
-    contentView.alpha = 0.0;
    
     // Pieces not quite fitting together here
     // what if delay AND noShow are both on?
@@ -163,6 +162,7 @@ APLOGRELEASE
     }
     else
     {
+        contentView.alpha = 0.0;
         _contentView = contentView;
         [self addSubview:contentView];
     }

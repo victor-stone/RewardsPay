@@ -7,6 +7,7 @@
 //
 #import "APHomeViewController.h"
 #import "APStrings.h"
+#import "APAccount.h"
 
 @interface APHomeViewController () <UICollectionViewDataSource>
 
@@ -15,8 +16,6 @@
 @implementation APHomeViewController
 
 APLOGRELEASE
-
-#warning Need a logout strategy
 
 -(BOOL)navigationBarHidden
 {
@@ -50,5 +49,19 @@ APLOGRELEASE
 -(IBAction)unwindFromError:(UIStoryboardSegue *)segue
 {
     [self broadcast:kNotifyErrorViewClosed payload:segue.sourceViewController];
+}
+
+-(IBAction)unwindFromLogout:(UIStoryboardSegue *)segue
+{
+    APAccount * account = [APAccount currentAccount];
+    [account logUserOut];
+}
+
+-(BOOL)canPerformUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender
+{
+    if( action == @selector(unwindFromLogout:) )
+        return YES;
+    
+    return [super canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
 }
 @end

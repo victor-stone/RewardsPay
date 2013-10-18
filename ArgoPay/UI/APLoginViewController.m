@@ -17,11 +17,8 @@
 
 @end
 
-@implementation APLoginViewController
-
--(UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleLightContent;
+@implementation APLoginViewController {
+    APPopup * _popup;
 }
 
 - (void)viewDidLoad
@@ -42,7 +39,7 @@
 
 - (IBAction)submit:(id)sender
 {
-    APPopup *popup = [APPopup withNetActivity:self.view];
+    _popup = [APPopup withNetActivity:self.view];
     [_password resignFirstResponder];
     [_username resignFirstResponder];
     
@@ -50,14 +47,8 @@
             password:_password.text
                block:^(APAccount *account)
     {
-            UIViewController *host = self.presentingViewController;
-            [NSObject performBlock:^{
-                [host dismissViewControllerAnimated:YES completion:^{
-#warning Get to home from here...?
-                }];
-            } afterDelay:0.2];
-    } onError:^(NSError *err) {
-#warning handle login error 
+        // call will trigger switch to main view
+        
     }];
 }
 
@@ -70,4 +61,9 @@
     return YES;
 }
 
+-(IBAction)unwindFromError:(UIStoryboardSegue *)segue
+{
+    [_popup dismiss];
+    _popup = nil;
+}
 @end

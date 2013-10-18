@@ -10,7 +10,6 @@
 
 #import "APError.h"
 
-NSString *const kAPMobileErrorDomain = @"com.ArgoPay.ArgoPayMobile.ErrorDomain";
 NSString *const kAPErrorDomain       = @"com.ArgoPay.ArgoPay.ErrorDomain";
 
 NSString *const kAPYouDontHaveToGoHomeButYouCantStayHereKey = @"kAPYouDontHaveToGoHomeButYouCantStayHereKey";
@@ -57,7 +56,7 @@ NSString *const kAPYouDontHaveToGoHomeButYouCantStayHereKey = @"kAPYouDontHaveTo
 
 -(id)initWithCode:(NSUInteger)code userInfo:(NSDictionary *)userInfo
 {
-    return [super initWithDomain:kAPMobileErrorDomain
+    return [super initWithDomain:kAPErrorDomain
                             code:code
                         userInfo:userInfo
             ];

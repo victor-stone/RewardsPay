@@ -26,6 +26,8 @@
 
 static APAccount * __currentAccount;
 
+APLOGRELEASE
+
 +(id)currentAccount
 {
     return __currentAccount;
@@ -34,42 +36,57 @@ static APAccount * __currentAccount;
 +(void)login:(NSString *)loginEmail
     password:(NSString *)password
        block:(APRemoteAPIRequestBlock)block
-     onError:(APRemoteAPIRequestErrorBlock)errorBlock;
 {
+    // um, in case of error...
+    __currentAccount = [APAccount new];
+    
     APRequestLogin *loginRequest = [APRequestLogin new];
-    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
-    loginRequest.Email      = loginEmail ?: [settings stringForKey:kSettingUserLoginName];
-    loginRequest.Password   = password ?: [settings stringForKey:kSettingUserLoginPassword];
+    loginRequest.Email      = loginEmail;
+    loginRequest.Password   = password;
     loginRequest.InToken    = [[NSUserDefaults standardUserDefaults] stringForKey:kSettingUserUniqueID];
-
-    APLOG(kDebugUser, @"Attemping login with username: %@ password: %@", loginRequest.Email, loginRequest.Password);
-    
-    APRemoteAPIRequestBlock handleAccount = ^(APAccount *account) {
-        if( !account )
-        {
-            APLOG(kDebugUser, @"No user account returned, creating blank", 0)
-            account = [APAccount new];
-        }
-        else
-        {
-            APLOG(kDebugUser, @"User is logged with AToken: %@",account.AToken);
-        }
-        __currentAccount = account;
-        __currentAccount.login = loginRequest.Email;
-        __currentAccount.password = loginRequest.Password;
-        if( block )
-            block(account);
-    };
-    
     if( (loginRequest.Email.length == 0) || (loginRequest.Password.length == 0 ) )
     {
         APError *appError = [APError errorWithCode:kAPERROR_MISSINGLOGINFIELDS];
-        errorBlock(appError);
+        [appError broadcast:kNotifySystemError payload:appError];
+        return;
     }
-    else
+    
+    [loginRequest performRequest:^(APAccount *account) {
+        APLOG(kDebugUser, @"User is logged with AToken: %@",account.AToken);
+        __currentAccount = account;
+        __currentAccount.login = loginRequest.Email;
+        __currentAccount.password = loginRequest.Password;
+        block(account);
+        [self broadcast:kNotifyUserLoginStatus payload:self];
+    }];
+}
+
++(void)attempLoginWithDefaults:(APRemoteAPIRequestBlock)block
+{
+    // um, in case of error...
+    __currentAccount = [APAccount new];
+    
+    APRequestLogin *loginRequest = [APRequestLogin new];
+    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
+    loginRequest.Email      = [settings stringForKey:kSettingUserLoginName];
+    loginRequest.Password   = [settings stringForKey:kSettingUserLoginPassword];
+    loginRequest.InToken    = [[NSUserDefaults standardUserDefaults] stringForKey:kSettingUserUniqueID];
+
+    APLOG(kDebugUser, @"Attemping login with username: %@ password: %@", loginRequest.Email, loginRequest.Password);
+    if( (loginRequest.Email.length == 0) || (loginRequest.Password.length == 0 ) )
     {
-        [loginRequest performRequest:handleAccount errorHandler:errorBlock];
+        block(nil);
+        return;
     }
+    
+    [loginRequest performRequest:^(APAccount *account) {
+        APLOG(kDebugUser, @"User is logged with AToken: %@",account.AToken);
+        __currentAccount = account;
+        __currentAccount.login = loginRequest.Email;
+        __currentAccount.password = loginRequest.Password;
+        block(account);
+        [self broadcast:kNotifyUserLoginStatus payload:self];
+    }];
 }
 
 -(void)setLogin:(NSString *)login
@@ -91,6 +108,7 @@ static APAccount * __currentAccount;
     [[NSUserDefaults standardUserDefaults] synchronize];
     _AToken = nil;
     APLOG(kDebugUser, @"User account logged out", 0);
+    [self broadcast:kNotifyUserLoginStatus payload:self];
 }
 
 -(BOOL)isLoggedIn

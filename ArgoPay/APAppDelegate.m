@@ -145,23 +145,18 @@ typedef enum _APStartupState {
 
 -(void)showMainAppWindow
 {
-    if( [NSThread currentThread] != [NSThread mainThread] )
-    {
-        [self performSelectorOnMainThread:@selector(_showMainAppWindow) withObject:nil waitUntilDone:YES];
-    }
-    else
-    {
-        [self _showMainAppWindow];
-    }
+    APAccount * account = [APAccount currentAccount];
+    NSString *viewName = account.isLoggedIn ? kViewMain : kViewLogin;
+    [self performSelectorOnMainThread:@selector(_changeRootWindow:) withObject:viewName waitUntilDone:YES];
 }
 
--(void)_showMainAppWindow
+-(void)_changeRootWindow:(NSString *)viewName
 {
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kSettingUserFirstInvoke];
     [_startupQueue cancelAllOperations];
     _startupQueue = nil;
     UIViewController *initial = _window.rootViewController;
-    UIViewController *home = [initial.storyboard instantiateViewControllerWithIdentifier:kViewMain];
+    UIViewController *home = [initial.storyboard instantiateViewControllerWithIdentifier:viewName];
     _window.rootViewController = home;
     _doneLoading = YES;
 }
@@ -190,6 +185,13 @@ typedef enum _APStartupState {
         }
     }];
     
+    [self registerForBroadcast:kNotifyUserLoginStatus
+                         block:^(APAppDelegate *me, APAccount *account)
+     {
+        if( me->_doneLoading )
+            [me showMainAppWindow];
+     }];
+     
     // Convert IASK notification center events to self:registerForBroadcast
     // to normalize different styles
     
@@ -219,8 +221,6 @@ typedef enum _APStartupState {
              kSettingViewAsKilometer: @(YES)
              
 #ifdef ALLOW_DEBUG_SETTINGS
-             ,kSettingUserLoginName: @"igor@argopay.com"
-             ,kSettingUserLoginPassword: @"ArgoPay"
              ,kSettingDebugNetworkStubbed: @"file"
              ,kSettingDebugLocalhostAddr: @"testingargo.192.168.1.2.xip.io"
 #endif
@@ -437,13 +437,7 @@ typedef enum _APStartupState {
     
     [self displayDelayedMessage:NSLocalizedString(@"Attempting to log in...",@"startup")];
     
-    [APAccount login:nil password:nil block:^(id data) {
-        [self iAmDone];
-    } onError:^(NSError *err) {
-        if( err && ( !((err.code == kAPERROR_MISSINGLOGINFIELDS) && (err.domain == kAPErrorDomain)) ) )
-        {
-            [_appDelegate setLoadingMessage:err.localizedDescription];
-        }
+    [APAccount attempLoginWithDefaults:^(id data) {
         [self iAmDone];
     }];
 }

@@ -13,6 +13,7 @@
 APKEYEDSTRING(kNotifySystemError)
 APKEYEDSTRING(kNotifyErrorViewClosed)
 APKEYEDSTRING(kNotifyUserSettingChanged)
+APKEYEDSTRING(kNotifyUserLoginStatus)
 
 APKEYEDSTRING(kSettingUserLoginName)
 APKEYEDSTRING(kSettingUserLoginPassword)
@@ -37,7 +38,7 @@ APKEYEDSTRING(kSettingDebugStrictJSON)
 APKEYEDSTRING(kSettingDebugSendStubData)
 
 APKEYEDSTRING(kViewError)
-
+APKEYEDSTRING(kViewLogin)
 APKEYEDSTRING(kViewMain)
 
 
