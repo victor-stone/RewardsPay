@@ -6,29 +6,34 @@
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 
-@class APErrorViewController;
+#import "APStrings.h"
+#import "VSNavigationViewController.h"
 
-typedef BOOL (^APErrorAlertBlock)(APErrorViewController *errorViewController);
+@class APErrorViewController;
 
 @interface APErrorViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *bottomMessage;
 @property (weak, nonatomic) IBOutlet UILabel *mainMessage;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navBar;
+@property (weak, nonatomic) IBOutlet UIButton *button;
 
-@property (nonatomic,strong) APErrorAlertBlock alertBlock;
+@property (nonatomic,strong) UIAlertView * alertView;
 @property (nonatomic,strong) NSError *errorObj;
 @end
 
 @implementation APErrorViewController
 
--(void)viewDidAppear:(BOOL)animated
+-(void)viewDidLoad
 {
-    [super viewDidAppear:animated];
+    [super viewDidLoad];
+    [self adjustViewForiOS7];
     
-    if( _alertBlock )
+    _button.hidden = YES;
+    _bottomMessage.hidden = YES;
+    
+    if( _alertView )
     {
-        if( !_alertBlock(self) )
-            _alertBlock = nil;
+        [_alertView show];
     }
 }
 
@@ -37,7 +42,22 @@ typedef BOOL (^APErrorAlertBlock)(APErrorViewController *errorViewController);
     _errorObj = error;
     [self view];
     _mainMessage.text = _errorObj.localizedDescription;
-    _bottomMessage.text = _errorObj.localizedRecoverySuggestion;
+    NSDictionary * dict = error.userInfo;
+    NSString * showContinue = @"Continue"; // dict[kAPYouDontHaveToGoHomeButYouCantStayHereKey];
+    if( showContinue )
+    {
+        [_button setTitle:showContinue forState:UIControlStateNormal];
+        _button.hidden = NO;
+    }
+    else
+    {
+        _bottomMessage.hidden = NO;
+        _bottomMessage.text = _errorObj.localizedRecoverySuggestion;
+    }
 }
 
+-(void)dismiss
+{
+    [self performSegueWithIdentifier:kSegueErrorUnwind sender:self];
+}
 @end

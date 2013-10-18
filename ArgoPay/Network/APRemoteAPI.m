@@ -297,8 +297,8 @@ static APRemoteAPI * _sharedRemoteAPI;
           parameters:self.remotableProperties
              success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject)
     {
-        //APLOG(kDebugNetwork, @"SENT: %@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
-        //APLOG(kDebugNetwork, @"RECEIVED: %@", operation.responseString);
+        APLOG(kDebugJSONDumps, @"SENT: %@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
+        APLOG(kDebugJSONDumps, @"RECEIVED: %@", operation.responseString);
         APRemoteRepsonse * response = [[APRemoteRepsonse alloc] initWithDictionary:responseObject];
         APLOG(kDebugNetwork, @"Response: Status: %@\n    Msg: %@\n   UMsg: %@\n  count: %d\n rawParams:%@",
               response.Status,
@@ -309,7 +309,7 @@ static APRemoteAPI * _sharedRemoteAPI;
               );
         if( [response.Status integerValue] != 0 )
         {
-            APError *error = [[APError alloc] initWithMsg:response.Message serverStatus:[response.Status integerValue]];
+            APError *error = [APError errorWithMsg:response.Message serverStatus:[response.Status integerValue]];
             if( errorHandler )
             {
                 errorHandler(error);

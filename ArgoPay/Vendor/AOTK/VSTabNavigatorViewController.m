@@ -61,6 +61,24 @@
         [_tabNavigator prepareForSegue:segue];
 }
 
+- (UIViewController *)viewControllerForUnwindSegueAction:(SEL)action
+                                      fromViewController:(UIViewController *)fromViewController
+                                              withSender:(id)sender
+{
+    return [_navigationViewController viewControllerForUnwindSegueAction:action
+                                                      fromViewController:fromViewController
+                                                              withSender:sender];
+}
+
+
+- (UIStoryboardSegue*)segueForUnwindingToViewController:(UIViewController *)toViewController
+                                     fromViewController:(UIViewController *)fromViewController
+                                             identifier:(NSString *)identifier
+{
+    return [_navigationViewController segueForUnwindingToViewController:toViewController
+                                                     fromViewController:fromViewController
+                                                             identifier:identifier];
+}
 @end
 
 @implementation VSTabNavigatorEmbed

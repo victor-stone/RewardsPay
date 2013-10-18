@@ -18,5 +18,6 @@ typedef void (^APDismissBlock)(UIViewController* dismissing);
 -(UIBarButtonItem *)barButtonForImage:(NSString *)imgName
                                 title:(NSString *)title
                                 block:(APMenuBlock)block;
+-(void)adjustViewForiOS7;
 
 @end

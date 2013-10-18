@@ -84,18 +84,15 @@ APLOGRELEASE
     request.Distance = @(20);
     request.CategoryID = @(0);
     request.Limit = @(200);
-    [[APLocation sharedInstance] currentLocation:^BOOL(CLLocationCoordinate2D loc, APError *error) {
-        if( !error )
-        {
-            _userLocation = [[CLLocation alloc] initWithLatitude:loc.latitude longitude:loc.longitude];
-            request.Long = @(loc.longitude);
-            request.Lat = @(loc.latitude);
-            [request performRequest:^(NSArray * data) {
-                _locations = data;
-                [_locationsTable reloadData];
-            }];
-        }
-        return NO;
+    [[APLocation sharedInstance] currentLocation:^(CLLocationCoordinate2D loc) {
+        [popup dismiss];
+        _userLocation = [[CLLocation alloc] initWithLatitude:loc.latitude longitude:loc.longitude];
+        request.Long = @(loc.longitude);
+        request.Lat = @(loc.latitude);
+        [request performRequest:^(NSArray * data) {
+            _locations = data;
+            [_locationsTable reloadData];
+        }];
     }];
 }
 
@@ -140,7 +137,7 @@ APLOGRELEASE
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if( [segue.identifier isEqualToString:kSegueHomeToMerchantDetail] )
+    if( [segue.identifier isEqualToString:kSegueLocationToMerchantDetail] )
     {
         NSIndexPath *indexPath = [_locationsTable indexPathForSelectedRow];
         APMerchant * merchant = _locations[indexPath.row/2];

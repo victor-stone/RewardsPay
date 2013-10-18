@@ -8,14 +8,10 @@
 
 #import "UIViewController+ArgoPay.h"
 #import "APStrings.h"
-#import "APPopup.h"
-#import "APAppDelegate.h"
-#import "APAccount.h"
 
 @implementation UIViewController (ArgoPay)
 
 void * kTargetMapAssociationKey = &kTargetMapAssociationKey;
-void * kDismissBlockKey = &kDismissBlockKey;
 
 -(void)invokeMenuItem:(id)sender
 {
@@ -51,16 +47,11 @@ void * kDismissBlockKey = &kDismissBlockKey;
 }
 
 
--(void)setDismissBlock:(APDismissBlock)block
-{
-    [self associateValue:[block copy] withKey:kDismissBlockKey];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)iOrientation {
     return (iOrientation == UIInterfaceOrientationPortrait);
 }
 
--(void)argoPayIze
+-(void)adjustViewForiOS7
 {
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
         

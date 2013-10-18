@@ -32,6 +32,7 @@
 
 VSNAV_STRING(kSegueRootViewController);
 VSNAV_STRING(kSegueBackButtonUnwind);
+VSNAV_STRING(kSegueErrorUnwind);
 
 VSNAV_STRING(kVSTransitionNoAnimation);
 VSNAV_STRING(kVSTransitionFromRight);
@@ -83,7 +84,7 @@ typedef void (^VSNavAnimationBlock)();
 - (void)swapTopViewController:(UIViewController *)newTop
                    transition:(VSTransitionType)transition;
 
--(void)performBack;
+- (void)performBack;
 
 @property (nonatomic) BOOL animating;
 

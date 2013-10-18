@@ -12,12 +12,18 @@
 
 NSString *const kAPMobileErrorDomain = @"com.ArgoPay.ArgoPayMobile.ErrorDomain";
 NSString *const kAPErrorDomain       = @"com.ArgoPay.ArgoPay.ErrorDomain";
-NSString *const kAPClientErrorKey = @"kAPClientErrorKey";
-NSString *const kAPServerErrorKey = @"kAPServerErrorKey";
+
+NSString *const kAPYouDontHaveToGoHomeButYouCantStayHereKey = @"kAPYouDontHaveToGoHomeButYouCantStayHereKey";
 
 @implementation APError
 
-+(id)errorWithCode:(NSUInteger)code;
+
++(id)errorWithCode:(NSUInteger)code
+{
+    return [APError errorWithCode:code userInfo:nil];
+}
+
++(id)errorWithCode:(NSUInteger)code userInfo:(NSDictionary *)userInfo
 {
     NSString *msg = nil;
     switch (code) {
@@ -29,6 +35,7 @@ NSString *const kAPServerErrorKey = @"kAPServerErrorKey";
             msg = NSLocalizedString(@"ArgoPay requires a network connection.", @"Network error");
             break;
             
+        case kAPERROR_GPSSYSTEM:
         case kAPERROR_NOGPS:
             msg = NSLocalizedString(@"ArgoPay requires that you allow us access to your current location. Go the Settings app and change the settings at\nPrivacy->Location", @"GPS error");
             break;
@@ -37,41 +44,35 @@ NSString *const kAPServerErrorKey = @"kAPServerErrorKey";
             msg = NSLocalizedString(@"Location data taking too long.", @"GPS error");
             break;
             
-        case kAPERROR_GPSSYSTEM:
-            msg = NSLocalizedString(@"Locations service is reporting an error", @"GPS error");
-            break;
-            
         default:
             msg = NSLocalizedString(@"Sorry, but something didn't quite right", @"Generic error");
             break;
     }
     
-    return [[APError alloc] initWithMsg:msg code:code];
+    NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithDictionary:userInfo];
+    dict[NSLocalizedDescriptionKey] = msg;
+    
+    return [[APError alloc] initWithCode:code userInfo:dict];
 }
 
--(id)initWithMsg:(NSString *)msg code:(NSUInteger)code
+-(id)initWithCode:(NSUInteger)code userInfo:(NSDictionary *)userInfo
 {
     return [super initWithDomain:kAPMobileErrorDomain
                             code:code
-                        userInfo:@{ NSLocalizedDescriptionKey:msg,
-               kAPClientErrorKey: @(YES)} ];
+                        userInfo:userInfo
+            ];
     
 }
 
--(id)initWithMsg:(NSString *)msg
++(id)errorWithMsg:(NSString *)msg serverStatus:(NSUInteger)serverStatus;
 {
-    return [super initWithDomain:kAPMobileErrorDomain
-                            code:KAPERROR_GENERIC
-                        userInfo:@{ NSLocalizedDescriptionKey:msg,
-                                    kAPClientErrorKey: @(YES)} ];
+    NSString *kcontinue = NSLocalizedString(@"Continue", @"Error button");
+    return [[APError alloc] initWithCode:kAPERROR_ARGOPAYSERVER userInfo:@
+    {
+        NSLocalizedDescriptionKey: msg,
+        kAPYouDontHaveToGoHomeButYouCantStayHereKey: kcontinue
+    }];
 }
 
--(id)initWithMsg:(NSString *)msg serverStatus:(NSUInteger)serverStatus
-{
-    return [super initWithDomain:kAPErrorDomain
-                            code:serverStatus
-                        userInfo:@{ NSLocalizedDescriptionKey:msg,
-               kAPServerErrorKey: @(YES)} ];    
-}
 
 @end

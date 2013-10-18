@@ -317,6 +317,8 @@ switch($_REQUEST['cmd'] )
         
     case 'ConsumerGetAvailableOffers':
     {
+       // $value['Status'] = 400;
+      //  $value['Message'] = 'This is a server generated error';
         $value['Offers'] = addOffers();
         break;
         

@@ -132,19 +132,15 @@ APLOGRELEASE
     request.Distance = @(20.0);
     request.SortBy = sort;
 
-    [[APLocation sharedInstance] currentLocation:^BOOL(CLLocationCoordinate2D loc, APError *error) {
-        if( !error )
-        {
-            request.Lat = @(loc.latitude);
-            request.Long = @(loc.longitude);
-            [request performRequest:^(id data) {
-                [_popup dismiss];
-                _popup = nil;
-                _offers = data;
-                [_offersTable reloadData];
-            }];
-        }
-        return NO;
+    [[APLocation sharedInstance] currentLocation:^(CLLocationCoordinate2D loc) {
+        request.Lat = @(loc.latitude);
+        request.Long = @(loc.longitude);
+        [request performRequest:^(id data) {
+            [_popup dismiss];
+            _popup = nil;
+            _offers = data;
+            [_offersTable reloadData];
+        }];
     }];
 }
 

@@ -11,6 +11,7 @@
 #endif
 
 APKEYEDSTRING(kNotifySystemError)
+APKEYEDSTRING(kNotifyErrorViewClosed)
 APKEYEDSTRING(kNotifyUserSettingChanged)
 
 APKEYEDSTRING(kSettingUserLoginName)
@@ -41,7 +42,8 @@ APKEYEDSTRING(kViewMain)
 
 
 APKEYEDSTRING(kSegueOffersToOfferDetail)
-APKEYEDSTRING(kSegueHomeToMerchantDetail)
+APKEYEDSTRING(kSegueRewardsToMerchantDetail)
+APKEYEDSTRING(kSegueLocationToMerchantDetail)
 APKEYEDSTRING(kSegueEmbedMerchantMap)
 APKEYEDSTRING(kSegueEmbedOfferMap)
 APKEYEDSTRING(kSegueCameraUnwind)
@@ -75,4 +77,4 @@ APKEYEDSTRING(kDebugLocation)
 APKEYEDSTRING(kDebugStartup)
 APKEYEDSTRING(kDebugScan)
 APKEYEDSTRING(kDebugNavigation)
-
+APKEYEDSTRING(kDebugJSONDumps)

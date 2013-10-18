@@ -16,6 +16,7 @@
 #import "APLocation.h"
 #import "VSConnectivity.h"
 #import "Reachability.h"
+#import "VSTabNavigator.h"
 
 typedef enum _APStartupState {
     kStartupStateExecting = 1,
@@ -44,47 +45,17 @@ typedef enum _APStartupState {
 @property (weak, nonatomic) IBOutlet UILabel *message;
 @end
 
-
-@implementation APStartupViewController {
-    id _notifyObserver;
-}
-
--(void)viewDidLoad
-{
-    [super viewDidLoad];
-
-    [_activity startAnimating];
-    __weak APStartupViewController *me = self;
-    _notifyObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kReachabilityChangedNotification
-                                                                        object:nil
-                                                                         queue:nil
-                                                                    usingBlock:^(NSNotification *note)
-                       {
-                           
-                           Reachability *reachability = note.object;
-                           if( reachability.currentReachabilityStatus == NotReachable )
-                           {
-                               NSString * msg = NSLocalizedString(@"Your phone doesn't seem to be connected to the Internet. Please connect in Settings and then return to ArgoPay.", @"startup");
-                               me.message.text = msg;
-                           }
-                       }];
-}
-
-@end
-
-
 @interface APAppDelegate ()
 @end
 
 @implementation APAppDelegate {
-    id _notifyObserver;
-    BOOL _showingErrorScreen;
+    id                 _notifyObserver;
     NSOperationQueue * _startupQueue;
-    BOOL _doneLoading;
+    BOOL               _doneLoading;
 @package
-    Reachability *_reachability;
+    __weak UIViewController * _errorView;
+    Reachability *      _reachability;
 }
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -117,11 +88,18 @@ typedef enum _APStartupState {
 
 -(void)showError:(NSError *)error
 {
-    [self performSelectorOnMainThread:@selector(_showError:) withObject:error waitUntilDone:NO];
+    [self performSelectorOnMainThread:@selector(_showError:) withObject:error waitUntilDone:YES];
 }
 
 -(void)_showError:(NSError *)error
 {
+    if( _errorView )
+    {
+        // what? stuff error into that window?
+        [_errorView setValue:error forKey:@"errorObj"];
+        return;
+    }
+    
     UIViewController * host = _window.rootViewController;
     if( host.presentedViewController )
         host = host.presentedViewController;
@@ -130,13 +108,13 @@ typedef enum _APStartupState {
     {
         [NSObject performBlock:^{
             [self _showError:error];
-        } afterDelay:0.3];
+        } afterDelay:0.2];
         return;
     }
     
-    UIViewController * vc = [_window.rootViewController.storyboard instantiateViewControllerWithIdentifier:kViewError];
-    [vc setValue:error forKey:@"errorObj"];
-    [host presentViewController:vc animated:YES completion:nil];
+    _errorView = [_window.rootViewController.storyboard instantiateViewControllerWithIdentifier:kViewError];
+    [_errorView setValue:error forKey:@"errorObj"];
+    [host presentViewController:_errorView animated:YES completion:nil];
 }
 
 -(void)setLoadingMessage:(NSString *)msg
@@ -152,6 +130,7 @@ typedef enum _APStartupState {
 
 -(void)setupAppearances
 {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];    
     /*
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
         [[UINavigationBar appearance] setTitleTextAttributes:
@@ -195,6 +174,12 @@ typedef enum _APStartupState {
         [me showError:error];
     }];
     
+    [self registerForBroadcast:kNotifyErrorViewClosed
+                         block:^(APAppDelegate *me, UIViewController *errorView)
+     {
+         me->_errorView = nil;
+     }];
+    
     [self registerForBroadcast:kVSNotificationConnectionTypeChanged
                          block:^(APAppDelegate *me, VSConnectivity *connectivity)
     {
@@ -202,13 +187,6 @@ typedef enum _APStartupState {
         {
             APError *error = [APError errorWithCode:kAPERROR_NONETCONNECTION];
             [me showError:error];
-        }
-        else
-        {
-            if( _showingErrorScreen )
-            {
-                [_window.rootViewController dismissViewControllerAnimated:YES completion:nil];
-            }
         }
     }];
     
@@ -425,6 +403,21 @@ typedef enum _APStartupState {
 @implementation APWaitForLocationService
 #define kLocationAttemptDelay 4.0
 
+-(void)tryToGetLocation
+{
+    APLocation *location = [APLocation sharedInstance];
+    [location currentLocation:^(CLLocationCoordinate2D loc) {
+        APLOG(kDebugStartup, @"Got location: %G, %G", loc.longitude, loc.latitude);
+        [self iAmDone];
+    }];
+    
+    if( !self.isCancelled && !self.isFinished )
+    {
+        [NSObject performBlock:^{
+            [self tryToGetLocation];
+        } afterDelay:0.5];
+    }
+}
 -(void)start
 {
     [self iAmStarting];
@@ -433,20 +426,7 @@ typedef enum _APStartupState {
     
     [GMSServices provideAPIKey:GOOGLE_MAPS_API_KEY];
     
-    APLocation *location = [APLocation sharedInstance];
-    [location currentLocation:^BOOL(CLLocationCoordinate2D loc, APError *error) {
-        if( error )
-        {
-            [_appDelegate setLoadingMessage:error.localizedDescription];
-            APLOG(kDebugStartup, @"Operation location failed, retrying",0);
-            return YES;
-        }
-
-        APLOG(kDebugStartup, @"Got location: %G, %G", loc.longitude, loc.latitude);
-        [self iAmDone];
-        return NO;
-    }];
-    
+    [self tryToGetLocation];
 }
 @end
 
@@ -460,7 +440,7 @@ typedef enum _APStartupState {
     [APAccount login:nil password:nil block:^(id data) {
         [self iAmDone];
     } onError:^(NSError *err) {
-        if( err && ( !((err.code == kAPERROR_MISSINGLOGINFIELDS) && (err.domain == kAPMobileErrorDomain)) ) )
+        if( err && ( !((err.code == kAPERROR_MISSINGLOGINFIELDS) && (err.domain == kAPErrorDomain)) ) )
         {
             [_appDelegate setLoadingMessage:err.localizedDescription];
         }
@@ -493,6 +473,39 @@ typedef enum _APStartupState {
     APLOG(kDebugStartup, @"Starting: %@", self);
     [self cancel];
     [_appDelegate showMainAppWindow];
+}
+
+@end
+
+
+@implementation APStartupViewController {
+    id _notifyObserver;
+}
+
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [_activity startAnimating];
+    __weak APStartupViewController *me = self;
+    _notifyObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kReachabilityChangedNotification
+                                                                        object:nil
+                                                                         queue:nil
+                                                                    usingBlock:^(NSNotification *note)
+                       {
+                           
+                           Reachability *reachability = note.object;
+                           if( reachability.currentReachabilityStatus == NotReachable )
+                           {
+                               NSString * msg = NSLocalizedString(@"Your phone doesn't seem to be connected to the Internet. Please connect in Settings and then return to ArgoPay.", @"startup");
+                               me.message.text = msg;
+                           }
+                       }];
+}
+
+-(IBAction)unwindFromError:(UIStoryboardSegue *)segue
+{
+    [self broadcast:kNotifyErrorViewClosed payload:self];
 }
 
 @end

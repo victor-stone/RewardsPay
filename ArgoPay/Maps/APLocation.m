@@ -137,7 +137,7 @@ static APLocation *__sharedLocation;
     {
         CLLocationCoordinate2D coord = _lastLocation.coordinate;
         APLOG(kDebugLocation, @"Calling(1) with: lat:%f long:%f", coord.latitude, coord.longitude);
-        gotBlock(coord,nil);
+        gotBlock(coord);
     }
     else
     {
@@ -152,8 +152,7 @@ static APLocation *__sharedLocation;
         {
             APLOG(kDebugLocation, @"request dropped status: %d", _currentStatus);
             APError *error = [APError errorWithCode:kAPERROR_NOGPS];
-            if( gotBlock((CLLocationCoordinate2D){0,0},error) )
-                [_waitingBlocks addObject:[gotBlock copy]];
+            [self broadcast:kNotifySystemError payload:error];
         }
     }
 }
@@ -202,7 +201,7 @@ didChangeAuthorizationStatus:(CLAuthorizationStatus)status
         {
             CLLocationCoordinate2D coord = location.coordinate;
             APLOG(kDebugLocation, @"Calling(2) with: lat:%f long:%f", coord.latitude, coord.longitude);
-            block(coord,nil);
+            block(coord);
         }
         @synchronized(self) {
             [_waitingBlocks removeAllObjects];
@@ -212,12 +211,12 @@ didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 
 - (void)locationManagerDidPauseLocationUpdates:(CLLocationManager *)manager
 {
-    APLOG(kDebugLocation, @"Manager paused updates", 0);
+    APLOG(kDebugLocation, @"Manager paused updates");
 }
 
 - (void)locationManagerDidResumeLocationUpdates:(CLLocationManager *)manager
 {
-    APLOG(kDebugLocation, @"Manager resumed updates", 0);
+    APLOG(kDebugLocation, @"Manager resumed updates");
 }
 
 - (void)locationManager:(CLLocationManager *)manager
@@ -225,31 +224,13 @@ didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
     APLOG(kDebugLocation, @"Manager failed with error: %@", error);
     [self stopService];
-    NSArray *copyOfBlocks = [NSArray arrayWithArray:_waitingBlocks];
-    NSMutableIndexSet * indexSet = [[NSMutableIndexSet alloc] init];
-    APError *aperror = error.domain == kAPErrorDomain ? (APError *)error : [APError errorWithCode:kAPERROR_GPSSYSTEM];
-    NSUInteger i = 0;
-    for( APLocationBlock block in copyOfBlocks )
-    {
-        CLLocationCoordinate2D coord = (CLLocationCoordinate2D){ 0, 0, };
-        APLOG(kDebugLocation, @"Calling with error", 0);
-        if( block(coord,aperror) == NO )
-           [indexSet addIndex:i];
-        ++i;
-    }
-    
-    @synchronized(self) {
-        [_waitingBlocks removeObjectsAtIndexes:indexSet];
-    }
-    
-    if( _waitingBlocks.count > 0 )
-    {
-        APLOG(kDebugLocation, @"Attempting with restart",0);
-        [NSObject performBlock:^{
-            [self startService];
-        } afterDelay:3.0];
-    }
-
+    [_waitingBlocks removeAllObjects];
+    error = [APError errorWithCode:kAPERROR_GPSSYSTEM];
+    [self broadcast:kNotifySystemError payload:error];
+    APLOG(kDebugLocation, @"Attempting with restart");
+    [NSObject performBlock:^{
+        [self startService];
+    } afterDelay:3.0];
 }
 
 

@@ -11,7 +11,7 @@
 
 // Return YES if you want to keep getting update (or try again after error)
 // Return NO if you don't want to get get more updates
-typedef BOOL (^APLocationBlock)(CLLocationCoordinate2D loc, APError *error);
+typedef void (^APLocationBlock)(CLLocationCoordinate2D loc);
 
 @interface APLocation : NSObject <CLLocationManagerDelegate>
 

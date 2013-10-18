@@ -19,9 +19,10 @@
 #pragma mark Custom segues
 
 @interface VSRootViewControllerSegue : UIStoryboardSegue
-
 @end
 
+@interface VSDismssAndUnwindSegue : VSNavigationSegue
+@end
 
 @interface VSNavigationViewController () <UINavigationBarDelegate> {
     UINavigationBar *_navigationBar;
@@ -196,6 +197,13 @@ typedef enum _VSTransitionTypeID {
                                              identifier:(NSString *)identifier
 {
     NAVDEBUG(@"Looking for unwind segue called: %@", identifier);
+    
+    if( [identifier isEqualToString:kSegueErrorUnwind] )
+    {
+        return [[VSDismssAndUnwindSegue alloc] initWithIdentifier:identifier
+                                                           source:fromViewController
+                                                      destination:toViewController];
+    }
 
     if( [fromViewController vsNavigationController] != self )
     {
@@ -698,9 +706,8 @@ typedef enum _VSTransitionTypeID {
     return self;
 }
 
--(void)setUnwind:(BOOL)unwind
+-(void)oppositeTransition
 {
-    _unwind = unwind;
     VSTransitionTypeID transition = [VSNavigationViewController transitionNameToID:_transition];
     switch (transition) {
         case kVSTransitionFromRightID:
@@ -729,7 +736,7 @@ typedef enum _VSTransitionTypeID {
     if (_unwind)
     {
         self.transition = [self.sourceViewController lastTransitionType];
-        self.unwind = _unwind;
+        [self oppositeTransition];
         [containerVC invokBackItem:self];
         [containerVC popToViewController:self.destinationViewController transition:_transition];
     }
@@ -751,10 +758,40 @@ typedef enum _VSTransitionTypeID {
             return (VSNavigationViewController *)vc;
         vc = vc.parentViewController;
     }
+    vc = self.destinationViewController;
+    while ( vc )
+    {
+        if( [vc isKindOfClass:klass] )
+            return (VSNavigationViewController *)vc;
+        vc = vc.parentViewController;
+    }
     return nil;
 }
 @end
 
+@implementation VSDismssAndUnwindSegue
+
+-(id)initWithIdentifier:(NSString *)identifier
+                 source:(UIViewController *)source
+            destination:(UIViewController *)destination
+{
+    return [self initWithIdentifier:identifier
+                             source:source
+                        destination:destination
+                             unwind:YES
+                         transition:kVSTransitionNoAnimation];
+}
+
+-(void)perform
+{
+    VSNavigationViewController *containerVC = [self navigationController];
+
+    [containerVC invokBackItem:self];
+    [containerVC popToViewController:self.destinationViewController transition:self.transition];
+    [containerVC dismissViewControllerAnimated:YES completion:nil];
+}
+
+@end
 @implementation VSSlideUpSegue
 
 -(id)initWithIdentifier:(NSString *)identifier

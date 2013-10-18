@@ -74,10 +74,7 @@ APLOGRELEASE
     request.AToken = account.AToken;
     request.Distance = @(20.0);
     request.SortBy = _currentSort;
-    [[APLocation sharedInstance] currentLocation:^BOOL(CLLocationCoordinate2D loc, APError *error) {
-        if( error )
-            return YES;
-
+    [[APLocation sharedInstance] currentLocation:^(CLLocationCoordinate2D loc) {
         request.Lat = @(loc.latitude);
         request.Long = @(loc.longitude);
         [request performRequest:^(id data) {
@@ -86,7 +83,6 @@ APLOGRELEASE
             [_popup dismiss];
             _popup = nil;
         }];
-        return NO;
     }];
 }
 
@@ -123,9 +119,12 @@ APLOGRELEASE
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    APArgoPointsReward * reward = _rewards[[_rewardsTable indexPathForSelectedRow].row];
-    UIViewController *vc = segue.destinationViewController;
-    [vc setValue:reward.MLocID forKey:@"MLocID"];
+    if( [segue.identifier isEqualToString:kSegueRewardsToMerchantDetail] )
+    {
+        APArgoPointsReward * reward = _rewards[[_rewardsTable indexPathForSelectedRow].row];
+        UIViewController *vc = segue.destinationViewController;
+        [vc setValue:reward.MLocID forKey:@"MLocID"];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView

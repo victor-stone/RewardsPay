@@ -19,16 +19,6 @@
 			<string>View distances as kilometer</string>
 		</dict>
 		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>DefaultValue</key>
-			<string>YES</string>
-			<key>Key</key>
-			<string>kSettingSlidingCameraView</string>
-			<key>Title</key>
-			<string>Animated camera</string>
-		</dict>
-		<dict>
 			<key>FooterText</key>
 			<string>Frequent location updates can drain battery life faster</string>
 			<key>Type</key>

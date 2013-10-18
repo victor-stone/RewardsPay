@@ -101,6 +101,7 @@ APLOGRELEASE
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self adjustViewForiOS7];
     
     _cancelButton.layer.masksToBounds = YES;
     _cancelButton.layer.cornerRadius = 8.0;
@@ -174,22 +175,18 @@ APLOGRELEASE
     
     // Step 1. Get location
     //
-    [[APLocation sharedInstance] currentLocation:^BOOL(CLLocationCoordinate2D loc, APError *error) {
-        if( !error )
-        {
-            // Step 2. Request a transactionID from server
-            //
-            APAccount *account = [APAccount currentAccount];
-            start.AToken = account.AToken;
-            start.QrData = _scanResultText;
-            start.Lat = @(loc.latitude);
-            start.Long = @(loc.longitude);
-            [start performRequest:^(APTransactionIDResponse *idResponse) {
-                me.transID = idResponse.TransID;
-                [me handleTransaction];
-            }];
-        }
-        return NO;
+    [[APLocation sharedInstance] currentLocation:^(CLLocationCoordinate2D loc) {
+        // Step 2. Request a transactionID from server
+        //
+        APAccount *account = [APAccount currentAccount];
+        start.AToken = account.AToken;
+        start.QrData = _scanResultText;
+        start.Lat = @(loc.latitude);
+        start.Long = @(loc.longitude);
+        [start performRequest:^(APTransactionIDResponse *idResponse) {
+            me.transID = idResponse.TransID;
+            [me handleTransaction];
+        }];
     }];
 }
 

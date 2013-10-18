@@ -142,6 +142,16 @@
 			<key>DefaultValue</key>
 			<string>NO</string>
 			<key>Key</key>
+			<string>kDebugJSONDumps</string>
+			<key>Title</key>
+			<string>JSON dumps</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>DefaultValue</key>
+			<string>NO</string>
+			<key>Key</key>
 			<string>kDebugViews</string>
 			<key>Title</key>
 			<string>View hierarchy</string>

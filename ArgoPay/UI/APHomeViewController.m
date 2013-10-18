@@ -33,6 +33,13 @@ APLOGRELEASE
     return 1;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    [NSObject performBlock:^{
+        [collectionView deselectItemAtIndexPath:indexPath animated:NO];
+    } afterDelay:0.4];
+}
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -42,6 +49,6 @@ APLOGRELEASE
 
 -(IBAction)unwindFromError:(UIStoryboardSegue *)segue
 {
-    
+    [self broadcast:kNotifyErrorViewClosed payload:segue.sourceViewController];
 }
 @end
