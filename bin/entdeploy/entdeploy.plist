@@ -11,7 +11,7 @@
 					<key>kind</key>
 					<string>software-package</string>
 					<key>url</key>
-					<string>http://timbregroove.org/apps/ipa/ArgoPay.ipa</string>
+					<string>http://timbregroove.org/apps/daily/ipa/ArgoPay.ipa</string>
 				</dict>
 				<dict>
 					<key>kind</key>
@@ -19,7 +19,7 @@
 					<key>needs-shine</key>
 					<true/>
 					<key>url</key>
-					<string>http://timbregroove.org/apps/appIcon@2x.png</string>
+					<string>http://timbregroove.org/apps/daily/appIcon@2x.png</string>
 				</dict>
 				<dict>
 					<key>kind</key>
@@ -27,7 +27,7 @@
 					<key>needs-shine</key>
 					<true/>
 					<key>url</key>
-					<string>http://timbregroove.org/apps/appIcon@2x.png</string>
+					<string>http://timbregroove.org/apps/daily/appIcon@2x.png</string>
 				</dict>
 			</array>
 			<key>metadata</key>

@@ -190,6 +190,7 @@
 		57E7B84117EA042B00205BCB /* VSPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E7B84017EA042B00205BCB /* VSPopup.m */; };
 		57E7B84617EA1BA400205BCB /* APPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E7B84517EA1BA400205BCB /* APPopup.m */; };
 		57E7B84D17EA5C0000205BCB /* APTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E7B84C17EA5C0000205BCB /* APTransaction.m */; };
+		57E8DD071811BDFC00B1296C /* entdeploy.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57E8DD061811BDFC00B1296C /* entdeploy.plist */; };
 		57F3690C180CF955009D0FAC /* APTransactionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57F3690B180CF955009D0FAC /* APTransactionViewController.m */; };
 		57F89F0E1804B19D00A80461 /* kImageLocation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57F89F0A1804B19C00A80461 /* kImageLocation@2x.png */; };
 		57F89F0F1804B19D00A80461 /* kImageLocation-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57F89F0B1804B19C00A80461 /* kImageLocation-selected@2x.png */; };
@@ -463,7 +464,6 @@
 		57C2ED3517F3FAA2003B3CA3 /* index.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; path = index.php; sourceTree = "<group>"; };
 		57C2ED3617F3FAA3003B3CA3 /* JSON.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; path = JSON.php; sourceTree = "<group>"; };
 		57C6C94218045B3C007AB199 /* entdeploy.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = entdeploy.sh; sourceTree = "<group>"; };
-		57C6C94318045B3C007AB199 /* entdeploy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = entdeploy.plist; sourceTree = "<group>"; };
 		57C6C94418045B69007AB199 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		57C6C9461804801B007AB199 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		57C6C949180489B3007AB199 /* appIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon.png; sourceTree = "<group>"; };
@@ -527,6 +527,7 @@
 		57E7B84517EA1BA400205BCB /* APPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPopup.m; sourceTree = "<group>"; };
 		57E7B84B17EA5C0000205BCB /* APTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APTransaction.h; sourceTree = "<group>"; };
 		57E7B84C17EA5C0000205BCB /* APTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APTransaction.m; sourceTree = "<group>"; };
+		57E8DD061811BDFC00B1296C /* entdeploy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = entdeploy.plist; sourceTree = "<group>"; };
 		57F3690B180CF955009D0FAC /* APTransactionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APTransactionViewController.m; sourceTree = "<group>"; };
 		57F89F0A1804B19C00A80461 /* kImageLocation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageLocation@2x.png"; sourceTree = "<group>"; };
 		57F89F0B1804B19C00A80461 /* kImageLocation-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageLocation-selected@2x.png"; sourceTree = "<group>"; };
@@ -1133,8 +1134,8 @@
 		57C6C94118045B1C007AB199 /* entdeploy */ = {
 			isa = PBXGroup;
 			children = (
+				57E8DD061811BDFC00B1296C /* entdeploy.plist */,
 				57C6C94218045B3C007AB199 /* entdeploy.sh */,
-				57C6C94318045B3C007AB199 /* entdeploy.plist */,
 				57C6C94418045B69007AB199 /* README */,
 			);
 			path = entdeploy;
@@ -1389,6 +1390,7 @@
 				57FD285B17FF161B004A50D8 /* kImageSort.png in Resources */,
 				57DA319617FA213500A6978A /* kImageRewards@2x.png in Resources */,
 				579C817817FD94480046BC9B /* kImageLogoutHome-selected@2x.png in Resources */,
+				57E8DD071811BDFC00B1296C /* entdeploy.plist in Resources */,
 				57DA319F17FA296A00A6978A /* kImageSettings-selected.png in Resources */,
 				57DA31A017FA296A00A6978A /* kImageSettings-selected@2x.png in Resources */,
 				57A224B717E913B3000B52E9 /* kImageSettings.png in Resources */,
