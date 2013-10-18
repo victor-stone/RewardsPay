@@ -24,6 +24,9 @@
 @end
 
 @implementation APSettingsViewController
+
+APLOGRELEASE
+
 - (IBAction)done:(id)sender
 {
     [[self vsNavigationController] performBack];

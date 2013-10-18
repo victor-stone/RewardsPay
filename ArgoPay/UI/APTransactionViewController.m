@@ -148,6 +148,15 @@ APLOGRELEASE
 
 @implementation APTransactionViewController
 
+-(void)clearTransaction
+{
+    _transID = nil;
+    _scanResultImage = nil;
+    _scanResultText = nil;
+    _statusResponse = nil;
+    self.popup = nil;
+}
+
 /**
  *  Camera unwind segue lands here after a QR code has been scanned
  *
@@ -255,6 +264,7 @@ APLOGRELEASE
  */
 -(IBAction)unWindFromBillCancel:(UIStoryboardSegue *)segue
 {
+    [self clearTransaction];
     [self userAction:kRemoteValueNO];
 }
 
@@ -289,7 +299,9 @@ APLOGRELEASE
      {
          me.popup = nil;
          APLOG(kDebugScan, @"Server responsded with: %@", response);
-         [APPopup msgWithParent:me.popupParent text:response.UserMessage dismissBlock:nil];
+         [APPopup msgWithParent:me.popupParent text:response.UserMessage dismissBlock:^{
+             [me clearTransaction];
+         }];
      }];
 }
 
@@ -304,4 +316,11 @@ APLOGRELEASE
 {
     return [self tabNavigator].view;
 }
+
+-(IBAction)unwindFromError:(UIStoryboardSegue *)segue
+{
+    [self clearTransaction];
+    [super unwindFromError:segue];
+}
+
 @end

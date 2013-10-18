@@ -13,7 +13,7 @@
 @interface VSTabNavigatorEmbed : UIView
 @end
 
-@interface VSTabNavigatorViewController : UIViewController<VSTabNavigatorDelegate>
+@interface VSTabNavigatorViewController : UIViewController
 @property (nonatomic,weak) IBOutlet VSTabNavigatorEmbed *navigationEmbedding;
 @property (nonatomic,weak) IBOutlet VSTabNavigator *tabNavigator;
 @property (nonatomic,weak)          VSNavigationViewController  *navigationViewController;

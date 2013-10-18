@@ -19,6 +19,8 @@
     GMSMapView *mapView_;
 }
 
+APLOGRELEASE
+
 - (void)loadView
 {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];

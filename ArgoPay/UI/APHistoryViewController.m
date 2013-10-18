@@ -29,6 +29,8 @@
     NSArray *_historyItems;
 }
 
+APLOGRELEASE
+
 -(UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;

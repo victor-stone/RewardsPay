@@ -26,10 +26,7 @@
     bool _didLayerWork;
 }
 
--(UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleLightContent;
-}
+APLOGRELEASE
 
 - (void)viewDidLoad
 {

@@ -37,7 +37,7 @@ NSString *const kAPYouDontHaveToGoHomeButYouCantStayHereKey = @"kAPYouDontHaveTo
             
         case kAPERROR_GPSSYSTEM:
         case kAPERROR_NOGPS:
-            msg = NSLocalizedString(@"ArgoPay requires that you allow us access to your current location. Go the Settings app and change the settings at\nPrivacy->Location", @"GPS error");
+            msg = NSLocalizedString(@"ArgoPay requires that you allow us access to your current location. Go to the Settings app and change the settings at\nPrivacy->Location", @"GPS error");
             break;
             
         case kAPERROR_GPSTIMEOUT:
@@ -45,7 +45,7 @@ NSString *const kAPYouDontHaveToGoHomeButYouCantStayHereKey = @"kAPYouDontHaveTo
             break;
             
         default:
-            msg = NSLocalizedString(@"Sorry, but something didn't quite right", @"Generic error");
+            msg = NSLocalizedString(@"Sorry, but something didn't go quite right", @"Generic error");
             break;
     }
     

@@ -59,7 +59,7 @@ typedef enum _APStartupState {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [self setupAppearances];
+    [self setupAppearances:application];
     [self registerUserDefaults];
     [self registerForNotifications];
     
@@ -128,19 +128,19 @@ typedef enum _APStartupState {
     }
 }
 
--(void)setupAppearances
+-(void)setupAppearances:(UIApplication *)application
 {
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];    
-    /*
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        
+        [application setStatusBarStyle:UIStatusBarStyleLightContent];
+
+        // http://stackoverflow.com/questions/19029833/ios-7-navigation-bar-text-and-arrow-color/19029973#19029973
+
         [[UINavigationBar appearance] setTitleTextAttributes:
-         [NSDictionary dictionaryWithObjectsAndKeys:
-          [UIColor whiteColor], UITextAttributeTextColor,
-          [UIColor blackColor], UITextAttributeTextShadowColor,
-          [NSValue valueWithUIOffset:UIOffsetMake(0, 0)], UITextAttributeTextShadowOffset,
-          nil]];
-    }
-     */
+         @{ NSForegroundColorAttributeName: [UIColor whiteColor]
+            }];
+        [[UINavigationBar appearance] setBarTintColor:[UIColor orangeColor]];
+     }
 }
 
 -(void)showMainAppWindow

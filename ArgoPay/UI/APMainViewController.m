@@ -6,12 +6,16 @@
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 #include "VSTabNavigatorViewController.h"
+#import "APDebug.h"
+#import "APStrings.h"
 
 @interface APMainViewController : VSTabNavigatorViewController
 @property (weak, nonatomic) IBOutlet UIView *orangeBox;
 @end
 
 @implementation APMainViewController
+
+APLOGRELEASE
 
 - (void)viewDidLoad
 {
@@ -23,3 +27,4 @@
 }
 
 @end
+

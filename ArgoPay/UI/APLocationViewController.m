@@ -54,6 +54,7 @@ APLOGRELEASE
 
     [self fetchLocations];
     _viewAsKM = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingViewAsKilometer];
+
     [self registerForBroadcast:kNotifyUserSettingChanged
                          block:^(APLocationListViewController *me, NSDictionary *settings)
      {
@@ -64,7 +65,7 @@ APLOGRELEASE
                  BOOL newSetting = [settings[key] boolValue];
                  if( newSetting != me->_viewAsKM )
                  {
-                     _viewAsKM = newSetting;
+                     me->_viewAsKM = newSetting;
                      [NSObject performBlock:^{
                          [me->_locationsTable reloadData];
                      } afterDelay:0.1];

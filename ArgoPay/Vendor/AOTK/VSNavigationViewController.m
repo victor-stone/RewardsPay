@@ -24,10 +24,23 @@
 @interface VSDismssAndUnwindSegue : VSNavigationSegue
 @end
 
-@interface VSNavigationViewController () <UINavigationBarDelegate> {
-    UINavigationBar *_navigationBar;
-    NSArray *_viewControllers;
-}
+@interface VSNavigationViewController () <UINavigationBarDelegate>
+@end
+
+
+typedef void (^Lamda)();
+typedef void (^BoolLamda)(BOOL);
+
+@interface VSNavWorker : NSObject
+@property (nonatomic,strong) NSArray *viewControllersToRemove;
+@property (nonatomic,strong) NSArray *viewControllersToAdd;
+@property (nonatomic,strong) Lamda finishRemovingViewControllers;
+@property (nonatomic,strong) Lamda finishAddingViewControllers;
+@property (nonatomic,strong) UIViewController *oldTopViewController;
+@property (nonatomic,strong) UIViewController *nuwTopViewController;
+@end
+
+@implementation VSNavWorker
 @end
 
 #pragma mark -
@@ -36,6 +49,8 @@
 @implementation VSNavigationViewController {
     UIColor * _navTextColor;
     BOOL _navBarHidden;
+    UINavigationBar *_navigationBar;
+    NSArray *_viewControllers;
 }
 
 typedef enum _VSTransitionTypeID {
@@ -73,26 +88,11 @@ typedef enum _VSTransitionTypeID {
 - (void)loadView
 {
     self.view = [[UIView alloc] init];
-    // http://stackoverflow.com/questions/19029833/ios-7-navigation-bar-text-and-arrow-color/19029973#19029973
+    
     _navigationBar = [[UINavigationBar alloc] init];
-    
-    _navTextColor = [UIColor whiteColor];
-    
-    if( [_navigationBar respondsToSelector:@selector(barTintColor)] )
-    {
-        _navigationBar.barTintColor = [UIColor orangeColor];
-        _navigationBar.tintColor = [UIColor grayColor];
-    }
-    else
-    {
-        _navigationBar.backgroundColor = [UIColor orangeColor];
-    }
-    
-    _navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: _navTextColor};
-        
     _navigationBar.translucent = NO;
-    
     _navigationBar.delegate = self;
+    _navigationBar.tintColor = [UIColor whiteColor];
     [self.view addSubview:_navigationBar];
 }
 
@@ -335,7 +335,7 @@ typedef enum _VSTransitionTypeID {
     }
     else
     {
-        NAVDEBUG(@"Animation is off, going ahead with %@", transition, viewControllers.lastObject);
+        NAVDEBUG(@"Animation is off, going ahead with %@", transition);
         [self _setViewControllers:viewControllers transition:transition];
     }
 }
@@ -354,39 +354,41 @@ typedef enum _VSTransitionTypeID {
 - (void)_setViewControllers:(NSArray *)viewControllers
                  transition:(VSTransitionType)transitionName
 {
-    typedef void (^Lamda)();
+
+    VSNavWorker * worker = [VSNavWorker new];
     
     // Compare the incoming viewControllers array to the existing navigation
     // stack, seperating the differences into two groups.
-    NSArray *viewControllersToRemove = [_viewControllers filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"NOT (SELF IN %@)", viewControllers]];
-    NSArray *viewControllersToAdd = [viewControllers filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"NOT (SELF IN %@)", _viewControllers]];
+    worker.viewControllersToRemove = [_viewControllers filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"NOT (SELF IN %@)", viewControllers]];
+    worker.viewControllersToAdd = [viewControllers filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"NOT (SELF IN %@)", _viewControllers]];
     
-    for (UIViewController *vc in viewControllersToRemove)
+    for (UIViewController *vc in worker.viewControllersToRemove)
         [vc willMoveToParentViewController:nil];
     
-    for (UIViewController *vc in viewControllersToAdd)
+    for (UIViewController *vc in worker.viewControllersToAdd)
         [self addChildViewController:vc];
     
-    Lamda finishRemovingViewControllers = ^{
-        for (UIViewController *vc in viewControllersToRemove)
+    __weak VSNavWorker * _ww = worker;
+    worker.finishRemovingViewControllers = ^{
+        for (UIViewController *vc in _ww.viewControllersToRemove)
             [vc removeFromParentViewController];
     };
     
-    Lamda finishAddingViewControllers = ^{
-        for (UIViewController *vc in viewControllersToAdd)
+    worker.finishAddingViewControllers = ^{
+        for (UIViewController *vc in _ww.viewControllersToAdd)
             [vc didMoveToParentViewController:self];
     };
     
     // The view controller presently at the top of the navigation stack.
-    UIViewController *oldTopViewController = (_viewControllers.count) ? [_viewControllers lastObject] : nil;
+    worker.oldTopViewController = (_viewControllers.count) ? [_viewControllers lastObject] : nil;
     // The view controller that will be at the stop of the navgation stack.
-    UIViewController *newTopViewController = (viewControllers.count) ? [viewControllers lastObject] : nil;
+    worker.nuwTopViewController = (viewControllers.count) ? [viewControllers lastObject] : nil;
     
     _navBarHidden = NO;
-    if( newTopViewController )
+    if( worker.nuwTopViewController )
     {
-        newTopViewController.navigationItem.hidesBackButton = YES;
-        _navBarHidden = newTopViewController.navigationBarHidden;
+        worker.nuwTopViewController.navigationItem.hidesBackButton = YES;
+        _navBarHidden = worker.nuwTopViewController.navigationBarHidden;
     }
     _navigationBar.hidden = _navBarHidden;
     
@@ -397,63 +399,73 @@ typedef enum _VSTransitionTypeID {
     // If the last object in the incoming viewControllers is the
     // already at the top of the current navigation stack then don't
     // perform any animation as it would be redundant.
-    if (oldTopViewController != newTopViewController)
+    if (worker.oldTopViewController != worker.nuwTopViewController)
     {
-        NAVDEBUG(@"Replacing top with : %@", newTopViewController);
+        NAVDEBUG(@"Replacing top with : %@", worker.nuwTopViewController);
         
         VSNavAnimationBlock animation = [self animationForTransition:transitionName
-                                                oldTopViewController:oldTopViewController
-                                                newTopViewController:newTopViewController];
+                                                oldTopViewController:worker.oldTopViewController
+                                                newTopViewController:worker.nuwTopViewController];
         Lamda oldAnimationDone  = nil;
         Lamda newAnimationDone = nil;
         
-        if (oldTopViewController)
+        if (worker.oldTopViewController)
         {
             oldAnimationDone = ^{
                 //
                 // Removing view here
                 //
-                [oldTopViewController.view removeFromSuperview];
-                finishRemovingViewControllers();
+                [worker.oldTopViewController.view removeFromSuperview];
+                worker.finishRemovingViewControllers();
             };
         }
         else
-            finishRemovingViewControllers();
+            worker.finishRemovingViewControllers();
         
-        if (newTopViewController)
+        if (worker.nuwTopViewController)
         {
             newAnimationDone = ^{
-                finishAddingViewControllers();
+                worker.finishAddingViewControllers();
             };
         }
         else
-            finishAddingViewControllers();
+            worker.finishAddingViewControllers();
         
-        BOOL bOldShouldRasterize = oldTopViewController.view.layer.shouldRasterize;
-        BOOL bNewShouldRasterize = newTopViewController.view.layer.shouldRasterize;
-        oldTopViewController.view.layer.shouldRasterize = YES;
-        newTopViewController.view.layer.shouldRasterize = YES;
-        
-        self.animating = YES;
-        [UIView animateWithDuration:((doAnimation) ? 0.4 : 0) delay:0 options:0 animations:^{
-            if( animation )
-                animation();
-        } completion:^(BOOL finished) {
+        BoolLamda complete = ^(BOOL finished) {
             if( oldAnimationDone )
                 oldAnimationDone();
             if( newAnimationDone )
                 newAnimationDone();
-            oldTopViewController.view.layer.shouldRasterize = bOldShouldRasterize;
-            newTopViewController.view.layer.shouldRasterize = bNewShouldRasterize;
-            self.animating = NO;
-        }];
+        };
+        
+        if( animation )
+        {
+            BOOL bOldShouldRasterize = worker.oldTopViewController.view.layer.shouldRasterize;
+            BOOL bNewShouldRasterize = worker.nuwTopViewController.view.layer.shouldRasterize;
+            worker.oldTopViewController.view.layer.shouldRasterize = YES;
+            worker.nuwTopViewController.view.layer.shouldRasterize = YES;
+            
+            self.animating = YES;
+            [UIView animateWithDuration:((doAnimation) ? 0.4 : 0) delay:0 options:0 animations:^{
+                animation();
+            } completion:^(BOOL finished) {
+                complete(finished);
+                worker.oldTopViewController.view.layer.shouldRasterize = bOldShouldRasterize;
+                worker.nuwTopViewController.view.layer.shouldRasterize = bNewShouldRasterize;
+                self.animating = NO;
+            }];
+        }
+        else
+        {
+            complete(YES);
+        }
     }
     else
     {
         NAVDEBUG(@"Top controller is already on top - no animation")
         // No animation required.
-        finishRemovingViewControllers();
-        finishAddingViewControllers();
+        worker.finishRemovingViewControllers();
+        worker.finishAddingViewControllers();
     }
     
     _viewControllers = viewControllers;
@@ -574,11 +586,14 @@ typedef enum _VSTransitionTypeID {
         if( top.navigationItem.leftBarButtonItems.count == 0 )
         {
             UINavigationItem * backItem = newNavigationItemsArray[ _viewControllers.count - 2 ];
+            
             [self addBackButtonForController:top
                                        title:backItem.title
                                   transition:transitionName
                                        block:^(VSNavigationViewController *me, id sender)
              {
+                 UIViewController * top = me->_viewControllers.lastObject;
+                 
                  if( [sender isKindOfClass:[UIStoryboardSegue class]] )
                      return;
                  
@@ -627,6 +642,7 @@ typedef enum _VSTransitionTypeID {
     button.showsTouchWhenHighlighted = YES;
 
     [button setTitle:title forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont fontWithName:button.titleLabel.font.fontName size:15];
 
     NSString * imageName = nil;
     VSTransitionTypeID transition = [VSNavigationViewController transitionNameToID:transitionName];
@@ -646,7 +662,9 @@ typedef enum _VSTransitionTypeID {
     [button setTintColor:_navigationBar.tintColor];
     
     [button addTarget:self action:@selector(invokBackItem:) forControlEvents:UIControlEventTouchUpInside];
+    
     [vc.backButtonHooks addObject:[block copy]];
+    
     UIBarButtonItem * bbi = [[UIBarButtonItem alloc] initWithCustomView:button];
     bbi.style = UIBarButtonItemStylePlain;
     [vc.navigationItem setLeftBarButtonItems:@[bbi] animated:YES];
@@ -750,22 +768,11 @@ typedef enum _VSTransitionTypeID {
 
 -(VSNavigationViewController *)navigationController
 {
-    Class klass = [VSNavigationViewController class];
-    UIViewController * vc = self.sourceViewController;
-    while ( vc )
-    {
-        if( [vc isKindOfClass:klass] )
-            return (VSNavigationViewController *)vc;
-        vc = vc.parentViewController;
-    }
-    vc = self.destinationViewController;
-    while ( vc )
-    {
-        if( [vc isKindOfClass:klass] )
-            return (VSNavigationViewController *)vc;
-        vc = vc.parentViewController;
-    }
-    return nil;
+    VSNavigationViewController * nav = ((UIViewController *)self.sourceViewController).vsNavigationController;
+    if( !nav )
+        nav = ((UIViewController *)self.destinationViewController).vsNavigationController;
+    
+    return nav;
 }
 @end
 

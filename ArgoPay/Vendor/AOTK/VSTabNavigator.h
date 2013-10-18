@@ -11,14 +11,9 @@
 
 @class VSTabNavigator;
 
-@protocol VSTabNavigatorDelegate <NSObject>
-@required
--(VSNavigationViewController *)vsTabNavigatorGetNavigationController;
-@end
-
 @interface VSTabNavigator : UIView
 
-@property (nonatomic,weak) IBOutlet id<VSTabNavigatorDelegate> delegate;
+@property (nonatomic,weak) IBOutlet UIViewController * delegate;
 
 @property (nonatomic,strong) IBOutletCollection(UIButton) NSArray * tabs;
 

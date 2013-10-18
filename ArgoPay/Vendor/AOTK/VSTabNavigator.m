@@ -40,9 +40,12 @@
             {
                 NSString * action = nil;
                 for( action in [button actionsForTarget:target forControlEvent:UIControlEventTouchUpInside]) { break; }
-                button.tag = nextTag++;
-                _actionSwap[@(button.tag)] = @[ target, action ];
-                [button addTarget:self action:@selector(tabPress:) forControlEvents:UIControlEventTouchUpInside];
+                if( action )
+                {
+                    button.tag = nextTag++;
+                    _actionSwap[@(button.tag)] = @[ target, action ];
+                    [button addTarget:self action:@selector(tabPress:) forControlEvents:UIControlEventTouchUpInside];
+                }
             }
         }
     }
@@ -52,7 +55,7 @@
 -(VSNavigationViewController *)navController
 {
     if( !_navigationController )
-        _navigationController = [_delegate vsTabNavigatorGetNavigationController];
+        _navigationController = _delegate.vsNavigationController;
     return _navigationController;
 }
 
@@ -80,10 +83,9 @@
         seg.doSwap = _selectedTab != nil;
     }
     UIViewController * dest = segue.destinationViewController;
-    VSNavActionBlock block = ^(id ctx, id sender) {
+    [dest.backButtonHooks addObject:^(id ctx, id sender) {
         [self deSelectButton];
-    };
-    [dest.backButtonHooks addObject:block];
+    }];
 }
 
 -(void)selectButton:(UIButton *)button
@@ -154,20 +156,6 @@
         [super perform];
     }
 }
-
--(VSNavigationViewController *)navigationController
-{
-    VSNavigationViewController *nav = nil;
-    SEL sel = @selector(vsTabNavigatorGetNavigationController);
-    
-    if( [self.sourceViewController respondsToSelector:sel] )
-        nav = [self.sourceViewController vsTabNavigatorGetNavigationController];
-    else if( [self.destinationViewController respondsToSelector:sel] )
-        nav = [self.destinationViewController vsTabNavigatorGetNavigationController];
-    
-    return nav;
-}
-
 
 @end
 

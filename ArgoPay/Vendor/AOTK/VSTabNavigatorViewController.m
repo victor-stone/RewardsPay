@@ -40,7 +40,7 @@
     }
 }
 
--(VSNavigationViewController *)vsTabNavigatorGetNavigationController
+-(VSNavigationViewController *)vsNavigationController
 {
     return _navigationViewController;
 }

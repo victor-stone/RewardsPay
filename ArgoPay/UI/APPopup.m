@@ -12,8 +12,6 @@
 
 @implementation APPopup
 
-APLOGRELEASE
-
 +(id)popupWithParent:(UIView *)parent text:(NSString *)text flags:(VSPopupFlags)flags
 {
     return [[APPopup alloc] initWithParent:parent flags:flags textOrView:text];
