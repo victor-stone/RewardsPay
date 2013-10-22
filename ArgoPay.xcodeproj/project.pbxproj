@@ -311,6 +311,7 @@
 		579E4E2417F0C6B900D03437 /* kImageErrorBalloon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageErrorBalloon.png; sourceTree = "<group>"; };
 		579E4E2517F0C6B900D03437 /* kImageErrorBang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageErrorBang.png; sourceTree = "<group>"; };
 		579E4E2917F143A400D03437 /* APErrorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APErrorViewController.m; sourceTree = "<group>"; };
+		579FE72918162AB4007D4638 /* ArgoDeploy.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = ArgoDeploy.m4v; sourceTree = "<group>"; };
 		57A223DF17E90626000B52E9 /* ArgoPay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArgoPay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57A223E217E90626000B52E9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		57A223E417E90626000B52E9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -612,6 +613,7 @@
 		571D75CA17EB46E700F0B869 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
+				579FE72918162AB4007D4638 /* ArgoDeploy.m4v */,
 				571D75CB17EB46E700F0B869 /* artist_psd */,
 				571D75D817EB46E700F0B869 /* specs */,
 				571D75DC17EB46E700F0B869 /* work_scope */,
