@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5700DC5D1816F2B900515226 /* APMerchantMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 5700DC5C1816F2B900515226 /* APMerchantMap.m */; };
 		570EC1CF17F64DFC00CBA207 /* NSObject+KeyPaths.m in Sources */ = {isa = PBXBuildFile; fileRef = 570EC1CE17F64DFC00CBA207 /* NSObject+KeyPaths.m */; };
 		570EC1D617F741C800CBA207 /* APArgoAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 570EC1D517F741C800CBA207 /* APArgoAccountViewController.m */; };
 		570EC1F217F74FED00CBA207 /* ConsumerStatementSummary.js in Resources */ = {isa = PBXBuildFile; fileRef = 570EC1F117F74FED00CBA207 /* ConsumerStatementSummary.js */; };
@@ -217,6 +218,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5700DC5C1816F2B900515226 /* APMerchantMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMerchantMap.m; sourceTree = "<group>"; };
 		57060A50180DA31F001DDC66 /* APHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APHomeViewController.h; sourceTree = "<group>"; };
 		570CD13717F9358D007B36D1 /* GoogleMapsKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GoogleMapsKey.h; sourceTree = "<group>"; };
 		570EC1CD17F64DFC00CBA207 /* NSObject+KeyPaths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+KeyPaths.h"; sourceTree = "<group>"; };
@@ -994,6 +996,7 @@
 				578BB5BE17F248F4009E2F45 /* APRewardViewController.m */,
 				57A2247617E90F47000B52E9 /* APLocationViewController.m */,
 				5713971018036896002F4D3E /* APMerchantMap.h */,
+				5700DC5C1816F2B900515226 /* APMerchantMap.m */,
 				57E08D0E17EF7FAF00E22B1A /* APMerchantDetailViewController.m */,
 				57A2247917E90F47000B52E9 /* APOffersViewController.m */,
 				57A224F217E95153000B52E9 /* APSettingsViewController.m */,
@@ -1451,6 +1454,7 @@
 				57A2246717E90F27000B52E9 /* IASKSpecifierValuesViewController.m in Sources */,
 				57A2246817E90F27000B52E9 /* IASKSettingsReader.m in Sources */,
 				57A2246917E90F27000B52E9 /* IASKSettingsStore.m in Sources */,
+				5700DC5D1816F2B900515226 /* APMerchantMap.m in Sources */,
 				57A2246A17E90F27000B52E9 /* IASKSettingsStoreFile.m in Sources */,
 				57A2246B17E90F27000B52E9 /* IASKSettingsStoreUserDefaults.m in Sources */,
 				57A2246C17E90F27000B52E9 /* IASKSpecifier.m in Sources */,
@@ -1598,7 +1602,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Victor Stone (HP2QCTSVH4)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../gmapInit\"",
@@ -1613,7 +1617,7 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "74490817-B6FD-44C5-9F63-B90850AF3A9C";
+				PROVISIONING_PROFILE = "28A27E00-7420-4347-B884-6BA833D43A13";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1638,7 +1642,7 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "74490817-B6FD-44C5-9F63-B90850AF3A9C";
+				PROVISIONING_PROFILE = "28A27E00-7420-4347-B884-6BA833D43A13";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

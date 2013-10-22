@@ -32,17 +32,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *merchantName;
 @property (weak, nonatomic) IBOutlet UILabel *expiration;
 @property (weak, nonatomic) IBOutlet UILabel *offerName;
-@property (weak, nonatomic) IBOutlet UITextView *offerDetail;
+@property (weak, nonatomic) IBOutlet UIButton *infoButton;
+
 @property (nonatomic,strong) APOffer *offer;
 @end
 
 @implementation APOfferDetailViewController {
     __weak  APMerchantDetailMapEmbedding * _map;    
-}
-
--(UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleLightContent;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -59,11 +55,22 @@
     [self view]; // force viewDidLoad
     _map.merchant = offer;
 
-    [_logo setImageWithURL:[NSURL URLWithString:offer.ImageURL] placeholderImage:[UIImage imageNamed:kImageOffers]];
+    [_logo setImageWithURL:[NSURL URLWithString:offer.ImageURL] placeholderImage:[UIImage imageNamed:SELECTEDIMG(kImageOffers)]];
     _merchantName.text = offer.Name;
-    _offerName.text = offer.Description;
-    _offerDetail.text = offer.LongDescription;
-    _expiration.text = [NSString stringWithFormat:NSLocalizedString(@"Expires: %@", @"offer detail"),[offer formatDateField:@"DateTo"]];
+    _offerName.text    = offer.Description;
+    _expiration.text   = [NSString stringWithFormat:NSLocalizedString(@"Expires: %@", @"offer detail"),
+                                [offer formatDateField:@"DateTo"]];
+    
+    // This seems to be theoritical field:
+
+    //if( !offer.LongDescription.length )
+    {
+        _infoButton.hidden = YES;
+    }
+}
+- (IBAction)infoButtonTap:(id)sender
+{
+    [APPopup popupWithParent:self.view text:_offer.LongDescription flags:kPopupCloseOnAnyTap];
 }
 
 @end

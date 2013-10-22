@@ -22,6 +22,7 @@ APKEYEDSTRING(kSettingUserUniqueID)
 APKEYEDSTRING(kSettingUserLastLat)
 APKEYEDSTRING(kSettingUserLastLong)
 APKEYEDSTRING(kSettingUserFirstInvoke)
+APKEYEDSTRING(kSettingUserUseGoogleMaps)
 
 APKEYEDSTRING(kSettingSystemBuildNumber)
 APKEYEDSTRING(kSettingFrequentGPS)
@@ -49,7 +50,8 @@ APKEYEDSTRING(kSegueEmbedMerchantMap)
 APKEYEDSTRING(kSegueEmbedOfferMap)
 APKEYEDSTRING(kSegueCameraUnwind)
 APKEYEDSTRING(kSegueTransactionBill)
-
+APKEYEDSTRING(kSegueLocationsToPinMap)
+APKEYEDSTRING(kSegueNearyByMapEmbedding)
 
 APKEYEDSTRING(kCellIDMenu)
 APKEYEDSTRING(kCellIDReward)

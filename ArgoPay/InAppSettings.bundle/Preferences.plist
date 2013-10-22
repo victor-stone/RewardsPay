@@ -7,6 +7,8 @@
 		<dict>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
+			<key>FooterText</key>
+			<string>Use the Google Maps App for directions if it is installed.</string>
 		</dict>
 		<dict>
 			<key>Type</key>
@@ -19,10 +21,20 @@
 			<string>View distances as kilometer</string>
 		</dict>
 		<dict>
-			<key>FooterText</key>
-			<string>Frequent location updates can drain battery life faster</string>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>DefaultValue</key>
+			<string>YES</string>
+			<key>Key</key>
+			<string>kSettingUserUseGoogleMaps</string>
+			<key>Title</key>
+			<string>Use Google (tm) Maps</string>
+		</dict>
+		<dict>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
+			<key>FooterText</key>
+			<string>Frequent location updates can drain battery life faster</string>
 		</dict>
 		<dict>
 			<key>Type</key>

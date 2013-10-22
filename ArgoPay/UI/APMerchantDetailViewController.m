@@ -10,51 +10,10 @@
 #import "APStrings.h"
 #import "APPopup.h"
 #import "APAccount.h"
-#import <GoogleMaps/GoogleMaps.h>
 #import "APArgoPointsReward.h"
-#import "APMerchantMap.h"
 #import "VSTabNavigatorViewController.h"
+#import "APMerchantMap.h"
 
-@implementation APMerchantDetailMapEmbedding {
-    GMSMapView *mapView_;
-}
-
-APLOGRELEASE
-
-- (void)loadView
-{
-    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-    CLLocationDegrees mlat  = [defaults doubleForKey:kSettingUserLastLat];
-    CLLocationDegrees mlong = [defaults doubleForKey:kSettingUserLastLong];
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:mlat
-                                                            longitude:mlong
-                                                                 zoom:13];
-    mapView_ = [GMSMapView mapWithFrame:CGRectZero camera:camera];
-    self.view = mapView_;
-}
-
--(void)setMerchant:(APMerchant *)merchant
-{
-    _merchant = merchant;
-    [self view]; // force viewDidLoad
-
-    CLLocationDegrees mlat  = [_merchant.Lat doubleValue];
-    CLLocationDegrees mlong = [_merchant.Long doubleValue];
-    APLOG(kDebugLocation, @"Creating map for %@ at %.3f, %.3f", _merchant.Name, mlat, mlong);
-    
-    CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(mlat,mlong);
-    [mapView_ moveCamera:[GMSCameraUpdate setTarget:coord]];
-    // Creates a marker in the center of the map.
-    GMSMarker *marker = [[GMSMarker alloc] init];
-    marker.position = coord;
-    marker.title = _merchant.Name;
-    marker.snippet = _merchant.Description;
-    marker.map = mapView_;
-    
-    mapView_.myLocationEnabled = YES;
-    mapView_.settings.myLocationButton = YES;
-}
-@end
 
 @interface APMerchantDetailCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *points;

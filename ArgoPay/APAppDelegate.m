@@ -218,7 +218,8 @@ typedef enum _APStartupState {
              kSettingUserUniqueID: [[NSProcessInfo processInfo] globallyUniqueString],
              kSettingSystemBuildNumber: [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"],
              kSettingFrequentGPS: @(YES),
-             kSettingViewAsKilometer: @(YES)
+             kSettingViewAsKilometer: @(YES),
+             kSettingUserUseGoogleMaps: @(YES)
              
 #ifdef ALLOW_DEBUG_SETTINGS
              ,kSettingDebugNetworkStubbed: @"file"

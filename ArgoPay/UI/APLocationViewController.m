@@ -13,6 +13,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "APLocation.h"
 #import "APPopup.h"
+#import "APMerchantMap.h"
 
 #define KM_TO_MILES_MULTIPLIER 0.621371192
 
@@ -33,7 +34,6 @@
     NSArray *_locations;
     CLLocation *_userLocation;
     BOOL _viewAsKM;
-
 }
 
 APLOGRELEASE
@@ -47,7 +47,7 @@ APLOGRELEASE
                                              title:nil
                                              block:^(APLocationListViewController *me, id sender)
     {
-        // flip to mapview
+        [me performSegueWithIdentifier:kSegueLocationsToPinMap sender:sender];
     }];
     
     self.navigationItem.rightBarButtonItems = @[bbi];
@@ -145,6 +145,17 @@ APLOGRELEASE
         UIViewController * vc = segue.destinationViewController;
         [vc setValue:merchant.MLocID forKey:@"MLocID"];
         [_locationsTable deselectRowAtIndexPath:indexPath animated:NO];
+    }
+    else if( [segue.identifier isEqualToString:kSegueLocationsToPinMap] )
+    {
+        APMerchantMap * map = segue.destinationViewController;
+        // for now center on first merchant
+        APMerchant * merchant = _locations[0];
+        CLLocationDegrees mlat  = [merchant.Lat doubleValue];
+        CLLocationDegrees mlong = [merchant.Long doubleValue];
+        CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(mlat,mlong);
+        map.homeLocation = coord; // _userLocation.coordinate;
+        map.merchants = _locations;
     }
 }
 

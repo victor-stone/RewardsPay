@@ -44,6 +44,11 @@ APLOGRELEASE
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
     [fmt setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDate *date = [fmt dateFromString:value];
+    if( !date )
+    {
+        [fmt setDateFormat:@"yyyy-MM-dd"];
+        date = [fmt dateFromString:value];
+    }
     return [NSDateFormatter localizedStringFromDate:date dateStyle:style timeStyle:NSDateFormatterNoStyle];
 }
 @end
