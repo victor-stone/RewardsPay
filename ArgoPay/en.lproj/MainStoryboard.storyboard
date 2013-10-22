@@ -59,12 +59,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ys5-IS-3gy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-862" y="-1078"/>
+            <point key="canvasLocation" x="-2197" y="-972"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="5">
             <objects>
-                <viewController storyboardIdentifier="kViewMain" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="2" customClass="APMainViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="kViewMain" useStoryboardIdentifierAsRestorationIdentifier="YES" id="2" customClass="APMainViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YVx-Ak-udI"/>
                         <viewControllerLayoutGuide type="bottom" id="2Hj-ce-Xpi"/>
@@ -901,7 +901,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nHH-Jl-bf4" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Q8S-w0-phG" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-318" y="-1431"/>
+            <point key="canvasLocation" x="-952" y="-1315"/>
         </scene>
         <!--Settings View Controller - Settings-->
         <scene sceneID="oKx-bA-Tiz">
@@ -1479,7 +1479,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KKF-Ry-s2z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-261" y="-1002"/>
+            <point key="canvasLocation" x="-349" y="-882"/>
         </scene>
         <!--Merchant Detail View Controller - Merchant-->
         <scene sceneID="Uaq-MT-Ocu">

@@ -41,7 +41,7 @@ APLOGRELEASE
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-#warning Add Home Button here
+//#warning Add Home Button here
     
     UIBarButtonItem *bbi = [self barButtonForImage:kImageMapView
                                              title:nil

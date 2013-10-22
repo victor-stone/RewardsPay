@@ -11,7 +11,7 @@
 
 #define VS_VIEWCONTROLLER_DECLS
 
-#define VSNAV_STRING(name) NSString * const name = @ #name;
+#define VSNAV_STRING(name) NSString * const name = @#name;
 
 #import "VSNavigationViewController.h"
 
