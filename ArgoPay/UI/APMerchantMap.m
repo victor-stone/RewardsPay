@@ -98,7 +98,8 @@ didTapInfoWindowOfMarker:(GMSMarker *)marker
                         merchant.Name, merchant.Addr1, merchant.City, merchant.State, merchant.Zip];
     query = [query stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     
-    BOOL hasGoogleMaps = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"comgooglemaps://"]];
+    BOOL userSetting = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingUserUseGoogleMaps];
+    BOOL hasGoogleMaps = userSetting && [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"comgooglemaps://"]];
     NSString * app;
     if( hasGoogleMaps )
     {
