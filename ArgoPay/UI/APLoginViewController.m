@@ -10,6 +10,9 @@
 #import "APStrings.h"
 #import "APPopup.h"
 
+#define NUM_SECRET_QUESTIONS 3
+#define HEADER_COMPONENT 0
+#define QUESTIONS_COMPONENT 1
 
 @interface APSignUp2ViewController : UIViewController<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *password;
@@ -124,7 +127,7 @@
     NSUInteger * _pickedQuestions;
     
     NSArray * _questionSets;
-    NSArray * _headers;
+    NSMutableArray * _headers;
     
     NSMutableArray * _currentStructure;
 }
@@ -133,14 +136,14 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    static NSUInteger s_pickedQuestions[3];
+    static NSUInteger s_pickedQuestions[NUM_SECRET_QUESTIONS];
     
     _submitButton.layer.masksToBounds = YES;
     _submitButton.layer.cornerRadius = 8.0;
     _resetButton.layer.masksToBounds = YES;
     _resetButton.layer.cornerRadius = 8.0;
     _pickedQuestions = s_pickedQuestions;
-    _pickedQuestions[0] = _pickedQuestions[1] = _pickedQuestions[2] = 0;
+    memset(_pickedQuestions, 0, sizeof(s_pickedQuestions));
     
     _questionSets = @[ @[@"Name of first pet.",
                          @"Mother's DJ name.",
@@ -152,10 +155,13 @@
                          @"OKC strikes at the ___ of ____.",
                          @"Your mother winced when..."]];
 
-    _headers =  @[ @"#1", @"#2", @"#3" ];
+    _headers = [NSMutableArray arrayWithCapacity:NUM_SECRET_QUESTIONS];
+    for( NSUInteger i = 0; i < NUM_SECRET_QUESTIONS; i++ )
+        [_headers addObject:[NSString stringWithFormat:@"#%d",i+1]];
     
-    _currentStructure = [NSMutableArray arrayWithArray: @[ _headers, _questionSets[0] ] ];
-    
+    _currentStructure = [NSMutableArray arrayWithCapacity:2];
+    _currentStructure[HEADER_COMPONENT] = _headers;
+    _currentStructure[QUESTIONS_COMPONENT] = _questionSets[0];
 }
 
 - (void)changeQuestion:(NSUInteger)newSeg picker:(UIPickerView *)pickerView
@@ -165,7 +171,7 @@
     APAnswerField * nextField = _answers[newSeg];
     nextField.hidden = NO;
     _currentQuestionSet = newSeg;
-    _currentStructure[1] = _questionSets[_currentQuestionSet];
+    _currentStructure[QUESTIONS_COMPONENT] = _questionSets[_currentQuestionSet];
     [pickerView reloadComponent:1];
     NSUInteger row = _pickedQuestions[_currentQuestionSet];
     [pickerView selectRow:row inComponent:1 animated:NO];
@@ -187,10 +193,22 @@
     return [_currentStructure[component] count];
 }
 
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+- (UIView *)pickerView:(UIPickerView *)pickerView
+            viewForRow:(NSInteger)row
+          forComponent:(NSInteger)component
+           reusingView:(UIView *)view
 {
-    return _currentStructure[component][row];
+    UILabel * label = (UILabel *)view;
+    if( !label )
+    {
+        label = [[UILabel alloc] init];
+        label.minimumScaleFactor = 0.5;
+    }
+    label.text = _currentStructure[component][row];
+    [label sizeToFit];
+    return label;
 }
+
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
 {
@@ -204,7 +222,7 @@
       didSelectRow:(NSInteger)row
        inComponent:(NSInteger)component
 {
-    if( component == 0 )
+    if( component == HEADER_COMPONENT )
     {
         if( row != _currentQuestionSet )
         {
@@ -221,6 +239,9 @@
 {
     [textField resignFirstResponder];
     [self.view becomeFirstResponder];
+    NSUInteger nextQSet = (_currentQuestionSet + 1) % NUM_SECRET_QUESTIONS;
+    [self changeQuestion:nextQSet picker:_picker];
+    [_picker selectRow:nextQSet inComponent:HEADER_COMPONENT animated:YES];
     return YES;
 }
 
@@ -242,6 +263,7 @@
     _nextButton.layer.cornerRadius = 8.0;
     _email.delegate = self;
     _username.delegate = self;
+    [_email resignFirstResponder];
 }
 - (IBAction)nextTap:(id)sender
 {

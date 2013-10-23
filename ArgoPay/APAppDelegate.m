@@ -222,7 +222,8 @@ typedef enum _APStartupState {
              kSettingUserUseGoogleMaps: @(YES)
              
 #ifdef ALLOW_DEBUG_SETTINGS
-             ,kSettingDebugNetworkStubbed: @"file"
+             ,kSettingDebugNetworkStubbed: @"dev.argopay.com"
+             ,kSettingDebugSendStubData: @(YES)
              ,kSettingDebugLocalhostAddr: @"testingargo.192.168.1.2.xip.io"
 #endif
              };

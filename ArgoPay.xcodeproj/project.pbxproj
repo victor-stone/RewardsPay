@@ -1617,7 +1617,7 @@
 		57A2240317E90626000B52E9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Victor Stone (HP2QCTSVH4)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
