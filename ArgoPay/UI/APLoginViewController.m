@@ -119,9 +119,14 @@
 @end
 
 @implementation APSignUp3ViewController {
-    NSArray * _questionSet;
-    NSUInteger _selectedQuestion;
-    NSUInteger * _pickedQuestion;
+    NSUInteger _currentQuestionSet;
+    
+    NSUInteger * _pickedQuestions;
+    
+    NSArray * _questionSets;
+    NSArray * _headers;
+    
+    NSMutableArray * _currentStructure;
 }
 
 
@@ -134,26 +139,36 @@
     _submitButton.layer.cornerRadius = 8.0;
     _resetButton.layer.masksToBounds = YES;
     _resetButton.layer.cornerRadius = 8.0;
-    _pickedQuestion = s_pickedQuestions;
-    _pickedQuestion[0] = _pickedQuestion[1] = _pickedQuestion[2] = -1UL;
+    _pickedQuestions = s_pickedQuestions;
+    _pickedQuestions[0] = _pickedQuestions[1] = _pickedQuestions[2] = 0;
     
-    _questionSet = @[ @"Name of first pet.",
-                      @"Mother's maiden name.",
-                      @"BFF who stole your GF/BF.",
-                      @"Favorite NYC subway line.",
-                      @"Least fav Glee cast member.",
-                      @"1st time U were Rickrolled.",
-                      @"Your mother winced when..."];
+    _questionSets = @[ @[@"Name of first pet.",
+                         @"Mother's DJ name.",
+                         @"BFF who stole your GF/BF."],
+                       @[@"Favorite NYC subway line.",
+                         @"Least fav Glee cast member.",
+                         @"1st time U were Rickrolled."],
+                       @[@"Juice is to Hat as...",
+                         @"OKC strikes at the ___ of ____.",
+                         @"Your mother winced when..."]];
+
+    _headers =  @[ @"#1", @"#2", @"#3" ];
+    
+    _currentStructure = [NSMutableArray arrayWithArray: @[ _headers, _questionSets[0] ] ];
+    
 }
 
-- (IBAction)changeQuestion:(UISegmentedControl *)sender
+- (void)changeQuestion:(NSUInteger)newSeg picker:(UIPickerView *)pickerView
 {
-    NSUInteger newSeg = sender.selectedSegmentIndex;
-    APAnswerField * oldField = _answers[_selectedQuestion];
+    APAnswerField * oldField = _answers[_currentQuestionSet];
     oldField.hidden = YES;
     APAnswerField * nextField = _answers[newSeg];
     nextField.hidden = NO;
-    _selectedQuestion = newSeg;
+    _currentQuestionSet = newSeg;
+    _currentStructure[1] = _questionSets[_currentQuestionSet];
+    [pickerView reloadComponent:1];
+    NSUInteger row = _pickedQuestions[_currentQuestionSet];
+    [pickerView selectRow:row inComponent:1 animated:NO];
 }
 
 - (IBAction)submit:(id)sender {
@@ -164,28 +179,48 @@
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
-    return 1;
+    return 2;
 }
 
-// returns the # of rows in each component..
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return _questionSet.count;
+    return [_currentStructure[component] count];
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return _questionSet[row];
+    return _currentStructure[component][row];
 }
 
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
 {
-    _selectedQuestion = row;
+    CGFloat w = self.view.frame.size.width;
+    if( component == 0 )
+        return w * 0.15;
+    return w * 0.85;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView
+      didSelectRow:(NSInteger)row
+       inComponent:(NSInteger)component
+{
+    if( component == 0 )
+    {
+        if( row != _currentQuestionSet )
+        {
+            [self changeQuestion:row picker:pickerView];
+        }
+    }
+    else
+    {
+        _pickedQuestions[_currentQuestionSet] = row;
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
+    [self.view becomeFirstResponder];
     return YES;
 }
 
