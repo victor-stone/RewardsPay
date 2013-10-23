@@ -47,7 +47,7 @@
     }
     else
     {
-        [self performSegueWithIdentifier:kSegueSignUp1to2 sender:self];
+        [self performSegueWithIdentifier:kSegueSignUp2to3 sender:self];
     }
 }
 
@@ -58,11 +58,6 @@
     else
         [self nextTap:textField];
     return YES;
-}
-
--(IBAction)unwindToSignUp1:(UIStoryboardSegue *)segue
-{
-    
 }
 
 @end
@@ -86,18 +81,44 @@
 
 @end
 
+@interface APAnswerField : UITextField
+
+@end
+
+@implementation APAnswerField
+
+- (id<CAAction>)actionForLayer:(CALayer *)theLayer
+                        forKey:(NSString *)theKey {
+    
+    CATransition *theAnimation = nil;
+    // kCAOnOrderIn
+    if ( [theKey isEqualToString:@"hidden"] ) {
+        
+        theAnimation = [[CATransition alloc] init];
+        theAnimation.duration = 0.2;
+        theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+        theAnimation.type = kCATransitionPush;
+        theAnimation.subtype = kCATransitionFromRight;
+    }
+    return theAnimation;
+}
+
+
+@end
+
 @interface APSignUp3ViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIPickerView *picker;
 @property (weak, nonatomic) IBOutlet UIButton *submitButton;
 @property (weak, nonatomic) IBOutlet UIButton *resetButton;
 
+@property (strong,nonatomic) IBOutletCollection(APAnswerField) NSArray * answers;
+
 @end
 
-@interface APSignUp3ViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
+@interface APSignUp3ViewController () <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate>
 @end
 
 @implementation APSignUp3ViewController {
-    NSMutableArray * _answers;
     NSArray * _questionSet;
     NSUInteger _selectedQuestion;
     NSUInteger * _pickedQuestion;
@@ -117,19 +138,24 @@
     _pickedQuestion[0] = _pickedQuestion[1] = _pickedQuestion[2] = -1UL;
     
     _questionSet = @[ @"Name of first pet.",
-                     @"Mother's maiden name.",
-                      @"Best friend who stole your girlfriend/boyfriend.",
-                      @"Your favorite NYC subway line.",
-                      @"Your least favorite Glee cast member.",
-                      @"The first time you were Rickrolled.",
-                      @"The things your mother that make you wince."];
+                      @"Mother's maiden name.",
+                      @"BFF who stole your GF/BF.",
+                      @"Favorite NYC subway line.",
+                      @"Least fav Glee cast member.",
+                      @"1st time U were Rickrolled.",
+                      @"Your mother winced when..."];
 }
 
 - (IBAction)changeQuestion:(UISegmentedControl *)sender
 {
+    NSUInteger newSeg = sender.selectedSegmentIndex;
+    APAnswerField * oldField = _answers[_selectedQuestion];
+    oldField.hidden = YES;
+    APAnswerField * nextField = _answers[newSeg];
+    nextField.hidden = NO;
+    _selectedQuestion = newSeg;
 }
-- (IBAction)answer:(id)sender {
-}
+
 - (IBAction)submit:(id)sender {
 }
 
@@ -155,6 +181,12 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     _selectedQuestion = row;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end

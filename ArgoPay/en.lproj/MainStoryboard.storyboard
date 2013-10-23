@@ -674,10 +674,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             </objects>
             <point key="canvasLocation" x="-435" y="-3924"/>
         </scene>
-        <!--Sign Up2 View Controller - Step 3-->
+        <!--Sign Up3 View Controller - Step 3-->
         <scene sceneID="zZ2-Z4-Dxe">
             <objects>
-                <viewController id="0vx-qE-OSp" customClass="APSignUp2ViewController" sceneMemberID="viewController">
+                <viewController id="0vx-qE-OSp" customClass="APSignUp3ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DxE-uu-f07"/>
                         <viewControllerLayoutGuide type="bottom" id="H0s-SB-ABx"/>
@@ -751,27 +751,26 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     <segment title="Question #3"/>
                                 </segments>
                                 <connections>
-                                    <action selector="changeQuestion:" destination="0vx-qE-OSp" eventType="valueChanged" id="uiG-Dd-3io"/>
+                                    <action selector="changeQuestion:" destination="0vx-qE-OSp" eventType="valueChanged" id="YHj-FA-LIs"/>
                                 </connections>
                             </segmentedControl>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Answer:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Btk-QC-Jno">
-                                <rect key="frame" x="12" y="124" width="56" height="21"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Answer #1" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="O5R-33-9Pg" customClass="APAnswerField">
+                                <rect key="frame" x="13" y="120" width="296" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="56" id="0bS-CK-Ax9"/>
-                                    <constraint firstAttribute="height" constant="21" id="ruY-Sl-GT8"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Answer #1" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="O5R-33-9Pg">
-                                <rect key="frame" x="70" y="120" width="239" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                            </textField>
+                            <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Answer #2" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="gWC-jd-ubo" customClass="APAnswerField">
+                                <rect key="frame" x="13" y="120" width="296" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="answer:" destination="0vx-qE-OSp" eventType="editingDidEnd" id="RJL-uc-xgq"/>
-                                </connections>
+                            </textField>
+                            <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Answer #3" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Fke-aN-Xom" customClass="APAnswerField">
+                                <rect key="frame" x="13" y="120" width="296" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pV8-KI-Mvj">
                                 <rect key="frame" x="178" y="449" width="96" height="36"/>
@@ -805,6 +804,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         </subviews>
                         <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="O5R-33-9Pg" firstAttribute="top" secondItem="15W-oA-hXe" secondAttribute="bottom" constant="8" symbolic="YES" id="6Z0-kX-llq"/>
                             <constraint firstItem="3Wf-aL-RWj" firstAttribute="leading" secondItem="OuN-Cf-NQ6" secondAttribute="leading" id="FC2-Wg-8ox"/>
                             <constraint firstAttribute="trailing" secondItem="PAi-Wa-sEq" secondAttribute="trailing" constant="20" symbolic="YES" id="GXV-yw-Rm1"/>
                             <constraint firstItem="PAi-Wa-sEq" firstAttribute="top" secondItem="15W-oA-hXe" secondAttribute="bottom" constant="70" id="Kmg-PM-whk"/>
@@ -812,29 +812,29 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             <constraint firstItem="15W-oA-hXe" firstAttribute="centerX" secondItem="PAi-Wa-sEq" secondAttribute="centerX" id="LTL-e2-vBv"/>
                             <constraint firstItem="3Wf-aL-RWj" firstAttribute="top" secondItem="PAi-Wa-sEq" secondAttribute="bottom" constant="8" symbolic="YES" id="LwW-BA-xHX"/>
                             <constraint firstItem="7oK-UR-Fwn" firstAttribute="centerX" secondItem="15W-oA-hXe" secondAttribute="centerX" id="NYc-ld-fbZ"/>
-                            <constraint firstItem="Btk-QC-Jno" firstAttribute="leading" secondItem="15W-oA-hXe" secondAttribute="leading" constant="2" id="RQU-HA-iLo"/>
                             <constraint firstItem="pV8-KI-Mvj" firstAttribute="leading" secondItem="tEb-lI-Jpo" secondAttribute="trailing" constant="36" id="bQ4-zh-p9Q"/>
-                            <constraint firstItem="O5R-33-9Pg" firstAttribute="trailing" secondItem="7oK-UR-Fwn" secondAttribute="trailing" constant="2" id="bha-wZ-8XG"/>
                             <constraint firstItem="15W-oA-hXe" firstAttribute="leading" secondItem="OuN-Cf-NQ6" secondAttribute="leading" constant="10" id="dRB-hc-Qb1"/>
-                            <constraint firstItem="O5R-33-9Pg" firstAttribute="top" secondItem="3Wf-aL-RWj" secondAttribute="bottom" constant="-260" id="eEs-OJ-SQX"/>
+                            <constraint firstItem="O5R-33-9Pg" firstAttribute="leading" secondItem="7oK-UR-Fwn" secondAttribute="leading" id="hVz-sa-u3M"/>
                             <constraint firstAttribute="trailing" secondItem="pV8-KI-Mvj" secondAttribute="trailing" constant="46" id="hqK-oX-EFs"/>
                             <constraint firstItem="tEb-lI-Jpo" firstAttribute="leading" secondItem="OuN-Cf-NQ6" secondAttribute="leading" constant="46" id="iT6-6h-Hh2"/>
                             <constraint firstItem="tEb-lI-Jpo" firstAttribute="top" secondItem="pV8-KI-Mvj" secondAttribute="top" id="id1-1I-I6B"/>
                             <constraint firstItem="PAi-Wa-sEq" firstAttribute="top" secondItem="7oK-UR-Fwn" secondAttribute="bottom" constant="101" id="kBE-y1-2zc"/>
                             <constraint firstItem="H0s-SB-ABx" firstAttribute="top" secondItem="pV8-KI-Mvj" secondAttribute="bottom" constant="19" id="lA9-4e-zxp"/>
+                            <constraint firstAttribute="trailing" secondItem="O5R-33-9Pg" secondAttribute="trailing" constant="11" id="naz-gW-rZG"/>
                             <constraint firstAttribute="bottom" secondItem="tEb-lI-Jpo" secondAttribute="bottom" constant="20" symbolic="YES" id="nsO-Hi-55X"/>
-                            <constraint firstItem="Btk-QC-Jno" firstAttribute="top" secondItem="3Wf-aL-RWj" secondAttribute="bottom" constant="-256" id="oBp-BB-aoQ"/>
                             <constraint firstItem="15W-oA-hXe" firstAttribute="top" secondItem="DxE-uu-f07" secondAttribute="bottom" constant="71" id="p28-rd-aQ1"/>
-                            <constraint firstItem="O5R-33-9Pg" firstAttribute="leading" secondItem="Btk-QC-Jno" secondAttribute="trailing" constant="2" id="rdA-4i-Lnh"/>
                             <constraint firstItem="PAi-Wa-sEq" firstAttribute="centerX" secondItem="3Wf-aL-RWj" secondAttribute="centerX" id="xdW-ng-FhF"/>
                             <constraint firstItem="7oK-UR-Fwn" firstAttribute="leading" secondItem="OuN-Cf-NQ6" secondAttribute="leading" constant="13" id="yKw-mK-9qE"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Step 3" id="252-yc-bbk"/>
                     <connections>
-                        <outlet property="picker" destination="3Wf-aL-RWj" id="WtU-sI-mvM"/>
+                        <outlet property="picker" destination="3Wf-aL-RWj" id="vt7-dq-iBs"/>
                         <outlet property="resetButton" destination="tEb-lI-Jpo" id="rOh-mp-Aew"/>
                         <outlet property="submitButton" destination="pV8-KI-Mvj" id="t7H-I2-koR"/>
+                        <outletCollection property="answers" destination="O5R-33-9Pg" id="oxp-eF-qX8"/>
+                        <outletCollection property="answers" destination="gWC-jd-ubo" id="DAv-v8-e3l"/>
+                        <outletCollection property="answers" destination="Fke-aN-Xom" id="ITC-GA-CSg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hOe-iv-P10" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2739,7 +2739,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     </view>
                     <navigationItem key="navigationItem" title="Sign Up" id="0nO-a0-zBD"/>
                     <connections>
+                        <outlet property="email" destination="YWs-jJ-ZGD" id="sp8-PA-JSL"/>
                         <outlet property="nextButton" destination="VEx-R8-bGp" id="1EC-h2-Brr"/>
+                        <outlet property="username" destination="wSC-Zd-3yy" id="GDV-dD-dpZ"/>
                         <segue destination="VSi-KA-eqZ" kind="push" identifier="kSegueSignUp1to2" id="fDV-Bz-SNZ"/>
                     </connections>
                 </viewController>
@@ -2747,10 +2749,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             </objects>
             <point key="canvasLocation" x="-1414" y="-3120"/>
         </scene>
-        <!--View Controller - Step 2-->
+        <!--Sign Up2 View Controller - Step 2-->
         <scene sceneID="U7f-7C-xUf">
             <objects>
-                <viewController id="VSi-KA-eqZ" sceneMemberID="viewController">
+                <viewController id="VSi-KA-eqZ" customClass="APSignUp2ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fg3-ii-h9Z"/>
                         <viewControllerLayoutGuide type="bottom" id="eOo-Aw-gdK"/>
@@ -2834,6 +2836,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="nextTap:" destination="VSi-KA-eqZ" eventType="touchUpInside" id="OlM-AG-PkT"/>
                                     <action selector="nextTap:" destination="vad-F4-Sbw" eventType="touchUpInside" id="hCG-pa-Djw"/>
                                 </connections>
                             </button>
@@ -2859,6 +2862,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     </view>
                     <navigationItem key="navigationItem" title="Step 2" id="5gC-pX-cPW"/>
                     <connections>
+                        <outlet property="confirmPassword" destination="7jr-Of-w5a" id="bGy-pg-b0P"/>
+                        <outlet property="nextButton" destination="5qu-mI-IFL" id="4UN-nY-dfW"/>
+                        <outlet property="password" destination="HKj-5Z-hvP" id="HkG-5g-PMf"/>
                         <segue destination="0vx-qE-OSp" kind="push" identifier="kSegueSignUp2to3" id="cuS-lv-Qri"/>
                     </connections>
                 </viewController>
