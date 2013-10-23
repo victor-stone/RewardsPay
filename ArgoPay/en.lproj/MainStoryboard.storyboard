@@ -764,13 +764,13 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <rect key="frame" x="13" y="120" width="296" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                             <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Answer #3" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Fke-aN-Xom" customClass="APAnswerField">
                                 <rect key="frame" x="13" y="120" width="296" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pV8-KI-Mvj">
                                 <rect key="frame" x="178" y="449" width="96" height="36"/>
@@ -3019,23 +3019,31 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="kImageErrorBalloon.png" width="397" height="253"/>
         <image name="kImageErrorBang.png" width="140" height="143"/>
         <image name="kImageForward.png" width="20" height="20"/>
+        <image name="kImageForward.png" width="20" height="20"/>
         <image name="kImageHelp.png" width="57" height="57"/>
         <image name="kImageHistory-selected.png" width="57" height="57"/>
         <image name="kImageHistory.png" width="57" height="57"/>
         <image name="kImageLocation-selected.png" width="30" height="30"/>
+        <image name="kImageLocation-selected.png" width="30" height="30"/>
         <image name="kImageLocation.png" width="30" height="30"/>
+        <image name="kImageLogo.png" width="57" height="57"/>
         <image name="kImageLogo.png" width="57" height="57"/>
         <image name="kImageLogoutHome-selected.png" width="57" height="57"/>
         <image name="kImageLogoutHome.png" width="57" height="57"/>
         <image name="kImageMerchantTop.png" width="320" height="191"/>
         <image name="kImageOffers-selected.png" width="30" height="30"/>
+        <image name="kImageOffers-selected.png" width="30" height="30"/>
+        <image name="kImageOffers-selected.png" width="30" height="30"/>
         <image name="kImageOffers.png" width="30" height="30"/>
+        <image name="kImageQR-selected.png" width="30" height="30"/>
         <image name="kImageQR-selected.png" width="30" height="30"/>
         <image name="kImageQR.png" width="64" height="64"/>
         <image name="kImageRewards-selected.png" width="57" height="57"/>
         <image name="kImageRewards.png" width="57" height="57"/>
         <image name="kImageSettings-selected.png" width="57" height="57"/>
         <image name="kImageSettings.png" width="57" height="57"/>
+        <image name="kImageStep1of2.png" width="253" height="41"/>
+        <image name="kImageStep1of2.png" width="253" height="41"/>
         <image name="kImageStep1of2.png" width="253" height="41"/>
         <image name="kImageStep2of2.png" width="253" height="41"/>
         <image name="kImageTransactionBottom.png" width="320" height="163"/>
