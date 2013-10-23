@@ -52,6 +52,8 @@ APKEYEDSTRING(kSegueCameraUnwind)
 APKEYEDSTRING(kSegueTransactionBill)
 APKEYEDSTRING(kSegueLocationsToPinMap)
 APKEYEDSTRING(kSegueNearyByMapEmbedding)
+APKEYEDSTRING(kSegueSignUp1to2)
+APKEYEDSTRING(kSegueSignUp2to3)
 
 APKEYEDSTRING(kCellIDMenu)
 APKEYEDSTRING(kCellIDReward)
