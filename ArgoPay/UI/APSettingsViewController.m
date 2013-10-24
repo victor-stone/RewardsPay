@@ -23,7 +23,8 @@
 
 @end
 
-@implementation APSettingsViewController
+@implementation APSettingsViewController {
+}
 
 APLOGRELEASE
 
@@ -35,6 +36,7 @@ APLOGRELEASE
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     if( self.navigationController.topViewController == self )
     {
         UIBarButtonItem * bbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
@@ -46,12 +48,12 @@ APLOGRELEASE
         [self setHiddenKeys:[NSSet setWithArray:@[kSettingDebug]] animated:NO];
 #endif
     }
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    /*
+    [self registerForBroadcast:kNotifyUserSettingChanged block:^(APSettingsViewController *me, NSDictionary *info)
+    {
+        NSLog(@"Setting changed: %@", info);
+    }];
+     */
 }
 
 @end

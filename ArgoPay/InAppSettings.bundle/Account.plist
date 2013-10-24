@@ -10,11 +10,11 @@
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSTextFieldSpecifier</string>
+			<string>PSTitleValueSpecifier</string>
+			<key>Title</key>
+			<string>Login name</string>
 			<key>Key</key>
 			<string>kSettingUserLoginName</string>
-			<key>Title</key>
-			<string>Login name:</string>
 		</dict>
 		<dict>
 			<key>Type</key>
@@ -25,6 +25,18 @@
 			<string>Password:</string>
 			<key>IsSecure</key>
 			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>KeyboardType</key>
+			<string>NumberPad</string>
+			<key>IsSecure</key>
+			<true/>
+			<key>Title</key>
+			<string>PIN</string>
+			<key>Key</key>
+			<string>kSettingUserPIN</string>
 		</dict>
 	</array>
 	<key>StringsTable</key>

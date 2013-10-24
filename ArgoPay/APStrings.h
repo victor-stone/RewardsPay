@@ -17,6 +17,8 @@ APKEYEDSTRING(kNotifyUserLoginStatus)
 
 APKEYEDSTRING(kSettingUserLoginName)
 APKEYEDSTRING(kSettingUserLoginPassword)
+APKEYEDSTRING(kSettingUserLoginPasswordConfirm)
+APKEYEDSTRING(kSettingUserPIN)
 APKEYEDSTRING(kSettingUserArgoPoints)
 APKEYEDSTRING(kSettingUserUniqueID)
 APKEYEDSTRING(kSettingUserLastLat)

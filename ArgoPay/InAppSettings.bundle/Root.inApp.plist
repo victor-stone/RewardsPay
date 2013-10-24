@@ -28,7 +28,7 @@
 			<key>File</key>
 			<string>Account</string>
 			<key>Title</key>
-			<string>Sign On Settings</string>
+			<string>Sign On/PIN</string>
 			<key>IASKTextAlignment</key>
 			<string>IASKUITextAlignmentCenter</string>
 		</dict>

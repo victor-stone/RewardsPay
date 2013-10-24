@@ -186,6 +186,7 @@
 		57DA31A317FA296A00A6978A /* kImageTransactionBottom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57DA319C17FA295F00A6978A /* kImageTransactionBottom@2x.png */; };
 		57DA31A417FA296A00A6978A /* kImageTransactionTop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57DA319D17FA296300A6978A /* kImageTransactionTop@2x.png */; };
 		57DA31A717FA424800A6978A /* VSImageTweaks.m in Sources */ = {isa = PBXBuildFile; fileRef = 57DA31A617FA424700A6978A /* VSImageTweaks.m */; };
+		57DE61681819A3B800F853CE /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57DE61671819A3B800F853CE /* Entitlements.plist */; };
 		57DFDFEA1810BEE20047DC36 /* APScanButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 57DFDFE91810BEE20047DC36 /* APScanButton.m */; };
 		57E08D0C17EF77E400E22B1A /* kImageMerchantTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 57E08D0B17EF77E400E22B1A /* kImageMerchantTop.png */; };
 		57E08D0F17EF7FAF00E22B1A /* APMerchantDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E08D0E17EF7FAF00E22B1A /* APMerchantDetailViewController.m */; };
@@ -524,6 +525,7 @@
 		57DA319D17FA296300A6978A /* kImageTransactionTop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageTransactionTop@2x.png"; sourceTree = "<group>"; };
 		57DA31A517FA424700A6978A /* VSImageTweaks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSImageTweaks.h; sourceTree = "<group>"; };
 		57DA31A617FA424700A6978A /* VSImageTweaks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSImageTweaks.m; sourceTree = "<group>"; };
+		57DE61671819A3B800F853CE /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		57DFDFE81810BEE20047DC36 /* APScanButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APScanButton.h; sourceTree = "<group>"; };
 		57DFDFE91810BEE20047DC36 /* APScanButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APScanButton.m; sourceTree = "<group>"; };
 		57E08D0B17EF77E400E22B1A /* kImageMerchantTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageMerchantTop.png; sourceTree = "<group>"; };
@@ -844,6 +846,7 @@
 				57A223EE17E90626000B52E9 /* main.m */,
 				57A223F017E90626000B52E9 /* ArgoPay-Prefix.pch */,
 				57E7B83417E9F01000205BCB /* about.html */,
+				57DE61671819A3B800F853CE /* Entitlements.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1347,6 +1350,7 @@
 				578B3E391805D963005B2701 /* qrcode.ANN.png in Resources */,
 				579C817017FD91690046BC9B /* kImageLocation.png in Resources */,
 				57ADDABA17F5F33F00F23689 /* ConsumerLogin.js in Resources */,
+				57DE61681819A3B800F853CE /* Entitlements.plist in Resources */,
 				57C6C9541804931D007AB199 /* Default-568h@2x.png in Resources */,
 				57FD285917FF161B004A50D8 /* kImageMapView.png in Resources */,
 				57F89F0F1804B19D00A80461 /* kImageLocation-selected@2x.png in Resources */,
@@ -1617,7 +1621,8 @@
 		57A2240317E90626000B52E9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "$(SRCROOT)/$(TARGET_NAME)/Entitlements.plist";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Victor Stone (HP2QCTSVH4)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Victor Stone (HP2QCTSVH4)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1633,7 +1638,7 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "74490817-B6FD-44C5-9F63-B90850AF3A9C";
+				PROVISIONING_PROFILE = "359EC831-951F-4268-AFF4-AE6274719208";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1642,6 +1647,7 @@
 		57A2240417E90626000B52E9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "$(SRCROOT)/$(TARGET_NAME)/Entitlements.plist";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: ArgoPay Inc.";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ArgoPay Inc.";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1658,7 +1664,7 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "74490817-B6FD-44C5-9F63-B90850AF3A9C";
+				PROVISIONING_PROFILE = "359EC831-951F-4268-AFF4-AE6274719208";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
