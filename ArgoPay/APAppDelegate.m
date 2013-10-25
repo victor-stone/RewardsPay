@@ -62,13 +62,13 @@ typedef enum _APStartupState {
     [self registerForNotifications];
     
     if( launchOptions[@"logStartup"] != nil )
-    {
         [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kDebugStartup];
-        _remoteNotifications = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-        if( _remoteNotifications )
-        {
-            APLOG(kDebugPush, @"Push options: %@", _remoteNotifications);
-        }
+
+    APLOG(kDebugPush, @"All launch options: %@", launchOptions);
+    _remoteNotifications = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+    if( _remoteNotifications )
+    {
+        APLOG(kDebugPush, @"Push options at launch: %@", _remoteNotifications);
     }
     
     _startupQueue = [NSOperationQueue mainQueue];
@@ -90,6 +90,49 @@ typedef enum _APStartupState {
     
     return YES;
 }
+
+-(NSDictionary *)factoryUserDefaultSettings
+{
+    return @{
+             kSettingSlidingCameraView: @(YES),
+             kSettingUserFirstInvoke: @(YES),
+             kSettingUserUniqueID: [[NSProcessInfo processInfo] globallyUniqueString],
+             kSettingSystemBuildNumber: [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"],
+             kSettingFrequentGPS: @(YES),
+             kSettingViewAsKilometer: @(YES),
+             kSettingUserUseGoogleMaps: @(YES)
+             
+#ifdef ALLOW_DEBUG_SETTINGS
+             ,kDebugPush: @(YES)
+             ,kSettingDebugNetworkStubbed: @"dev.argopay.com"
+             ,kSettingDebugSendStubData: @(YES)
+             ,kSettingDebugLocalhostAddr: @"testingargo.192.168.1.2.xip.io"
+#endif
+             };
+}
+
+-(void)registerUserDefaults
+{
+    NSDictionary * defaults = [self factoryUserDefaultSettings];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+}
+
+-(void)setupAppearances:(UIApplication *)application
+{
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        
+        [application setStatusBarStyle:UIStatusBarStyleLightContent];
+        
+        // http://stackoverflow.com/questions/19029833/ios-7-navigation-bar-text-and-arrow-color/19029973#19029973
+        
+        [[UINavigationBar appearance] setTitleTextAttributes:
+         @{ NSForegroundColorAttributeName: [UIColor whiteColor]
+            }];
+        [[UINavigationBar appearance] setBarTintColor:[UIColor orangeColor]];
+    }
+}
+
+#pragma mark Windows
 
 -(void)showError:(NSError *)error
 {
@@ -135,21 +178,6 @@ typedef enum _APStartupState {
     return NO;
 }
 
--(void)setupAppearances:(UIApplication *)application
-{
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
-        
-        [application setStatusBarStyle:UIStatusBarStyleLightContent];
-
-        // http://stackoverflow.com/questions/19029833/ios-7-navigation-bar-text-and-arrow-color/19029973#19029973
-
-        [[UINavigationBar appearance] setTitleTextAttributes:
-         @{ NSForegroundColorAttributeName: [UIColor whiteColor]
-            }];
-        [[UINavigationBar appearance] setBarTintColor:[UIColor orangeColor]];
-     }
-}
-
 -(void)showMainAppWindow
 {
     APAccount * account = [APAccount currentAccount];
@@ -166,12 +194,14 @@ typedef enum _APStartupState {
     UIViewController *home = [initial.storyboard instantiateViewControllerWithIdentifier:viewName];
     if( _remoteNotifications )
     {
-        [home view];
+        [home view]; // trigger viewDidLoad so it can register for broadcasts
         [self deliverRemoteNotifications];
     }
     _window.rootViewController = home;
     _doneLoading = YES;
 }
+
+#pragma mark Notifications
 
 -(void)registerForNotifications
 {
@@ -219,6 +249,15 @@ typedef enum _APStartupState {
                              UIRemoteNotificationTypeAlert |
                              UIRemoteNotificationTypeBadge |
                              UIRemoteNotificationTypeSound];
+    
+    [self registerForBroadcast:kNotifyRemotePushPickedUp
+                         block:^(APAppDelegate *me, id something)
+     {
+         APLOG(kDebugPush, @"payload picked up, clearing badges and notificatoins");
+         [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
+         [[UIApplication sharedApplication] cancelAllLocalNotifications];
+         me->_remoteNotifications = nil;
+     }];
 }
 
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
@@ -242,52 +281,34 @@ typedef enum _APStartupState {
 
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No push"
+                                                    message:error.localizedDescription
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
     if( ![self setLoadingMessage:error.localizedDescription] )
         [self broadcast:kNotifySystemError payload:error];
 }
 
 -(void)deliverRemoteNotifications
 {
+    APLOG(kDebugPush, @"Broadcasting push payload");
     [self broadcast:kNotifyMessageFromRemotePush payload:_remoteNotifications];
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
-    [[UIApplication sharedApplication] cancelAllLocalNotifications];
-    _remoteNotifications = nil;
 }
 
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    
+    APLOG(kDebugPush, @"Recieved push payload at runtime: %@", userInfo);
+    _remoteNotifications = userInfo;
+    [self deliverRemoteNotifications];
 }
 
+#pragma mark Housecleaning
 
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:_notifyObserver];
-}
-
--(NSDictionary *)factoryUserDefaultSettings
-{
-    return @{
-             kSettingSlidingCameraView: @(YES),
-             kSettingUserFirstInvoke: @(YES),
-             kSettingUserUniqueID: [[NSProcessInfo processInfo] globallyUniqueString],
-             kSettingSystemBuildNumber: [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"],
-             kSettingFrequentGPS: @(YES),
-             kSettingViewAsKilometer: @(YES),
-             kSettingUserUseGoogleMaps: @(YES)
-             
-#ifdef ALLOW_DEBUG_SETTINGS
-             ,kSettingDebugNetworkStubbed: @"dev.argopay.com"
-             ,kSettingDebugSendStubData: @(YES)
-             ,kSettingDebugLocalhostAddr: @"testingargo.192.168.1.2.xip.io"
-#endif
-             };
-}
-
--(void)registerUserDefaults
-{
-    NSDictionary * defaults = [self factoryUserDefaultSettings];
-    [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

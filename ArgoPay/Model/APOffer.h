@@ -40,7 +40,7 @@
 @property (nonatomic,strong) NSNumber *AmountDiscount;
 @property (nonatomic,strong) NSNumber *AmountMinimum;
 @property (nonatomic,strong) NSNumber *PointBonus;
-@property (nonatomic,strong) NSNumber *PointMultiplier;
+//@property (nonatomic,strong) NSNumber *PointMultiplier;
 @property (nonatomic,strong) NSNumber *ArgoBonus;
 @property (nonatomic,strong) NSNumber *ArgoMultiplier;
 @end

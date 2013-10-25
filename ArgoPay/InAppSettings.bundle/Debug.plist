@@ -158,16 +158,6 @@
 			<key>DefaultValue</key>
 			<string>NO</string>
 			<key>Key</key>
-			<string>kDebugNetwork</string>
-			<key>Title</key>
-			<string>Remote API</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>DefaultValue</key>
-			<string>NO</string>
-			<key>Key</key>
 			<string>kDebugPush</string>
 			<key>Title</key>
 			<string>Remote Push</string>

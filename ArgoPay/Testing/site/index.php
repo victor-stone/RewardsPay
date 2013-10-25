@@ -1,16 +1,15 @@
 <?
 function doMessagePump()
 {
-    /* We are using the sandbox version of the APNS for development. For production environments, change 
-        this to ssl://gateway.push.apple.com:2195 */
-    $apnsServer = 'ssl://gateway.sandbox.push.apple.com:2195';
-    /* Make sure this is set to the password that you set for your private key when you exported it to 
+    $apnsServer = 'ssl://gateway.push.apple.com:2195';
+
+    /* Make sure this is set to the password that you set for your private key when you exported it to
         the .pem file using openssl on your OS X */
     $privateKeyPassword = 'U44qh'; // 2st@7wK+AR
      
-    /* Put your own message here if you want to */ 
-    $message = 'ArgoPay reward notification'; 
-    /* Pur your device token here */ 
+
+    $message = 'ArgoPay reward notification';
+
     $deviceToken = $_REQUEST['devicetoken'];
     if( empty($deviceToken) )
     {
@@ -20,8 +19,14 @@ function doMessagePump()
     
     /* Replace this with the name of the file that you have placed by your PHP script file, 
       containing your private key and certificate that you generated earlier */ 
-      $pushCertAndKeyPemFile = 'PushCertificateAndKey.pem'; 
-      
+      $pushCertAndKeyPemFile = 'EntPushCertificateAndKey.pem';
+    
+        if( !empty($_RESUEST['sandbox'] ) )
+        {
+            $apnsServer = 'ssl://gateway.sandbox.push.apple.com:2195';
+            $pushCertAndKeyPemFile = 'PushCertificateAndKey.pem';
+        }
+    
       $stream = stream_context_create(); 
       stream_context_set_option( $stream, 'ssl', 'passphrase', $privateKeyPassword); 
       stream_context_set_option( $stream, 'ssl', 'local_cert', $pushCertAndKeyPemFile); 

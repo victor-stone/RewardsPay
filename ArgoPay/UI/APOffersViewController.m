@@ -97,7 +97,6 @@ APLOGRELEASE
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//#warning Add Home Button here
 
     UIBarButtonItem * bbi = [self barButtonForImage:kImageSort
                                               title:nil
@@ -126,6 +125,18 @@ APLOGRELEASE
         [self fetchOffers:kRemoteValueSortByNewest];
         self.view.alpha = 1.0;
     }
+    
+    [self registerForBroadcast:kNotifyMessageFromRemotePush block:^(APOffersViewController *me, id payload) {
+        [NSObject performBlock:^{
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"New Offers!",@"offers")
+                                                             message:NSLocalizedString(@"New offers are available!", @"offers")
+                                                            delegate:nil
+                                                   cancelButtonTitle:@"OK"
+                                                   otherButtonTitles:nil];
+            [alert show];
+            [me fetchOffers:kRemoteValueSortByNewest];
+        } afterDelay:0.2];
+    }];
 }
 
 -(void)fetchOffers:(NSString *)sort
@@ -147,6 +158,7 @@ APLOGRELEASE
             _popup = nil;
             _offers = data;
             [_offersTable reloadData];
+            [self broadcast:kNotifyRemotePushPickedUp payload:self];
         }];
     }];
 }

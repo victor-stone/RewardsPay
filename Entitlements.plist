@@ -5,12 +5,12 @@
         <key>application-identifier</key>
         <string>F52Y74Z9XA.com.argopay.argopay</string>
         <key>aps-environment</key>
-        <string>development</string>
+        <string>production</string>
         <key>get-task-allow</key>
-        <true />
+        <false />
         <key>keychain-access-groups</key>
         <array>
             <string>F52Y74Z9XA.*</string>
-        </array>
+        </array>        
     </dict>
 </plist>
