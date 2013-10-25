@@ -100,6 +100,22 @@
 			<key>DefaultValue</key>
 			<string>NO</string>
 		</dict>
+        <dict>
+            <key>Type</key>
+            <string>PSTitleValueSpecifier</string>
+            <key>Key</key>
+            <string>_just_a_title_for_push_token</string>
+            <key>Title</key>
+            <string>Device Push Token:</string>
+        </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSTextFieldSpecifier</string>
+            <key>Key</key>
+            <string>kSettingUserDevicePushToken</string>
+            <key>Title</key>
+            <string></string>
+        </dict>
 		<dict>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
@@ -142,9 +158,19 @@
 			<key>DefaultValue</key>
 			<string>NO</string>
 			<key>Key</key>
-			<string>kDebugJSONDumps</string>
+			<string>kDebugNetwork</string>
 			<key>Title</key>
-			<string>JSON dumps</string>
+			<string>Remote API</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>DefaultValue</key>
+			<string>NO</string>
+			<key>Key</key>
+			<string>kDebugPush</string>
+			<key>Title</key>
+			<string>Remote Push</string>
 		</dict>
 		<dict>
 			<key>Type</key>

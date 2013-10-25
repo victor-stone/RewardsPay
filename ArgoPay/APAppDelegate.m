@@ -45,16 +45,14 @@ typedef enum _APStartupState {
 @property (weak, nonatomic) IBOutlet UILabel *message;
 @end
 
-@interface APAppDelegate ()
-@end
-
 @implementation APAppDelegate {
     id                 _notifyObserver;
     NSOperationQueue * _startupQueue;
     BOOL               _doneLoading;
+    NSDictionary     * _remoteNotifications;
 @package
     __weak UIViewController * _errorView;
-    Reachability *      _reachability;
+    Reachability *            _reachability;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -64,7 +62,14 @@ typedef enum _APStartupState {
     [self registerForNotifications];
     
     if( launchOptions[@"logStartup"] != nil )
+    {
         [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kDebugStartup];
+        _remoteNotifications = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        if( _remoteNotifications )
+        {
+            APLOG(kDebugPush, @"Push options: %@", _remoteNotifications);
+        }
+    }
     
     _startupQueue = [NSOperationQueue mainQueue];
     _startupQueue.name = @"ArgoPay startup queue";
@@ -117,7 +122,7 @@ typedef enum _APStartupState {
     [host presentViewController:_errorView animated:YES completion:nil];
 }
 
--(void)setLoadingMessage:(NSString *)msg
+-(BOOL)setLoadingMessage:(NSString *)msg
 {
     if( [_window.rootViewController isKindOfClass:[APStartupViewController class]] )
     {
@@ -125,7 +130,9 @@ typedef enum _APStartupState {
         [NSObject performBlock:^{
             vc.message.text = msg;
         } afterDelay:0.1];
+        return YES;
     }
+    return NO;
 }
 
 -(void)setupAppearances:(UIApplication *)application
@@ -157,6 +164,11 @@ typedef enum _APStartupState {
     _startupQueue = nil;
     UIViewController *initial = _window.rootViewController;
     UIViewController *home = [initial.storyboard instantiateViewControllerWithIdentifier:viewName];
+    if( _remoteNotifications )
+    {
+        [home view];
+        [self deliverRemoteNotifications];
+    }
     _window.rootViewController = home;
     _doneLoading = YES;
 }
@@ -203,7 +215,50 @@ typedef enum _APStartupState {
         [self broadcast:kNotifyUserSettingChanged payload:note.userInfo];
     }];
     
+    [[ UIApplication sharedApplication] registerForRemoteNotificationTypes:
+                             UIRemoteNotificationTypeAlert |
+                             UIRemoteNotificationTypeBadge |
+                             UIRemoteNotificationTypeSound];
 }
+
+-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+#if ALLOW_DEBUG_SETTINGS
+    /* Each byte in the data will be translated to its hex value like 0x01 or 0xAB excluding the 0x part, so for 1 byte, we
+     will need 2 characters to represent that byte, hence the * 2 */
+    NSMutableString *tokenAsString = [[ NSMutableString alloc] initWithCapacity:deviceToken.length * 2];
+    char *bytes = malloc( deviceToken.length);
+    [deviceToken getBytes:bytes];
+    for (NSUInteger byteCounter = 0; byteCounter < deviceToken.length; byteCounter ++)
+    {
+        char byte = bytes[ byteCounter];
+        [tokenAsString appendFormat:@"%02hhX", byte];
+    }
+    free( bytes);
+    [[NSUserDefaults standardUserDefaults] setObject:tokenAsString forKey:kSettingUserDevicePushToken];
+    APLOG(kDebugPush,@"Suscessfully registered with remove notifications.Device Token:\n%@",tokenAsString);
+#endif
+}
+
+-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    if( ![self setLoadingMessage:error.localizedDescription] )
+        [self broadcast:kNotifySystemError payload:error];
+}
+
+-(void)deliverRemoteNotifications
+{
+    [self broadcast:kNotifyMessageFromRemotePush payload:_remoteNotifications];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    _remoteNotifications = nil;
+}
+
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    
+}
+
 
 -(void)dealloc
 {

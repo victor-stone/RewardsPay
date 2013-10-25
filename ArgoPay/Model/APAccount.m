@@ -85,7 +85,7 @@ APLOGRELEASE
         __currentAccount.login = loginRequest.Email;
         __currentAccount.password = loginRequest.Password;
         block(account);
-        [self broadcast:kNotifyUserLoginStatus payload:self];
+       // [self broadcast:kNotifyUserLoginStatus payload:self];
     }];
 }
 

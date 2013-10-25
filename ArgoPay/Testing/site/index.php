@@ -1,19 +1,85 @@
 <?
+function doMessagePump()
+{
+    /* We are using the sandbox version of the APNS for development. For production environments, change 
+        this to ssl://gateway.push.apple.com:2195 */
+    $apnsServer = 'ssl://gateway.sandbox.push.apple.com:2195';
+    /* Make sure this is set to the password that you set for your private key when you exported it to 
+        the .pem file using openssl on your OS X */
+    $privateKeyPassword = 'U44qh'; // 2st@7wK+AR
+     
+    /* Put your own message here if you want to */ 
+    $message = 'ArgoPay reward notification'; 
+    /* Pur your device token here */ 
+    $deviceToken = $_REQUEST['devicetoken'];
+    if( empty($deviceToken) )
+    {
+        // this is victor's iphone:
+        $deviceToken = 'D78680ABC93AFA8B6D7D28A8DD36AFA2656D4FDD9EBFA73E569773F80280C0AF';
+    }
+    
+    /* Replace this with the name of the file that you have placed by your PHP script file, 
+      containing your private key and certificate that you generated earlier */ 
+      $pushCertAndKeyPemFile = 'PushCertificateAndKey.pem'; 
+      
+      $stream = stream_context_create(); 
+      stream_context_set_option( $stream, 'ssl', 'passphrase', $privateKeyPassword); 
+      stream_context_set_option( $stream, 'ssl', 'local_cert', $pushCertAndKeyPemFile); 
+      $connectionTimeout = 20; 
+      $connectionType = STREAM_CLIENT_CONNECT | STREAM_CLIENT_PERSISTENT; 
+      $connection = stream_socket_client( $apnsServer, $errorNumber, $errorString, $connectionTimeout, $connectionType, $stream); 
+      
+      if (!$connection)
+      { 
+        echo "Failed to connect to the APNS server. Error no = $ errorNumber < br/ >"; 
+        exit; 
+      } 
+      else 
+      { 
+         echo "Successfully connected to the APNS. Processing... </ br >"; 
+      } 
+      $messageBody['aps'] = array('alert' => $message,
+                                  'sound' => 'default',
+                                  'badge' => 2 ); 
+     $payload = json_encode( $messageBody); 
+     $notification = chr(0) . 
+                     pack('n', 32) . 
+                     pack('H*', $deviceToken) . 
+                     pack('n', strlen($payload)) . 
+                     $payload; 
+     $wroteSuccessfully = fwrite( $connection, $notification, strlen( $notification)); 
+     
+     if ($wroteSuccessfully)
+     { 
+          echo "Successfully sent the message < br/ >"; 
+      }
+      else
+      {
+         echo "Could not send the message < br/ >";
+      } 
+      
+      fclose( $connection);
+
+     exit;
+}
+
+if( $_REQUEST['cmd'] === 'pump' )
+{
+   doMessagePump();
+}
+
 header('Cache-Control: no-cache, must-revalidate');
 header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 header('Content-type: text/json');
 
 // phpinfo();
 
-require_once "JSON.php";
-$json = new Services_JSON();
-
 //convert php object to json
 
 $ICON_HOST = 'timbregroove.org/apps'; // $ICON_HOST
 
 // assumes Content-Type 'application/json'
-$parameters = $json->decode($HTTP_RAW_POST_DATA);
+$parameters = json_decode($HTTP_RAW_POST_DATA);
 
 $value = array( 'Status' => 0, 'Message' => ''
                //,'rawPostData' => $HTTP_RAW_POST_DATA, 'callingParams' => $parameters
@@ -576,7 +642,7 @@ switch($_REQUEST['cmd'] )
     }
 }
 
-$output = $json->encode($value);
+$output = json_encode($value);
 
 print($output);
 
