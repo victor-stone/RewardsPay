@@ -14,6 +14,12 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
+				<string>magantune80</string>
+				<string>magnatune58</string>
+				<string>magnatune29</string>
+				<string>magnatune120</string>
+				<string>magnatune114</string>
+				<string>magnatune57</string>
 				<string>appIcon80</string>
 				<string>appIcon58</string>
 				<string>appIcon29</string>
@@ -37,7 +43,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>Daily 0.7</string>
+	<string>Daily 0.8</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIMainStoryboardFile</key>

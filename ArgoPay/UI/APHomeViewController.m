@@ -10,11 +10,11 @@
 #import "APAccount.h"
 
 @interface APHomeViewController () <UICollectionViewDataSource>
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionViewMenu;
 
 @end
 
-@implementation APHomeViewController
-
+@implementation APHomeViewController 
 APLOGRELEASE
 
 -(BOOL)navigationBarHidden
@@ -46,11 +46,6 @@ APLOGRELEASE
     return [collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
 }
 
--(IBAction)unwindFromError:(UIStoryboardSegue *)segue
-{
-    [self broadcast:kNotifyErrorViewClosed payload:segue.sourceViewController];
-}
-
 -(IBAction)unwindFromLogout:(UIStoryboardSegue *)segue
 {
     APAccount * account = [APAccount currentAccount];
@@ -64,4 +59,5 @@ APLOGRELEASE
     
     return [super canPerformUnwindSegueAction:action fromViewController:fromViewController withSender:sender];
 }
+
 @end

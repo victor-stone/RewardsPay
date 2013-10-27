@@ -6,10 +6,8 @@
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 
-#import "APHomeViewController.h"
-#import "VSNavigationViewController.h"
-#import "APTransaction.h"
 
+#import "APTransactionViewController.h"
 #import "ZBarSDK.h"
 #import "APDebug.h"
 #import "APStrings.h"
@@ -17,6 +15,7 @@
 #import "APLocation.h"
 #import "APAccount.h"
 #import "APRemoteStrings.h"
+#import "VSTabNavigatorViewController.h"
 
 /**
  *  Wrapper for ZBar VC which has a bug (missing auto release)
@@ -27,6 +26,22 @@
 @property (nonatomic,strong) NSString *resultText;
 @property (nonatomic,strong) UIImage * resultImage;
 @end
+
+
+/**
+ *  Modal screen that waits for use to accept/reject payment
+ */
+@interface APTranasctionBillViewController : UIViewController
+
+@property (weak, nonatomic) IBOutlet UILabel *grandTotal;
+@property (weak, nonatomic) IBOutlet UILabel *merchantName;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UILabel *merchantCategory;
+
+@property (nonatomic,strong) NSString * transID;
+@property (nonatomic,strong) APTransactionStatusResponse *statusResponse;
+@end
+
 
 @implementation APCamera
 APLOGRELEASE
@@ -40,6 +55,7 @@ APLOGRELEASE
     self.view = [[UIView alloc]
                  initWithFrame: CGRectMake(0, 0, 320, 480)];
 }
+
 -(void)awakeFromNib
 {
     [super awakeFromNib];
@@ -80,20 +96,6 @@ APLOGRELEASE
 
 @end
 
-/**
- *  Modal screen that waits for use to accept/reject payment
- */
-@interface APTranasctionBillViewController : UIViewController
-
-@property (weak, nonatomic) IBOutlet UILabel *grandTotal;
-@property (weak, nonatomic) IBOutlet UILabel *merchantName;
-@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
-@property (weak, nonatomic) IBOutlet UILabel *merchantCategory;
-
-@property (nonatomic,strong) NSString * transID;
-@property (nonatomic,strong) APTransactionStatusResponse *statusResponse;
-@end
-
 @implementation APTranasctionBillViewController
 
 APLOGRELEASE
@@ -118,42 +120,15 @@ APLOGRELEASE
 
 @end
 
-/**
- *  Handles transaction cycle
- * 
- *  Derived from 'HomeViewController' because 
- *  1) the transaction process throws up many different views and we 
- *     need a way to 'root' the transaction in a central place but
- *     this is view controller that actuall 'owns' all parts.
- *  2) We *need* a view controller in order to take advantage of the
- *     unwind segues to let us bounce around around between the different
- *     views
- *  3) putting all this in the actual HomeViewController seemed like
- *     it would be mixing purposes and this should functionality 
- *     should be in a separate code module
- */
-@interface APTransactionViewController : APHomeViewController
-@end
-
-// making these properties quiets warning messages about weak
-// pointers in blocks
-@interface APTransactionViewController ()
-@property (nonatomic,strong) NSString *transID;
-@property (nonatomic,strong) NSString *scanResultText;
-@property (nonatomic,strong) UIImage * scanResultImage;
-@property (nonatomic,strong) APTransactionStatusResponse *statusResponse;
-@property (nonatomic,strong) APPopup *popup;
-@end
-
 
 @implementation APTransactionViewController
 
 -(void)clearTransaction
 {
-    _transID = nil;
-    _scanResultImage = nil;
-    _scanResultText = nil;
-    _statusResponse = nil;
+    self.transID = nil;
+    self.scanResultImage = nil;
+    self.scanResultText = nil;
+    self.statusResponse = nil;
     self.popup = nil;
 }
 
@@ -164,12 +139,17 @@ APLOGRELEASE
  */
 -(IBAction)unwindFromCamera:(UIStoryboardSegue *)segue
 {
-    APCamera * camera = segue.sourceViewController;
-    _scanResultImage = camera.resultImage;
-    _scanResultText  = camera.resultText;
+    [self storeCameraResults:segue.sourceViewController];
     [self attemptTransaction];
 }
 
+-(void)storeCameraResults:(id)cameraViewController
+{
+    APCamera * camera = cameraViewController;
+    self.scanResultImage = camera.resultImage;
+    self.scanResultText  = camera.resultText;
+    
+}
 
 /**
  *  Transaction entry point
@@ -189,7 +169,7 @@ APLOGRELEASE
         //
         APAccount *account = [APAccount currentAccount];
         start.AToken = account.AToken;
-        start.QrData = _scanResultText;
+        start.QrData = self.scanResultText;
         start.Lat = @(loc.latitude);
         start.Long = @(loc.longitude);
         [start performRequest:^(APTransactionIDResponse *idResponse) {
@@ -211,33 +191,33 @@ APLOGRELEASE
     APRequestTransactionStatus *request = [APRequestTransactionStatus new];
     APAccount * account = [APAccount currentAccount];
     request.AToken = account.AToken;
-    request.TransID = _transID;
+    request.TransID = self.transID;
     
     [request performRequest: ^(APTransactionStatusResponse *response)
-    {
-        NSString *stat = response.TransStatus;
-        
-        if( [stat isEqualToString:kRemoteValueTransactionStatusPending] )
-        {
-            [NSObject performBlock:^{
-                [me handleTransaction];
-            } afterDelay:0.5];
-            return;
-        }
-        
-        me.popup = nil;
-        
-        if( [stat isEqualToString:kRemoteValueTransactionStatusReadyForApproval] )
-        {
-            // Step 4. Ask the user to accept/reject
-            me.statusResponse = response;
-            [me performSystemSegue:kSegueTransactionBill sender:self];
-        }
-        else
-        {
-            me.popup = [APPopup msgWithParent:me.popupParent text:response.UserMessage];
-        }
-    }];
+     {
+         NSString *stat = response.TransStatus;
+         
+         if( [stat isEqualToString:kRemoteValueTransactionStatusPending] )
+         {
+             [NSObject performBlock:^{
+                 [me handleTransaction];
+             } afterDelay:0.5];
+             return;
+         }
+         
+         me.popup = nil;
+         
+         if( [stat isEqualToString:kRemoteValueTransactionStatusReadyForApproval] )
+         {
+             // Step 4. Ask the user to accept/reject
+             me.statusResponse = response;
+             [me performSystemSegue:kSegueTransactionBill sender:self];
+         }
+         else
+         {
+             me.popup = [APPopup msgWithParent:me.popupParent text:response.UserMessage];
+         }
+     }];
     
 }
 
@@ -252,7 +232,7 @@ APLOGRELEASE
     if( [segue.identifier isEqualToString:kSegueTransactionBill] )
     {
         APTranasctionBillViewController * bill = segue.destinationViewController;
-        bill.statusResponse = _statusResponse;
+        bill.statusResponse = self.statusResponse;
     }
     [super prepareForSegue:segue sender:sender];
 }
@@ -320,7 +300,7 @@ APLOGRELEASE
 -(IBAction)unwindFromError:(UIStoryboardSegue *)segue
 {
     [self clearTransaction];
-    [super unwindFromError:segue];
+    [self broadcast:kNotifyErrorViewClosed payload:segue.sourceViewController];
 }
 
 @end

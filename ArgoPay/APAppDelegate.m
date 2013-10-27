@@ -281,12 +281,15 @@ typedef enum _APStartupState {
 
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
+#if 0
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No push"
                                                     message:error.localizedDescription
                                                    delegate:nil
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
     [alert show];
+#endif
+    
     if( ![self setLoadingMessage:error.localizedDescription] )
         [self broadcast:kNotifySystemError payload:error];
 }

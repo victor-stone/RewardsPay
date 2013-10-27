@@ -48,7 +48,6 @@ APKEYEDSTRING(kViewError)
 APKEYEDSTRING(kViewLogin)
 APKEYEDSTRING(kViewMain)
 
-
 APKEYEDSTRING(kSegueOffersToOfferDetail)
 APKEYEDSTRING(kSegueRewardsToMerchantDetail)
 APKEYEDSTRING(kSegueLocationToMerchantDetail)
@@ -60,6 +59,8 @@ APKEYEDSTRING(kSegueLocationsToPinMap)
 APKEYEDSTRING(kSegueNearyByMapEmbedding)
 APKEYEDSTRING(kSegueSignUp1to2)
 APKEYEDSTRING(kSegueSignUp2to3)
+APKEYEDSTRING(kSegueSignInToGetPIN)
+APKEYEDSTRING(kSegueUnwindToGetPIN)
 
 APKEYEDSTRING(kCellIDMenu)
 APKEYEDSTRING(kCellIDReward)

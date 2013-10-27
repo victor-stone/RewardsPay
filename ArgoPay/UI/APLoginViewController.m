@@ -9,65 +9,70 @@
 #import "APAccount.h"
 #import "APStrings.h"
 #import "APPopup.h"
+#import "APTransactionViewController.h"
 
-#define NUM_SECRET_QUESTIONS 3
-#define HEADER_COMPONENT 0
-#define QUESTIONS_COMPONENT 1
 
-@interface APSignUp2ViewController : UIViewController<UITextFieldDelegate>
-@property (weak, nonatomic) IBOutlet UITextField *password;
-@property (weak, nonatomic) IBOutlet UITextField *confirmPassword;
-@property (weak, nonatomic) IBOutlet UIButton *nextButton;
-
+@interface APQuickScanGetPIN : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate>
+@property (readonly) NSUInteger PIN;
 @end
 
-@implementation APSignUp2ViewController
-
--(void)viewDidLoad
-{
-    [super viewDidLoad];
-    _nextButton.layer.masksToBounds = YES;
-    _nextButton.layer.cornerRadius = 8.0;
-    _password.delegate = self;
-    _confirmPassword.delegate = self;
-    
+@implementation APQuickScanGetPIN {
+    NSUInteger _pin[4];
 }
-- (IBAction)nextTap:(id)sender
+
+-(NSUInteger)PIN
 {
-    NSString * errMessage = nil;
-    if( !_password.text.length )
-        errMessage = NSLocalizedString(@"You must fill in a password.", @"signup");
-    else if( !_confirmPassword.text.length )
-        errMessage = NSLocalizedString(@"You must confirm your password.", @"signup");
-    else if( ![_confirmPassword.text isEqualToString:_password.text] )
-        errMessage = NSLocalizedString(@"The password and confirm password must match.", @"signup");
-    
-    if( errMessage )
+    NSUInteger pin = 0;
+    for( NSUInteger i = 0; i < 4; i++ )
+        pin |= (_pin[i] << (i*4));
+    return pin;
+}
+
+- (IBAction)submitPIN:(id)sender
+{
+    NSUInteger userPIN = (NSUInteger)[[NSUserDefaults standardUserDefaults] integerForKey:kSettingUserPIN];
+    NSUInteger pin = self.PIN;
+    if( userPIN == pin )
     {
-        NSString * title = NSLocalizedString(@"Sign Up Error", @"signup");
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:title message:errMessage delegate:nil cancelButtonTitle:@"Yup, OK" otherButtonTitles:nil];
+        [self performSegueWithIdentifier:kSegueUnwindToGetPIN sender:self];
+    }
+    else
+    {
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Invalid PIN"
+                                                         message:@"Your PIN number doesn't match our records."
+                                                        delegate:nil
+                                               cancelButtonTitle:@"Try Again"
+                                               otherButtonTitles:nil];
         [alert show];
     }
-    else
-    {
-        [self performSegueWithIdentifier:kSegueSignUp2to3 sender:self];
-    }
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
-    if( textField == _password )
-        [_confirmPassword becomeFirstResponder];
-    else
-        [self nextTap:textField];
-    return YES;
+    return 4;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView
+numberOfRowsInComponent:(NSInteger)component
+{
+    return 10;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return [NSString stringWithFormat:@"%d", row];
+}
+
+- (void)pickerView:(UIPickerView *)pickerView
+      didSelectRow:(NSInteger)row
+       inComponent:(NSInteger)component
+{
+    _pin[component] = row;
 }
 
 @end
 
-
-@interface APWelcomeViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UIButton *signUpButton;
+@interface APWelcomeViewController : APTransactionViewController
 @property (weak, nonatomic) IBOutlet UIButton *signInButton;
 
 @end
@@ -76,229 +81,40 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    _signUpButton.layer.masksToBounds = YES;
-    _signUpButton.layer.cornerRadius = 8.0;
     _signInButton.layer.masksToBounds = YES;
     _signInButton.layer.cornerRadius = 8.0;
 }
 
-@end
-
-@interface APAnswerField : UITextField
-
-@end
-
-@implementation APAnswerField
-
-- (id<CAAction>)actionForLayer:(CALayer *)theLayer
-                        forKey:(NSString *)theKey {
-    
-    CATransition *theAnimation = nil;
-    // kCAOnOrderIn
-    if ( [theKey isEqualToString:@"hidden"] ) {
-        
-        theAnimation = [[CATransition alloc] init];
-        theAnimation.duration = 0.2;
-        theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-        theAnimation.type = kCATransitionPush;
-        theAnimation.subtype = kCATransitionFromRight;
-    }
-    return theAnimation;
-}
-
-
-@end
-
-@interface APSignUp3ViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UIPickerView *picker;
-@property (weak, nonatomic) IBOutlet UIButton *submitButton;
-@property (weak, nonatomic) IBOutlet UIButton *resetButton;
-
-@property (strong,nonatomic) IBOutletCollection(APAnswerField) NSArray * answers;
-
-@end
-
-@interface APSignUp3ViewController () <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate>
-@end
-
-@implementation APSignUp3ViewController {
-    NSUInteger _currentQuestionSet;
-    
-    NSUInteger * _pickedQuestions;
-    
-    NSArray * _questionSets;
-    NSMutableArray * _headers;
-    
-    NSMutableArray * _currentStructure;
-}
-
-
--(void)viewDidLoad
-{
-    [super viewDidLoad];
-    static NSUInteger s_pickedQuestions[NUM_SECRET_QUESTIONS];
-    
-    _submitButton.layer.masksToBounds = YES;
-    _submitButton.layer.cornerRadius = 8.0;
-    _resetButton.layer.masksToBounds = YES;
-    _resetButton.layer.cornerRadius = 8.0;
-    _pickedQuestions = s_pickedQuestions;
-    memset(_pickedQuestions, 0, sizeof(s_pickedQuestions));
-    
-    _questionSets = @[ @[@"Name of first pet.",
-                         @"Mother's DJ name.",
-                         @"BFF who stole your GF/BF."],
-                       @[@"Favorite NYC subway line.",
-                         @"Least fav Glee cast member.",
-                         @"1st time U were Rickrolled."],
-                       @[@"Juice is to Hat as...",
-                         @"OKC strikes at the ___ of ____.",
-                         @"Your mother winced when..."]];
-
-    _headers = [NSMutableArray arrayWithCapacity:NUM_SECRET_QUESTIONS];
-    for( NSUInteger i = 0; i < NUM_SECRET_QUESTIONS; i++ )
-        [_headers addObject:[NSString stringWithFormat:@"#%d",i+1]];
-    
-    _currentStructure = [NSMutableArray arrayWithCapacity:2];
-    _currentStructure[HEADER_COMPONENT] = _headers;
-    _currentStructure[QUESTIONS_COMPONENT] = _questionSets[0];
-}
-
-- (void)changeQuestion:(NSUInteger)newSeg picker:(UIPickerView *)pickerView
-{
-    APAnswerField * oldField = _answers[_currentQuestionSet];
-    oldField.hidden = YES;
-    APAnswerField * nextField = _answers[newSeg];
-    nextField.hidden = NO;
-    _currentQuestionSet = newSeg;
-    _currentStructure[QUESTIONS_COMPONENT] = _questionSets[_currentQuestionSet];
-    [pickerView reloadComponent:1];
-    NSUInteger row = _pickedQuestions[_currentQuestionSet];
-    [pickerView selectRow:row inComponent:1 animated:NO];
-}
-
-- (IBAction)submit:(id)sender {
-}
-
-- (IBAction)reset:(id)sender {
-}
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 2;
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    return [_currentStructure[component] count];
-}
-
-- (UIView *)pickerView:(UIPickerView *)pickerView
-            viewForRow:(NSInteger)row
-          forComponent:(NSInteger)component
-           reusingView:(UIView *)view
-{
-    UILabel * label = (UILabel *)view;
-    if( !label )
-    {
-        label = [[UILabel alloc] init];
-        label.minimumScaleFactor = 0.5;
-    }
-    label.text = _currentStructure[component][row];
-    [label sizeToFit];
-    return label;
-}
-
-
-- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
-{
-    CGFloat w = self.view.frame.size.width;
-    if( component == 0 )
-        return w * 0.15;
-    return w * 0.85;
-}
-
-- (void)pickerView:(UIPickerView *)pickerView
-      didSelectRow:(NSInteger)row
-       inComponent:(NSInteger)component
-{
-    if( component == HEADER_COMPONENT )
-    {
-        if( row != _currentQuestionSet )
-        {
-            [self changeQuestion:row picker:pickerView];
-        }
-    }
-    else
-    {
-        _pickedQuestions[_currentQuestionSet] = row;
-    }
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    [self.view becomeFirstResponder];
-    NSUInteger nextQSet = (_currentQuestionSet + 1) % NUM_SECRET_QUESTIONS;
-    [self changeQuestion:nextQSet picker:_picker];
-    [_picker selectRow:nextQSet inComponent:HEADER_COMPONENT animated:YES];
-    return YES;
-}
-
-@end
-
-@interface APSignUp1ViewController : UIViewController<UITextFieldDelegate>
-@property (weak, nonatomic) IBOutlet UITextField *email;
-@property (weak, nonatomic) IBOutlet UITextField *username;
-@property (weak, nonatomic) IBOutlet UIButton *nextButton;
-
-@end
-
-@implementation APSignUp1ViewController
-
--(void)viewDidLoad
-{
-    [super viewDidLoad];
-    _nextButton.layer.masksToBounds = YES;
-    _nextButton.layer.cornerRadius = 8.0;
-    _email.delegate = self;
-    _username.delegate = self;
-    [_email resignFirstResponder];
-}
-- (IBAction)nextTap:(id)sender
-{
-    NSString * errMessage = nil;
-    if( !_email.text.length )
-        errMessage = NSLocalizedString(@"You must fill in an email address.", @"signup");
-    else if( !_username.text.length )
-        errMessage = NSLocalizedString(@"You must fill in a username.", @"signup");
-    
-    if( errMessage )
-    {
-        NSString * title = NSLocalizedString(@"Sign Up Error", @"signup");
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:title message:errMessage delegate:nil cancelButtonTitle:@"Yup, OK" otherButtonTitles:nil];
-        [alert show];
-    }
-    else
-    {
-        [self performSegueWithIdentifier:kSegueSignUp1to2 sender:self];
-    }
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    if( textField == _email )
-        [_username becomeFirstResponder];
-    else
-        [self nextTap:textField];
-    return YES;
-}
-
--(IBAction)unwindToSignUp1:(UIStoryboardSegue *)segue
+-(IBAction)unwindToLogin:(UIStoryboardSegue *)segue
 {
     
 }
 
+-(IBAction)unwindFromError:(UIStoryboardSegue *)segue
+{
+}
+
+
+/**
+ *  Intercept this so we can ask for PIN.
+ *
+ *  @param segue (ignored)
+ */
+-(IBAction)unwindFromCamera:(UIStoryboardSegue *)segue
+{
+    [self storeCameraResults:segue.sourceViewController];
+    [self performSegueWithIdentifier:kSegueSignInToGetPIN sender:self];
+}
+
+-(IBAction)unwindFromGetPIN:(UIStoryboardSegue *)segue
+{
+    [self attemptTransaction];
+}
+
+-(IBAction)unwindFromCancelPIN:(UIStoryboardSegue *)segue
+{
+    [self clearTransaction];
+}
 @end
 
 @interface APLoginViewController : UIViewController<UITextFieldDelegate>
@@ -347,11 +163,6 @@
     return YES;
 }
 
--(IBAction)unwindFromError:(UIStoryboardSegue *)segue
-{
-    [_popup dismiss];
-    _popup = nil;
-}
 @end
 
 

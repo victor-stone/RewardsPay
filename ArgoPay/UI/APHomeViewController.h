@@ -6,10 +6,9 @@
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 
-#import "VSTabNavigatorViewController.h"
+#import "APTransactionViewController.h"
 
-@interface APHomeViewController : UIViewController
--(IBAction)unwindFromError:(UIStoryboardSegue *)segue;
+@interface APHomeViewController : APTransactionViewController
 @end
 
 

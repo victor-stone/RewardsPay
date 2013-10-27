@@ -48,12 +48,7 @@ APLOGRELEASE
         [self setHiddenKeys:[NSSet setWithArray:@[kSettingDebug]] animated:NO];
 #endif
     }
-    /*
-    [self registerForBroadcast:kNotifyUserSettingChanged block:^(APSettingsViewController *me, NSDictionary *info)
-    {
-        NSLog(@"Setting changed: %@", info);
-    }];
-     */
 }
+
 
 @end
