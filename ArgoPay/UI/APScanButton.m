@@ -15,7 +15,11 @@
 -(void)setSelected:(BOOL)selected
 {
     if( !_defaultColor )
+    {
         _defaultColor = self.backgroundColor;
+        if( !_defaultColor )
+            _defaultColor = [UIColor clearColor];
+    }
     
     BOOL oldValue = self.selected;
     if( oldValue != selected )

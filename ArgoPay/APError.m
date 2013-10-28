@@ -43,6 +43,10 @@ NSString *const kAPYouDontHaveToGoHomeButYouCantStayHereKey = @"kAPYouDontHaveTo
             msg = NSLocalizedString(@"Location data taking too long.", @"GPS error");
             break;
             
+        case kAPERROR_TRANSACTIONTIMEOUT:
+            msg = NSLocalizedString(@"Could not finish transaction with ArgoPay server", @"Transaction error");
+            break;
+            
         default:
             msg = NSLocalizedString(@"Sorry, but something didn't go quite right", @"Generic error");
             break;

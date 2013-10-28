@@ -239,7 +239,6 @@
 
 /* Begin PBXFileReference section */
 		5700DC5C1816F2B900515226 /* APMerchantMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APMerchantMap.m; sourceTree = "<group>"; };
-		57060A50180DA31F001DDC66 /* APHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APHomeViewController.h; sourceTree = "<group>"; };
 		570852C6181DA3A500443BB1 /* APTransactionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APTransactionViewController.h; sourceTree = "<group>"; };
 		570CD13717F9358D007B36D1 /* GoogleMapsKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GoogleMapsKey.h; sourceTree = "<group>"; };
 		570EC1CD17F64DFC00CBA207 /* NSObject+KeyPaths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+KeyPaths.h"; sourceTree = "<group>"; };
@@ -1033,7 +1032,6 @@
 			children = (
 				57E7B83817E9FC9E00205BCB /* Categories */,
 				57A2247417E90F47000B52E9 /* APMainViewController.m */,
-				57060A50180DA31F001DDC66 /* APHomeViewController.h */,
 				57A2247717E90F47000B52E9 /* APHomeViewController.m */,
 				57ADDAA517F5DFB500F23689 /* APLoginViewController.m */,
 				570852C6181DA3A500443BB1 /* APTransactionViewController.h */,
@@ -1041,11 +1039,11 @@
 				570EC1F417F75ACA00CBA207 /* APHistoryViewController.m */,
 				578BB5BE17F248F4009E2F45 /* APRewardViewController.m */,
 				57A2247617E90F47000B52E9 /* APLocationViewController.m */,
-				5713971018036896002F4D3E /* APMerchantMap.h */,
-				5700DC5C1816F2B900515226 /* APMerchantMap.m */,
 				57E08D0E17EF7FAF00E22B1A /* APMerchantDetailViewController.m */,
 				57A2247917E90F47000B52E9 /* APOffersViewController.m */,
 				57A224F217E95153000B52E9 /* APSettingsViewController.m */,
+				5713971018036896002F4D3E /* APMerchantMap.h */,
+				5700DC5C1816F2B900515226 /* APMerchantMap.m */,
 				57E7B84417EA1BA400205BCB /* APPopup.h */,
 				57E7B84517EA1BA400205BCB /* APPopup.m */,
 				579E4E2917F143A400D03437 /* APErrorViewController.m */,
@@ -1688,7 +1686,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Victor Stone (HP2QCTSVH4)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../gmapInit\"",
 					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1714,7 +1711,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ArgoPay Inc.";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../gmapInit\"",
 					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

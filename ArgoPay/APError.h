@@ -24,6 +24,7 @@ extern NSString *const kAPYouDontHaveToGoHomeButYouCantStayHereKey;
 #define kAPERROR_GPSTIMEOUT         (kAPERROR_BASE + 4)
 #define kAPERROR_GPSSYSTEM          (kAPERROR_BASE + 5)
 #define kAPERROR_ARGOPAYSERVER      (kAPERROR_BASE + 6)
+#define kAPERROR_TRANSACTIONTIMEOUT (kAPERROR_BASE + 7)
 
 @interface APError : NSError
 +(id)errorWithCode:(NSUInteger)code;

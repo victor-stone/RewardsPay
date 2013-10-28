@@ -17,6 +17,8 @@
 #import "APRemoteStrings.h"
 #import "VSTabNavigatorViewController.h"
 
+#define MAX_NUMBER_OF_ATTEMPTS 15
+
 /**
  *  Wrapper for ZBar VC which has a bug (missing auto release)
  *
@@ -97,7 +99,6 @@ APLOGRELEASE
 @end
 
 @implementation APTranasctionBillViewController
-
 APLOGRELEASE
 
 - (void)viewDidLoad
@@ -121,10 +122,14 @@ APLOGRELEASE
 @end
 
 
-@implementation APTransactionViewController
+@implementation APTransactionViewController{
+    NSUInteger _numberOfAttempts;
+}
+
 
 -(void)clearTransaction
 {
+    _numberOfAttempts = 0;
     self.transID = nil;
     self.scanResultImage = nil;
     self.scanResultText = nil;
@@ -148,7 +153,6 @@ APLOGRELEASE
     APCamera * camera = cameraViewController;
     self.scanResultImage = camera.resultImage;
     self.scanResultText  = camera.resultText;
-    
 }
 
 /**
@@ -199,6 +203,14 @@ APLOGRELEASE
          
          if( [stat isEqualToString:kRemoteValueTransactionStatusPending] )
          {
+             if( _numberOfAttempts == MAX_NUMBER_OF_ATTEMPTS )
+             {
+                 [self clearTransaction];
+                 NSError * err = [APError errorWithCode:kAPERROR_TRANSACTIONTIMEOUT];
+                 [me broadcast:kNotifySystemError payload:err];
+                 return;
+             }
+             ++_numberOfAttempts;
              [NSObject performBlock:^{
                  [me handleTransaction];
              } afterDelay:0.5];

@@ -5,9 +5,13 @@
 //  Created by victor on 9/12/13.
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
-#import "APHomeViewController.h"
 #import "APStrings.h"
 #import "APAccount.h"
+#import "APTransactionViewController.h"
+#import "VSNavigationViewController.h"
+
+@interface APHomeViewController : APTransactionViewController
+@end
 
 @interface APHomeViewController () <UICollectionViewDataSource>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionViewMenu;
@@ -19,7 +23,7 @@ APLOGRELEASE
 
 -(BOOL)navigationBarHidden
 {
-    return YES;
+    return  YES;
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section

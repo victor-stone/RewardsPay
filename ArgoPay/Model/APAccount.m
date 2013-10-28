@@ -57,7 +57,6 @@ APLOGRELEASE
         __currentAccount.login = loginRequest.Email;
         __currentAccount.password = loginRequest.Password;
         block(account);
-        [self broadcast:kNotifyUserLoginStatus payload:self];
     }];
 }
 
@@ -103,9 +102,13 @@ APLOGRELEASE
 
 -(void)logUserOut
 {
+    /*
+     We are using the UserDefaults for QuickScan login
     self.login = nil;
     self.password = nil;
     [[NSUserDefaults standardUserDefaults] synchronize];
+     */
+    
     _AToken = nil;
     APLOG(kDebugUser, @"User account logged out", 0);
     [self broadcast:kNotifyUserLoginStatus payload:self];

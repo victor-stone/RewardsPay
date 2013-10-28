@@ -11,13 +11,19 @@
 #import "APPopup.h"
 #import "APTransactionViewController.h"
 
-
-@interface APQuickScanGetPIN : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate>
+@interface APPINHoster : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate>
+@property (weak, nonatomic) IBOutlet UIButton *submitButton;
 @property (readonly) NSUInteger PIN;
 @end
 
-@implementation APQuickScanGetPIN {
+@implementation APPINHoster {
     NSUInteger _pin[4];
+}
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    _submitButton.layer.masksToBounds = YES;
+    _submitButton.layer.cornerRadius = 8.0;
 }
 
 -(NSUInteger)PIN
@@ -26,25 +32,6 @@
     for( NSUInteger i = 0; i < 4; i++ )
         pin |= (_pin[i] << (i*4));
     return pin;
-}
-
-- (IBAction)submitPIN:(id)sender
-{
-    NSUInteger userPIN = (NSUInteger)[[NSUserDefaults standardUserDefaults] integerForKey:kSettingUserPIN];
-    NSUInteger pin = self.PIN;
-    if( userPIN == pin )
-    {
-        [self performSegueWithIdentifier:kSegueUnwindToGetPIN sender:self];
-    }
-    else
-    {
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Invalid PIN"
-                                                         message:@"Your PIN number doesn't match our records."
-                                                        delegate:nil
-                                               cancelButtonTitle:@"Try Again"
-                                               otherButtonTitles:nil];
-        [alert show];
-    }
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -71,6 +58,31 @@ numberOfRowsInComponent:(NSInteger)component
 }
 
 @end
+@interface APQuickScanGetPIN : APPINHoster
+@end
+
+@implementation APQuickScanGetPIN
+
+- (IBAction)submitPIN:(id)sender
+{
+    NSUInteger userPIN = (NSUInteger)[[NSUserDefaults standardUserDefaults] integerForKey:kSettingUserPIN];
+    NSUInteger pin = self.PIN;
+    if( userPIN && (userPIN == pin) )
+    {
+        [self performSegueWithIdentifier:kSegueUnwindToGetPIN sender:self];
+    }
+    else
+    {
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Invalid PIN"
+                                                         message:@"Your PIN number doesn't match our records."
+                                                        delegate:nil
+                                               cancelButtonTitle:@"Try Again"
+                                               otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+@end
 
 @interface APWelcomeViewController : APTransactionViewController
 @property (weak, nonatomic) IBOutlet UIButton *signInButton;
@@ -90,10 +102,6 @@ numberOfRowsInComponent:(NSInteger)component
     
 }
 
--(IBAction)unwindFromError:(UIStoryboardSegue *)segue
-{
-}
-
 
 /**
  *  Intercept this so we can ask for PIN.
@@ -103,12 +111,28 @@ numberOfRowsInComponent:(NSInteger)component
 -(IBAction)unwindFromCamera:(UIStoryboardSegue *)segue
 {
     [self storeCameraResults:segue.sourceViewController];
-    [self performSegueWithIdentifier:kSegueSignInToGetPIN sender:self];
+    [NSObject performBlock:^{
+        [self performSegueWithIdentifier:kSegueSignInToGetPIN sender:self];
+    } afterDelay:0.6];
 }
 
 -(IBAction)unwindFromGetPIN:(UIStoryboardSegue *)segue
 {
-    [self attemptTransaction];
+    [APAccount attempLoginWithDefaults:^(APAccount *account) {
+        if( account )
+        {
+            [self attemptTransaction];
+        }
+        else
+        {
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"No account information"
+                                                             message:@"We can't find auto-login account information"
+                                                            delegate:nil
+                                                   cancelButtonTitle:@"Continue with log in"
+                                                   otherButtonTitles:nil];
+            [alert show];
+        }
+    }];
 }
 
 -(IBAction)unwindFromCancelPIN:(UIStoryboardSegue *)segue
@@ -117,11 +141,43 @@ numberOfRowsInComponent:(NSInteger)component
 }
 @end
 
+@interface APPINMaker : APPINHoster
+@end
+
+@implementation APPINMaker
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self adjustViewForiOS7];
+}
+
+- (IBAction)doneTap:(id)sender
+{
+    NSUInteger pin = self.PIN;
+    if( pin )
+    {
+        [[NSUserDefaults standardUserDefaults] setInteger:pin forKey:kSettingUserPIN];
+        [self broadcast:kNotifyUserLoginStatus payload:self];
+
+    }
+    else
+    {
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Blank PIN"
+                                                         message:@"Please pick a PIN number."
+                                                        delegate:nil
+                                               cancelButtonTitle:@"Continue with log in"
+                                               otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+@end
+
 @interface APLoginViewController : UIViewController<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *username;
 @property (weak, nonatomic) IBOutlet UITextField *password;
 @property (weak, nonatomic) IBOutlet UIButton *submitButton;
-
 @end
 
 @implementation APLoginViewController {
@@ -131,12 +187,9 @@ numberOfRowsInComponent:(NSInteger)component
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     [_username becomeFirstResponder];
-    
     _submitButton.layer.masksToBounds = YES;
     _submitButton.layer.cornerRadius = 8.0;
-    
 }
 
 - (IBAction)submit:(id)sender
@@ -149,10 +202,19 @@ numberOfRowsInComponent:(NSInteger)component
             password:_password.text
                block:^(APAccount *account)
     {
-        // call will trigger switch to main view
+        NSUInteger pin = 0; // [[NSUserDefaults standardUserDefaults] integerForKey:kSettingUserPIN];
+        if( pin )
+        {
+            [self broadcast:kNotifyUserLoginStatus payload:self];
+        }
+        else
+        {
+            [self performSegueWithIdentifier:kSegueLoginToMakePIN sender:self];
+        }
         
     }];
 }
+
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {

@@ -21,7 +21,7 @@
 @interface VSRootViewControllerSegue : UIStoryboardSegue
 @end
 
-@interface VSDismssAndUnwindSegue : VSNavigationSegue
+@interface VSDismissAndUnwindSegue : VSNavigationSegue
 @end
 
 @interface VSNavigationViewController () <UINavigationBarDelegate>
@@ -200,7 +200,7 @@ typedef enum _VSTransitionTypeID {
     
     if( [identifier isEqualToString:kSegueErrorUnwind] )
     {
-        return [[VSDismssAndUnwindSegue alloc] initWithIdentifier:identifier
+        return [[VSDismissAndUnwindSegue alloc] initWithIdentifier:identifier
                                                            source:fromViewController
                                                       destination:toViewController];
     }
@@ -776,7 +776,7 @@ typedef enum _VSTransitionTypeID {
 }
 @end
 
-@implementation VSDismssAndUnwindSegue
+@implementation VSDismissAndUnwindSegue
 
 -(id)initWithIdentifier:(NSString *)identifier
                  source:(UIViewController *)source

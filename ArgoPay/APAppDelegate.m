@@ -61,9 +61,11 @@ typedef enum _APStartupState {
     [self registerUserDefaults];
     [self registerForNotifications];
     
+#ifdef ALLOW_DEBUG_OPTIONS
     if( launchOptions[@"logStartup"] != nil )
         [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:kDebugStartup];
-
+#endif
+    
     APLOG(kDebugPush, @"All launch options: %@", launchOptions);
     _remoteNotifications = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
     if( _remoteNotifications )
@@ -104,7 +106,7 @@ typedef enum _APStartupState {
              
 #ifdef ALLOW_DEBUG_SETTINGS
              ,kDebugPush: @(YES)
-             ,kSettingDebugNetworkStubbed: @"dev.argopay.com"
+             ,kSettingDebugNetworkStubbed: @"file" // @"dev.argopay.com"
              ,kSettingDebugSendStubData: @(YES)
              ,kSettingDebugLocalhostAddr: @"testingargo.192.168.1.2.xip.io"
 #endif
@@ -515,12 +517,16 @@ typedef enum _APStartupState {
 -(void)main
 {
     [self iAmStarting];
-    
+#ifdef DO_AUTO_LOGIN
     [self displayDelayedMessage:NSLocalizedString(@"Attempting to log in...",@"startup")];
     
     [APAccount attempLoginWithDefaults:^(id data) {
         [self iAmDone];
     }];
+#else
+    [self iAmDone];
+#endif
+    
 }
 @end
 
