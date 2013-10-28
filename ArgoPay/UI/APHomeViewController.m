@@ -21,11 +21,6 @@
 @implementation APHomeViewController 
 APLOGRELEASE
 
--(BOOL)navigationBarHidden
-{
-    return  YES;
-}
-
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return 5; // TODO: Is there a way to get the number of prototype cells?

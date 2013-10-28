@@ -65,32 +65,7 @@
 
 @end
 
-
-
-@interface APAnswerField : UITextField
-
-@end
-
-@implementation APAnswerField
-
-- (id<CAAction>)actionForLayer:(CALayer *)theLayer
-                        forKey:(NSString *)theKey {
-    
-    CATransition *theAnimation = nil;
-    // kCAOnOrderIn
-    if ( [theKey isEqualToString:@"hidden"] ) {
-        
-        theAnimation = [[CATransition alloc] init];
-        theAnimation.duration = 0.2;
-        theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-        theAnimation.type = kCATransitionPush;
-        theAnimation.subtype = kCATransitionFromRight;
-    }
-    return theAnimation;
-}
-
-
-@end
+@class APAnswerField;
 
 @interface APSignUp3ViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIPickerView *picker;
@@ -149,6 +124,7 @@
 
 - (void)changeQuestion:(NSUInteger)newSeg picker:(UIPickerView *)pickerView
 {
+    /*
     APAnswerField * oldField = _answers[_currentQuestionSet];
     oldField.hidden = YES;
     APAnswerField * nextField = _answers[newSeg];
@@ -158,6 +134,7 @@
     [pickerView reloadComponent:1];
     NSUInteger row = _pickedQuestions[_currentQuestionSet];
     [pickerView selectRow:row inComponent:1 animated:NO];
+     */
 }
 
 - (IBAction)submit:(id)sender {

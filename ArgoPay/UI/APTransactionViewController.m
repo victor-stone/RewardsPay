@@ -315,4 +315,16 @@ APLOGRELEASE
     [self broadcast:kNotifyErrorViewClosed payload:segue.sourceViewController];
 }
 
+-(UINavigationItem *)navigationItem
+{
+    UINavigationItem * item = [super navigationItem];
+    item.title = @"Home";
+    if( !item.titleView )
+    {
+        UIImageView * imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"kImageBanner"]];
+        imageView.backgroundColor = [UIColor clearColor];
+        item.titleView = imageView;
+    }
+    return item;
+}
 @end

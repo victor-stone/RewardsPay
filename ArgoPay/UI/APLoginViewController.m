@@ -11,6 +11,11 @@
 #import "APPopup.h"
 #import "APTransactionViewController.h"
 
+
+#ifndef NUM_SECRET_QUESTIONS
+#define NUM_SECRET_QUESTIONS 3
+#endif
+
 @interface APPINHoster : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *submitButton;
 @property (readonly) NSUInteger PIN;
@@ -101,7 +106,6 @@ numberOfRowsInComponent:(NSInteger)component
 {
     
 }
-
 
 /**
  *  Intercept this so we can ask for PIN.
@@ -227,4 +231,111 @@ numberOfRowsInComponent:(NSInteger)component
 
 @end
 
+@interface APAnswerField : UITextField
 
+@end
+
+@implementation APAnswerField
+
+- (id<CAAction>)actionForLayer:(CALayer *)theLayer
+                        forKey:(NSString *)theKey {
+    
+    CATransition *theAnimation = nil;
+    // kCAOnOrderIn
+    if ( [theKey isEqualToString:@"hidden"] ) {
+        
+        theAnimation = [[CATransition alloc] init];
+        theAnimation.duration = 0.2;
+        theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+        theAnimation.type = kCATransitionPush;
+        theAnimation.subtype = kCATransitionFromRight;
+    }
+    return theAnimation;
+}
+
+
+@end
+
+@interface APForgotPasswordViewController : UIViewController
+@property (strong,nonatomic) IBOutletCollection(APAnswerField) NSArray * answers;
+
+@end
+
+@interface APForgotPasswordViewController () <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate>
+@property (weak, nonatomic) IBOutlet UIPickerView *picker;
+
+@end
+
+@implementation APForgotPasswordViewController {
+    NSUInteger _currentQuestion;
+    NSArray * _questions;
+}
+
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    _questions = @[@"Name of first pet.",
+                   @"Mother's DJ name.",
+                   @"BFF who stole your GF/BF."];
+
+}
+- (APAnswerField *)changeQuestion:(NSUInteger)newQuestion picker:(UIPickerView *)pickerView
+{
+    APAnswerField * oldField = _answers[_currentQuestion];
+    oldField.hidden = YES;
+    APAnswerField * nextField = _answers[newQuestion];
+    nextField.hidden = NO;
+    _currentQuestion = newQuestion;
+    return nextField;
+}
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return 3;
+}
+
+- (UIView *)pickerView:(UIPickerView *)pickerView
+            viewForRow:(NSInteger)row
+          forComponent:(NSInteger)component
+           reusingView:(UIView *)view
+{
+    UILabel * label = (UILabel *)view;
+    if( !label )
+    {
+        label = [[UILabel alloc] init];
+        label.minimumScaleFactor = 0.5;
+    }
+    label.text = _questions[row];
+    [label sizeToFit];
+    return label;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView
+      didSelectRow:(NSInteger)row
+       inComponent:(NSInteger)component
+{
+    [self changeQuestion:row picker:pickerView];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    NSUInteger nextQ = (_currentQuestion + 1) % NUM_SECRET_QUESTIONS;
+    APAnswerField * nextA = [self changeQuestion:nextQ picker:_picker];
+    if( nextQ > 0 )
+    {
+        [nextA becomeFirstResponder];
+    }
+    else
+    {
+        [textField resignFirstResponder];
+    }
+    [_picker selectRow:nextQ inComponent:0 animated:YES];
+    return YES;
+}
+
+@end
