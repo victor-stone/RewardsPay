@@ -637,6 +637,11 @@ typedef enum _VSTransitionTypeID {
                             block:(VSNavActionBlock)block
 {
 #define kBarButtonSize 20
+
+    [vc.backButtonHooks addObject:[block copy]];
+    
+    if( vc.backButtonHidden )
+        return;
     
     UIButton * button = [[UIButton alloc] initWithFrame:(CGRect){0,0,kBarButtonSize,kBarButtonSize}];
     button.showsTouchWhenHighlighted = YES;
@@ -662,8 +667,6 @@ typedef enum _VSTransitionTypeID {
     [button setTintColor:_navigationBar.tintColor];
     
     [button addTarget:self action:@selector(invokBackItem:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [vc.backButtonHooks addObject:[block copy]];
     
     UIBarButtonItem * bbi = [[UIBarButtonItem alloc] initWithCustomView:button];
     bbi.style = UIBarButtonItemStylePlain;
@@ -858,6 +861,11 @@ static void * kBackButtonHooks = &kBackButtonHooks;
 }
 
 -(BOOL)navigationBarHidden
+{
+    return NO;
+}
+
+-(BOOL)backButtonHidden
 {
     return NO;
 }

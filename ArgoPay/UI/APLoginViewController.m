@@ -10,7 +10,7 @@
 #import "APStrings.h"
 #import "APPopup.h"
 #import "APTransactionViewController.h"
-
+#import "VSNavigationViewController.h"
 
 #ifndef NUM_SECRET_QUESTIONS
 #define NUM_SECRET_QUESTIONS 3
@@ -35,7 +35,10 @@
 {
     NSUInteger pin = 0;
     for( NSUInteger i = 0; i < 4; i++ )
-        pin |= (_pin[i] << (i*4));
+    {
+        pin *= 10;
+        pin += _pin[i];
+    }
     return pin;
 }
 
@@ -63,6 +66,7 @@ numberOfRowsInComponent:(NSInteger)component
 }
 
 @end
+
 @interface APQuickScanGetPIN : APPINHoster
 @end
 
@@ -194,6 +198,8 @@ numberOfRowsInComponent:(NSInteger)component
     [_username becomeFirstResponder];
     _submitButton.layer.masksToBounds = YES;
     _submitButton.layer.cornerRadius = 8.0;
+    NSString * name = [[NSUserDefaults standardUserDefaults] stringForKey:kSettingUserLoginName];
+    _username.text = name;
 }
 
 - (IBAction)submit:(id)sender
@@ -206,7 +212,7 @@ numberOfRowsInComponent:(NSInteger)component
             password:_password.text
                block:^(APAccount *account)
     {
-        NSUInteger pin = 0; // [[NSUserDefaults standardUserDefaults] integerForKey:kSettingUserPIN];
+        NSUInteger pin = [[NSUserDefaults standardUserDefaults] integerForKey:kSettingUserPIN];
         if( pin )
         {
             [self broadcast:kNotifyUserLoginStatus payload:self];
@@ -231,44 +237,15 @@ numberOfRowsInComponent:(NSInteger)component
 
 @end
 
-@interface APAnswerField : UITextField
+
+@interface APForgotPasswordViewController : UITableViewController<UITextFieldDelegate>
 
 @end
 
-@implementation APAnswerField
-
-- (id<CAAction>)actionForLayer:(CALayer *)theLayer
-                        forKey:(NSString *)theKey {
-    
-    CATransition *theAnimation = nil;
-    // kCAOnOrderIn
-    if ( [theKey isEqualToString:@"hidden"] ) {
-        
-        theAnimation = [[CATransition alloc] init];
-        theAnimation.duration = 0.2;
-        theAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-        theAnimation.type = kCATransitionPush;
-        theAnimation.subtype = kCATransitionFromRight;
-    }
-    return theAnimation;
-}
-
-
-@end
-
-@interface APForgotPasswordViewController : UIViewController
-@property (strong,nonatomic) IBOutletCollection(APAnswerField) NSArray * answers;
-
-@end
-
-@interface APForgotPasswordViewController () <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate>
-@property (weak, nonatomic) IBOutlet UIPickerView *picker;
-
-@end
 
 @implementation APForgotPasswordViewController {
-    NSUInteger _currentQuestion;
     NSArray * _questions;
+    NSMutableArray * _answers;
 }
 
 -(void)viewDidLoad
@@ -277,65 +254,84 @@ numberOfRowsInComponent:(NSInteger)component
     _questions = @[@"Name of first pet.",
                    @"Mother's DJ name.",
                    @"BFF who stole your GF/BF."];
-
-}
-- (APAnswerField *)changeQuestion:(NSUInteger)newQuestion picker:(UIPickerView *)pickerView
-{
-    APAnswerField * oldField = _answers[_currentQuestion];
-    oldField.hidden = YES;
-    APAnswerField * nextField = _answers[newQuestion];
-    nextField.hidden = NO;
-    _currentQuestion = newQuestion;
-    return nextField;
 }
 
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+-(void)viewWillAppear:(BOOL)animated
 {
-    return 1;
+    [super viewWillAppear:animated];
+
+    for( UITextField * textField in self.textFields )
+        textField.delegate = self;
+    
 }
 
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return 3;
+    return _questions[section];
 }
 
-- (UIView *)pickerView:(UIPickerView *)pickerView
-            viewForRow:(NSInteger)row
-          forComponent:(NSInteger)component
-           reusingView:(UIView *)view
+-(BOOL)backButtonHidden
 {
-    UILabel * label = (UILabel *)view;
-    if( !label )
+    return YES;
+}
+
+-(UINavigationItem *)navigationItem
+{
+    UINavigationItem * item = [super navigationItem];
+    if( !item.rightBarButtonItems )
     {
-        label = [[UILabel alloc] init];
-        label.minimumScaleFactor = 0.5;
+        UIBarButtonItem * bbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                              target:self
+                                                                              action:@selector(submit:)];
+        item.rightBarButtonItems = @[bbi];
     }
-    label.text = _questions[row];
-    [label sizeToFit];
-    return label;
+    return item;
 }
 
-- (void)pickerView:(UIPickerView *)pickerView
-      didSelectRow:(NSInteger)row
-       inComponent:(NSInteger)component
+-(NSArray *)textFields
 {
-    [self changeQuestion:row picker:pickerView];
+    NSMutableArray * arr = [NSMutableArray arrayWithCapacity:3];
+    for( int i = 0; i < 3; i++ )
+    {
+        UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i]];
+        [arr addObject:cell.contentView.subviews[0]];
+    }
+    return arr;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    NSUInteger nextQ = (_currentQuestion + 1) % NUM_SECRET_QUESTIONS;
-    APAnswerField * nextA = [self changeQuestion:nextQ picker:_picker];
-    if( nextQ > 0 )
-    {
-        [nextA becomeFirstResponder];
-    }
-    else
-    {
-        [textField resignFirstResponder];
-    }
-    [_picker selectRow:nextQ inComponent:0 animated:YES];
+    [textField resignFirstResponder];
+    NSUInteger next = (textField.tag + 1) % 3;
+    textField = self.textFields[next];
+    [textField becomeFirstResponder];
     return YES;
 }
 
+
+-(IBAction)submit:(id)sender
+{
+    BOOL ok = YES;
+ 
+    for( UITextField * textField in self.textFields )
+    {
+        if( textField.text.length == 0 )
+        {
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Missing answer"
+                                                             message:@"Can't leave a field blank"
+                                                            delegate:nil
+                                                   cancelButtonTitle:@"OK"
+                                                   otherButtonTitles:nil];
+            [alert show];
+            ok = NO;
+            break;
+        }
+    }
+    
+    if (ok)
+    {
+        [self.vsNavigationController performBack];
+    }
+}
 @end

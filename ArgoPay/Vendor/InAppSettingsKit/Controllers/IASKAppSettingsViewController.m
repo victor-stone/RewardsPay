@@ -455,7 +455,7 @@ CGRect IASKCGRectSwap(CGRect rect);
     }
 
 	footerText = [self.settingsReader footerTextForSection:section];
-	if (_showCreditsFooter && (section == [self.settingsReader numberOfSections]-1)) {
+	if (0 && _showCreditsFooter && (section == [self.settingsReader numberOfSections]-1)) {
 		// show credits since this is the last section
 		if ( (footerText == nil) || ([footerText length] == 0)) {
 			// show the credits on their own

@@ -18,13 +18,57 @@
 		</dict>
 		<dict>
 			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Key</key>
+			<string>kSettingChangePassword</string>
+			<key>Title</key>
+			<string>Change Password</string>
+			<key>Type</key>
+			<string>IASKButtonSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 			<key>Key</key>
-			<string>kSettingUserLoginPassword</string>
+			<string>kSettingUserLoginOldPassword</string>
 			<key>Title</key>
-			<string>Password:</string>
+			<string>Old Password:</string>
 			<key>IsSecure</key>
 			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Key</key>
+			<string>kSettingUserLoginNewPassword</string>
+			<key>Title</key>
+			<string>New Password:</string>
+			<key>IsSecure</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Key</key>
+			<string>kSettingUserLoginPasswordConfirm</string>
+			<key>Title</key>
+			<string>Confirm New Password:</string>
+			<key>IsSecure</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Key</key>
+			<string>kSettingChangePIN</string>
+			<key>Title</key>
+			<string>Change PIN</string>
+			<key>Type</key>
+			<string>IASKButtonSpecifier</string>
 		</dict>
 		<dict>
 			<key>Type</key>
@@ -34,9 +78,33 @@
 			<key>IsSecure</key>
 			<true/>
 			<key>Title</key>
-			<string>PIN</string>
+			<string>Old PIN</string>
 			<key>Key</key>
-			<string>kSettingUserPIN</string>
+			<string>kSettingUserLoginOldPIN</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>KeyboardType</key>
+			<string>NumberPad</string>
+			<key>IsSecure</key>
+			<true/>
+			<key>Title</key>
+			<string>New PIN</string>
+			<key>Key</key>
+			<string>kSettingUserLoginNewPIN</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>KeyboardType</key>
+			<string>NumberPad</string>
+			<key>IsSecure</key>
+			<true/>
+			<key>Title</key>
+			<string>Confirm New PIN</string>
+			<key>Key</key>
+			<string>kSettingUserLoginPINConfirm</string>
 		</dict>
 	</array>
 	<key>StringsTable</key>

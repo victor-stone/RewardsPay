@@ -19,5 +19,6 @@ typedef void (^APDismissBlock)(UIViewController* dismissing);
                                 title:(NSString *)title
                                 block:(APMenuBlock)block;
 -(void)adjustViewForiOS7;
+- (id)firstResponder;
 
 @end

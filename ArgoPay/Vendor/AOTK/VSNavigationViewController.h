@@ -184,6 +184,7 @@ typedef void (^VSNavAnimationBlock)();
 -(NSString *)backUnwindSegue;
 -(NSMutableArray *)backButtonHooks;
 -(BOOL)navigationBarHidden;
+-(BOOL)backButtonHidden;
 -(VSNavigationViewController *)vsNavigationController;
 -(void)performSystemSegue:(NSString *)identifier sender:(id)sender;
 @end

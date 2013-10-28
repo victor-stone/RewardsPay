@@ -9,6 +9,23 @@
 #import "UIViewController+ArgoPay.h"
 #import "APStrings.h"
 
+
+@implementation UIView (argopay)
+
+-(id)firstResponder
+{
+    if( [self isFirstResponder] )
+        return self;
+    for( UIView * view in self.subviews )
+    {
+        id found = [view firstResponder];
+        if( found )
+            return found;
+    }
+    return nil;
+}
+@end
+
 @implementation UIViewController (ArgoPay)
 
 void * kTargetMapAssociationKey = &kTargetMapAssociationKey;
@@ -72,6 +89,11 @@ void * kTargetMapAssociationKey = &kTargetMapAssociationKey;
         }
 
     }
+}
+
+- (id)firstResponder
+{
+    return [self.view firstResponder];
 }
 
 @end

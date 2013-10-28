@@ -31,6 +31,8 @@
 			<string>Sign On/PIN</string>
 			<key>IASKTextAlignment</key>
 			<string>IASKUITextAlignmentCenter</string>
+			<key>IASKViewControllerClass</key>
+			<string>APAccountSettingsViewController</string>
 		</dict>
 		<dict>
 			<key>Type</key>
