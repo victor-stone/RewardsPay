@@ -6,47 +6,30 @@
 //  Copyright (c) 2013 ArgoPay. All rights reserved.
 //
 
-#import <objc/runtime.h>
 #import "APStrings.h"
 
 #define INACTIVITY_TIMEOUT 60*4
 
-@implementation UIApplication (ArgoPayTimeOut)
-
 static void * kInactivityTimerKey = &kInactivityTimerKey;
 
-+ (void)load
-{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        @autoreleasepool {
-            [self ap_swizzle];
-        }
-    });
+@interface ArgoPayApplication : UIApplication {
+    NSTimer * _inactivityTimer;
 }
+@end
 
-+(void)ap_swizzle
-{
-    SEL se   = @selector(sendEvent:);
-    SEL apse = @selector(apSendEvent:);
-    method_exchangeImplementations(class_getInstanceMethod(self, se), class_getInstanceMethod(self, apse));
-}
+@implementation ArgoPayApplication
 
--(void)apSendEvent:(UIEvent *)event
+-(void)sendEvent:(UIEvent *)event
 {
-    NSTimer * timer = [self associatedValueForKey:kInactivityTimerKey];
-    if( timer )
-        [timer invalidate];
+    if( _inactivityTimer )
+        [_inactivityTimer invalidate];
     
-    timer = [NSTimer scheduledTimerWithTimeInterval:INACTIVITY_TIMEOUT
+    _inactivityTimer = [NSTimer scheduledTimerWithTimeInterval:INACTIVITY_TIMEOUT
                                             repeats:NO
                                               block:^(NSTimeInterval time) {
                                                   [self broadcast:kNotifyInactivityTimeOut payload:self];
                                               }];
     
-    [self associateValue:timer withKey:kInactivityTimerKey];
-
-    [self apSendEvent:event];
+    [super sendEvent:event];
 }
-
 @end
