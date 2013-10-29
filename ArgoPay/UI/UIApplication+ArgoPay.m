@@ -10,8 +10,6 @@
 
 #define INACTIVITY_TIMEOUT 60*4
 
-static void * kInactivityTimerKey = &kInactivityTimerKey;
-
 @interface ArgoPayApplication : UIApplication {
     NSTimer * _inactivityTimer;
 }
