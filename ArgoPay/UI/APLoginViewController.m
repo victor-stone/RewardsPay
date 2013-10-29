@@ -160,6 +160,7 @@ numberOfRowsInComponent:(NSInteger)component
     [self adjustViewForiOS7];
 }
 
+
 - (IBAction)doneTap:(id)sender
 {
     NSUInteger pin = self.PIN;
@@ -271,11 +272,6 @@ numberOfRowsInComponent:(NSInteger)component
     return _questions[section];
 }
 
--(BOOL)backButtonHidden
-{
-    return YES;
-}
-
 -(UINavigationItem *)navigationItem
 {
     UINavigationItem * item = [super navigationItem];
@@ -286,6 +282,7 @@ numberOfRowsInComponent:(NSInteger)component
                                                                               action:@selector(submit:)];
         item.rightBarButtonItems = @[bbi];
     }
+    item.hidesBackButton = YES;
     return item;
 }
 

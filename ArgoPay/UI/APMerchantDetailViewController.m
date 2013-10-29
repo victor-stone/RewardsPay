@@ -32,9 +32,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *merchantPoints;
 @property (weak, nonatomic) IBOutlet UILabel *streetAddr;
 @property (weak, nonatomic) IBOutlet UILabel *cityState;
-@property (weak, nonatomic) IBOutlet UITextView *phoneNumber;
-@property (weak, nonatomic) IBOutlet UITextView *urlAddr;
-@property (weak, nonatomic) IBOutlet UINavigationBar *orangeNavBar;
+@property (weak, nonatomic) IBOutlet UIButton *phone;
+
+@property (weak, nonatomic) IBOutlet UIButton *urlAddr;
+
 @property (weak, nonatomic) IBOutlet UITableView *pointsTable;
 @property (weak, nonatomic) IBOutlet UIButton *discloseButton;
 
@@ -64,8 +65,8 @@ APLOGRELEASE
     _merchantPoints.text = nil;
     _streetAddr.text = nil;
     _cityState.text = nil;
-    _phoneNumber.text = nil;
-    _urlAddr.text = nil;
+    [_phone setTitle:@"" forState:UIControlStateNormal];
+    [_urlAddr setTitle:@"" forState:UIControlStateNormal];
 }
 
 -(void)setMLocID:(NSNumber *)MLocID
@@ -85,8 +86,10 @@ APLOGRELEASE
         _merchantPoints.text = [NSString stringWithFormat:@"%dpts",[merchantDetail.ConsumerPoints integerValue] ];
         _streetAddr.text = merchantDetail.Addr1;
         _cityState.text = [NSString stringWithFormat:@"%@, %@", merchantDetail.City, merchantDetail.State];
-        _phoneNumber.text = merchantDetail.Tel;
-        _urlAddr.text = [merchantDetail.Website stringByReplacingOccurrencesOfString:@"http://" withString:@""];
+        if( merchantDetail.Tel.length && ![merchantDetail.Tel isEqualToString:@"None"] )
+            [_phone setTitle:merchantDetail.Tel forState:UIControlStateNormal];
+        if( merchantDetail.Website && ![merchantDetail.Website isEqualToString:@"None"] )
+            [_urlAddr setTitle:[merchantDetail.Website stringByReplacingOccurrencesOfString:@"http://" withString:@""] forState:UIControlStateNormal];
         _rewards = merchantDetail.Rewards;
         if( _showingRewards )
         {
@@ -99,6 +102,14 @@ APLOGRELEASE
         }
         [popup dismiss];
     }];
+}
+- (IBAction)phoneTap:(UIButton *)sender
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",sender.titleLabel.text]]];
+}
+- (IBAction)websiteTap:(UIButton *)sender
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@",sender.titleLabel.text]]];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

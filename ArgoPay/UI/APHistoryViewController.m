@@ -24,9 +24,15 @@
 @property (weak, nonatomic) IBOutlet UITableView *transactionsTable;
 @end
 
+#define SORT_BY_DATE 0
+#define SORT_BY_DESC 1
+#define SORT_BY_AMOUNT 2
+
+
 @implementation APHistoryViewController {
     NSArray *_allResults;
     NSArray *_historyItems;
+    NSUInteger _currentSort;
 }
 
 APLOGRELEASE
@@ -59,8 +65,33 @@ APLOGRELEASE
     }];
 }
 
+#define ORD_NATURAL 1
+#define ORD_FLIPPED -1
+
 - (IBAction)sort:(UISegmentedControl *)sender
 {
+    NSUInteger newSortType = sender.selectedSegmentIndex;
+    NSUInteger ord = ORD_NATURAL;
+    if( newSortType == SORT_BY_DATE )
+        ord = ORD_FLIPPED;
+    if( newSortType == _currentSort )
+        ord = -ord;
+    
+    _historyItems = [_historyItems sortedArrayUsingComparator:^NSComparisonResult(APStatementLine* obj1, APStatementLine* obj2) {
+        switch (newSortType) {
+            case SORT_BY_DATE:
+                return [obj1.Date compare:obj2.Date] * ord;
+            case SORT_BY_AMOUNT:
+                return (obj1.Amount.floatValue - obj2.Amount.floatValue) * ord;
+            default: // SORT_BY_DESC
+                return [obj1.Description compare:obj2.Description] * ord;
+        }
+        return 0;
+    }];
+    
+    _currentSort = newSortType;
+    [_transactionsTable reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationTop];
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -100,7 +131,7 @@ APLOGRELEASE
     [searchBar resignFirstResponder];
 }
 
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar;                     // called when keyboard search button pressed
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     [searchBar resignFirstResponder];
 }
