@@ -51,11 +51,6 @@
 
 APLOGRELEASE
 
--(UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleLightContent;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -71,10 +66,14 @@ APLOGRELEASE
 
 -(void)setMLocID:(NSNumber *)MLocID
 {
-    APPopup * popup = [APPopup withNetActivity:self.tabNavigator.view];
-    
     _MLocID = MLocID;
-    [self view]; // force a viewDidLoad
+
+    // problem: this is not block the tab navigator at the bottom
+    // because we are not in the hierarchy yet.
+    APPopup * popup = nil;
+    
+    if( !_showingRewards )
+        popup = [APPopup withNetActivity:self.view]; // forces a view load
 
     APRequestMerchantLocationDetail *request = [APRequestMerchantLocationDetail new];
     APAccount *account = [APAccount currentAccount];
@@ -148,9 +147,9 @@ APLOGRELEASE
     return [_rewards count];
 }
 
--(void)redeemCredit:(UIButton *)button
+-(IBAction)redeemCredit:(UIButton *)button
 {
-    APArgoPointsReward      *reward  = _rewards[button.tag];
+    APArgoPointsReward *reward  = _rewards[button.tag];
     [reward setFetchingON];
     [_pointsTable reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:button.tag inSection:0]]
                         withRowAnimation:UITableViewRowAnimationNone];
@@ -169,28 +168,26 @@ APLOGRELEASE
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    APMerchantDetailCell * cell = [tableView dequeueReusableCellWithIdentifier:kCellIDMerchantDetail forIndexPath:indexPath];
+    NSString * cellID = kCellIDMerchantDetail;
+
     APArgoPointsReward * reward = _rewards[indexPath.row];
-    cell.activity.hidden = YES;
     
     if( [reward isFetching] )
     {
-        cell.redeemButton.hidden = NO;
-        cell.activity.hidden = NO;
-        [cell.activity startAnimating];
-        [cell.redeemButton setTitle:@"" forState:UIControlStateNormal];
+        cellID = [cellID stringByAppendingString:@"-redeeming"];
     }
     else if( [reward.Selectable isRemoteYES] )
     {
-        cell.redeemButton.hidden = NO;
-        cell.redeemButton.tag = indexPath.row;
-        [cell.redeemButton setTitle:NSLocalizedString(@"Redeem", @"merchant detail reward") forState:UIControlStateNormal];
-        [cell.redeemButton addTarget:self action:@selector(redeemCredit:) forControlEvents:UIControlEventTouchUpInside];
+        cellID = [cellID stringByAppendingString:@"-selectable"];
     }
-    else
-    {
-        cell.redeemButton.hidden = YES;
-    }
+    
+    APMerchantDetailCell * cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
+    
+    if( cell.activity )
+        [cell.activity startAnimating];
+    
+    if( cell.redeemButton )
+       [cell.redeemButton addTarget:self action:@selector(redeemCredit:) forControlEvents:UIControlEventTouchUpInside];
     
     cell.points.text = [NSString stringWithFormat:NSLocalizedString(@"%dpts","MerchantDetailCell"), [reward.AmountReward integerValue]];
     cell.credit.text = [NSString stringWithFormat:@"$%d credit",[reward.PointsRequired integerValue]];

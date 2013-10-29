@@ -16,6 +16,7 @@ APKEYEDSTRING(kNotifyUserSettingChanged)
 APKEYEDSTRING(kNotifyUserLoginStatus)
 APKEYEDSTRING(kNotifyMessageFromRemotePush)
 APKEYEDSTRING(kNotifyRemotePushPickedUp)
+APKEYEDSTRING(kNotifyInactivityTimeOut)
 
 APKEYEDSTRING(kSettingUserLoginName)
 APKEYEDSTRING(kSettingUserLoginPassword)

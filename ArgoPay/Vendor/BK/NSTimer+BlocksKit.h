@@ -19,6 +19,7 @@
  @return A new NSTimer object, configured according to the specified parameters.
  */
 + (NSTimer *)scheduledTimerWithTimeInterval:(NSTimeInterval)inTimeInterval block:(BKTimerBlock)inBlock repeats:(BOOL)inRepeats;
++ (NSTimer *)scheduledTimerWithTimeInterval:(NSTimeInterval)inTimeInterval repeats:(BOOL)inRepeats block:(BKTimerBlock)inBlock;
 
 /** Creates and returns a block-based NSTimer initialized with the specified block.
 

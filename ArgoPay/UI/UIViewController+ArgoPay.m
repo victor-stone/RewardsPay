@@ -75,7 +75,7 @@ void * kTargetMapAssociationKey = &kTargetMapAssociationKey;
         [self setNeedsStatusBarAppearanceUpdate];
         
         UIView *view = [[UIView alloc] initWithFrame:(CGRect){ 0, 0, 320, 20 }];
-        view.backgroundColor = [UIColor orangeColor];
+        view.backgroundColor = [UIColor argoOrange];
         [self.view addSubview:view];
         
         for( NSLayoutConstraint *lcx in self.view.constraints )
@@ -94,6 +94,15 @@ void * kTargetMapAssociationKey = &kTargetMapAssociationKey;
 - (id)firstResponder
 {
     return [self.view firstResponder];
+}
+
+@end
+
+@implementation UIColor (ArgoPay)
+
++(UIColor *)argoOrange
+{
+    return [UIColor colorWithRed:230.0/255.0 green:112.0/255.0 blue:19.0/255 alpha:1.0];
 }
 
 @end

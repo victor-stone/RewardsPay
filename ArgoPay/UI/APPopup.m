@@ -8,7 +8,7 @@
 
 #import "APPopup.h"
 #import "APStrings.h"
-
+#import "APAppDelegate.h"
 
 @implementation APPopup
 
@@ -19,7 +19,8 @@
 
 +(id)withNetActivity:(UIView *)parent
 {
-    return [APPopup withNetActivity:parent delay:YES];
+    APAppDelegate *ap = (id)[UIApplication sharedApplication].delegate;
+    return [APPopup withNetActivity:ap.window.rootViewController.view delay:YES];
 }
 
 +(id)withNetActivity:(UIView *)parent delay:(BOOL)delay

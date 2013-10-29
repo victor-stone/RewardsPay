@@ -11,6 +11,11 @@
 
 @implementation NSTimer (BlocksKit)
 
++ (NSTimer *)scheduledTimerWithTimeInterval:(NSTimeInterval)inTimeInterval repeats:(BOOL)inRepeats block:(BKTimerBlock)inBlock
+{
+    return [self scheduledTimerWithTimeInterval:inTimeInterval block:inBlock repeats:inRepeats];
+}
+
 + (id)scheduledTimerWithTimeInterval:(NSTimeInterval)inTimeInterval block:(BKTimerBlock)block repeats:(BOOL)inRepeats {
 	NSParameterAssert(block);
 	return [self scheduledTimerWithTimeInterval: inTimeInterval target: self selector: @selector(bk_executeBlockFromTimer:) userInfo: [block copy] repeats: inRepeats];

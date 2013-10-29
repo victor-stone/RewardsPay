@@ -60,7 +60,7 @@ APLOGRELEASE
     if( !_didLayerWork )
     {
         CALayer *layer = _infoContainer.layer;
-        layer.borderColor = [UIColor orangeColor].CGColor;
+        layer.borderColor = [UIColor argoOrange].CGColor;
         layer.borderWidth = 2;
         layer.cornerRadius = 8.0;
         layer.masksToBounds = YES;

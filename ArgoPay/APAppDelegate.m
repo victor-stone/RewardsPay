@@ -130,7 +130,7 @@ typedef enum _APStartupState {
         [[UINavigationBar appearance] setTitleTextAttributes:
          @{ NSForegroundColorAttributeName: [UIColor whiteColor]
             }];
-        [[UINavigationBar appearance] setBarTintColor:[UIColor orangeColor]];
+        [[UINavigationBar appearance] setBarTintColor:[UIColor argoOrange]];
     }
 }
 
@@ -235,7 +235,19 @@ typedef enum _APStartupState {
         if( me->_doneLoading )
             [me showMainAppWindow];
      }];
-     
+    
+    [self registerForBroadcast:kNotifyInactivityTimeOut
+                         block:^(id thisIsYou, id payload)
+    {
+        APAccount * account = [APAccount currentAccount];
+        if( account.isLoggedIn )
+        {
+            [NSObject performBlock:^{
+                [account logUserOut];
+            } afterDelay:0.2];
+        }
+    }];
+    
     // Convert IASK notification center events to self:registerForBroadcast
     // to normalize different styles
     

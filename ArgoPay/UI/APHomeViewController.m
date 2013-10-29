@@ -13,9 +13,8 @@
 @interface APHomeViewController : APTransactionViewController
 @end
 
-@interface APHomeViewController () <UICollectionViewDataSource>
+@interface APHomeViewController () <UICollectionViewDataSource,UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionViewMenu;
-
 @end
 
 @implementation APHomeViewController 
@@ -47,8 +46,22 @@ APLOGRELEASE
 
 -(IBAction)unwindFromLogout:(UIStoryboardSegue *)segue
 {
-    APAccount * account = [APAccount currentAccount];
-    [account logUserOut];
+    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Log out", @"logout")
+                                                     message:NSLocalizedString(@"Log out now?", @"logout")
+                                                    delegate:self
+                                           cancelButtonTitle:NSLocalizedString(@"Yes, Log out",@"logout")
+                                           otherButtonTitles:NSLocalizedString(@"No, keep me logged in", @logout), nil];
+    [alert show];
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if( buttonIndex == 0 )
+    {
+        APAccount * account = [APAccount currentAccount];
+        [account logUserOut];
+    }
 }
 
 -(BOOL)canPerformUnwindSegueAction:(SEL)action fromViewController:(UIViewController *)fromViewController withSender:(id)sender

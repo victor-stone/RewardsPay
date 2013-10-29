@@ -52,7 +52,6 @@ APLOGRELEASE
     
     self.navigationItem.rightBarButtonItems = @[bbi];
 
-    [self fetchLocations];
     _viewAsKM = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingViewAsKilometer];
 
     [self registerForBroadcast:kNotifyUserSettingChanged
@@ -76,6 +75,13 @@ APLOGRELEASE
     
 }
 
+-(void)willMoveToParentViewController:(UIViewController *)parent
+{
+    [super willMoveToParentViewController:parent];
+    if( parent )
+        [self fetchLocations];
+}
+
 -(void)fetchLocations
 {
     APPopup *popup = [APPopup withNetActivity:self.view];
@@ -86,13 +92,13 @@ APLOGRELEASE
     request.CategoryID = @(0);
     request.Limit = @(200);
     [[APLocation sharedInstance] currentLocation:^(CLLocationCoordinate2D loc) {
-        [popup dismiss];
         _userLocation = [[CLLocation alloc] initWithLatitude:loc.latitude longitude:loc.longitude];
         request.Long = @(loc.longitude);
         request.Lat = @(loc.latitude);
         [request performRequest:^(NSArray * data) {
             _locations = data;
             [_locationsTable reloadData];
+            [popup dismiss];
         }];
     }];
 }

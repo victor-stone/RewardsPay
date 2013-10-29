@@ -216,6 +216,7 @@
 		57F89F0F1804B19D00A80461 /* kImageLocation-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57F89F0B1804B19C00A80461 /* kImageLocation-selected@2x.png */; };
 		57F89F101804B19D00A80461 /* kImageOffers-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57F89F0C1804B19D00A80461 /* kImageOffers-selected@2x.png */; };
 		57F89F111804B19D00A80461 /* kImageOffers@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57F89F0D1804B19D00A80461 /* kImageOffers@2x.png */; };
+		57FCCA6F1820629C00CB60C7 /* UIApplication+ArgoPay.m in Sources */ = {isa = PBXBuildFile; fileRef = 57FCCA6E1820629C00CB60C7 /* UIApplication+ArgoPay.m */; };
 		57FD23A717FF1573004A50D8 /* kImageQR-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 57FD23A317FF1573004A50D8 /* kImageQR-selected.png */; };
 		57FD23A817FF1573004A50D8 /* kImageQR-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57FD23A417FF1573004A50D8 /* kImageQR-selected@2x.png */; };
 		57FD23A917FF1573004A50D8 /* kImageQR.png in Resources */ = {isa = PBXBuildFile; fileRef = 57FD23A517FF1573004A50D8 /* kImageQR.png */; };
@@ -576,6 +577,7 @@
 		57F89F0B1804B19C00A80461 /* kImageLocation-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageLocation-selected@2x.png"; sourceTree = "<group>"; };
 		57F89F0C1804B19D00A80461 /* kImageOffers-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageOffers-selected@2x.png"; sourceTree = "<group>"; };
 		57F89F0D1804B19D00A80461 /* kImageOffers@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageOffers@2x.png"; sourceTree = "<group>"; };
+		57FCCA6E1820629C00CB60C7 /* UIApplication+ArgoPay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+ArgoPay.m"; sourceTree = "<group>"; };
 		57FD23A317FF1573004A50D8 /* kImageQR-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageQR-selected.png"; sourceTree = "<group>"; };
 		57FD23A417FF1573004A50D8 /* kImageQR-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageQR-selected@2x.png"; sourceTree = "<group>"; };
 		57FD23A517FF1573004A50D8 /* kImageQR.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageQR.png; sourceTree = "<group>"; };
@@ -1230,6 +1232,7 @@
 			children = (
 				57A2247C17E90F47000B52E9 /* UIViewController+ArgoPay.h */,
 				57A2247D17E90F47000B52E9 /* UIViewController+ArgoPay.m */,
+				57FCCA6E1820629C00CB60C7 /* UIApplication+ArgoPay.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -1545,6 +1548,7 @@
 				57F3690C180CF955009D0FAC /* APTransactionViewController.m in Sources */,
 				57A2246D17E90F27000B52E9 /* IASKPSSliderSpecifierViewCell.m in Sources */,
 				57A2246E17E90F27000B52E9 /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
+				57FCCA6F1820629C00CB60C7 /* UIApplication+ArgoPay.m in Sources */,
 				57A2246F17E90F27000B52E9 /* IASKPSTitleValueSpecifierViewCell.m in Sources */,
 				5795C04A180C6E85008D0A0E /* VSNavigationViewController.m in Sources */,
 				57A2247017E90F27000B52E9 /* IASKSlider.m in Sources */,
@@ -1701,7 +1705,7 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "60506C26-79E5-4673-A763-4BECA09847E0";
+				PROVISIONING_PROFILE = "28A27E00-7420-4347-B884-6BA833D43A13";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1726,7 +1730,7 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "60506C26-79E5-4673-A763-4BECA09847E0";
+				PROVISIONING_PROFILE = "28A27E00-7420-4347-B884-6BA833D43A13";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
