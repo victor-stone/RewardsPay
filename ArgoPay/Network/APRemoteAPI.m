@@ -85,6 +85,8 @@ static APRemoteAPI * _sharedRemoteAPI;
 //            client.defaultSSLPinningMode = AFSSLPinningModePublicKey;
             client.defaultSSLPinningMode = AFSSLPinningModeCertificate;
         }
+#else
+        client.defaultSSLPinningMode = AFSSLPinningModeCertificate;        
 #endif
         api->_clients[urlString] = client;
         APLOG(kDebugNetwork, @"Created HTTP-JSON client for base URL: %@", urlString);
