@@ -213,16 +213,20 @@ numberOfRowsInComponent:(NSInteger)component
             password:_password.text
                block:^(APAccount *account)
     {
-        NSUInteger pin = [[NSUserDefaults standardUserDefaults] integerForKey:kSettingUserPIN];
-        if( pin )
+        [_popup dismiss];
+        _popup = nil;
+        if( account )
         {
-            [self broadcast:kNotifyUserLoginStatus payload:self];
+            NSUInteger pin = [[NSUserDefaults standardUserDefaults] integerForKey:kSettingUserPIN];
+            if( pin )
+            {
+                [self broadcast:kNotifyUserLoginStatus payload:self];
+            }
+            else
+            {
+                [self performSegueWithIdentifier:kSegueLoginToMakePIN sender:self];
+            }
         }
-        else
-        {
-            [self performSegueWithIdentifier:kSegueLoginToMakePIN sender:self];
-        }
-        
     }];
 }
 

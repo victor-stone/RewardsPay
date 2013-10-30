@@ -42,21 +42,24 @@ static APRemoteAPI * _sharedRemoteAPI;
 +(NSString *)baseURLForSubDomain:(NSString *)scope
 {
 #ifdef ALLOW_DEBUG_SETTINGS
-    NSString * protocol = APENABLED(kSettingDebugNetworkSSL) ? @"https" : @"http";
+    BOOL ssl = APENABLED(kSettingDebugNetworkSSL);
+    NSString * protocol = ssl ? @"https" : @"http";
+    NSString * port = ssl ? @":443" : @"";
     NSString * base = [[NSUserDefaults standardUserDefaults] stringForKey:kSettingDebugNetworkStubbed];
     if( [base isEqualToString:@"localhost"] )
         base = [[NSUserDefaults standardUserDefaults] stringForKey:kSettingDebugLocalhostAddr];
     else if( [base isEqualToString:@"file"] )
         protocol = @"file";
 #else
-    NSString *protocol = @"https";
+    NSString * protocol = @"https";
     NSString * base = @".argopay.com";
+    NSString * port = @":443";
 #endif
     
     if( [base characterAtIndex:0] == '.' )
         base = [scope stringByAppendingString:base];
     
-    return [NSString stringWithFormat:@"%@://%@", protocol, base];
+    return [NSString stringWithFormat:@"%@://%@%@", protocol, base, port];
 }
 
 +(AFHTTPClient *)clientForSubDomain:(NSString *)subDomain
@@ -75,6 +78,14 @@ static APRemoteAPI * _sharedRemoteAPI;
         [client registerHTTPOperationClass:[AFJSONRequestOperation class]];
         [client setDefaultHeader:@"Accept" value:@"text/json"];
         client.parameterEncoding = AFJSONParameterEncoding;
+#ifdef ALLOW_DEBUG_SETTINGS
+        BOOL ssl = APENABLED(kSettingDebugNetworkSSL);
+        if( ssl )
+        {
+//            client.defaultSSLPinningMode = AFSSLPinningModePublicKey;
+            client.defaultSSLPinningMode = AFSSLPinningModeCertificate;
+        }
+#endif
         api->_clients[urlString] = client;
         APLOG(kDebugNetwork, @"Created HTTP-JSON client for base URL: %@", urlString);
     }
@@ -176,11 +187,13 @@ static APRemoteAPI * _sharedRemoteAPI;
             [self setValuesForKeysWithDictionary:fakeParameters];
     }
 
+    [APRemoteAPI sharedInstance];
+    
 #else
     
 #define DOVALIDATION(obj)
 
--(void)_performRequest:(APRemoteAPIRequestBlock)block errorHandler:(APRemoteAPIRequestErrorBlock)errorHandler
+-(void)performRequest:(APRemoteAPIRequestBlock)block errorHandler:(APRemoteAPIRequestErrorBlock)errorHandler
 {
 
 #endif

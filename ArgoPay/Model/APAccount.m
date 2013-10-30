@@ -51,12 +51,15 @@ APLOGRELEASE
         return;
     }
     
-    [loginRequest performRequest:^(APAccount *account) {
+    [loginRequest performRequest:^(APAccount * account) {
         APLOG(kDebugUser, @"User is logged with AToken: %@",account.AToken);
         __currentAccount = account;
         __currentAccount.login = loginRequest.Email;
         __currentAccount.password = loginRequest.Password;
         block(account);
+    } errorHandler:^(NSError *err) {
+        block(nil);
+        [err broadcast:kNotifySystemError payload:err];
     }];
 }
 

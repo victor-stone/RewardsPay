@@ -30,13 +30,6 @@
 		576A2F5217FB33B600E53CA3 /* MerchantLocationSearch.js in Resources */ = {isa = PBXBuildFile; fileRef = 576A2F5017FB33B600E53CA3 /* MerchantLocationSearch.js */; };
 		5774F7A318071F7600F83313 /* kImageForward@2x copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 5774F7A118071F7600F83313 /* kImageForward@2x copy.png */; };
 		5774F7A418071F7600F83313 /* kImageForward.png in Resources */ = {isa = PBXBuildFile; fileRef = 5774F7A218071F7600F83313 /* kImageForward.png */; };
-		578B3E311805CDA9005B2701 /* SendingStubs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 578B3E301805CDA9005B2701 /* SendingStubs.plist */; };
-		578B3E391805D963005B2701 /* qrcode.ANN.png in Resources */ = {isa = PBXBuildFile; fileRef = 578B3E331805D963005B2701 /* qrcode.ANN.png */; };
-		578B3E3A1805D963005B2701 /* qrcode.DAV.png in Resources */ = {isa = PBXBuildFile; fileRef = 578B3E341805D963005B2701 /* qrcode.DAV.png */; };
-		578B3E3B1805D963005B2701 /* qrcode.MEX.png in Resources */ = {isa = PBXBuildFile; fileRef = 578B3E351805D963005B2701 /* qrcode.MEX.png */; };
-		578B3E3C1805D963005B2701 /* qrcode.PET.png in Resources */ = {isa = PBXBuildFile; fileRef = 578B3E361805D963005B2701 /* qrcode.PET.png */; };
-		578B3E3D1805D963005B2701 /* qrcode.ABC.png in Resources */ = {isa = PBXBuildFile; fileRef = 578B3E371805D963005B2701 /* qrcode.ABC.png */; };
-		578B3E3E1805D963005B2701 /* qrcode.JOE.png in Resources */ = {isa = PBXBuildFile; fileRef = 578B3E381805D963005B2701 /* qrcode.JOE.png */; };
 		578BB57D17F208FE009E2F45 /* APOffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 578BB57C17F208FE009E2F45 /* APOffer.m */; };
 		578BB5BB17F22CFA009E2F45 /* AFNetworking.strings in Resources */ = {isa = PBXBuildFile; fileRef = 578BB5B717F22CFA009E2F45 /* AFNetworking.strings */; };
 		578BB5BC17F22CFA009E2F45 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 578BB5B917F22CFA009E2F45 /* Localizable.strings */; };
@@ -133,12 +126,7 @@
 		57A224F317E95154000B52E9 /* APSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A224F217E95153000B52E9 /* APSettingsViewController.m */; };
 		57A224F517E951A5000B52E9 /* InAppSettings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 57A224F417E951A5000B52E9 /* InAppSettings.bundle */; };
 		57A4A9261819AC4E0007929B /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57A4A9251819AC4E0007929B /* Entitlements.plist */; };
-		57A4A92D1819BE480007929B /* create_cert_and_test.sh in Resources */ = {isa = PBXBuildFile; fileRef = 57A4A9271819BE480007929B /* create_cert_and_test.sh */; };
-		57A4A92E1819BE480007929B /* PushCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 57A4A9281819BE480007929B /* PushCertificate.cer */; };
-		57A4A92F1819BE480007929B /* PushCertificate.pem in Resources */ = {isa = PBXBuildFile; fileRef = 57A4A9291819BE480007929B /* PushCertificate.pem */; };
-		57A4A9301819BE480007929B /* PushCertificateAndKey.pem in Resources */ = {isa = PBXBuildFile; fileRef = 57A4A92A1819BE480007929B /* PushCertificateAndKey.pem */; };
-		57A4A9311819BE480007929B /* PushKey.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 57A4A92B1819BE480007929B /* PushKey.p12 */; };
-		57A4A9321819BE480007929B /* PushKey.pem in Resources */ = {isa = PBXBuildFile; fileRef = 57A4A92C1819BE480007929B /* PushKey.pem */; };
+		57AAF308182160F1009C333E /* argopaydev.cer in Resources */ = {isa = PBXBuildFile; fileRef = 57AAF307182160F1009C333E /* argopaydev.cer */; };
 		57ADDAA617F5DFB500F23689 /* APLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57ADDAA517F5DFB500F23689 /* APLoginViewController.m */; };
 		57ADDAB617F5F33F00F23689 /* ConsActivateOffer.js in Resources */ = {isa = PBXBuildFile; fileRef = 57ADDAAE17F5F33F00F23689 /* ConsActivateOffer.js */; };
 		57ADDAB717F5F33F00F23689 /* ConsActivateReward.js in Resources */ = {isa = PBXBuildFile; fileRef = 57ADDAAF17F5F33F00F23689 /* ConsActivateReward.js */; };
@@ -149,12 +137,6 @@
 		57ADDABC17F5F33F00F23689 /* ConsumerTransactionStart.js in Resources */ = {isa = PBXBuildFile; fileRef = 57ADDAB417F5F33F00F23689 /* ConsumerTransactionStart.js */; };
 		57ADDABD17F5F33F00F23689 /* ConsumerTransactionStatus.js in Resources */ = {isa = PBXBuildFile; fileRef = 57ADDAB517F5F33F00F23689 /* ConsumerTransactionStatus.js */; };
 		57AEDC941800633D00042F7F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 57AEDC931800633D00042F7F /* Reachability.m */; };
-		57B5EF1C181AC11A00A02AC5 /* ent_create_cert_and_test.sh in Resources */ = {isa = PBXBuildFile; fileRef = 57B5EF16181AC11A00A02AC5 /* ent_create_cert_and_test.sh */; };
-		57B5EF1D181AC11A00A02AC5 /* EntPushCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 57B5EF17181AC11A00A02AC5 /* EntPushCertificate.cer */; };
-		57B5EF1E181AC11A00A02AC5 /* EntPushCertificate.pem in Resources */ = {isa = PBXBuildFile; fileRef = 57B5EF18181AC11A00A02AC5 /* EntPushCertificate.pem */; };
-		57B5EF1F181AC11A00A02AC5 /* EntPushCertificateAndKey.pem in Resources */ = {isa = PBXBuildFile; fileRef = 57B5EF19181AC11A00A02AC5 /* EntPushCertificateAndKey.pem */; };
-		57B5EF20181AC11A00A02AC5 /* EntPushKey.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 57B5EF1A181AC11A00A02AC5 /* EntPushKey.p12 */; };
-		57B5EF21181AC11A00A02AC5 /* EntPushKey.pem in Resources */ = {isa = PBXBuildFile; fileRef = 57B5EF1B181AC11A00A02AC5 /* EntPushKey.pem */; };
 		57C6C9471804801B007AB199 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57C6C9461804801B007AB199 /* CoreImage.framework */; };
 		57C6C9541804931D007AB199 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57C6C9531804931D007AB199 /* Default-568h@2x.png */; };
 		57C6C95718049417007AB199 /* kImageLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57C6C95518049417007AB199 /* kImageLogo@2x.png */; };
@@ -210,7 +192,6 @@
 		57E7B84117EA042B00205BCB /* VSPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E7B84017EA042B00205BCB /* VSPopup.m */; };
 		57E7B84617EA1BA400205BCB /* APPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E7B84517EA1BA400205BCB /* APPopup.m */; };
 		57E7B84D17EA5C0000205BCB /* APTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E7B84C17EA5C0000205BCB /* APTransaction.m */; };
-		57E8DD071811BDFC00B1296C /* entdeploy.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57E8DD061811BDFC00B1296C /* entdeploy.plist */; };
 		57F3690C180CF955009D0FAC /* APTransactionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57F3690B180CF955009D0FAC /* APTransactionViewController.m */; };
 		57F89F0E1804B19D00A80461 /* kImageLocation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57F89F0A1804B19C00A80461 /* kImageLocation@2x.png */; };
 		57F89F0F1804B19D00A80461 /* kImageLocation-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57F89F0B1804B19C00A80461 /* kImageLocation-selected@2x.png */; };
@@ -482,6 +463,7 @@
 		57A4A92A1819BE480007929B /* PushCertificateAndKey.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PushCertificateAndKey.pem; sourceTree = "<group>"; };
 		57A4A92B1819BE480007929B /* PushKey.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = PushKey.p12; sourceTree = "<group>"; };
 		57A4A92C1819BE480007929B /* PushKey.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PushKey.pem; sourceTree = "<group>"; };
+		57AAF307182160F1009C333E /* argopaydev.cer */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = argopaydev.cer; sourceTree = "<group>"; };
 		57ADDAA517F5DFB500F23689 /* APLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLoginViewController.m; sourceTree = "<group>"; };
 		57ADDAAB17F5F1E700F23689 /* gen_jsonstubs.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = gen_jsonstubs.sh; sourceTree = "<group>"; };
 		57ADDAAE17F5F33F00F23689 /* ConsActivateOffer.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ConsActivateOffer.js; sourceTree = "<group>"; };
@@ -871,6 +853,7 @@
 		57A223E917E90626000B52E9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				57AAF307182160F1009C333E /* argopaydev.cer */,
 				57A4A9251819AC4E0007929B /* Entitlements.plist */,
 				575C4895181A176A00660ED2 /* Debug-Entitlements.plist */,
 				57A224F417E951A5000B52E9 /* InAppSettings.bundle */,
@@ -1379,15 +1362,14 @@
 				57C6C95D1804959C007AB199 /* appIcon58.png in Resources */,
 				57C6C95E1804959C007AB199 /* appIcon29.png in Resources */,
 				57C6C95F1804959C007AB199 /* appIcon120.png in Resources */,
-				57B5EF1C181AC11A00A02AC5 /* ent_create_cert_and_test.sh in Resources */,
 				57C6C9601804959C007AB199 /* appIcon@2x.png in Resources */,
 				57C6C9611804959C007AB199 /* appIcon.png in Resources */,
 				57FD285617FF161B004A50D8 /* kImageLogout@2x.png in Resources */,
-				57A4A9311819BE480007929B /* PushKey.p12 in Resources */,
 				5748E0DB181720EF00DD079E /* kImageStep1of2.png in Resources */,
 				5748E0D9181720EF00DD079E /* kImageStep2of2.png in Resources */,
 				57C6C95818049417007AB199 /* kImageLogo.png in Resources */,
 				57F89F111804B19D00A80461 /* kImageOffers@2x.png in Resources */,
+				57AAF308182160F1009C333E /* argopaydev.cer in Resources */,
 				57A4A9261819AC4E0007929B /* Entitlements.plist in Resources */,
 				5795C04C180C6E85008D0A0E /* kImageDown@2x.png in Resources */,
 				57E7B83517E9F01000205BCB /* about.html in Resources */,
@@ -1402,10 +1384,7 @@
 				57ADDAB917F5F33F00F23689 /* ConsumerGetAvailableRewards.js in Resources */,
 				5774F7A318071F7600F83313 /* kImageForward@2x copy.png in Resources */,
 				5795C04B180C6E85008D0A0E /* kImageDown.png in Resources */,
-				578B3E391805D963005B2701 /* qrcode.ANN.png in Resources */,
 				579C817017FD91690046BC9B /* kImageLocation.png in Resources */,
-				57B5EF20181AC11A00A02AC5 /* EntPushKey.p12 in Resources */,
-				57A4A92E1819BE480007929B /* PushCertificate.cer in Resources */,
 				57ADDABA17F5F33F00F23689 /* ConsumerLogin.js in Resources */,
 				57DE61681819A3B800F853CE /* Entitlements.plist in Resources */,
 				57C6C9541804931D007AB199 /* Default-568h@2x.png in Resources */,
@@ -1413,15 +1392,12 @@
 				57F89F0F1804B19D00A80461 /* kImageLocation-selected@2x.png in Resources */,
 				570EC1F717F7638E00CBA207 /* ConsumerStatementDetail.js in Resources */,
 				570EC1F217F74FED00CBA207 /* ConsumerStatementSummary.js in Resources */,
-				578B3E3A1805D963005B2701 /* qrcode.DAV.png in Resources */,
 				57ADDABB17F5F33F00F23689 /* ConsumerTransactionApprove.js in Resources */,
 				579C817717FD94480046BC9B /* kImageLogoutHome-selected.png in Resources */,
-				57B5EF1F181AC11A00A02AC5 /* EntPushCertificateAndKey.pem in Resources */,
 				57ADDABC17F5F33F00F23689 /* ConsumerTransactionStart.js in Resources */,
 				57ADDABD17F5F33F00F23689 /* ConsumerTransactionStatus.js in Resources */,
 				579C817A17FD94480046BC9B /* kImageLogoutHome@2x.png in Resources */,
 				57DA314517F94DA700A6978A /* GoogleMaps.bundle in Resources */,
-				57B5EF1E181AC11A00A02AC5 /* EntPushCertificate.pem in Resources */,
 				57A224F517E951A5000B52E9 /* InAppSettings.bundle in Resources */,
 				57A223ED17E90626000B52E9 /* InfoPlist.strings in Resources */,
 				57DA317A17FA213500A6978A /* kImageAccount-selected.png in Resources */,
@@ -1439,12 +1415,9 @@
 				5793E3EE17EBC38A004B0838 /* kImageButtonBg.png in Resources */,
 				5795C04E180C6E85008D0A0E /* kImageBackArrow@2x.png in Resources */,
 				57DA317F17FA213500A6978A /* kImageButtonBg@2x.png in Resources */,
-				578B3E3D1805D963005B2701 /* qrcode.ABC.png in Resources */,
 				57FD285717FF161B004A50D8 /* kImageMapList.png in Resources */,
 				579E4E2617F0C6B900D03437 /* kImageErrorBalloon.png in Resources */,
-				578B3E3B1805D963005B2701 /* qrcode.MEX.png in Resources */,
 				579E4E2717F0C6B900D03437 /* kImageErrorBang.png in Resources */,
-				578B3E3C1805D963005B2701 /* qrcode.PET.png in Resources */,
 				57DA318317FA213500A6978A /* kImageHelp-selected.png in Resources */,
 				57FD285117FF161B004A50D8 /* kImageHome.png in Resources */,
 				57DA318417FA213500A6978A /* kImageHelp-selected@2x.png in Resources */,
@@ -1462,32 +1435,24 @@
 				579C817217FD91890046BC9B /* kImageOffers.png in Resources */,
 				57E08D0C17EF77E400E22B1A /* kImageMerchantTop.png in Resources */,
 				57DA318E17FA213500A6978A /* kImageMerchantTop@2x.png in Resources */,
-				57A4A9301819BE480007929B /* PushCertificateAndKey.pem in Resources */,
 				57FD285217FF161B004A50D8 /* kImageHome@2x.png in Resources */,
 				57FD23A817FF1573004A50D8 /* kImageQR-selected@2x.png in Resources */,
 				579C817917FD94480046BC9B /* kImageLogoutHome.png in Resources */,
-				578B3E311805CDA9005B2701 /* SendingStubs.plist in Resources */,
 				57DA319417FA213500A6978A /* kImageRewards-selected.png in Resources */,
 				57DA319517FA213500A6978A /* kImageRewards-selected@2x.png in Resources */,
 				57FD285417FF161B004A50D8 /* kImageLogin@2x.png in Resources */,
 				57A224B617E913B3000B52E9 /* kImageRewards.png in Resources */,
 				5748E0DA181720EF00DD079E /* kImageStep2of2@2x.png in Resources */,
-				578B3E3E1805D963005B2701 /* qrcode.JOE.png in Resources */,
 				57FD285B17FF161B004A50D8 /* kImageSort.png in Resources */,
 				57DA319617FA213500A6978A /* kImageRewards@2x.png in Resources */,
-				57B5EF21181AC11A00A02AC5 /* EntPushKey.pem in Resources */,
 				579C817817FD94480046BC9B /* kImageLogoutHome-selected@2x.png in Resources */,
-				57B5EF1D181AC11A00A02AC5 /* EntPushCertificate.cer in Resources */,
-				57E8DD071811BDFC00B1296C /* entdeploy.plist in Resources */,
 				57DA319F17FA296A00A6978A /* kImageSettings-selected.png in Resources */,
 				57DA31A017FA296A00A6978A /* kImageSettings-selected@2x.png in Resources */,
 				57FFC84D181E224D00BA64A2 /* Splash@2x.png in Resources */,
 				57A224B717E913B3000B52E9 /* kImageSettings.png in Resources */,
-				57A4A92F1819BE480007929B /* PushCertificate.pem in Resources */,
 				57DA31A117FA296A00A6978A /* kImageSettings@2x.png in Resources */,
 				571D75C717EB3D0A00F0B869 /* kImageTransactionBottom.png in Resources */,
 				57FD285317FF161B004A50D8 /* kImageLogin.png in Resources */,
-				57A4A92D1819BE480007929B /* create_cert_and_test.sh in Resources */,
 				57DA31A317FA296A00A6978A /* kImageTransactionBottom@2x.png in Resources */,
 				571D75C817EB3D0A00F0B869 /* kImageTransactionExpander.png in Resources */,
 				571D75C917EB3D0A00F0B869 /* kImageTransactionTop.png in Resources */,
@@ -1496,7 +1461,6 @@
 				578BB5BC17F22CFA009E2F45 /* Localizable.strings in Resources */,
 				57A223FC17E90626000B52E9 /* MainStoryboard.storyboard in Resources */,
 				576A2F5117FB33B600E53CA3 /* MerchantLocationDetail.js in Resources */,
-				57A4A9321819BE480007929B /* PushKey.pem in Resources */,
 				57FD285A17FF161B004A50D8 /* kImageMapView@2x.png in Resources */,
 				576A2F5217FB33B600E53CA3 /* MerchantLocationSearch.js in Resources */,
 				57A224E517E91EA9000B52E9 /* zbar-back.png in Resources */,
@@ -1705,7 +1669,7 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "28A27E00-7420-4347-B884-6BA833D43A13";
+				PROVISIONING_PROFILE = "60506C26-79E5-4673-A763-4BECA09847E0";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1730,7 +1694,7 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "28A27E00-7420-4347-B884-6BA833D43A13";
+				PROVISIONING_PROFILE = "60506C26-79E5-4673-A763-4BECA09847E0";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
