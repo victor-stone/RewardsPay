@@ -76,6 +76,9 @@
                             <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ays-II-wps" customClass="VSTabNavigatorEmbed">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="410"/>
                                 <color key="backgroundColor" red="0.90000000000000002" green="0.439" blue="0.070000000000000007" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="j3g-C4-aMn"/>
+                                </constraints>
                                 <connections>
                                     <segue destination="XZG-ZJ-1HU" kind="embed" identifier="kNavigatorEmbedSegue" id="Q4W-hs-TaA"/>
                                 </connections>
@@ -83,14 +86,18 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vAA-jJ-LOd" userLabel="navTab View" customClass="VSTabNavigator">
                                 <rect key="frame" x="0.0" y="392" width="320" height="88"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfs-1r-zRA" userLabel="blackBg">
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wfs-1r-zRA" userLabel="blackBg">
                                         <rect key="frame" x="0.0" y="18" width="320" height="84"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oWE-YL-vXq" customClass="APScanButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oWE-YL-vXq" customClass="APScanButton">
                                         <rect key="frame" x="119" y="0.0" width="82" height="102"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.90000000000000002" green="0.439" blue="0.070000000000000007" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="82" id="9xm-Vg-zyl"/>
+                                            <constraint firstAttribute="height" constant="102" id="cdQ-d3-HMa"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <inset key="imageEdgeInsets" minX="1" minY="-19" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" image="kImageQR.png">
@@ -102,9 +109,13 @@
                                             <segue destination="TdH-er-4Nx" kind="custom" customClass="VSTabModalSegue" id="L0p-IE-o8C"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XY7-eb-sxc">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XY7-eb-sxc">
                                         <rect key="frame" x="28" y="29" width="85" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="85" id="0w1-y3-Lm4"/>
+                                            <constraint firstAttribute="height" constant="50" id="jrF-nb-I8c"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <inset key="titleEdgeInsets" minX="-27" minY="36" maxX="0.0" maxY="0.0"/>
                                         <inset key="imageEdgeInsets" minX="25" minY="-17" maxX="0.0" maxY="0.0"/>
@@ -121,9 +132,13 @@
                                             <segue destination="oS9-Q0-BIf" kind="custom" customClass="VSTabModalSegue" id="UYU-vP-5ol"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4cf-Hu-aus">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4cf-Hu-aus">
                                         <rect key="frame" x="214" y="29" width="85" height="52"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="85" id="oot-2t-5mx"/>
+                                            <constraint firstAttribute="height" constant="52" id="rPy-Wn-p2H"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <inset key="titleEdgeInsets" minX="-16" minY="32" maxX="0.0" maxY="0.0"/>
                                         <inset key="imageEdgeInsets" minX="26" minY="-19" maxX="0.0" maxY="0.0"/>
@@ -141,49 +156,56 @@
                                             <segue destination="9dJ-qh-BNN" kind="custom" customClass="VSTabModalSegue" id="qUF-bN-dt1"/>
                                         </connections>
                                     </button>
-                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="88" textAlignment="center" lineBreakMode="tailTruncation" minimumScaleFactor="0.75000000000000022" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nwv-0h-CUJ" customClass="APBadgeLabel">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uVY-8Q-IU0" userLabel="Offers Badge Label" customClass="APBadgeLabel">
                                         <rect key="frame" x="90" y="20" width="16" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.74901960779999999" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                        <size key="shadowOffset" width="0.0" height="0.0"/>
-                                    </label>
-                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="88" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LoZ-Fg-lj3" customClass="APBadgeLabel">
-                                        <rect key="frame" x="283" y="20" width="16" height="16"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="16" id="aEK-Vp-0ic"/>
+                                            <constraint firstAttribute="width" constant="16" id="wDD-bj-Hp8"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="slt-zY-COM" userLabel="Places Badge Label" customClass="APBadgeLabel">
+                                        <rect key="frame" x="280" y="20" width="16" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.74901960779999999" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="16" id="ZON-HL-kwS"/>
+                                            <constraint firstAttribute="width" constant="16" id="ysL-Ld-Jpb"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="wfs-1r-zRA" secondAttribute="trailing" id="7Tu-Zg-Kjy"/>
-                                    <constraint firstItem="wfs-1r-zRA" firstAttribute="top" secondItem="vAA-jJ-LOd" secondAttribute="top" constant="18" id="Ex0-91-O49"/>
-                                    <constraint firstAttribute="bottom" secondItem="wfs-1r-zRA" secondAttribute="bottom" constant="-14" id="ZmO-7a-iou"/>
-                                    <constraint firstItem="wfs-1r-zRA" firstAttribute="leading" secondItem="vAA-jJ-LOd" secondAttribute="leading" id="qow-3I-lMf"/>
-                                    <constraint firstAttribute="height" constant="88" id="suE-BK-ntX"/>
+                                    <constraint firstItem="oWE-YL-vXq" firstAttribute="top" secondItem="vAA-jJ-LOd" secondAttribute="top" id="02E-3e-aeo"/>
+                                    <constraint firstItem="XY7-eb-sxc" firstAttribute="leading" secondItem="vAA-jJ-LOd" secondAttribute="leading" constant="28" id="49I-n7-XSi"/>
+                                    <constraint firstAttribute="trailing" secondItem="4cf-Hu-aus" secondAttribute="trailing" constant="21" id="Awg-XT-4C2"/>
+                                    <constraint firstItem="uVY-8Q-IU0" firstAttribute="leading" secondItem="vAA-jJ-LOd" secondAttribute="leading" constant="90" id="EzQ-SL-T2S"/>
+                                    <constraint firstAttribute="height" constant="88" id="IxW-np-g89"/>
+                                    <constraint firstItem="uVY-8Q-IU0" firstAttribute="top" secondItem="vAA-jJ-LOd" secondAttribute="top" constant="20" id="MV7-PC-0oP"/>
+                                    <constraint firstItem="oWE-YL-vXq" firstAttribute="leading" secondItem="vAA-jJ-LOd" secondAttribute="leading" constant="119" id="O0s-SH-jAn"/>
+                                    <constraint firstItem="XY7-eb-sxc" firstAttribute="top" secondItem="vAA-jJ-LOd" secondAttribute="top" constant="29" id="Ovp-JK-sOn"/>
+                                    <constraint firstAttribute="bottom" secondItem="oWE-YL-vXq" secondAttribute="bottom" constant="-14" id="PBU-HR-58H"/>
+                                    <constraint firstAttribute="trailing" secondItem="slt-zY-COM" secondAttribute="trailing" constant="24" id="U1b-mJ-Siw"/>
+                                    <constraint firstAttribute="width" constant="320" id="bQl-tN-juH"/>
+                                    <constraint firstItem="4cf-Hu-aus" firstAttribute="top" secondItem="vAA-jJ-LOd" secondAttribute="top" constant="29" id="mS6-Sz-FlV"/>
+                                    <constraint firstItem="slt-zY-COM" firstAttribute="top" secondItem="vAA-jJ-LOd" secondAttribute="top" constant="20" id="xUv-rq-9tg"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.90000000000000002" green="0.439" blue="0.070000000000000007" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="vAA-jJ-LOd" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="18C-Ne-Ig6"/>
-                            <constraint firstItem="Ays-II-wps" firstAttribute="leading" secondItem="vAA-jJ-LOd" secondAttribute="leading" id="2ek-yI-bNp"/>
-                            <constraint firstItem="Ays-II-wps" firstAttribute="top" secondItem="3" secondAttribute="top" id="73S-Uv-1nu"/>
-                            <constraint firstItem="Ays-II-wps" firstAttribute="trailing" secondItem="vAA-jJ-LOd" secondAttribute="trailing" id="MMf-gn-Z96"/>
-                            <constraint firstAttribute="bottom" secondItem="Ays-II-wps" secondAttribute="bottom" constant="70" id="VbG-h7-0WD"/>
-                            <constraint firstAttribute="bottom" secondItem="vAA-jJ-LOd" secondAttribute="bottom" id="dR5-iA-n8w"/>
-                            <constraint firstAttribute="trailing" secondItem="vAA-jJ-LOd" secondAttribute="trailing" id="oAK-0D-eTB"/>
+                            <constraint firstItem="vAA-jJ-LOd" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="9yZ-GY-3mK"/>
+                            <constraint firstItem="2Hj-ce-Xpi" firstAttribute="top" secondItem="vAA-jJ-LOd" secondAttribute="bottom" id="H3B-8c-0US"/>
+                            <constraint firstItem="Ays-II-wps" firstAttribute="top" secondItem="3" secondAttribute="top" id="L0g-27-hXO"/>
+                            <constraint firstItem="2Hj-ce-Xpi" firstAttribute="top" secondItem="Ays-II-wps" secondAttribute="bottom" constant="70" id="nHa-4H-hhy"/>
+                            <constraint firstItem="Ays-II-wps" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="rnz-rP-gtF"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="offersBadge" destination="nwv-0h-CUJ" id="fqk-T0-wua"/>
+                        <outlet property="offersBadge" destination="uVY-8Q-IU0" id="6LX-xH-Rhw"/>
                         <outlet property="orangeBox" destination="oWE-YL-vXq" id="Tgu-fB-DrK"/>
-                        <outlet property="placesBadge" destination="LoZ-Fg-lj3" id="sPl-HG-EXf"/>
+                        <outlet property="placesBadge" destination="slt-zY-COM" id="V7b-x7-bkl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
@@ -2579,27 +2601,18 @@
         <image name="kImageErrorBalloon.png" width="397" height="253"/>
         <image name="kImageErrorBang.png" width="140" height="143"/>
         <image name="kImageForward.png" width="20" height="20"/>
-        <image name="kImageForward.png" width="20" height="20"/>
         <image name="kImageHelp.png" width="57" height="57"/>
         <image name="kImageHistory-selected.png" width="57" height="57"/>
         <image name="kImageHistory.png" width="57" height="57"/>
         <image name="kImageLocation-selected.png" width="30" height="30"/>
-        <image name="kImageLocation-selected.png" width="30" height="30"/>
         <image name="kImageLocation.png" width="30" height="30"/>
-        <image name="kImageLogo.png" width="57" height="57"/>
         <image name="kImageLogo.png" width="57" height="57"/>
         <image name="kImageLogoutHome-selected.png" width="57" height="57"/>
         <image name="kImageLogoutHome.png" width="57" height="57"/>
         <image name="kImageMerchantTop.png" width="320" height="191"/>
         <image name="kImageOffers-selected.png" width="30" height="30"/>
-        <image name="kImageOffers-selected.png" width="30" height="30"/>
-        <image name="kImageOffers-selected.png" width="30" height="30"/>
         <image name="kImageOffers.png" width="30" height="30"/>
         <image name="kImageQR-selected.png" width="64" height="64"/>
-        <image name="kImageQR-selected.png" width="64" height="64"/>
-        <image name="kImageQR-selected.png" width="64" height="64"/>
-        <image name="kImageQR.png" width="64" height="64"/>
-        <image name="kImageQR.png" width="64" height="64"/>
         <image name="kImageQR.png" width="64" height="64"/>
         <image name="kImageRewards-selected.png" width="57" height="57"/>
         <image name="kImageRewards.png" width="57" height="57"/>

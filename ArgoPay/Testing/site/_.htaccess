@@ -1,2 +1,2 @@
 RewriteEngine on
-RewriteRule ^([a-zA-Z0-9]+)$ index.php?cmd=$1 [L]
+RewriteRule ^([a-zA-Z0-9]+)$ index.php?cmd=$1 [L,QSA]

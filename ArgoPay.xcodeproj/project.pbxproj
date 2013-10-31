@@ -21,13 +21,13 @@
 		57287ED217F8B3B000C37D2E /* NSString+APNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 57287ED117F8B3B000C37D2E /* NSString+APNetwork.m */; };
 		573DA3801822C46A00497E06 /* ArgoPayDebugPush.key.pem in Resources */ = {isa = PBXBuildFile; fileRef = 573DA37E1822C46A00497E06 /* ArgoPayDebugPush.key.pem */; };
 		573DA3811822C46A00497E06 /* ArgoPayDistPush.key.pem in Resources */ = {isa = PBXBuildFile; fileRef = 573DA37F1822C46A00497E06 /* ArgoPayDistPush.key.pem */; };
+		573DA3851822CD1A00497E06 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 573DA3841822CD1A00497E06 /* CustomBadge.m */; };
 		5748E0D9181720EF00DD079E /* kImageStep2of2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5748E0D5181720EF00DD079E /* kImageStep2of2.png */; };
 		5748E0DA181720EF00DD079E /* kImageStep2of2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5748E0D6181720EF00DD079E /* kImageStep2of2@2x.png */; };
 		5748E0DB181720EF00DD079E /* kImageStep1of2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5748E0D7181720EF00DD079E /* kImageStep1of2.png */; };
 		5748E0DC181720EF00DD079E /* kImageStep1of2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5748E0D8181720EF00DD079E /* kImageStep1of2@2x.png */; };
 		574B2DF217EC9BEF008E17EE /* APRemoteAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 574B2DF117EC9BEF008E17EE /* APRemoteAPI.m */; };
 		574B2DF517ECA097008E17EE /* APDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 574B2DF417ECA097008E17EE /* APDebug.m */; };
-		575C4896181A176A00660ED2 /* Debug-Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 575C4895181A176A00660ED2 /* Debug-Entitlements.plist */; };
 		576A2F5117FB33B600E53CA3 /* MerchantLocationDetail.js in Resources */ = {isa = PBXBuildFile; fileRef = 576A2F4F17FB33B500E53CA3 /* MerchantLocationDetail.js */; };
 		576A2F5217FB33B600E53CA3 /* MerchantLocationSearch.js in Resources */ = {isa = PBXBuildFile; fileRef = 576A2F5017FB33B600E53CA3 /* MerchantLocationSearch.js */; };
 		5774F7A318071F7600F83313 /* kImageForward@2x copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 5774F7A118071F7600F83313 /* kImageForward@2x copy.png */; };
@@ -129,7 +129,6 @@
 		57A224F017E92D1A000B52E9 /* VSSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A224EF17E92D1A000B52E9 /* VSSettings.m */; };
 		57A224F317E95154000B52E9 /* APSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A224F217E95153000B52E9 /* APSettingsViewController.m */; };
 		57A224F517E951A5000B52E9 /* InAppSettings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 57A224F417E951A5000B52E9 /* InAppSettings.bundle */; };
-		57A4A9261819AC4E0007929B /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57A4A9251819AC4E0007929B /* Entitlements.plist */; };
 		57AAF308182160F1009C333E /* argopaydev.cer in Resources */ = {isa = PBXBuildFile; fileRef = 57AAF307182160F1009C333E /* argopaydev.cer */; };
 		57ADDAA617F5DFB500F23689 /* APLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57ADDAA517F5DFB500F23689 /* APLoginViewController.m */; };
 		57ADDAB617F5F33F00F23689 /* ConsActivateOffer.js in Resources */ = {isa = PBXBuildFile; fileRef = 57ADDAAE17F5F33F00F23689 /* ConsActivateOffer.js */; };
@@ -264,6 +263,8 @@
 		57287ED317F8B41700C37D2E /* DEMO presentation v.3.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DEMO presentation v.3.docx"; sourceTree = "<group>"; };
 		573DA37E1822C46A00497E06 /* ArgoPayDebugPush.key.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ArgoPayDebugPush.key.pem; sourceTree = "<group>"; };
 		573DA37F1822C46A00497E06 /* ArgoPayDistPush.key.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ArgoPayDistPush.key.pem; sourceTree = "<group>"; };
+		573DA3831822CD1A00497E06 /* CustomBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomBadge.h; sourceTree = "<group>"; };
+		573DA3841822CD1A00497E06 /* CustomBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomBadge.m; sourceTree = "<group>"; };
 		5748E0D5181720EF00DD079E /* kImageStep2of2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageStep2of2.png; sourceTree = "<group>"; };
 		5748E0D6181720EF00DD079E /* kImageStep2of2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageStep2of2@2x.png"; sourceTree = "<group>"; };
 		5748E0D7181720EF00DD079E /* kImageStep1of2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageStep1of2.png; sourceTree = "<group>"; };
@@ -271,7 +272,6 @@
 		574B2DF117EC9BEF008E17EE /* APRemoteAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APRemoteAPI.m; sourceTree = "<group>"; };
 		574B2DF317ECA097008E17EE /* APDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APDebug.h; sourceTree = "<group>"; };
 		574B2DF417ECA097008E17EE /* APDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APDebug.m; sourceTree = "<group>"; };
-		575C4895181A176A00660ED2 /* Debug-Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Debug-Entitlements.plist"; sourceTree = SOURCE_ROOT; };
 		576A2F4F17FB33B500E53CA3 /* MerchantLocationDetail.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MerchantLocationDetail.js; sourceTree = "<group>"; };
 		576A2F5017FB33B600E53CA3 /* MerchantLocationSearch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MerchantLocationSearch.js; sourceTree = "<group>"; };
 		5774F7A118071F7600F83313 /* kImageForward@2x copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageForward@2x copy.png"; sourceTree = "<group>"; };
@@ -464,7 +464,6 @@
 		57A224EF17E92D1A000B52E9 /* VSSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VSSettings.m; sourceTree = "<group>"; };
 		57A224F217E95153000B52E9 /* APSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APSettingsViewController.m; sourceTree = "<group>"; };
 		57A224F417E951A5000B52E9 /* InAppSettings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = InAppSettings.bundle; sourceTree = "<group>"; };
-		57A4A9251819AC4E0007929B /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Entitlements.plist; path = ../Entitlements.plist; sourceTree = "<group>"; };
 		57A4A9271819BE480007929B /* create_cert_and_test.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = create_cert_and_test.sh; sourceTree = "<group>"; };
 		57AAF307182160F1009C333E /* argopaydev.cer */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = argopaydev.cer; sourceTree = "<group>"; };
 		57ADDAA517F5DFB500F23689 /* APLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLoginViewController.m; sourceTree = "<group>"; };
@@ -695,6 +694,15 @@
 			path = work_scope;
 			sourceTree = "<group>";
 		};
+		573DA3821822CD1A00497E06 /* Paulus */ = {
+			isa = PBXGroup;
+			children = (
+				573DA3831822CD1A00497E06 /* CustomBadge.h */,
+				573DA3841822CD1A00497E06 /* CustomBadge.m */,
+			);
+			path = Paulus;
+			sourceTree = "<group>";
+		};
 		578B3E321805D939005B2701 /* qr */ = {
 			isa = PBXGroup;
 			children = (
@@ -856,8 +864,6 @@
 				578382E51821B5470075F918 /* client.cer */,
 				578382E61821B5470075F918 /* server.cer */,
 				57AAF307182160F1009C333E /* argopaydev.cer */,
-				57A4A9251819AC4E0007929B /* Entitlements.plist */,
-				575C4895181A176A00660ED2 /* Debug-Entitlements.plist */,
 				57A224F417E951A5000B52E9 /* InAppSettings.bundle */,
 				578BB5B717F22CFA009E2F45 /* AFNetworking.strings */,
 				578BB5B917F22CFA009E2F45 /* Localizable.strings */,
@@ -879,6 +885,7 @@
 				57A2241A17E90F27000B52E9 /* AOTK */,
 				57A2241D17E90F27000B52E9 /* BK */,
 				57A2243117E90F27000B52E9 /* InAppSettingsKit */,
+				573DA3821822CD1A00497E06 /* Paulus */,
 				57A224C617E91EA8000B52E9 /* ZBarSDK */,
 			);
 			path = Vendor;
@@ -1351,7 +1358,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				57C6C9591804959C007AB199 /* Default~iphone.png in Resources */,
-				575C4896181A176A00660ED2 /* Debug-Entitlements.plist in Resources */,
 				57C6C95A1804959C007AB199 /* Default@2x.png in Resources */,
 				57C6C95B1804959C007AB199 /* Default.png in Resources */,
 				57C6C95C1804959C007AB199 /* appIcon80.png in Resources */,
@@ -1367,7 +1373,6 @@
 				57C6C95818049417007AB199 /* kImageLogo.png in Resources */,
 				57F89F111804B19D00A80461 /* kImageOffers@2x.png in Resources */,
 				57AAF308182160F1009C333E /* argopaydev.cer in Resources */,
-				57A4A9261819AC4E0007929B /* Entitlements.plist in Resources */,
 				5795C04C180C6E85008D0A0E /* kImageDown@2x.png in Resources */,
 				57E7B83517E9F01000205BCB /* about.html in Resources */,
 				578BB5BB17F22CFA009E2F45 /* AFNetworking.strings in Resources */,
@@ -1536,6 +1541,7 @@
 				57AEDC941800633D00042F7F /* Reachability.m in Sources */,
 				5793E3E717EB7F24004B0838 /* APMerchant.m in Sources */,
 				5793E3EA17EB7FBF004B0838 /* APArgoPointsReward.m in Sources */,
+				573DA3851822CD1A00497E06 /* CustomBadge.m in Sources */,
 				574B2DF217EC9BEF008E17EE /* APRemoteAPI.m in Sources */,
 				574B2DF517ECA097008E17EE /* APDebug.m in Sources */,
 				57E08D0F17EF7FAF00E22B1A /* APMerchantDetailViewController.m in Sources */,
@@ -1662,13 +1668,14 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ArgoPay/ArgoPay-Prefix.pch";
 				INFOPLIST_FILE = "ArgoPay/ArgoPay-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ArgoPay/Vendor/ZBarSDK\"",
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "976147A0-8A48-41CF-8567-E97BABC9F835";
+				PROVISIONING_PROFILE = "EB8384F5-7C0F-4B6D-89C9-173FDBD1A8C4";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1686,13 +1693,14 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ArgoPay/ArgoPay-Prefix.pch";
 				INFOPLIST_FILE = "ArgoPay/ArgoPay-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ArgoPay/Vendor/ZBarSDK\"",
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "976147A0-8A48-41CF-8567-E97BABC9F835";
+				PROVISIONING_PROFILE = "EB8384F5-7C0F-4B6D-89C9-173FDBD1A8C4";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

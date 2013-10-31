@@ -7,25 +7,27 @@
 //
 #include "VSTabNavigatorViewController.h"
 #import "APStrings.h"
+#import "CustomBadge.h"
 
-@interface APBadgeLabel : UILabel
+@interface APBadgeLabel : CustomBadge
 @end
+
 @implementation APBadgeLabel
--(void)awakeFromNib
+
+-(id)initWithCoder:(NSCoder *)aDecoder
 {
-    [super awakeFromNib];
-    self.layer.cornerRadius = 8;
-    self.layer.masksToBounds = YES;
-}
-- (CGRect)textRectForBounds:(CGRect)bounds limitedToNumberOfLines:(NSInteger)numberOfLines
-{
-    CGRect rc = [super textRectForBounds:bounds limitedToNumberOfLines:numberOfLines];
-    rc.origin.y -= 2;
-    return rc;
+    self = [super initWithString:@"00" withScale:1.0 withShining:YES];
+    if( self )
+    {
+        self.badgeTextColor = [UIColor whiteColor];
+        self.badgeFrameColor = [UIColor whiteColor];
+        self.badgeInsetColor = [UIColor redColor];
+        self.translatesAutoresizingMaskIntoConstraints = NO;
+    }
+    return self;
 }
 
 @end
-
 @interface APMainViewController : VSTabNavigatorViewController
 @property (weak, nonatomic) IBOutlet APBadgeLabel *placesBadge;
 @property (weak, nonatomic) IBOutlet APBadgeLabel *offersBadge;
@@ -44,9 +46,13 @@ APLOGRELEASE
     layer.cornerRadius = 5.0;
     layer.masksToBounds = YES;
     
+    _placesBadge.hidden = YES;
+    _offersBadge.hidden = YES;
+    
     [self registerForBroadcast:kNotifyMessageFromRemotePush
                          block:^(APMainViewController * me, NSDictionary * aps) {
-                             me->_offersBadge.text = [NSString stringWithFormat:@"%d", [aps[@"aps"][@"badge"] integerValue]];
+                             NSString *str = [NSString stringWithFormat:@"%d", [aps[@"aps"][@"badge"] integerValue]];
+                             [me->_offersBadge autoBadgeSizeWithString:str];
                              me->_offersBadge.hidden = NO;
                          }];
     [self registerForBroadcast:kNotifyRemotePushPickedUp
