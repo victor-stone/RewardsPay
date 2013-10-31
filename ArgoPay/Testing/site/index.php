@@ -19,13 +19,16 @@ function doMessagePump()
     
     /* Replace this with the name of the file that you have placed by your PHP script file,
      containing your private key and certificate that you generated earlier */
-    $pushCertAndKeyPemFile = 'EntPushCertificateAndKey.pem';
+    $pushCertAndKeyPemFile = 'ArgoPayDistPush.key.pem';
     
     if( !empty($_RESUEST['sandbox'] ) )
     {
         $apnsServer = 'ssl://gateway.sandbox.push.apple.com:2195';
-        $pushCertAndKeyPemFile = 'PushCertificateAndKey.pem';
+        $pushCertAndKeyPemFile = 'ArgoPayDebugPush.key.pem';
     }
+    
+    print ("<html><body><pre>");
+    print("Connecting to: " . $apnsServer . " using cert: " . $pushCertAndKeyPemFile . "\n");
     
     $stream = stream_context_create();
     stream_context_set_option( $stream, 'ssl', 'passphrase', $privateKeyPassword);
@@ -65,6 +68,7 @@ function doMessagePump()
     
     fclose( $connection);
     
+    print( "</body></html>" );
     exit;
 }
 
