@@ -16,7 +16,7 @@
 {
     if( !_defaultColor )
     {
-        _defaultColor = self.backgroundColor;
+        _defaultColor = [UIColor argoOrange]; // self.backgroundColor;
         if( !_defaultColor )
             _defaultColor = [UIColor clearColor];
     }

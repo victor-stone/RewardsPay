@@ -10,12 +10,24 @@
 #import "APStrings.h"
 #import "APPopup.h"
 #import "APTransactionViewController.h"
-#import "VSNavigationViewController.h"
+#import "VSTabNavigatorViewController.h"
 
 #ifndef NUM_SECRET_QUESTIONS
 #define NUM_SECRET_QUESTIONS 3
 #endif
 
+@interface APLoginTabNavigator : VSTabNavigatorViewController
+
+@end
+@implementation APLoginTabNavigator
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationEmbedding.backgroundColor = [UIColor argoOrange];
+}
+
+@end
 @interface APPINHoster : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *submitButton;
 @property (readonly) NSUInteger PIN;
@@ -160,6 +172,19 @@ numberOfRowsInComponent:(NSInteger)component
     [self adjustViewForiOS7];
 }
 
+-(UINavigationItem *)navigationItem
+{
+    UINavigationItem * item = [super navigationItem];
+    if( !item.rightBarButtonItems )
+    {
+        UIBarButtonItem * bbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                              target:self
+                                                                              action:@selector(doneTap:)];
+        bbi.tintColor = [UIColor whiteColor];
+        item.rightBarButtonItems = @[bbi];
+    }
+    return item;
+}
 
 - (IBAction)doneTap:(id)sender
 {
@@ -230,6 +255,26 @@ numberOfRowsInComponent:(NSInteger)component
     }];
 }
 
+- (IBAction)forgotPassword:(id)sender
+{
+    if( _username.text.length == 0 )
+    {
+        NSString * title = NSLocalizedString(@"Missing email", @"login");
+        NSString * msg = NSLocalizedString(@"You need to enter an email address", @"login");
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:title
+                                                         message:msg
+                                                        delegate:nil
+                                               cancelButtonTitle:@"OK"
+                                               otherButtonTitles:nil];
+        [alert show
+         ];
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:_username.text forKey:kSettingUserLoginName];
+        [self performSegueWithIdentifier:kSegueLoginToValidateGet sender:self];
+    }
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -244,6 +289,7 @@ numberOfRowsInComponent:(NSInteger)component
 
 
 @interface APForgotPasswordViewController : UITableViewController<UITextFieldDelegate>
+@property (strong, nonatomic) IBOutlet UITableView *table;
 
 @end
 
@@ -256,9 +302,7 @@ numberOfRowsInComponent:(NSInteger)component
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    _questions = @[@"Name of first pet.",
-                   @"Mother's DJ name.",
-                   @"BFF who stole your GF/BF."];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -267,13 +311,25 @@ numberOfRowsInComponent:(NSInteger)component
 
     for( UITextField * textField in self.textFields )
         textField.delegate = self;
-    
+
+    if( !_questions )
+    {
+        APPopup *popup = [APPopup withNetActivity:self.view];
+        _questions = [NSMutableArray new];
+        APRequestValidateGet *request = [APRequestValidateGet new];
+        request.Email = [[NSUserDefaults standardUserDefaults] stringForKey:kSettingUserLoginName];
+        [request performRequest:^(APValidateGet *validateGet) {
+            [popup dismiss];
+            _questions = @[ validateGet.Ques1, validateGet.Ques2, validateGet.Ques3 ];
+            [_table reloadData];
+        }];
+    }
 }
 
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return _questions[section];
+    return _questions.count > section ? _questions[section] : @"Question...";
 }
 
 -(UINavigationItem *)navigationItem
@@ -284,6 +340,7 @@ numberOfRowsInComponent:(NSInteger)component
         UIBarButtonItem * bbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                               target:self
                                                                               action:@selector(submit:)];
+        bbi.tintColor = [UIColor whiteColor];
         item.rightBarButtonItems = @[bbi];
     }
     item.hidesBackButton = YES;
@@ -332,7 +389,36 @@ numberOfRowsInComponent:(NSInteger)component
     
     if (ok)
     {
-        [self.vsNavigationController performBack];
+        APPopup * popup = [APPopup withNetActivity:self.view delay:YES];
+        APRequestValidateTest * request = [APRequestValidateTest new];
+        request.Email = [[NSUserDefaults standardUserDefaults] stringForKey:kSettingUserLoginName];
+        NSArray * textFields = self.textFields;
+        request.Ans1 = ((UITextField *)textFields[0]).text;
+        request.Ans2 = ((UITextField *)textFields[1]).text;
+        request.Ans3 = ((UITextField *)textFields[2]).text;
+        [request performRequest:^(APValidateTest * test) {
+            [popup dismiss];
+            [APAccount loginWithEmail:request.Email andToken:test.AToken];
+            [self broadcast:kNotifyUserLoginStatus payload:[APAccount currentAccount]]; 
+         }
+         errorHandler:^(NSError *err) {
+             [popup dismiss];
+             if( [err isKindOfClass:[APError class]] )
+             {
+                 NSString * title = NSLocalizedString(@"Validation Error", @"login");
+                 UIAlertView * view;
+                 view = [[UIAlertView alloc] initWithTitle:title
+                                                   message:err.localizedDescription
+                                                  delegate:nil
+                                         cancelButtonTitle:@"Try again..."
+                                         otherButtonTitles:nil];
+                 [view show];
+             }
+             else
+             {
+                 [self broadcast:kNotifySystemError payload:err];
+             }
+         }];
     }
 }
 @end

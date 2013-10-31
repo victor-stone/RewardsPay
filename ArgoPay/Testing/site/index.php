@@ -381,6 +381,40 @@ switch($_REQUEST['cmd'] )
         break;
     }
         
+        /*
+         /ConsumerValidateGet (Gets consumer protection questions.  Consumer does not need to be logged in)
+         > Email
+         < Status, Message, Ques1, Ques2, Ques3
+         */
+    case 'ConsumerValidateGet':
+    {
+        $value['Ques1'] = "Who's your daddy?";
+        $value['Ques2'] = 'Least favorite Glee cast member?';
+        $value['Ques3'] = "Mother's DJ name?";
+        break;
+    }
+        
+        /*
+         /ConsumerValidateTest (Send answers for verification to server. If successful, logs in consumer)
+         > Email, Ans1, Ans2, Ans3
+         < Status, Message, AToken, AccountID
+         */
+
+    case 'ConsumerValidateTest':
+    {
+        if( strcmp( $parameters->Ans1, 'bob' ) == 0 )
+        {
+            $value['Status'] = -1;
+            $value['Message'] = 'Wrong answer';
+        }
+        else
+        {
+            $value['AToken'] = 'A-Magic-Token';
+            $value['AccountID'] = 'Some-Account-ID';
+        }
+        break;
+    }
+        
     case 'ConsActivateOffer':
     {
         /*
@@ -440,8 +474,8 @@ switch($_REQUEST['cmd'] )
                          'Description' => 'Everything I do is goin be funky from now on',
                          'Category' => 'Category1',
                          'Name' => 'Funky Cleaners',
-                         'Addr1' => '1234 First Ave.',
-                         'Addr2' => 'addr2 for 1',
+                        'Addr1' => '1234 First Ave.',
+                        'Addr2' => 'addr2 for 1',
                          'City' => 'CityField',
                          'Lat' => 39.067884,
                          'Long' => -77.080239,

@@ -63,6 +63,14 @@ APLOGRELEASE
     }];
 }
 
++(void)loginWithEmail:(NSString *)email andToken:(NSString *)AToken
+{
+    __currentAccount = [APAccount new];
+    __currentAccount.login = email;
+    __currentAccount.AToken = AToken;
+    APLOG(kDebugUser, @"User is logged with AToken: %@",AToken);
+}
+
 +(void)attempLoginWithDefaults:(APRemoteAPIRequestBlock)block
 {
     // um, in case of error...
@@ -87,7 +95,6 @@ APLOGRELEASE
         __currentAccount.login = loginRequest.Email;
         __currentAccount.password = loginRequest.Password;
         block(account);
-       // [self broadcast:kNotifyUserLoginStatus payload:self];
     }];
 }
 
@@ -174,4 +181,34 @@ APLOGRELEASE
 @end
 
 @implementation APStatementLine
+@end
+
+@implementation APRequestValidateGet
+-(id)init
+{
+    return [super initWithCmd:kRemoteCmdConsumerValidateGet subDomain:kRemoteSubDomainCustomer];
+}
+
+-(Class)payloadClass
+{
+    return [APValidateGet class];
+}
+@end
+
+@implementation APValidateGet
+@end
+
+@implementation APRequestValidateTest
+-(id)init
+{
+    return [super initWithCmd:kRemoteCmdConsumerValidateTest subDomain:kRemoteSubDomainCustomer];
+}
+
+-(Class)payloadClass
+{
+    return [APValidateTest class];
+}
+@end
+
+@implementation APValidateTest
 @end

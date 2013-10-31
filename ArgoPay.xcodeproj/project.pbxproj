@@ -38,6 +38,8 @@
 		578BB5BB17F22CFA009E2F45 /* AFNetworking.strings in Resources */ = {isa = PBXBuildFile; fileRef = 578BB5B717F22CFA009E2F45 /* AFNetworking.strings */; };
 		578BB5BC17F22CFA009E2F45 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 578BB5B917F22CFA009E2F45 /* Localizable.strings */; };
 		578BB5BF17F248F4009E2F45 /* APRewardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 578BB5BE17F248F4009E2F45 /* APRewardViewController.m */; };
+		579127B51822E7A9002668A4 /* ConsumerValidateGet.js in Resources */ = {isa = PBXBuildFile; fileRef = 579127B31822E7A9002668A4 /* ConsumerValidateGet.js */; };
+		579127B61822E7A9002668A4 /* ConsumerValidateTest.js in Resources */ = {isa = PBXBuildFile; fileRef = 579127B41822E7A9002668A4 /* ConsumerValidateTest.js */; };
 		5793E3E417EB7E98004B0838 /* APRemoteObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5793E3E317EB7E98004B0838 /* APRemoteObject.m */; };
 		5793E3E717EB7F24004B0838 /* APMerchant.m in Sources */ = {isa = PBXBuildFile; fileRef = 5793E3E617EB7F24004B0838 /* APMerchant.m */; };
 		5793E3EA17EB7FBF004B0838 /* APArgoPointsReward.m in Sources */ = {isa = PBXBuildFile; fileRef = 5793E3E917EB7FBF004B0838 /* APArgoPointsReward.m */; };
@@ -292,6 +294,8 @@
 		578BB5B817F22CFA009E2F45 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AFNetworking.strings; sourceTree = "<group>"; };
 		578BB5BA17F22CFA009E2F45 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		578BB5BE17F248F4009E2F45 /* APRewardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APRewardViewController.m; sourceTree = "<group>"; };
+		579127B31822E7A9002668A4 /* ConsumerValidateGet.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ConsumerValidateGet.js; sourceTree = "<group>"; };
+		579127B41822E7A9002668A4 /* ConsumerValidateTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ConsumerValidateTest.js; sourceTree = "<group>"; };
 		5793E3E217EB7E98004B0838 /* APRemoteObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APRemoteObject.h; sourceTree = "<group>"; };
 		5793E3E317EB7E98004B0838 /* APRemoteObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APRemoteObject.m; sourceTree = "<group>"; };
 		5793E3E517EB7F24004B0838 /* APMerchant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APMerchant.h; sourceTree = "<group>"; };
@@ -1154,6 +1158,8 @@
 		57ADDAAD17F5F33F00F23689 /* stubs */ = {
 			isa = PBXGroup;
 			children = (
+				579127B31822E7A9002668A4 /* ConsumerValidateGet.js */,
+				579127B41822E7A9002668A4 /* ConsumerValidateTest.js */,
 				576A2F4F17FB33B500E53CA3 /* MerchantLocationDetail.js */,
 				576A2F5017FB33B600E53CA3 /* MerchantLocationSearch.js */,
 				570EC1F617F7638D00CBA207 /* ConsumerStatementDetail.js */,
@@ -1358,6 +1364,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				57C6C9591804959C007AB199 /* Default~iphone.png in Resources */,
+				579127B51822E7A9002668A4 /* ConsumerValidateGet.js in Resources */,
+				579127B61822E7A9002668A4 /* ConsumerValidateTest.js in Resources */,
 				57C6C95A1804959C007AB199 /* Default@2x.png in Resources */,
 				57C6C95B1804959C007AB199 /* Default.png in Resources */,
 				57C6C95C1804959C007AB199 /* appIcon80.png in Resources */,

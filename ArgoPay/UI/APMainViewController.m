@@ -19,9 +19,6 @@
     self = [super initWithString:@"00" withScale:1.0 withShining:YES];
     if( self )
     {
-        self.badgeTextColor = [UIColor whiteColor];
-        self.badgeFrameColor = [UIColor whiteColor];
-        self.badgeInsetColor = [UIColor redColor];
         self.translatesAutoresizingMaskIntoConstraints = NO;
     }
     return self;
@@ -60,6 +57,13 @@ APLOGRELEASE
                              me->_offersBadge.hidden = YES;
                          }];
 }
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationEmbedding.backgroundColor = [UIColor argoOrange];
+}
+
 
 @end
 

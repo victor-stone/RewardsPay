@@ -35,6 +35,8 @@ APREMOTECMD(MerchantLocationSearch)
 APREMOTECMD(MerchantLocationDetail)
 APREMOTECMD(ConsActivateReward)
 APREMOTECMD(ConsActivateOffer)
+APREMOTECMD(ConsumerValidateGet)
+APREMOTECMD(ConsumerValidateTest)
 
 // Payloads
 APREMOTEPAYLOAD(ROOT)

@@ -252,24 +252,11 @@
                                     <outlet property="delegate" destination="3Ur-cu-qwc" id="eYI-us-xpE"/>
                                 </connections>
                             </pickerView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xfT-3C-Mxc">
-                                <rect key="frame" x="119" y="294" width="83" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Submit">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="submitPIN:" destination="3Ur-cu-qwc" eventType="touchUpInside" id="eHw-Nd-u9N"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Quick Pay PIN" id="T7s-y5-b6G"/>
                     <connections>
-                        <outlet property="submitButton" destination="xfT-3C-Mxc" id="1Tc-vz-qy6"/>
                         <segue destination="stl-Yz-kt3" kind="unwind" identifier="kSegueUnwindToGetPIN" unwindAction="unwindFromGetPIN:" id="zgO-bh-PvM"/>
                         <segue destination="stl-Yz-kt3" kind="unwind" identifier="kSegueBackButtonUnwind" unwindAction="unwindFromCancelPIN:" id="sdU-Bw-uMQ"/>
                     </connections>
@@ -619,7 +606,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="i9p-wC-lMs" kind="custom" customClass="VSNavigationSegue" id="3Tx-CK-aKL"/>
+                                    <action selector="forgotPassword:" destination="BLI-wt-2gI" eventType="touchUpInside" id="O3c-uq-G7X"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="kImageHelp.png" translatesAutoresizingMaskIntoConstraints="NO" id="iog-Tz-VP7">
@@ -661,6 +648,7 @@
                         <outlet property="submitButton" destination="v68-gL-sLM" id="sKa-TS-378"/>
                         <outlet property="username" destination="xjA-8U-IP0" id="zlG-Xi-4Cq"/>
                         <segue destination="zTq-MU-jTM" kind="modal" identifier="kSegueLoginToMakePIN" customClass="VSNavigationSegue" modalTransitionStyle="coverVertical" id="JPH-m4-Gfl"/>
+                        <segue destination="i9p-wC-lMs" kind="custom" identifier="kSegueLoginToValidateGet" customClass="VSNavigationSegue" id="6LI-4f-bpj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BIw-9I-kee" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -752,10 +740,13 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Security" id="0pj-Tf-oZ5"/>
+                    <connections>
+                        <outlet property="table" destination="6Xq-U2-XXq" id="vzM-02-Ftp"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1kD-w4-czO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-978" y="-2058"/>
+            <point key="canvasLocation" x="-970" y="-2010"/>
         </scene>
         <!--Welcome View Controller - Welcome to ArgoPay-->
         <scene sceneID="z6u-f5-PxV">
@@ -923,10 +914,10 @@
             </objects>
             <point key="canvasLocation" x="-1354" y="505"/>
         </scene>
-        <!--Tab Navigator View Controller-->
+        <!--Login Tab Navigator-->
         <scene sceneID="5jd-GB-uBw">
             <objects>
-                <viewController storyboardIdentifier="kViewLogin" useStoryboardIdentifierAsRestorationIdentifier="YES" id="spx-MC-Hlf" customClass="VSTabNavigatorViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="kViewLogin" useStoryboardIdentifierAsRestorationIdentifier="YES" id="spx-MC-Hlf" customClass="APLoginTabNavigator" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ShJ-Mh-YQ8"/>
                         <viewControllerLayoutGuide type="bottom" id="gR4-gN-v5r"/>
@@ -938,7 +929,7 @@
                             <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UP4-se-cVk" customClass="VSTabNavigatorEmbed">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="393"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="0.90000000000000002" green="0.439" blue="0.070000000000000007" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.45882352939999999" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <segue destination="fHl-AB-Of3" kind="embed" identifier="kNavigatorEmbedSegue" id="qAd-Ph-WOQ"/>
                                 </connections>
@@ -2563,6 +2554,7 @@
                                 <items>
                                     <navigationItem title="Make a PIN" id="zQW-8m-MjN">
                                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="w2d-Xg-KLt">
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <connections>
                                                 <action selector="doneTap:" destination="zTq-MU-jTM" id="G2O-b2-2Aq"/>
                                             </connections>
@@ -2627,9 +2619,9 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="KMA-nX-9az"/>
         <segue reference="wTX-bH-lKb"/>
-        <segue reference="L0p-IE-o8C"/>
-        <segue reference="rah-rg-xnc"/>
         <segue reference="lDa-5G-cuc"/>
+        <segue reference="rah-rg-xnc"/>
     </inferredMetricsTieBreakers>
 </document>
