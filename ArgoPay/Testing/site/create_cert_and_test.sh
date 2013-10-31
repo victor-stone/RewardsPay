@@ -1,6 +1,12 @@
-openssl x509 -in PushCertificate.cer -inform der -out PushCertificate.pem
-openssl pkcs12 -nocerts -in PushKey.p12 -out PushKey.pem
-cat PushCertificate.pem PushKey.pem > PushCertificateAndKey.pem
+#BASEFILE=ArgoPayDebugPush
+#TESTSERVER=gateway.sandbox
 
-read -n1 -r -p "Certificate created, now test with gateway.sandbox at apple.com (press any key...)" key
-openssl s_client -connect gateway.sandbox.push.apple.com:2195 -cert PushCertificate.pem -key PushKey.pem
+BASEFILE=ArgoPayDistPush
+TESTSERVER=gateway
+
+openssl x509 -in $BASEFILE.cer -inform der -out $BASEFILE.pem
+openssl pkcs12 -nocerts -in $BASEFILE.p12 -out $BASEFILE.key
+cat $BASEFILE.pem $BASEFILE.key > $BASEFILE.key.pem
+
+read -n1 -r -p "Certificate created, now test with gateway at apple.com (press any key...)" keystroke
+openssl s_client -connect $TESTSERVER.push.apple.com:2195 -cert $BASEFILE.pem -key $BASEFILE.key

@@ -84,6 +84,7 @@ static APRemoteAPI * _sharedRemoteAPI;
         {
 //            client.defaultSSLPinningMode = AFSSLPinningModePublicKey;
             client.defaultSSLPinningMode = AFSSLPinningModeCertificate;
+            client.allowsInvalidSSLCertificate = YES;
         }
 #else
         client.defaultSSLPinningMode = AFSSLPinningModeCertificate;        

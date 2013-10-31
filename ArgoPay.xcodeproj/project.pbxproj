@@ -30,6 +30,8 @@
 		576A2F5217FB33B600E53CA3 /* MerchantLocationSearch.js in Resources */ = {isa = PBXBuildFile; fileRef = 576A2F5017FB33B600E53CA3 /* MerchantLocationSearch.js */; };
 		5774F7A318071F7600F83313 /* kImageForward@2x copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 5774F7A118071F7600F83313 /* kImageForward@2x copy.png */; };
 		5774F7A418071F7600F83313 /* kImageForward.png in Resources */ = {isa = PBXBuildFile; fileRef = 5774F7A218071F7600F83313 /* kImageForward.png */; };
+		578382E71821B5470075F918 /* client.cer in Resources */ = {isa = PBXBuildFile; fileRef = 578382E51821B5470075F918 /* client.cer */; };
+		578382E81821B5470075F918 /* server.cer in Resources */ = {isa = PBXBuildFile; fileRef = 578382E61821B5470075F918 /* server.cer */; };
 		578BB57D17F208FE009E2F45 /* APOffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 578BB57C17F208FE009E2F45 /* APOffer.m */; };
 		578BB5BB17F22CFA009E2F45 /* AFNetworking.strings in Resources */ = {isa = PBXBuildFile; fileRef = 578BB5B717F22CFA009E2F45 /* AFNetworking.strings */; };
 		578BB5BC17F22CFA009E2F45 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 578BB5B917F22CFA009E2F45 /* Localizable.strings */; };
@@ -271,6 +273,8 @@
 		5774F7A118071F7600F83313 /* kImageForward@2x copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageForward@2x copy.png"; sourceTree = "<group>"; };
 		5774F7A218071F7600F83313 /* kImageForward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageForward.png; sourceTree = "<group>"; };
 		5774F7A5180723BD00F83313 /* DEMO presentation v.7.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DEMO presentation v.7.docx"; sourceTree = "<group>"; };
+		578382E51821B5470075F918 /* client.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = client.cer; sourceTree = "<group>"; };
+		578382E61821B5470075F918 /* server.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = server.cer; sourceTree = "<group>"; };
 		578B3E301805CDA9005B2701 /* SendingStubs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SendingStubs.plist; sourceTree = "<group>"; };
 		578B3E331805D963005B2701 /* qrcode.ANN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qrcode.ANN.png; sourceTree = "<group>"; };
 		578B3E341805D963005B2701 /* qrcode.DAV.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qrcode.DAV.png; sourceTree = "<group>"; };
@@ -458,11 +462,6 @@
 		57A224F417E951A5000B52E9 /* InAppSettings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = InAppSettings.bundle; sourceTree = "<group>"; };
 		57A4A9251819AC4E0007929B /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Entitlements.plist; path = ../Entitlements.plist; sourceTree = "<group>"; };
 		57A4A9271819BE480007929B /* create_cert_and_test.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = create_cert_and_test.sh; sourceTree = "<group>"; };
-		57A4A9281819BE480007929B /* PushCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = PushCertificate.cer; sourceTree = "<group>"; };
-		57A4A9291819BE480007929B /* PushCertificate.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PushCertificate.pem; sourceTree = "<group>"; };
-		57A4A92A1819BE480007929B /* PushCertificateAndKey.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PushCertificateAndKey.pem; sourceTree = "<group>"; };
-		57A4A92B1819BE480007929B /* PushKey.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = PushKey.p12; sourceTree = "<group>"; };
-		57A4A92C1819BE480007929B /* PushKey.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PushKey.pem; sourceTree = "<group>"; };
 		57AAF307182160F1009C333E /* argopaydev.cer */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = argopaydev.cer; sourceTree = "<group>"; };
 		57ADDAA517F5DFB500F23689 /* APLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLoginViewController.m; sourceTree = "<group>"; };
 		57ADDAAB17F5F1E700F23689 /* gen_jsonstubs.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = gen_jsonstubs.sh; sourceTree = "<group>"; };
@@ -476,18 +475,11 @@
 		57ADDAB517F5F33F00F23689 /* ConsumerTransactionStatus.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ConsumerTransactionStatus.js; sourceTree = "<group>"; };
 		57AEDC931800633D00042F7F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		57AEDC951800634A00042F7F /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		57B5EF16181AC11A00A02AC5 /* ent_create_cert_and_test.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = ent_create_cert_and_test.sh; sourceTree = "<group>"; };
-		57B5EF17181AC11A00A02AC5 /* EntPushCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = EntPushCertificate.cer; sourceTree = "<group>"; };
-		57B5EF18181AC11A00A02AC5 /* EntPushCertificate.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EntPushCertificate.pem; sourceTree = "<group>"; };
-		57B5EF19181AC11A00A02AC5 /* EntPushCertificateAndKey.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EntPushCertificateAndKey.pem; sourceTree = "<group>"; };
-		57B5EF1A181AC11A00A02AC5 /* EntPushKey.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = EntPushKey.p12; sourceTree = "<group>"; };
-		57B5EF1B181AC11A00A02AC5 /* EntPushKey.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EntPushKey.pem; sourceTree = "<group>"; };
 		57C2EC0A17F3483A003B3CA3 /* ArgoMessages.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ArgoMessages.txt; sourceTree = "<group>"; };
 		57C2EC0C17F35DC3003B3CA3 /* APRemoteStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APRemoteStrings.h; sourceTree = "<group>"; };
 		57C2ED3317F3FAA2003B3CA3 /* _.htaccess */ = {isa = PBXFileReference; lastKnownFileType = text; path = _.htaccess; sourceTree = "<group>"; };
 		57C2ED3417F3FAA2003B3CA3 /* _appIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = _appIcon.png; sourceTree = "<group>"; };
 		57C2ED3517F3FAA2003B3CA3 /* index.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; path = index.php; sourceTree = "<group>"; };
-		57C2ED3617F3FAA3003B3CA3 /* JSON.php */ = {isa = PBXFileReference; lastKnownFileType = text.script.php; path = JSON.php; sourceTree = "<group>"; };
 		57C6C94218045B3C007AB199 /* entdeploy.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = entdeploy.sh; sourceTree = "<group>"; };
 		57C6C94418045B69007AB199 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		57C6C9461804801B007AB199 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
@@ -503,6 +495,10 @@
 		57C6C9531804931D007AB199 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		57C6C95518049417007AB199 /* kImageLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageLogo@2x.png"; sourceTree = "<group>"; };
 		57C6C95618049417007AB199 /* kImageLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageLogo.png; sourceTree = "<group>"; };
+		57CA17901822B876005285C6 /* ArgoPayDebugPush.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = ArgoPayDebugPush.cer; sourceTree = "<group>"; };
+		57CA17911822B876005285C6 /* ArgoPayDebugPush.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = ArgoPayDebugPush.p12; sourceTree = "<group>"; };
+		57CA17921822BAC2005285C6 /* ArgoPayDistPush.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = ArgoPayDistPush.cer; sourceTree = "<group>"; };
+		57CA17931822BAC2005285C6 /* ArgoPayDistPush.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = ArgoPayDistPush.p12; sourceTree = "<group>"; };
 		57DA312C17F9478400A6978A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		57DA312E17F9479000A6978A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		57DA313017F9479A00A6978A /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -853,6 +849,8 @@
 		57A223E917E90626000B52E9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				578382E51821B5470075F918 /* client.cer */,
+				578382E61821B5470075F918 /* server.cer */,
 				57AAF307182160F1009C333E /* argopaydev.cer */,
 				57A4A9251819AC4E0007929B /* Entitlements.plist */,
 				575C4895181A176A00660ED2 /* Debug-Entitlements.plist */,
@@ -1164,22 +1162,14 @@
 		57C2ED3217F3FAA2003B3CA3 /* site */ = {
 			isa = PBXGroup;
 			children = (
-				57B5EF16181AC11A00A02AC5 /* ent_create_cert_and_test.sh */,
-				57B5EF17181AC11A00A02AC5 /* EntPushCertificate.cer */,
-				57B5EF18181AC11A00A02AC5 /* EntPushCertificate.pem */,
-				57B5EF19181AC11A00A02AC5 /* EntPushCertificateAndKey.pem */,
-				57B5EF1A181AC11A00A02AC5 /* EntPushKey.p12 */,
-				57B5EF1B181AC11A00A02AC5 /* EntPushKey.pem */,
 				57A4A9271819BE480007929B /* create_cert_and_test.sh */,
-				57A4A9281819BE480007929B /* PushCertificate.cer */,
-				57A4A9291819BE480007929B /* PushCertificate.pem */,
-				57A4A92A1819BE480007929B /* PushCertificateAndKey.pem */,
-				57A4A92B1819BE480007929B /* PushKey.p12 */,
-				57A4A92C1819BE480007929B /* PushKey.pem */,
+				57CA17901822B876005285C6 /* ArgoPayDebugPush.cer */,
+				57CA17911822B876005285C6 /* ArgoPayDebugPush.p12 */,
+				57CA17921822BAC2005285C6 /* ArgoPayDistPush.cer */,
+				57CA17931822BAC2005285C6 /* ArgoPayDistPush.p12 */,
 				57C2ED3317F3FAA2003B3CA3 /* _.htaccess */,
 				57C2ED3417F3FAA2003B3CA3 /* _appIcon.png */,
 				57C2ED3517F3FAA2003B3CA3 /* index.php */,
-				57C2ED3617F3FAA3003B3CA3 /* JSON.php */,
 			);
 			path = site;
 			sourceTree = "<group>";
@@ -1423,6 +1413,7 @@
 				57DA318417FA213500A6978A /* kImageHelp-selected@2x.png in Resources */,
 				57A224A917E913B3000B52E9 /* kImageHelp.png in Resources */,
 				57DA318517FA213500A6978A /* kImageHelp@2x.png in Resources */,
+				578382E71821B5470075F918 /* client.cer in Resources */,
 				57DA318617FA213500A6978A /* kImageHistory-selected.png in Resources */,
 				57FD23A917FF1573004A50D8 /* kImageQR.png in Resources */,
 				57DA318717FA213500A6978A /* kImageHistory-selected@2x.png in Resources */,
@@ -1430,6 +1421,7 @@
 				5713970F18034EB3002F4D3E /* kImageOffers-selected.png in Resources */,
 				57A224AA17E913B3000B52E9 /* kImageHistory.png in Resources */,
 				57DA318817FA213500A6978A /* kImageHistory@2x.png in Resources */,
+				578382E81821B5470075F918 /* server.cer in Resources */,
 				57F89F0E1804B19D00A80461 /* kImageLocation@2x.png in Resources */,
 				57FD285817FF161B004A50D8 /* kImageMapList@2x.png in Resources */,
 				579C817217FD91890046BC9B /* kImageOffers.png in Resources */,
@@ -1653,7 +1645,6 @@
 		57A2240317E90626000B52E9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "$(SRCROOT)/Debug-Entitlements.plist";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Victor Stone (HP2QCTSVH4)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1669,7 +1660,7 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "60506C26-79E5-4673-A763-4BECA09847E0";
+				PROVISIONING_PROFILE = "976147A0-8A48-41CF-8567-E97BABC9F835";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1678,8 +1669,7 @@
 		57A2240417E90626000B52E9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "$(SRCROOT)/Entitlements.plist";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: ArgoPay Inc.";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ArgoPay Inc.";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1694,7 +1684,7 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "60506C26-79E5-4673-A763-4BECA09847E0";
+				PROVISIONING_PROFILE = "976147A0-8A48-41CF-8567-E97BABC9F835";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

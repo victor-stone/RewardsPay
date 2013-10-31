@@ -21,6 +21,7 @@ extern NSString *const kDebugNavigation;
 
 #define VS_CONNECTIVITY_HOST_NAME "argopay.com"
 #define _AFNETWORKING_PIN_SSL_CERTIFICATES_ 1
+#define _AFNETWORKING_ALLOW_INVALID_SSL_CERTIFICATES_ 1
 
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <MobileCoreServices/MobileCoreServices.h>

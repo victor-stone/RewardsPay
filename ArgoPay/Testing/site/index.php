@@ -14,58 +14,58 @@ function doMessagePump()
     if( empty($deviceToken) )
     {
         // this is victor's iphone:
-        $deviceToken = 'D78680ABC93AFA8B6D7D28A8DD36AFA2656D4FDD9EBFA73E569773F80280C0AF';
+        $deviceToken = 'F0333F9CCD2547AB09B863D5E1F9AFC8869B2AD24CBE73EC3D53D1034D0AF558';
     }
     
-    /* Replace this with the name of the file that you have placed by your PHP script file, 
-      containing your private key and certificate that you generated earlier */ 
-      $pushCertAndKeyPemFile = 'EntPushCertificateAndKey.pem';
+    /* Replace this with the name of the file that you have placed by your PHP script file,
+     containing your private key and certificate that you generated earlier */
+    $pushCertAndKeyPemFile = 'EntPushCertificateAndKey.pem';
     
-        if( !empty($_RESUEST['sandbox'] ) )
-        {
-            $apnsServer = 'ssl://gateway.sandbox.push.apple.com:2195';
-            $pushCertAndKeyPemFile = 'PushCertificateAndKey.pem';
-        }
+    if( !empty($_RESUEST['sandbox'] ) )
+    {
+        $apnsServer = 'ssl://gateway.sandbox.push.apple.com:2195';
+        $pushCertAndKeyPemFile = 'PushCertificateAndKey.pem';
+    }
     
-      $stream = stream_context_create(); 
-      stream_context_set_option( $stream, 'ssl', 'passphrase', $privateKeyPassword); 
-      stream_context_set_option( $stream, 'ssl', 'local_cert', $pushCertAndKeyPemFile); 
-      $connectionTimeout = 20; 
-      $connectionType = STREAM_CLIENT_CONNECT | STREAM_CLIENT_PERSISTENT; 
-      $connection = stream_socket_client( $apnsServer, $errorNumber, $errorString, $connectionTimeout, $connectionType, $stream); 
-      
-      if (!$connection)
-      { 
-        echo "Failed to connect to the APNS server. Error no = $ errorNumber < br/ >"; 
-        exit; 
-      } 
-      else 
-      { 
-         echo "Successfully connected to the APNS. Processing... </ br >"; 
-      } 
-      $messageBody['aps'] = array('alert' => $message,
-                                  'sound' => 'default',
-                                  'badge' => 2 ); 
-     $payload = json_encode( $messageBody); 
-     $notification = chr(0) . 
-                     pack('n', 32) . 
-                     pack('H*', $deviceToken) . 
-                     pack('n', strlen($payload)) . 
-                     $payload; 
-     $wroteSuccessfully = fwrite( $connection, $notification, strlen( $notification)); 
-     
-     if ($wroteSuccessfully)
-     { 
-          echo "Successfully sent the message < br/ >"; 
-      }
-      else
-      {
-         echo "Could not send the message < br/ >";
-      } 
-      
-      fclose( $connection);
-
-     exit;
+    $stream = stream_context_create();
+    stream_context_set_option( $stream, 'ssl', 'passphrase', $privateKeyPassword);
+    stream_context_set_option( $stream, 'ssl', 'local_cert', $pushCertAndKeyPemFile);
+    $connectionTimeout = 20;
+    $connectionType = STREAM_CLIENT_CONNECT | STREAM_CLIENT_PERSISTENT;
+    $connection = stream_socket_client( $apnsServer, $errorNumber, $errorString, $connectionTimeout, $connectionType, $stream);
+    
+    if (!$connection)
+    {
+        echo "Failed to connect to the APNS server. Error no = $ errorNumber < br/ >";
+        exit;
+    }
+    else
+    {
+        echo "Successfully connected to the APNS. Processing... </ br >";
+    }
+    $messageBody['aps'] = array('alert' => $message,
+                                'sound' => 'default',
+                                'badge' => 2 );
+    $payload = json_encode( $messageBody);
+    $notification = chr(0) .
+    pack('n', 32) .
+    pack('H*', $deviceToken) .
+    pack('n', strlen($payload)) .
+    $payload;
+    $wroteSuccessfully = fwrite( $connection, $notification, strlen( $notification));
+    
+    if ($wroteSuccessfully)
+    {
+        echo "Successfully sent the message < br/ >";
+    }
+    else
+    {
+        echo "Could not send the message < br/ >";
+    }
+    
+    fclose( $connection);
+    
+    exit;
 }
 
 if( $_REQUEST['cmd'] === 'pump' )
