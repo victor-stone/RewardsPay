@@ -1,5 +1,5 @@
 ArgoPay API Documentation
-Version 2013-10-04 15:50:00
+Version 2013-11-01 10:00:00
 
 Security Model:
 A consumer logs in either when creating a new record with ConsumerAdd, or ConsumerLogin
@@ -37,6 +37,21 @@ The format of the following is:
     > Email, Password, InToken
     < Status, Message, AToken, AccountID
 
+   /ConsumerSetPIN (Sets a Consumer PIN for verifying transactions)
+    >AToken, PIN
+    <Status, Message
+
+   /ConsumerSetPINRequired (Allows a user to require a PIN)
+    >AToken, PINRequred (Y/N)
+    <Status, Message
+
+   /ConsumerSetNotificationID
+    >AToken, ID
+    <Status, Message
+
+   /ConsumerSetNotificatonEnabled
+    >AToken, Enabled (Y/N)
+    <Status, Message
 
    /ConsumerMetaData  (Adds other consumer metadata, Full Name, Address, etc.)
     > AToken, Fname, Lname, Sault, Suffix, Addr1, Addr2, City, State, Zip, Tel, Gender, DOB
@@ -238,8 +253,9 @@ Future:
    /ConsumerTransactionStart (Starts a transaction from the client. Immediately returns with
                              (a transaction ID. PayID is non-zero if consumer wants to use )
                              (a different payment method instead of ArgoCredit)
+                             (PINRequired will be a Y if the PIN is required to complete the transaction)
     > AToken, QrData, Lat, Long, PayID
-    < Status, Message, TransID
+    < Status, Message, TransID, PINRequired
 
 
    /ConsumerTransactionStatus (Gets the status of a transaction.  Returns a TransStatus of:
@@ -257,7 +273,8 @@ Future:
     <Status, Message, TransStatus, Amounts: {Type,Amount), TotalAmount, PayAmounts: {Desc, Amount}, MerchName, MerchLocation, Category, MerchRegister
 
    /ConsumerTransactionApprove (Approves or denies a transaction)
-    >AToken, TransID, Approve (Binary [Y/N])
+                               (PIN is the PIN that the user needs to supply, only if PINRequired is set to Y
+    >AToken, TransID, Approve (Binary [Y/N]), PIN
     <Status, Message, UserMessage
 
    /ConsumerTransactionCancel (Allows a consumer to cancel a transaction in progress before approving)

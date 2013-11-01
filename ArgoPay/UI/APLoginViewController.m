@@ -12,98 +12,6 @@
 #import "APTransactionViewController.h"
 #import "VSTabNavigatorViewController.h"
 
-#ifndef NUM_SECRET_QUESTIONS
-#define NUM_SECRET_QUESTIONS 3
-#endif
-
-@interface APLoginTabNavigator : VSTabNavigatorViewController
-
-@end
-@implementation APLoginTabNavigator
-
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    self.navigationEmbedding.backgroundColor = [UIColor argoOrange];
-}
-
-@end
-@interface APPINHoster : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate>
-@property (weak, nonatomic) IBOutlet UIButton *submitButton;
-@property (readonly) NSUInteger PIN;
-@end
-
-@implementation APPINHoster {
-    NSUInteger _pin[4];
-}
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    _submitButton.layer.masksToBounds = YES;
-    _submitButton.layer.cornerRadius = 8.0;
-}
-
--(NSUInteger)PIN
-{
-    NSUInteger pin = 0;
-    for( NSUInteger i = 0; i < 4; i++ )
-    {
-        pin *= 10;
-        pin += _pin[i];
-    }
-    return pin;
-}
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 4;
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView
-numberOfRowsInComponent:(NSInteger)component
-{
-    return 10;
-}
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    return [NSString stringWithFormat:@"%d", row];
-}
-
-- (void)pickerView:(UIPickerView *)pickerView
-      didSelectRow:(NSInteger)row
-       inComponent:(NSInteger)component
-{
-    _pin[component] = row;
-}
-
-@end
-
-@interface APQuickScanGetPIN : APPINHoster
-@end
-
-@implementation APQuickScanGetPIN
-
-- (IBAction)submitPIN:(id)sender
-{
-    NSUInteger userPIN = (NSUInteger)[[NSUserDefaults standardUserDefaults] integerForKey:kSettingUserPIN];
-    NSUInteger pin = self.PIN;
-    if( userPIN && (userPIN == pin) )
-    {
-        [self performSegueWithIdentifier:kSegueUnwindToGetPIN sender:self];
-    }
-    else
-    {
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Invalid PIN"
-                                                         message:@"Your PIN number doesn't match our records."
-                                                        delegate:nil
-                                               cancelButtonTitle:@"Try Again"
-                                               otherButtonTitles:nil];
-        [alert show];
-    }
-}
-
-@end
 
 @interface APWelcomeViewController : APTransactionViewController
 @property (weak, nonatomic) IBOutlet UIButton *signInButton;
@@ -121,89 +29,6 @@ numberOfRowsInComponent:(NSInteger)component
 -(IBAction)unwindToLogin:(UIStoryboardSegue *)segue
 {
     
-}
-
-/**
- *  Intercept this so we can ask for PIN.
- *
- *  @param segue (ignored)
- */
--(IBAction)unwindFromCamera:(UIStoryboardSegue *)segue
-{
-    [self storeCameraResults:segue.sourceViewController];
-    [NSObject performBlock:^{
-        [self performSegueWithIdentifier:kSegueSignInToGetPIN sender:self];
-    } afterDelay:0.6];
-}
-
--(IBAction)unwindFromGetPIN:(UIStoryboardSegue *)segue
-{
-    [APAccount attempLoginWithDefaults:^(APAccount *account) {
-        if( account )
-        {
-            [self attemptTransaction];
-        }
-        else
-        {
-            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"No account information"
-                                                             message:@"We can't find auto-login account information"
-                                                            delegate:nil
-                                                   cancelButtonTitle:@"Continue with log in"
-                                                   otherButtonTitles:nil];
-            [alert show];
-        }
-    }];
-}
-
--(IBAction)unwindFromCancelPIN:(UIStoryboardSegue *)segue
-{
-    [self clearTransaction];
-}
-@end
-
-@interface APPINMaker : APPINHoster
-@end
-
-@implementation APPINMaker
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    [self adjustViewForiOS7];
-}
-
--(UINavigationItem *)navigationItem
-{
-    UINavigationItem * item = [super navigationItem];
-    if( !item.rightBarButtonItems )
-    {
-        UIBarButtonItem * bbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                                                              target:self
-                                                                              action:@selector(doneTap:)];
-        bbi.tintColor = [UIColor whiteColor];
-        item.rightBarButtonItems = @[bbi];
-    }
-    return item;
-}
-
-- (IBAction)doneTap:(id)sender
-{
-    NSUInteger pin = self.PIN;
-    if( pin )
-    {
-        [[NSUserDefaults standardUserDefaults] setInteger:pin forKey:kSettingUserPIN];
-        [self broadcast:kNotifyUserLoginStatus payload:self];
-
-    }
-    else
-    {
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Blank PIN"
-                                                         message:@"Please pick a PIN number."
-                                                        delegate:nil
-                                               cancelButtonTitle:@"Continue with log in"
-                                               otherButtonTitles:nil];
-        [alert show];
-    }
 }
 
 @end
@@ -242,15 +67,7 @@ numberOfRowsInComponent:(NSInteger)component
         _popup = nil;
         if( account )
         {
-            NSUInteger pin = [[NSUserDefaults standardUserDefaults] integerForKey:kSettingUserPIN];
-            if( pin )
-            {
                 [self broadcast:kNotifyUserLoginStatus payload:self];
-            }
-            else
-            {
-                [self performSegueWithIdentifier:kSegueLoginToMakePIN sender:self];
-            }
         }
     }];
 }
@@ -289,8 +106,6 @@ numberOfRowsInComponent:(NSInteger)component
 
 
 @interface APForgotPasswordViewController : UITableViewController<UITextFieldDelegate>
-@property (strong, nonatomic) IBOutlet UITableView *table;
-
 @end
 
 
@@ -302,7 +117,6 @@ numberOfRowsInComponent:(NSInteger)component
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -321,7 +135,7 @@ numberOfRowsInComponent:(NSInteger)component
         [request performRequest:^(APValidateGet *validateGet) {
             [popup dismiss];
             _questions = @[ validateGet.Ques1, validateGet.Ques2, validateGet.Ques3 ];
-            [_table reloadData];
+            [self.tableView reloadData];
         }];
     }
 }

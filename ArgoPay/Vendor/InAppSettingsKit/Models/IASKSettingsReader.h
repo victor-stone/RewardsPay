@@ -38,6 +38,7 @@
 #define kIASKTitles                           @"Titles"
 #define kIASKViewControllerClass              @"IASKViewControllerClass"
 #define kIASKViewControllerSelector           @"IASKViewControllerSelector"
+#define kIASKStoryboardID                     @"kIASKStoryboardID"
 #define kIASKButtonClass                      @"IASKButtonClass"
 #define kIASKButtonAction                     @"IASKButtonAction"
 #define kIASKMailComposeToRecipents           @"IASKMailComposeToRecipents"

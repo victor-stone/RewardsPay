@@ -585,6 +585,7 @@ switch($_REQUEST['cmd'] )
          < Status, Message, TransID
          */
         $value['TransID'] = 1200;
+        $value['PINRequired'] = 'Y';
         break;
     }
         

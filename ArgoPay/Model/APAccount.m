@@ -212,3 +212,31 @@ APLOGRELEASE
 
 @implementation APValidateTest
 @end
+
+@implementation APRequestSetPIN
+-(id)init
+{
+    return [super initWithCmd:kRemoteCmdConsumerSetPIN subDomain:kRemoteSubDomainCustomer];
+}
+@end
+
+@implementation APRequestSetPINRequired
+-(id)init
+{
+    return [super initWithCmd:kRemoteCmdConsumerSetPINRequired subDomain:kRemoteSubDomainCustomer];
+}
+@end
+
+@implementation APRequestSetNotificationID
+-(id)init
+{
+    return [super initWithCmd:kRemoteCmdConsumerSetNotificationID subDomain:kRemoteSubDomainCustomer];
+}
+@end
+
+@implementation APRequestSetNotificationEnabled
+-(id)init
+{
+    return [super initWithCmd:kRemoteCmdConsumerSetNotificatonEnabled subDomain:kRemoteSubDomainCustomer];
+}
+@end

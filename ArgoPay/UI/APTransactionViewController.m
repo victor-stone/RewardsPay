@@ -16,6 +16,7 @@
 #import "APAccount.h"
 #import "APRemoteStrings.h"
 #import "VSTabNavigatorViewController.h"
+#import "APPinViewController.h"
 
 #define MAX_NUMBER_OF_ATTEMPTS 15
 
@@ -135,6 +136,8 @@ APLOGRELEASE
     self.scanResultText = nil;
     self.statusResponse = nil;
     self.popup = nil;
+    self.pinRequired = NO;
+    self.userPIN = @"";
 }
 
 /**
@@ -178,6 +181,7 @@ APLOGRELEASE
         start.Long = @(loc.longitude);
         [start performRequest:^(APTransactionIDResponse *idResponse) {
             me.transID = idResponse.TransID;
+            me.pinRequired = [idResponse.PINRequired isRemoteYES];
             [me handleTransaction];
         }];
     }];
@@ -267,6 +271,21 @@ APLOGRELEASE
  */
 -(IBAction)unWindFromBillAccept:(UIStoryboardSegue *)segue
 {
+    if( self.pinRequired == NO )
+        [self userAction:kRemoteValueYES];
+    else
+        [self performSystemSegue:kSegueTransactionToPIN sender:self];
+}
+
+-(IBAction)unwindFromPINCancel:(UIStoryboardSegue *)segue
+{
+    [self unWindFromBillCancel:nil];
+}
+
+-(IBAction)unwindFromSubmitPin:(UIStoryboardSegue *)segue
+{
+    APPinViewController * vc = segue.sourceViewController;
+    self.userPIN = vc.PIN;
     [self userAction:kRemoteValueYES];
 }
 
@@ -286,6 +305,7 @@ APLOGRELEASE
     request.AToken = account.AToken;
     request.Approve = type;
     request.TransID = me.transID;
+    request.PIN = me.userPIN;
     
     [request performRequest:^(APRemoteRepsonse *response)
      {

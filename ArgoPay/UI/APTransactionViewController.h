@@ -12,8 +12,11 @@
 
 @interface APTransactionViewController : UIViewController
 @property (nonatomic,strong) NSString *transID;
+@property (nonatomic)        BOOL      pinRequired;
+@property (nonatomic,strong) NSString *userPIN;
 @property (nonatomic,strong) NSString *scanResultText;
 @property (nonatomic,strong) UIImage * scanResultImage;
+
 @property (nonatomic,strong) APTransactionStatusResponse *statusResponse;
 @property (nonatomic,strong) APPopup *popup;
 

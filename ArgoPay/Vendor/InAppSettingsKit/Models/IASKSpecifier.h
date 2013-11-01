@@ -52,9 +52,10 @@
 - (UITextAutocorrectionType)autoCorrectionType;
 - (NSString*)footerText;
 - (Class)viewControllerClass;
+- (NSString *)storyboardID;
 - (SEL)viewControllerSelector;
--(Class)buttonClass;
--(SEL)buttonAction;
+- (Class)buttonClass;
+- (SEL)buttonAction;
 - (UIImage *)cellImage;
 - (UIImage *)highlightedCellImage;
 - (BOOL)adjustsFontSizeToFitWidth;

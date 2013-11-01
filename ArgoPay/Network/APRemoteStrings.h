@@ -37,6 +37,10 @@ APREMOTECMD(ConsActivateReward)
 APREMOTECMD(ConsActivateOffer)
 APREMOTECMD(ConsumerValidateGet)
 APREMOTECMD(ConsumerValidateTest)
+APREMOTECMD(ConsumerSetPIN)
+APREMOTECMD(ConsumerSetPINRequired)
+APREMOTECMD(ConsumerSetNotificationID)
+APREMOTECMD(ConsumerSetNotificatonEnabled)
 
 // Payloads
 APREMOTEPAYLOAD(ROOT)

@@ -221,6 +221,8 @@
 		57FD285A17FF161B004A50D8 /* kImageMapView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57FD23B817FF161A004A50D8 /* kImageMapView@2x.png */; };
 		57FD285B17FF161B004A50D8 /* kImageSort.png in Resources */ = {isa = PBXBuildFile; fileRef = 57FD23B917FF161A004A50D8 /* kImageSort.png */; };
 		57FD285C17FF161B004A50D8 /* kImageSort@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57FD23BA17FF161A004A50D8 /* kImageSort@2x.png */; };
+		57FD29B61823EFC300D14DDE /* APPINButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 57FD29B51823EFC300D14DDE /* APPINButton.m */; };
+		57FD29D318240D0100D14DDE /* APPinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57FD29D218240D0100D14DDE /* APPinViewController.m */; };
 		57FFC84C181E224D00BA64A2 /* Splash.png in Resources */ = {isa = PBXBuildFile; fileRef = 57FFC84A181E224D00BA64A2 /* Splash.png */; };
 		57FFC84D181E224D00BA64A2 /* Splash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57FFC84B181E224D00BA64A2 /* Splash@2x.png */; };
 /* End PBXBuildFile section */
@@ -581,6 +583,10 @@
 		57FD23B817FF161A004A50D8 /* kImageMapView@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageMapView@2x.png"; sourceTree = "<group>"; };
 		57FD23B917FF161A004A50D8 /* kImageSort.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageSort.png; sourceTree = "<group>"; };
 		57FD23BA17FF161A004A50D8 /* kImageSort@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageSort@2x.png"; sourceTree = "<group>"; };
+		57FD29B41823EFC300D14DDE /* APPINButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPINButton.h; sourceTree = "<group>"; };
+		57FD29B51823EFC300D14DDE /* APPINButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPINButton.m; sourceTree = "<group>"; };
+		57FD29D118240D0100D14DDE /* APPinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPinViewController.h; sourceTree = "<group>"; };
+		57FD29D218240D0100D14DDE /* APPinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPinViewController.m; sourceTree = "<group>"; };
 		57FFC84A181E224D00BA64A2 /* Splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Splash.png; sourceTree = "<group>"; };
 		57FFC84B181E224D00BA64A2 /* Splash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Splash@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1048,8 +1054,12 @@
 				57E7B84517EA1BA400205BCB /* APPopup.m */,
 				579E4E2917F143A400D03437 /* APErrorViewController.m */,
 				570EC1D517F741C800CBA207 /* APArgoAccountViewController.m */,
+				57FD29B41823EFC300D14DDE /* APPINButton.h */,
+				57FD29B51823EFC300D14DDE /* APPINButton.m */,
 				57DFDFE81810BEE20047DC36 /* APScanButton.h */,
 				57DFDFE91810BEE20047DC36 /* APScanButton.m */,
+				57FD29D118240D0100D14DDE /* APPinViewController.h */,
+				57FD29D218240D0100D14DDE /* APPinViewController.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1498,6 +1508,7 @@
 				57A2245417E90F27000B52E9 /* AFImageRequestOperation.m in Sources */,
 				57A2245517E90F27000B52E9 /* AFJSONRequestOperation.m in Sources */,
 				5795C049180C6E85008D0A0E /* VSTabNavigator.m in Sources */,
+				57FD29D318240D0100D14DDE /* APPinViewController.m in Sources */,
 				57A2245617E90F27000B52E9 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				57A2245717E90F27000B52E9 /* AFPropertyListRequestOperation.m in Sources */,
 				57A2245817E90F27000B52E9 /* AFURLConnectionOperation.m in Sources */,
@@ -1551,6 +1562,7 @@
 				5793E3EA17EB7FBF004B0838 /* APArgoPointsReward.m in Sources */,
 				573DA3851822CD1A00497E06 /* CustomBadge.m in Sources */,
 				574B2DF217EC9BEF008E17EE /* APRemoteAPI.m in Sources */,
+				57FD29B61823EFC300D14DDE /* APPINButton.m in Sources */,
 				574B2DF517ECA097008E17EE /* APDebug.m in Sources */,
 				57E08D0F17EF7FAF00E22B1A /* APMerchantDetailViewController.m in Sources */,
 				57E08D1217EF896700E22B1A /* APAccount.m in Sources */,

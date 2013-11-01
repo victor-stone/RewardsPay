@@ -683,26 +683,51 @@ CGRect IASKCGRectSwap(CGRect rect);
     }
     else if ([[specifier type] isEqualToString:kIASKPSChildPaneSpecifier]) {
 
+        UIViewController * paneVC = nil;
         
-        Class vcClass = [specifier viewControllerClass];
-        if (vcClass) {
-            SEL initSelector = [specifier viewControllerSelector];
+        NSString * storyboardID = [specifier storyboardID];
+        SEL initSelector = [specifier viewControllerSelector];
+        
+        if( storyboardID.length > 0 )
+        {
+            UIStoryboard * storyboard = self.storyboard;
+            if( !storyboard )
+            {
+                NSString *storyboardName  = [[NSBundle mainBundle].infoDictionary objectForKey:@"UIMainStoryboardFile"];
+                storyboard = [UIStoryboard storyboardWithName:storyboardName bundle:nil];
+            }
+            paneVC = [storyboard instantiateViewControllerWithIdentifier:storyboardID];
+            if (initSelector) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+                [paneVC performSelector:initSelector withObject:[specifier file] withObject:[specifier key]];
+#pragma clang diagnostic pop
+            }
+        }
+        else
+        {
+            Class vcClass = [specifier viewControllerClass];
+            if (vcClass) {
+                paneVC = [vcClass alloc]; // performSelector:@selector(alloc)];
+            }
             if (!initSelector) {
                 initSelector = @selector(init);
             }
-            UIViewController * vc = [vcClass alloc]; // performSelector:@selector(alloc)];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            [vc performSelector:initSelector withObject:[specifier file] withObject:[specifier key]];
+            [paneVC performSelector:initSelector withObject:[specifier file] withObject:[specifier key]];
 #pragma clang diagnostic pop
-            
-			if ([vc respondsToSelector:@selector(setDelegate:)]) {
-				[vc performSelector:@selector(setDelegate:) withObject:self.delegate];
+        }
+        
+        if( paneVC )
+        {
+			if ([paneVC respondsToSelector:@selector(setDelegate:)]) {
+				[paneVC performSelector:@selector(setDelegate:) withObject:self.delegate];
 			}
-			if ([vc respondsToSelector:@selector(setSettingsStore:)]) {
-				[vc performSelector:@selector(setSettingsStore:) withObject:self.settingsStore];
+			if ([paneVC respondsToSelector:@selector(setSettingsStore:)]) {
+				[paneVC performSelector:@selector(setSettingsStore:) withObject:self.settingsStore];
 			}
-            [self.navigationController pushViewController:vc animated:YES];
+            [self.navigationController pushViewController:paneVC animated:YES];
             //            [vc performSelector:@selector(release)];
             return;
         }

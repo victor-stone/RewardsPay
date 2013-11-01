@@ -11,7 +11,7 @@
 /*
  /ConsumerTransactionStart
  > AToken, QrData, Lat, Long, PayID
- < Status, Message, TransID 
+ < Status, Message, TransID, PINRequired
 */
 @interface APRequestTransactionStart : APRemoteRequest
 @property (nonatomic,strong) NSString * AToken;
@@ -23,6 +23,7 @@
 
 @interface APTransactionIDResponse : APRemoteObject
 @property (nonatomic,strong) NSString *TransID;
+@property (nonatomic,strong) NSString *PINRequired;
 @end
 
 @interface APRequestTransactionStatus : APRemoteRequest
@@ -48,12 +49,13 @@
 /*
 
  /ConsumerTransactionApprove
- >AToken, TransID, Approve (Binary [Y/N])
+ >AToken, TransID, Approve (Binary [Y/N]), PIN
  <Status, Message, UserMessage
  */
 @interface APRequestTransactionApprove : APRemoteRequest
 @property (nonatomic,strong) NSString *AToken;
 @property (nonatomic,strong) NSString *TransID;
 @property (nonatomic,strong) NSString *Approve;
+@property (nonatomic,strong) NSString *PIN;
 @end
 

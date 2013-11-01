@@ -84,6 +84,11 @@
     return NSSelectorFromString(_specifierDict[kIASKViewControllerSelector]);
 }
 
+-(NSString *)storyboardID
+{
+    return [self localizedObjectForKey:kIASKStoryboardID];
+}
+
 -(Class)buttonClass {
     return NSClassFromString(_specifierDict[kIASKButtonClass]);
 }

@@ -108,3 +108,49 @@
 @property (nonatomic,strong) NSString * AToken;
 @property (nonatomic,strong) NSString * AccountID;
 @end
+
+
+/*
+ /ConsumerSetPIN (Sets a Consumer PIN for verifying transactions)
+ >AToken, PIN
+ <Status, Message
+*/
+
+@interface APRequestSetPIN : APRemoteRequest
+@property (nonatomic,strong) NSString * AToken;
+@property (nonatomic,strong) NSString * PIN;
+@end
+
+/*
+ /ConsumerSetPINRequired (Allows a user to require a PIN)
+ >AToken, PINRequred (Y/N)
+ <Status, Message
+*/
+
+@interface APRequestSetPINRequired : APRemoteRequest
+@property (nonatomic,strong) NSString * AToken;
+@property (nonatomic,strong) NSString * PINRequired;
+@end
+
+/*
+ /ConsumerSetNotificationID
+ >AToken, ID
+ <Status, Message
+*/
+
+@interface APRequestSetNotificationID : APRemoteRequest
+@property (nonatomic,strong) NSString * AToken;
+@property (nonatomic,strong) NSString * ID;
+@end
+
+
+/*
+ /ConsumerSetNotificatonEnabled
+ >AToken, Enabled (Y/N)
+ <Status, Message
+*/
+
+@interface APRequestSetNotificationEnabled : APRemoteRequest
+@property (nonatomic,strong) NSString * AToken;
+@property (nonatomic,strong) NSString * Enabled;
+@end

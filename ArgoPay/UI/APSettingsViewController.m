@@ -8,11 +8,14 @@
 #import "VSSettings.h"
 #import "APStrings.h"
 #import "VSNavigationViewController.h"
+#import "APPinViewController.h"
+#import "APAccount.h"
+#import "APRemoteStrings.h"
 
 @interface APSettingNavigationController : UINavigationController
 @end
-@implementation APSettingNavigationController
 
+@implementation APSettingNavigationController
 -(BOOL)navigationBarHidden
 {
     return YES;
@@ -20,11 +23,9 @@
 @end
 
 @interface APSettingsViewController : VSSettingsExtensions
-
 @end
 
-@implementation APSettingsViewController {
-}
+@implementation APSettingsViewController
 
 APLOGRELEASE
 
@@ -49,193 +50,83 @@ APLOGRELEASE
 #endif
     }
 }
-
-
 @end
 
-
-@interface APAccountSettingsViewController : IASKAppSettingsViewController<IASKSettingsDelegate>
-
+@interface APResetPasswordViewController : UITableViewController<UITextFieldDelegate>
 @end
 
-@implementation APAccountSettingsViewController {
-    BOOL _passwordShowing;
-    BOOL _pinShowing;
-}
--(void)viewDidLoad
-{
-    [super viewDidLoad];
-    self.showDoneButton = YES;
-    self.showCreditsFooter = NO;
-    self.file = @"Account";
-    self.navigationItem.hidesBackButton = YES;
-    self.delegate = self;
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:nil forKey:kSettingUserLoginOldPIN];
-    [defaults setObject:nil forKey:kSettingUserLoginNewPIN];
-    [defaults setObject:nil forKey:kSettingUserLoginPINConfirm];
-    [defaults setObject:nil forKey:kSettingUserLoginOldPassword];
-    [defaults setObject:nil forKey:kSettingUserLoginNewPassword];
-    [defaults setObject:nil forKey:kSettingUserLoginPasswordConfirm];
-    
-    [self setHiddenKeys:[NSSet setWithArray:@[kSettingUserLoginOldPIN,
-                                              kSettingUserLoginNewPIN,
-                                              kSettingUserLoginPINConfirm,
-                                              kSettingUserLoginOldPassword,
-                                              kSettingUserLoginNewPassword,
-                                              kSettingUserLoginPasswordConfirm
-                                              ]] animated:NO];
-    
-    __block BOOL bSettingSetting = NO;
-    
-    [self registerForBroadcast:kNotifyUserSettingChanged block:^(APAccountSettingsViewController *me, NSDictionary *d) {
-        if( !bSettingSetting )
-        {
-            NSString * pinStr = nil;
-            NSString * key;
-            for( key in @[kSettingUserLoginNewPIN, kSettingUserLoginOldPIN, kSettingUserLoginPINConfirm] )
-            {
-                pinStr = d[key];
-                if( pinStr )
-                    break;
-            }
+@implementation APResetPasswordViewController
 
-            if( pinStr )
-            {
-                if( pinStr.length > 4 )
-                {
-                    pinStr = [pinStr stringByPaddingToLength:4 withString:@"" startingAtIndex:0];
-                    bSettingSetting = YES;
-                    [[NSUserDefaults standardUserDefaults] setObject:pinStr forKey:key];
-                    UITextView * textView = [me firstResponder];
-                    textView.text = pinStr;
-                    bSettingSetting = NO;
-                }
-            }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    NSUInteger tag = 0;
+    for( UITextField * textField in self.textFields )
+    {
+        textField.delegate = self;
+        textField.tag = tag++;
+    }
+}
+
+-(NSArray *)textFields
+{
+    NSMutableArray * arr = [NSMutableArray arrayWithCapacity:3];
+    for( int i = 0; i < 3; i++ )
+    {
+        UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i]];
+        [arr addObject:cell.contentView.subviews[0]];
+    }
+    return arr;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    NSUInteger next = (textField.tag + 1) % 3;
+    textField = self.textFields[next];
+    [textField becomeFirstResponder];
+    return YES;
+}
+
+
+-(BOOL)doneResetPassword:(id)sender
+{
+    NSArray *       textFields  = self.textFields;
+    NSUserDefaults *defaults    = [NSUserDefaults standardUserDefaults];
+    NSString *      title       = NSLocalizedString(@"Error", @"Reset Password");
+    NSString *      msg         = nil;
+    
+    
+    NSString * oldPassword, * currentPassword, * newPassword, * confirmPassword;
+    
+    UITextField *tf = textFields[0];
+    oldPassword = tf.text;
+    currentPassword = [defaults stringForKey:kSettingUserLoginPassword];
+    
+    if( ![oldPassword isEqualToString:currentPassword] )
+    {
+        msg = NSLocalizedString(@"Old password doesn't match our records", @"Account settings");
+    }
+    else
+    {
+        tf = textFields[1];
+        newPassword = tf.text;
+        tf = textFields[2];
+        confirmPassword = tf.text;
+        if( !newPassword )
+        {
+            msg = NSLocalizedString(@"New password can't be blank", @"Account settings");
         }
-    }];
-}
-
--(void)setDelegate:(id)delegate
-{
-    [super setDelegate:self];
-}
-
--(void)hideKeys
-{
-    NSArray * passwordFields = _passwordShowing ? @[] : @[
-                                 kSettingUserLoginOldPassword,
-                                 kSettingUserLoginNewPassword,
-                                 kSettingUserLoginPasswordConfirm
-                                 ];
-    NSArray * pinFields = _pinShowing ? @[] : @[kSettingUserLoginOldPIN,
-                                                kSettingUserLoginNewPIN,
-                                                kSettingUserLoginPINConfirm
-                                                ];
-    
-    NSMutableArray * fieldsToHide = [NSMutableArray arrayWithArray:passwordFields];
-    [fieldsToHide addObjectsFromArray:pinFields];
-    [self setHiddenKeys:[NSSet setWithArray:fieldsToHide] animated:YES];
-}
-
-
--(void)settingsViewController:(IASKAppSettingsViewController *)sender
-     buttonTappedForSpecifier:(IASKSpecifier *)specifier
-{
-    if( [specifier.key isEqualToString:kSettingChangePassword] )
-    {
-        _passwordShowing = !_passwordShowing;
-    }
-    else if( [specifier.key isEqualToString:kSettingChangePIN] )
-    {
-        _pinShowing = !_pinShowing;
-    }
-    [self hideKeys];
-}
-
-- (void)settingsViewControllerDidEnd:(IASKAppSettingsViewController*)sender
-{
-    NSString * title = NSLocalizedString(@"Error", @"Account settings");
-    NSString * msg = nil;
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    if( _passwordShowing )
-    {
-        NSString * oldPassword, * currentPassword, * newPassword, * confirmPassword;
-        
-        oldPassword = [defaults stringForKey:kSettingUserLoginOldPassword];
-        
-        if( oldPassword.length > 0 )
+        else if( ![newPassword isEqualToString:confirmPassword] )
         {
-            currentPassword = [defaults stringForKey:kSettingUserLoginPassword];
-            if( ![oldPassword isEqualToString:currentPassword] )
-            {
-                msg = NSLocalizedString(@"Old password doesn't match our records", @"Account settings");
-            }
-            else
-            {
-                newPassword = [defaults stringForKey:kSettingUserLoginNewPassword];
-                confirmPassword = [defaults stringForKey:kSettingUserLoginPasswordConfirm];
-                if( !newPassword )
-                {
-                    msg = NSLocalizedString(@"New password can't be blank", @"Account settings");
-                }
-                else if( ![newPassword isEqualToString:confirmPassword] )
-                {
-                    msg = NSLocalizedString(@"Confirm password doesn't match new password", @"Account settings");
-                }
-                else
-                {
-                    [defaults setObject:newPassword forKey:kSettingUserLoginPassword];
-                }
-            }
+            msg = NSLocalizedString(@"Confirm password doesn't match new password", @"Account settings");
         }
-        
-    }
-    
-    if( _pinShowing && !msg )
-    {
-        NSUInteger newPIN, confirmPIN;
-        
-        NSUInteger oldPIN = [defaults integerForKey:kSettingUserLoginOldPIN];
-        
-        if( oldPIN > 0 )
+        else
         {
-            if( !msg )
-            {
-                NSUInteger currentPIN = [defaults integerForKey:kSettingUserPIN];
-                if( oldPIN != currentPIN )
-                {
-                    msg = NSLocalizedString(@"Old PIN number doesn't match our records", @"Account settings");
-                }
-            }
-            
-            if( !msg )
-            {
-                newPIN = [defaults integerForKey:kSettingUserLoginNewPIN];
-                if( newPIN < 1 )
-                {
-                    msg = NSLocalizedString(@"Invalid PIN number", @"Account settings");
-                }
-            }
-            
-            if( !msg )
-            {
-                confirmPIN = [defaults integerForKey:kSettingUserLoginPINConfirm];
-                if( newPIN != confirmPIN )
-                {
-                    msg = NSLocalizedString(@"The confirm PIN number doesn't match the new PIN number", @"Account settings");
-                }
-                else
-                {
-                    [defaults setInteger:newPIN forKey:kSettingUserPIN];
-                }
-            }
+            [defaults setObject:newPassword forKey:kSettingUserLoginPassword];
         }
     }
-    
+
     if( msg )
     {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:title
@@ -244,11 +135,127 @@ APLOGRELEASE
                                                cancelButtonTitle:@"OK"
                                                otherButtonTitles:nil];
         [alert show];
+        return NO;
     }
-    else
-    {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+    
+    return YES;
+    
+}
+@end
+
+
+@interface APResetPasswordWrapper : UIViewController
+@property (nonatomic,weak) APResetPasswordViewController * vc;
+@end
+
+@implementation APResetPasswordWrapper
+
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self adjustViewForiOS7];
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    _vc = segue.destinationViewController;
+}
+
+-(IBAction)doneResetPassword:(id)sender
+{
+    if( [_vc doneResetPassword:sender] == YES )
+        [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(IBAction)cancelResetPassword:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+@end
+
+
+
+@interface APAccountSettingsViewController : UITableViewController
+@end
+
+
+@implementation APAccountSettingsViewController {
+    __weak UILabel * _pinLabel;
+    __weak UISwitch * _pinSwitch;
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
+    for( UIView * view in cell.contentView.subviews )
+    {
+        if( [view isKindOfClass:[UISwitch class]] )
+        {
+            _pinSwitch = (id)view;
+            
+            [_pinSwitch addTarget:self
+                           action:@selector(pinSwitchChanged:)
+                 forControlEvents:UIControlEventValueChanged];
+            
+            break;
+        }
+    }
+    cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:2]];
+    _pinLabel = (id)cell.contentView.subviews[0];
+    [self updatePinSwitches];
+}
+
+-(void)updatePinSwitches
+{
+    BOOL pinEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingUserEnablePIN];
+    _pinSwitch.on = pinEnabled;
+    _pinLabel.textColor = pinEnabled ? [UIColor blackColor] : [UIColor lightGrayColor];
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if( indexPath.row == 1 && indexPath.section == 2 )
+        return _pinSwitch.on;
+    if( indexPath.row == 0 && indexPath.section == 0 )
+        return NO;
+    return YES;
+}
+
+-(IBAction)pinSwitchChanged:(UISwitch *)switcher
+{
+    BOOL enablePIN = switcher.on;
+    [[NSUserDefaults standardUserDefaults] setBool:enablePIN forKey:kSettingUserEnablePIN];
+    [self updatePinSwitches];
+    
+    // um, is this the place for this?
+    APRequestSetPINRequired * request = [APRequestSetPINRequired new];
+    APAccount * account = [APAccount currentAccount];
+    request.AToken = account.AToken;
+    request.PINRequired = enablePIN ? kRemoteValueYES : kRemoteValueNO;
+    [request performRequest:^(id data) {
+        //
+    }];
+}
+
+-(IBAction)unwindFromPINCancel:(UIStoryboardSegue *)segue
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(IBAction)unwindFromSubmitPin:(UIStoryboardSegue *)segue
+{
+    APPinViewController * vc = segue.sourceViewController;
+    NSString * PIN = vc.PIN;
+    APRequestSetPIN * request = [APRequestSetPIN new];
+    APAccount * account = [APAccount currentAccount];
+    request.AToken = account.AToken;
+    request.PIN = PIN;
+    [request performRequest:^(id data) {
+        //
+    }];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end
