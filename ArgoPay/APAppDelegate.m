@@ -17,6 +17,7 @@
 #import "VSConnectivity.h"
 #import "Reachability.h"
 #import "VSTabNavigator.h"
+#import "APRemoteStrings.h"
 
 typedef enum _APStartupState {
     kStartupStateExecting = 1,
@@ -105,7 +106,7 @@ typedef enum _APStartupState {
              kSettingUserUseGoogleMaps: @(YES)
              
 #ifdef ALLOW_DEBUG_SETTINGS
-             ,kSettingDebugNetworkStubbed: @"file" // @"dev.argopay.com"
+             ,kSettingDebugNetworkStubbed: @"dev.argopay.com"
              ,kSettingDebugSendStubData: @(YES)
              ,kSettingDebugLocalhostAddr: @"testingargo.192.168.1.2.xip.io"
 #endif
@@ -231,6 +232,9 @@ typedef enum _APStartupState {
     [self registerForBroadcast:kNotifyUserLoginStatus
                          block:^(APAppDelegate *me, APAccount *account)
      {
+         if( account.isLoggedIn )
+             [me sendDeviceIDsToArgoPay:account];
+         
         if( me->_doneLoading )
             [me showMainAppWindow];
      }];
@@ -275,7 +279,6 @@ typedef enum _APStartupState {
 
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-#if ALLOW_DEBUG_SETTINGS
     /* Each byte in the data will be translated to its hex value like 0x01 or 0xAB excluding the 0x part, so for 1 byte, we
      will need 2 characters to represent that byte, hence the * 2 */
     NSMutableString *tokenAsString = [[ NSMutableString alloc] initWithCapacity:deviceToken.length * 2];
@@ -286,10 +289,9 @@ typedef enum _APStartupState {
         char byte = bytes[ byteCounter];
         [tokenAsString appendFormat:@"%02hhX", byte];
     }
-    free( bytes);
+    free(bytes);
     [[NSUserDefaults standardUserDefaults] setObject:tokenAsString forKey:kSettingUserDevicePushToken];
     APLOG(kDebugPush,@"Suscessfully registered with remove notifications.Device Token:\n%@",tokenAsString);
-#endif
 }
 
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
@@ -301,10 +303,29 @@ typedef enum _APStartupState {
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
     [alert show];
-#endif
     
     if( ![self setLoadingMessage:error.localizedDescription] )
         [self broadcast:kNotifySystemError payload:error];
+#endif
+}
+
+-(void)sendDeviceIDsToArgoPay:(APAccount *)account
+{
+    NSString * pushDeviceID = [[NSUserDefaults standardUserDefaults] stringForKey:kSettingUserDevicePushToken];
+    if( pushDeviceID.length > 0 )
+    {
+        APRequestSetNotificationID * request = [APRequestSetNotificationID new];
+        request.AToken = account.AToken;
+        request.ID = pushDeviceID;
+        [request performRequest:^(id data) {
+            APRequestSetNotificationEnabled * request2 = [APRequestSetNotificationEnabled new];
+            request2.AToken = account.AToken;
+            request2.Enabled = kRemoteValueYES;
+            [request2 performRequest:^(id data) {
+                //
+            }];
+        }];
+    }
 }
 
 -(void)deliverRemoteNotifications

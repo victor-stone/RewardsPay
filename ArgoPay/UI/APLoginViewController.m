@@ -67,7 +67,7 @@
         _popup = nil;
         if( account )
         {
-                [self broadcast:kNotifyUserLoginStatus payload:self];
+            [self broadcast:kNotifyUserLoginStatus payload:account];
         }
     }];
 }
