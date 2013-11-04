@@ -22,6 +22,7 @@
 		573DA3801822C46A00497E06 /* ArgoPayDebugPush.key.pem in Resources */ = {isa = PBXBuildFile; fileRef = 573DA37E1822C46A00497E06 /* ArgoPayDebugPush.key.pem */; };
 		573DA3811822C46A00497E06 /* ArgoPayDistPush.key.pem in Resources */ = {isa = PBXBuildFile; fileRef = 573DA37F1822C46A00497E06 /* ArgoPayDistPush.key.pem */; };
 		573DA3851822CD1A00497E06 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 573DA3841822CD1A00497E06 /* CustomBadge.m */; };
+		57431758182737F600A72E89 /* client.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 57431757182737F600A72E89 /* client.p12 */; };
 		5748E0D9181720EF00DD079E /* kImageStep2of2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5748E0D5181720EF00DD079E /* kImageStep2of2.png */; };
 		5748E0DA181720EF00DD079E /* kImageStep2of2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5748E0D6181720EF00DD079E /* kImageStep2of2@2x.png */; };
 		5748E0DB181720EF00DD079E /* kImageStep1of2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5748E0D7181720EF00DD079E /* kImageStep1of2.png */; };
@@ -32,7 +33,6 @@
 		576A2F5217FB33B600E53CA3 /* MerchantLocationSearch.js in Resources */ = {isa = PBXBuildFile; fileRef = 576A2F5017FB33B600E53CA3 /* MerchantLocationSearch.js */; };
 		5774F7A318071F7600F83313 /* kImageForward@2x copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 5774F7A118071F7600F83313 /* kImageForward@2x copy.png */; };
 		5774F7A418071F7600F83313 /* kImageForward.png in Resources */ = {isa = PBXBuildFile; fileRef = 5774F7A218071F7600F83313 /* kImageForward.png */; };
-		578382E71821B5470075F918 /* client.cer in Resources */ = {isa = PBXBuildFile; fileRef = 578382E51821B5470075F918 /* client.cer */; };
 		578382E81821B5470075F918 /* server.cer in Resources */ = {isa = PBXBuildFile; fileRef = 578382E61821B5470075F918 /* server.cer */; };
 		578BB57D17F208FE009E2F45 /* APOffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 578BB57C17F208FE009E2F45 /* APOffer.m */; };
 		578BB5BB17F22CFA009E2F45 /* AFNetworking.strings in Resources */ = {isa = PBXBuildFile; fileRef = 578BB5B717F22CFA009E2F45 /* AFNetworking.strings */; };
@@ -269,6 +269,7 @@
 		573DA37F1822C46A00497E06 /* ArgoPayDistPush.key.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ArgoPayDistPush.key.pem; sourceTree = "<group>"; };
 		573DA3831822CD1A00497E06 /* CustomBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomBadge.h; sourceTree = "<group>"; };
 		573DA3841822CD1A00497E06 /* CustomBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomBadge.m; sourceTree = "<group>"; };
+		57431757182737F600A72E89 /* client.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = client.p12; sourceTree = "<group>"; };
 		5748E0D5181720EF00DD079E /* kImageStep2of2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageStep2of2.png; sourceTree = "<group>"; };
 		5748E0D6181720EF00DD079E /* kImageStep2of2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageStep2of2@2x.png"; sourceTree = "<group>"; };
 		5748E0D7181720EF00DD079E /* kImageStep1of2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageStep1of2.png; sourceTree = "<group>"; };
@@ -281,7 +282,6 @@
 		5774F7A118071F7600F83313 /* kImageForward@2x copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageForward@2x copy.png"; sourceTree = "<group>"; };
 		5774F7A218071F7600F83313 /* kImageForward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageForward.png; sourceTree = "<group>"; };
 		5774F7A5180723BD00F83313 /* DEMO presentation v.7.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DEMO presentation v.7.docx"; sourceTree = "<group>"; };
-		578382E51821B5470075F918 /* client.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = client.cer; sourceTree = "<group>"; };
 		578382E61821B5470075F918 /* server.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = server.cer; sourceTree = "<group>"; };
 		578B3E301805CDA9005B2701 /* SendingStubs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SendingStubs.plist; sourceTree = "<group>"; };
 		578B3E331805D963005B2701 /* qrcode.ANN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qrcode.ANN.png; sourceTree = "<group>"; };
@@ -871,8 +871,8 @@
 		57A223E917E90626000B52E9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				578382E51821B5470075F918 /* client.cer */,
 				578382E61821B5470075F918 /* server.cer */,
+				57431757182737F600A72E89 /* client.p12 */,
 				57AAF307182160F1009C333E /* argopaydev.cer */,
 				57A224F417E951A5000B52E9 /* InAppSettings.bundle */,
 				578BB5B717F22CFA009E2F45 /* AFNetworking.strings */,
@@ -1437,6 +1437,7 @@
 				5795C04E180C6E85008D0A0E /* kImageBackArrow@2x.png in Resources */,
 				57DA317F17FA213500A6978A /* kImageButtonBg@2x.png in Resources */,
 				57FD285717FF161B004A50D8 /* kImageMapList.png in Resources */,
+				57431758182737F600A72E89 /* client.p12 in Resources */,
 				579E4E2617F0C6B900D03437 /* kImageErrorBalloon.png in Resources */,
 				579E4E2717F0C6B900D03437 /* kImageErrorBang.png in Resources */,
 				57DA318317FA213500A6978A /* kImageHelp-selected.png in Resources */,
@@ -1444,7 +1445,6 @@
 				57DA318417FA213500A6978A /* kImageHelp-selected@2x.png in Resources */,
 				57A224A917E913B3000B52E9 /* kImageHelp.png in Resources */,
 				57DA318517FA213500A6978A /* kImageHelp@2x.png in Resources */,
-				578382E71821B5470075F918 /* client.cer in Resources */,
 				57DA318617FA213500A6978A /* kImageHistory-selected.png in Resources */,
 				57FD23A917FF1573004A50D8 /* kImageQR.png in Resources */,
 				57DA318717FA213500A6978A /* kImageHistory-selected@2x.png in Resources */,

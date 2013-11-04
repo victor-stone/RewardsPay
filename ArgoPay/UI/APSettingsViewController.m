@@ -203,9 +203,14 @@ APLOGRELEASE
             break;
         }
     }
+    
     cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:2]];
     _pinLabel = (id)cell.contentView.subviews[0];
     [self updatePinSwitches];
+    
+    cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    APAccount * account = [APAccount currentAccount];
+    cell.textLabel.text = account.login;
 }
 
 -(void)updatePinSwitches

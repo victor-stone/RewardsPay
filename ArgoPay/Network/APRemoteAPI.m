@@ -16,6 +16,103 @@
 
 #import "APRemoteStrings.h"
 
+@interface APArgoRequest : AFJSONRequestOperation
+@end
+
+@implementation APArgoRequest
+
+
+-(id)initWithRequest:(NSURLRequest *)urlRequest
+{
+    self = [super initWithRequest:urlRequest];
+    if( self )
+    {
+        [self setWillSendRequestForAuthenticationChallengeBlock:^(NSURLConnection *connection,
+                                                                  NSURLAuthenticationChallenge *challenge)
+        {
+            if( [challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust])
+            {
+                NSString * path = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"cer"];
+                NSData * localCertData = [NSData dataWithContentsOfFile:path];
+                
+                SecTrustRef serverTrust = challenge.protectionSpace.serverTrust;
+                CFIndex certificateCount = SecTrustGetCertificateCount(serverTrust);
+                
+                for (CFIndex i = 0; i < certificateCount; i++)
+                {
+                    SecCertificateRef certificate = SecTrustGetCertificateAtIndex(serverTrust, i);
+                    NSData * serverCertData = (__bridge_transfer NSData *)SecCertificateCopyData(certificate);
+                    if( [localCertData isEqualToData:serverCertData] )
+                    {
+                        NSURLCredential *credential = [NSURLCredential credentialForTrust:serverTrust];
+                        [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
+                        return;
+                    }
+                    
+                }
+            }
+            else if( [challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodClientCertificate])
+            {
+                NSString *path = [[NSBundle mainBundle] pathForResource:@"client" ofType:@"p12"];
+
+                SecIdentityRef myIdentity;
+                SecTrustRef    myTrust;
+                [APArgoRequest extractIdentityAndTrust:(__bridge CFDataRef)[NSData dataWithContentsOfFile:path]
+                                              identity:&myIdentity
+                                                 trust:&myTrust];
+                
+                SecCertificateRef myCertificate;
+                SecIdentityCopyCertificate(myIdentity, &myCertificate);
+                NSData * certData = (__bridge_transfer NSData *)SecCertificateCopyData(myCertificate);
+                
+                NSURLCredential *credential = [NSURLCredential credentialWithIdentity:myIdentity
+                                                                         certificates:@[certData]
+                                                                          persistence:NSURLCredentialPersistencePermanent];
+                
+                [challenge.sender useCredential:credential forAuthenticationChallenge:challenge];
+                
+                CFRelease(myIdentity);
+                CFRelease(myCertificate);
+                return;
+                
+            }
+            
+            [[challenge sender] continueWithoutCredentialForAuthenticationChallenge:challenge];
+            
+        }];
+    }
+    return self;
+}
+
++ (OSStatus) extractIdentityAndTrust:(CFDataRef)inpfxdata identity:(SecIdentityRef *)identity trust:(SecTrustRef *)trust
+{
+    OSStatus securityError = errSecSuccess;
+    
+    CFArrayRef items = NULL;
+
+    const void * keys[] = { kSecImportExportPassphrase };
+    const void * values[] = { (CFStringRef)@"ArgoPay" };
+    CFDictionaryRef dict = CFDictionaryCreate(NULL, keys, values,1,NULL,NULL);
+    securityError = SecPKCS12Import(inpfxdata, dict, &items);
+    if (securityError == 0)
+    {
+        CFDictionaryRef myIdentityAndTrust = CFArrayGetValueAtIndex(items, 0);
+        const void *tempIdentity           = CFDictionaryGetValue(myIdentityAndTrust, kSecImportItemIdentity);
+        const void *tempTrust              = CFDictionaryGetValue(myIdentityAndTrust, kSecImportItemTrust);
+        
+        CFRetain(tempIdentity);
+        CFRetain(tempTrust);
+        
+        *identity = (SecIdentityRef)tempIdentity;
+        *trust = (SecTrustRef)tempTrust;
+    }
+    
+    CFRelease(items);
+    
+    return securityError;
+}
+
+@end
 @interface APRemoteAPI : NSObject
 
 +(id)sharedInstance;
@@ -75,7 +172,7 @@ static APRemoteAPI * _sharedRemoteAPI;
     if( !client )
     {
         client = [[AFHTTPClient alloc] initWithBaseURL:url];
-        [client registerHTTPOperationClass:[AFJSONRequestOperation class]];
+        [client registerHTTPOperationClass:[APArgoRequest class]];
         [client setDefaultHeader:@"Accept" value:@"text/json"];
         client.parameterEncoding = AFJSONParameterEncoding;
 #ifdef ALLOW_DEBUG_SETTINGS
@@ -85,6 +182,7 @@ static APRemoteAPI * _sharedRemoteAPI;
 //            client.defaultSSLPinningMode = AFSSLPinningModePublicKey;
             client.defaultSSLPinningMode = AFSSLPinningModeCertificate;
             client.allowsInvalidSSLCertificate = YES;
+
         }
 #else
         client.defaultSSLPinningMode = AFSSLPinningModeCertificate;        

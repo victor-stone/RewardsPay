@@ -155,12 +155,15 @@ APLOGRELEASE
     else if( [segue.identifier isEqualToString:kSegueLocationsToPinMap] )
     {
         APMerchantMap * map = segue.destinationViewController;
-        // for now center on first merchant
-        APMerchant * merchant = _locations[0];
-        CLLocationDegrees mlat  = [merchant.Lat doubleValue];
-        CLLocationDegrees mlong = [merchant.Long doubleValue];
-        CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(mlat,mlong);
-        map.homeLocation = coord; // _userLocation.coordinate;
+        if( _locations.count > 0 )
+        {
+            // for now center on first merchant
+            APMerchant * merchant = _locations[0];
+            CLLocationDegrees mlat  = [merchant.Lat doubleValue];
+            CLLocationDegrees mlong = [merchant.Long doubleValue];
+            CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(mlat,mlong);
+            map.homeLocation = coord; // _userLocation.coordinate;
+        }
         map.merchants = _locations;
     }
 }
