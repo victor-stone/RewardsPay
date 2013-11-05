@@ -19,76 +19,108 @@
 @interface APArgoRequest : AFJSONRequestOperation
 @end
 
-@implementation APArgoRequest
+@implementation APArgoRequest {
+    NSURLCredential *_clientCredential;
+}
 
+-(NSURLCredential *)clientCredentials
+{
+    if( !_clientCredential )
+    {
+        NSString *p12Path = [[NSBundle mainBundle] pathForResource:@"client" ofType:@"p12"];
+        NSData *p12Data = [[NSData alloc] initWithContentsOfFile:p12Path];
+        CFArrayRef p12Items;
+        
+        NSDictionary * optionsDictionary = @{ (__bridge id)kSecImportExportPassphrase: @"ArgoPay" };
+        OSStatus result = SecPKCS12Import((__bridge CFDataRef)p12Data,
+                                          (__bridge CFDictionaryRef)optionsDictionary,
+                                          &p12Items);
+        
+        
+        if(result == noErr)
+        {
+            CFDictionaryRef identityDict = CFArrayGetValueAtIndex(p12Items, 0);
+            SecIdentityRef identityApp =(SecIdentityRef)CFDictionaryGetValue(identityDict,kSecImportItemIdentity);
+            
+            SecCertificateRef certRef;
+            SecIdentityCopyCertificate(identityApp, &certRef);
+            
+            SecCertificateRef certArray[1] = { certRef };
+            CFArrayRef myCerts = CFArrayCreate(NULL, (void *)certArray, 1, NULL);
+            CFRelease(certRef);
+            
+            _clientCredential = [NSURLCredential credentialWithIdentity:identityApp
+                                                           certificates:(__bridge id)myCerts
+                                                            persistence:NSURLCredentialPersistencePermanent];
+            CFRelease(myCerts);            
+        }
+    }
+    
+    return _clientCredential;
+}
 
++(void)importCA
+{
+    static dispatch_once_t once_token;
+    dispatch_once( &once_token, ^{
+        NSString * caPath       = [[NSBundle mainBundle] pathForResource:@"ca" ofType:@"cer"];
+        NSData *   caCertData   = [NSData dataWithContentsOfFile:caPath];
+        SecCertificateRef       cert= SecCertificateCreateWithData(NULL, (__bridge CFDataRef)caCertData);
+        OSStatus                err = SecItemAdd(
+                                                 (__bridge CFDictionaryRef) [NSDictionary dictionaryWithObjectsAndKeys:
+                                                                    (__bridge id) kSecClassCertificate,  kSecClass,
+                                                                    (__bridge id) cert,                  kSecValueRef,
+                                                                    nil
+                                                                    ], 
+                                                 NULL
+                                                 );
+        if( err )
+        {
+            //
+        }
+        
+    });
+}
 -(id)initWithRequest:(NSURLRequest *)urlRequest
 {
     self = [super initWithRequest:urlRequest];
     if( self )
     {
+        NSString * argoPath     = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"cer"];
+        NSData *   argoCertData = [NSData dataWithContentsOfFile:argoPath];
+        
+        NSURLCredential * clientCredential = [self clientCredentials];
+        
         [self setWillSendRequestForAuthenticationChallengeBlock:^(NSURLConnection *connection,
                                                                   NSURLAuthenticationChallenge *challenge)
         {
+            if( challenge.previousFailureCount != 0 )
+            {
+                APLOG(kDebugNetwork, @"Bailing on auth challenge. Failure count: %d", challenge.previousFailureCount);
+                return;
+            }
+            
             if( [challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust])
             {
                 SecTrustRef serverTrust = challenge.protectionSpace.serverTrust;
-#if 0
-                NSString * argoPath = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"cer"];
-                NSData * argoCertData = [NSData dataWithContentsOfFile:argoPath];
-                NSString * caPath = [[NSBundle mainBundle] pathForResource:@"ca" ofType:@"cer"];
-                NSData * caData = [NSData dataWithContentsOfFile:caPath];
-                
-                CFIndex certificateCount = SecTrustGetCertificateCount(serverTrust);
-                for (CFIndex i = 0; i < certificateCount; i++)
+                SecCertificateRef certificate = SecTrustGetCertificateAtIndex(serverTrust, 0);
+                NSData * serverCertData = (__bridge_transfer NSData *)SecCertificateCopyData(certificate);
+                if( [argoCertData isEqualToData:serverCertData] )
                 {
-                    SecCertificateRef certificate = SecTrustGetCertificateAtIndex(serverTrust, i);
-                    NSData * serverCertData = (__bridge_transfer NSData *)SecCertificateCopyData(certificate);
-                    if( [argoCertData isEqualToData:serverCertData] || [caData isEqualToData:serverCertData] )
-#endif
-                    {
-                        NSURLCredential *credential = [NSURLCredential credentialForTrust:serverTrust];
-                        [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
-                        return;
-                    }
-#if 0
-                }
-#endif
-            }
-            else if( [challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodClientCertificate])
-            {
-                NSString *p12Path = [[NSBundle mainBundle] pathForResource:@"client" ofType:@"p12"];
-                NSData *p12Data = [[NSData alloc] initWithContentsOfFile:p12Path];
-                CFArrayRef p12Items;
-                
-                NSDictionary * optionsDictionary = @{ (__bridge id)kSecImportExportPassphrase: @"ArgoPay" };
-                OSStatus result = SecPKCS12Import((__bridge CFDataRef)p12Data,
-                                                  (__bridge CFDictionaryRef)optionsDictionary,
-                                                  &p12Items);
-                
-                
-                if(result == noErr)
-                {
-                    CFDictionaryRef identityDict = CFArrayGetValueAtIndex(p12Items, 0);
-                    SecIdentityRef identityApp =(SecIdentityRef)CFDictionaryGetValue(identityDict,kSecImportItemIdentity);
-                    
-                    SecCertificateRef certRef;
-                    SecIdentityCopyCertificate(identityApp, &certRef);
-                    
-                    SecCertificateRef certArray[1] = { certRef };
-                    CFArrayRef myCerts = CFArrayCreate(NULL, (void *)certArray, 1, NULL);
-                    CFRelease(certRef);
-                    
-                    NSURLCredential *credential = [NSURLCredential credentialWithIdentity:identityApp
-                                                                             certificates:(__bridge id)myCerts
-                                                                              persistence:NSURLCredentialPersistencePermanent];
-                    CFRelease(myCerts);
-                    
+                    APLOG(kDebugNetwork, @"Server cert matches");
+                    NSURLCredential *credential = [NSURLCredential credentialForTrust:serverTrust];
                     [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
                     return;
                 }
             }
+            else if( [challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodClientCertificate])
+            {
+                APLOG(kDebugNetwork, @"Returning client cert");
+                [[challenge sender] useCredential:clientCredential forAuthenticationChallenge:challenge];
+                return;
+            }
             
+            APLOG(kDebugNetwork,@"Cancelling auth challenge for type: %@",challenge.protectionSpace.authenticationMethod);
             [[challenge sender] cancelAuthenticationChallenge:challenge];
             
         }];
