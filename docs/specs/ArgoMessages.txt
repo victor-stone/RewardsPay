@@ -1,5 +1,5 @@
 ArgoPay API Documentation
-Version 2013-11-04 15:30:00
+Version 2013-11-05 17:00:00
 
 Security Model:
 A consumer logs in either when creating a new record with ConsumerAdd, or ConsumerLogin
@@ -30,11 +30,15 @@ The format of the following is:
 
 -Consumer
    /ConsumerAdd - Adds a consumer record
-    > Email, Password, InToken
+    > UserName, Email, Password, InToken
     < Status, Message, AToken, AccountID
 
+   /ConsumerEmailValidate
+    >AccountID, ValidateID
+    <Status, Message
+
    /ConsumerLogin
-    > Email, Password, InToken
+    > UserName, Password, InToken
     < Status, Message, AToken, AccountID
 
    /ConsumerChangePassword
@@ -71,11 +75,11 @@ The format of the following is:
     < Status, Message
 
    /ConsumerValidateGet (Gets consumer protection questions.  Consumer does not need to be logged in)
-    > Email
+    > UserName
     < Status, Message, Ques1, Ques2, Ques3
 
    /ConsumerValidateTest (Send answers for verification to server. If successful, logs in consumer)
-    > Email, Ans1, Ans2, Ans3
+    > UserName, Ans1, Ans2, Ans3
     < Status, Message, AToken, AccountID
 
    /ConsumerCreditApply (List of questions that need to be correctly answered for Credit to be extended)

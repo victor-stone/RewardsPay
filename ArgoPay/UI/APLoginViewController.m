@@ -36,7 +36,7 @@
 @end
 
 @interface APForgotPasswordViewController : UITableViewController<UITextFieldDelegate>
-@property (nonatomic,strong) NSString * loginEmail;
+@property (nonatomic,strong) NSString * loginUserName;
 @end
 
 @interface APLoginViewController : UIViewController<UITextFieldDelegate>
@@ -81,8 +81,8 @@
 {
     if( _username.text.length == 0 )
     {
-        NSString * title = NSLocalizedString(@"Missing email", @"login");
-        NSString * msg = NSLocalizedString(@"You need to enter an email address", @"login");
+        NSString * title = NSLocalizedString(@"Missing login name", @"login");
+        NSString * msg = NSLocalizedString(@"You need to enter a user name", @"login");
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:title
                                                          message:msg
                                                         delegate:nil
@@ -110,7 +110,7 @@
     if( [segue.identifier isEqualToString:kSegueLoginToValidateGet] )
     {
         APForgotPasswordViewController * vc = segue.destinationViewController;
-        vc.loginEmail = _username.text;
+        vc.loginUserName = _username.text;
     }
 }
 @end
@@ -138,7 +138,7 @@
         APPopup *popup = [APPopup withNetActivity:self.view];
         _questions = [NSMutableArray new];
         APRequestValidateGet *request = [APRequestValidateGet new];
-        request.Email = _loginEmail;
+        request.UserName = _loginUserName;
         [request performRequest:^(APValidateGet *validateGet) {
             [popup dismiss];
             _questions = @[ validateGet.Ques1, validateGet.Ques2, validateGet.Ques3 ];
@@ -213,14 +213,14 @@
     {
         APPopup * popup = [APPopup withNetActivity:self.view delay:YES];
         APRequestValidateTest * request = [APRequestValidateTest new];
-        request.Email = _loginEmail;
+        request.UserName = _loginUserName;
         NSArray * textFields = self.textFields;
         request.Ans1 = ((UITextField *)textFields[0]).text;
         request.Ans2 = ((UITextField *)textFields[1]).text;
         request.Ans3 = ((UITextField *)textFields[2]).text;
         [request performRequest:^(APValidateTest * test) {
             [popup dismiss];
-            [APAccount loginWithEmail:request.Email andToken:test.AToken];
+            [APAccount loginWithUserName:request.UserName andToken:test.AToken];
             [self broadcast:kNotifyUserLoginStatus payload:[APAccount currentAccount]]; 
          }
          errorHandler:^(NSError *err) {

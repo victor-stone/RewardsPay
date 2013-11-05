@@ -16,7 +16,7 @@
  < Status, Message, AToken, AccountID
  */
 @interface APRequestLogin : APRemoteRequest
-@property (nonatomic,strong) NSString *Email;
+@property (nonatomic,strong) NSString *UserName;
 @property (nonatomic,strong) NSString *Password;
 @property (nonatomic,strong) NSString *InToken;
 @end
@@ -33,7 +33,7 @@ APLOGRELEASE
     return __currentAccount;
 }
 
-+(void)login:(NSString *)loginEmail
++(void)login:(NSString *)loginUserName
     password:(NSString *)password
        block:(APRemoteAPIRequestBlock)block
 {
@@ -41,10 +41,10 @@ APLOGRELEASE
     __currentAccount = [APAccount new];
     
     APRequestLogin *loginRequest = [APRequestLogin new];
-    loginRequest.Email      = loginEmail;
+    loginRequest.UserName      = loginUserName;
     loginRequest.Password   = password;
     loginRequest.InToken    = [[NSUserDefaults standardUserDefaults] stringForKey:kSettingUserUniqueID];
-    if( (loginRequest.Email.length == 0) || (loginRequest.Password.length == 0 ) )
+    if( (loginRequest.UserName.length == 0) || (loginRequest.Password.length == 0 ) )
     {
         APError *appError = [APError errorWithCode:kAPERROR_MISSINGLOGINFIELDS];
         [appError broadcast:kNotifySystemError payload:appError];
@@ -54,7 +54,7 @@ APLOGRELEASE
     [loginRequest performRequest:^(APAccount * account) {
         APLOG(kDebugUser, @"User is logged with AToken: %@",account.AToken);
         __currentAccount = account;
-        __currentAccount.login = loginRequest.Email;
+        __currentAccount.login = loginRequest.UserName;
         __currentAccount.password = loginRequest.Password;
         block(account);
     } errorHandler:^(NSError *err) {
@@ -63,10 +63,10 @@ APLOGRELEASE
     }];
 }
 
-+(void)loginWithEmail:(NSString *)email andToken:(NSString *)AToken
++(void)loginWithUserName:(NSString *)userName andToken:(NSString *)AToken
 {
     __currentAccount = [APAccount new];
-    __currentAccount.login = email;
+    __currentAccount.login = userName;
     __currentAccount.AToken = AToken;
     APLOG(kDebugUser, @"User is logged with AToken: %@",AToken);
 }

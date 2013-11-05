@@ -19,11 +19,11 @@
 
 +(id)currentAccount;
 
-+(void)login:(NSString *)loginEmail
++(void)login:(NSString *)loginUserName
     password:(NSString *)password
        block:(APRemoteAPIRequestBlock)block;
 
-+(void)loginWithEmail:(NSString *)email
++(void)loginWithUserName:(NSString *)userName
              andToken:(NSString *)AToken;
 
 -(void)logUserOut;
@@ -91,7 +91,7 @@
  < Status, Message, Ques1, Ques2, Ques3
 */
 @interface APRequestValidateGet : APRemoteRequest
-@property (nonatomic,strong) NSString * Email;
+@property (nonatomic,strong) NSString * UserName;
 @end
 
 @interface APValidateGet : APRemoteObject
@@ -107,7 +107,7 @@
 */
 
 @interface APRequestValidateTest : APRemoteRequest
-@property (nonatomic,strong) NSString * Email;
+@property (nonatomic,strong) NSString * UserName;
 @property (nonatomic,strong) NSString * Ans1;
 @property (nonatomic,strong) NSString * Ans2;
 @property (nonatomic,strong) NSString * Ans3;

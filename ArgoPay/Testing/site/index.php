@@ -366,7 +366,7 @@ switch($_REQUEST['cmd'] )
          > Email, Password, InToken
          < Status, Message, AToken, AccountID
          */
-        if( strcmp( $parameters->Email, "bogus" ) == 0 )
+        if( strcmp( $parameters->UserName, "bogus" ) == 0 )
         {
             $value['Status'] = 1;
             $value['Message'] = 'Invalid username and password combination';
