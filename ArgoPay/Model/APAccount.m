@@ -71,37 +71,9 @@ APLOGRELEASE
     APLOG(kDebugUser, @"User is logged with AToken: %@",AToken);
 }
 
-+(void)attempLoginWithDefaults:(APRemoteAPIRequestBlock)block
-{
-    // um, in case of error...
-    __currentAccount = [APAccount new];
-    
-    APRequestLogin *loginRequest = [APRequestLogin new];
-    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
-    loginRequest.Email      = [settings stringForKey:kSettingUserLoginName];
-    loginRequest.Password   = [settings stringForKey:kSettingUserLoginPassword];
-    loginRequest.InToken    = [[NSUserDefaults standardUserDefaults] stringForKey:kSettingUserUniqueID];
-
-    APLOG(kDebugUser, @"Attemping login with username: %@ password: %@", loginRequest.Email, loginRequest.Password);
-    if( (loginRequest.Email.length == 0) || (loginRequest.Password.length == 0 ) )
-    {
-        block(nil);
-        return;
-    }
-    
-    [loginRequest performRequest:^(APAccount *account) {
-        APLOG(kDebugUser, @"User is logged with AToken: %@",account.AToken);
-        __currentAccount = account;
-        __currentAccount.login = loginRequest.Email;
-        __currentAccount.password = loginRequest.Password;
-        block(account);
-    }];
-}
-
 -(void)setLogin:(NSString *)login
 {
     _login = login;
-    [[NSUserDefaults standardUserDefaults] setValue:login forKey:kSettingUserLoginName];
 }
 
 -(void)setPassword:(NSString *)password
@@ -144,8 +116,14 @@ APLOGRELEASE
 }
 @end
 
-@implementation APRequestStatementSummary
+@implementation APRequestChangePassword
+-(id)init
+{
+    return [super initWithCmd:kRemoteCmdConsumerChangePassword subDomain:kRemoteSubDomainCustomer];
+}
+@end
 
+@implementation APRequestStatementSummary
 -(id)init
 {
     return [super initWithCmd:kRemoteCmdConsumerStatementSummary
@@ -227,6 +205,20 @@ APLOGRELEASE
 }
 @end
 
+@implementation APResponseGetPinRequired
+@end
+
+@implementation APRequestGetPinRequired
+-(id)init
+{
+    return [super initWithCmd:kRemoteCmdConsumerGetPINRequired subDomain:kRemoteSubDomainCustomer];
+}
+-(Class)payloadClass
+{
+    return [APResponseGetPinRequired class];
+}
+@end
+
 @implementation APRequestSetNotificationID
 -(id)init
 {
@@ -237,6 +229,6 @@ APLOGRELEASE
 @implementation APRequestSetNotificationEnabled
 -(id)init
 {
-    return [super initWithCmd:kRemoteCmdConsumerSetNotificatonEnabled subDomain:kRemoteSubDomainCustomer];
+    return [super initWithCmd:kRemoteCmdConsumerSetNotificationEnabled subDomain:kRemoteSubDomainCustomer];
 }
 @end

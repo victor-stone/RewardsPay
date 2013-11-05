@@ -124,6 +124,13 @@ APLOGRELEASE
         else
         {
             [defaults setObject:newPassword forKey:kSettingUserLoginPassword];
+            APRequestChangePassword * request = [APRequestChangePassword new];
+            APAccount * account = [APAccount currentAccount];
+            request.AToken = account.AToken;
+            request.NewPassword = newPassword;
+            [request performRequest:^(id data) {
+                //
+            }];
         }
     }
 
@@ -183,6 +190,20 @@ APLOGRELEASE
 @implementation APAccountSettingsViewController {
     __weak UILabel * _pinLabel;
     __weak UISwitch * _pinSwitch;
+    BOOL _pinEnabled;
+}
+
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    APRequestGetPinRequired * request = [APRequestGetPinRequired new];
+    APAccount * account = [APAccount currentAccount];
+    request.AToken = account.AToken;
+    [request performRequest:^(APResponseGetPinRequired * pinRequired) {
+        _pinEnabled = [pinRequired.PINRequired isRemoteYES];
+        [self updatePinSwitches];
+    }];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -206,8 +227,7 @@ APLOGRELEASE
     
     cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:2]];
     _pinLabel = (id)cell.contentView.subviews[0];
-    [self updatePinSwitches];
-    
+
     cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     APAccount * account = [APAccount currentAccount];
     cell.textLabel.text = account.login;
@@ -215,9 +235,8 @@ APLOGRELEASE
 
 -(void)updatePinSwitches
 {
-    BOOL pinEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kSettingUserEnablePIN];
-    _pinSwitch.on = pinEnabled;
-    _pinLabel.textColor = pinEnabled ? [UIColor blackColor] : [UIColor lightGrayColor];
+    _pinSwitch.on = _pinEnabled;
+    _pinLabel.textColor = _pinEnabled ? [UIColor blackColor] : [UIColor lightGrayColor];
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
@@ -231,15 +250,14 @@ APLOGRELEASE
 
 -(IBAction)pinSwitchChanged:(UISwitch *)switcher
 {
-    BOOL enablePIN = switcher.on;
-    [[NSUserDefaults standardUserDefaults] setBool:enablePIN forKey:kSettingUserEnablePIN];
+    _pinEnabled = switcher.on;
     [self updatePinSwitches];
     
     // um, is this the place for this?
     APRequestSetPINRequired * request = [APRequestSetPINRequired new];
     APAccount * account = [APAccount currentAccount];
     request.AToken = account.AToken;
-    request.PINRequired = enablePIN ? kRemoteValueYES : kRemoteValueNO;
+    request.PINRequired = _pinEnabled ? kRemoteValueYES : kRemoteValueNO;
     [request performRequest:^(id data) {
         //
     }];

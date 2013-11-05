@@ -26,5 +26,6 @@ typedef void (^APDismissBlock)(UIViewController* dismissing);
 @interface UIColor (ArgoPay)
 
 +(UIColor *)argoOrange;
++(UIColor *)argoGreen;
 
 @end

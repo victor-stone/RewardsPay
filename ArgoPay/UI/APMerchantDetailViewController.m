@@ -26,7 +26,7 @@
 @implementation APMerchantDetailCell 
 @end
 
-@interface APMerchantDetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface APMerchantDetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *merchantName;
 @property (weak, nonatomic) IBOutlet UILabel *merchantPoints;
@@ -104,8 +104,23 @@ APLOGRELEASE
 }
 - (IBAction)phoneTap:(UIButton *)sender
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",sender.titleLabel.text]]];
+    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Phone", @"merchantdetail")
+                                                     message:@"Call merchant?"
+                                                    delegate:self
+                                           cancelButtonTitle:NSLocalizedString(@"Cancel", @"merchantdetail")
+                                           otherButtonTitles:NSLocalizedString(@"OK", @"merchantdetail"), nil];
+    [alert show];
 }
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if( buttonIndex == 1 )
+    {
+        NSString * urlStr = [NSString stringWithFormat:@"tel:%@", _phone.titleLabel.text];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
+    }
+}
+
 - (IBAction)websiteTap:(UIButton *)sender
 {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@",sender.titleLabel.text]]];

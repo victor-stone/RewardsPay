@@ -10,7 +10,7 @@
 #import "APStrings.h"
 #import "APPopup.h"
 #import "APTransactionViewController.h"
-#import "VSTabNavigatorViewController.h"
+#import "VSNavigationViewController.h"
 
 
 @interface APWelcomeViewController : APTransactionViewController
@@ -24,6 +24,8 @@
     [super viewDidLoad];
     _signInButton.layer.masksToBounds = YES;
     _signInButton.layer.cornerRadius = 8.0;
+    if([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0)
+        [self.vsNavigationController.navigationBar setTintColor:[UIColor argoOrange]];
 }
 
 -(IBAction)unwindToLogin:(UIStoryboardSegue *)segue
@@ -31,6 +33,10 @@
     
 }
 
+@end
+
+@interface APForgotPasswordViewController : UITableViewController<UITextFieldDelegate>
+@property (nonatomic,strong) NSString * loginEmail;
 @end
 
 @interface APLoginViewController : UIViewController<UITextFieldDelegate>
@@ -49,8 +55,7 @@
     [_username becomeFirstResponder];
     _submitButton.layer.masksToBounds = YES;
     _submitButton.layer.cornerRadius = 8.0;
-    NSString * name = [[NSUserDefaults standardUserDefaults] stringForKey:kSettingUserLoginName];
-    _username.text = name;
+    _username.text = @"";
 }
 
 - (IBAction)submit:(id)sender
@@ -83,12 +88,10 @@
                                                         delegate:nil
                                                cancelButtonTitle:@"OK"
                                                otherButtonTitles:nil];
-        [alert show
-         ];
+        [alert show];
     }
     else
     {
-        [[NSUserDefaults standardUserDefaults] setObject:_username.text forKey:kSettingUserLoginName];
         [self performSegueWithIdentifier:kSegueLoginToValidateGet sender:self];
     }
 }
@@ -102,10 +105,14 @@
     return YES;
 }
 
-@end
-
-
-@interface APForgotPasswordViewController : UITableViewController<UITextFieldDelegate>
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if( [segue.identifier isEqualToString:kSegueLoginToValidateGet] )
+    {
+        APForgotPasswordViewController * vc = segue.destinationViewController;
+        vc.loginEmail = _username.text;
+    }
+}
 @end
 
 
@@ -131,7 +138,7 @@
         APPopup *popup = [APPopup withNetActivity:self.view];
         _questions = [NSMutableArray new];
         APRequestValidateGet *request = [APRequestValidateGet new];
-        request.Email = [[NSUserDefaults standardUserDefaults] stringForKey:kSettingUserLoginName];
+        request.Email = _loginEmail;
         [request performRequest:^(APValidateGet *validateGet) {
             [popup dismiss];
             _questions = @[ validateGet.Ques1, validateGet.Ques2, validateGet.Ques3 ];
@@ -154,7 +161,9 @@
         UIBarButtonItem * bbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                               target:self
                                                                               action:@selector(submit:)];
-        bbi.tintColor = [UIColor whiteColor];
+        if([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+            bbi.tintColor = [UIColor whiteColor];
+
         item.rightBarButtonItems = @[bbi];
     }
     item.hidesBackButton = YES;
@@ -181,7 +190,6 @@
     return YES;
 }
 
-
 -(IBAction)submit:(id)sender
 {
     BOOL ok = YES;
@@ -205,7 +213,7 @@
     {
         APPopup * popup = [APPopup withNetActivity:self.view delay:YES];
         APRequestValidateTest * request = [APRequestValidateTest new];
-        request.Email = [[NSUserDefaults standardUserDefaults] stringForKey:kSettingUserLoginName];
+        request.Email = _loginEmail;
         NSArray * textFields = self.textFields;
         request.Ans1 = ((UITextField *)textFields[0]).text;
         request.Ans2 = ((UITextField *)textFields[1]).text;

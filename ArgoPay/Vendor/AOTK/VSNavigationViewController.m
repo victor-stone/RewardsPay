@@ -663,8 +663,19 @@ typedef enum _VSTransitionTypeID {
     [button setImage:image forState:UIControlStateNormal];
 
     [button sizeToFit];
-    [button setTitleColor:_navigationBar.tintColor forState:UIControlStateNormal];
-    [button setTintColor:_navigationBar.tintColor];
+    UIColor * textColor;
+    if([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+    {
+        textColor = _navigationBar.tintColor;
+        [button setTintColor:textColor];
+    }
+    else
+    {
+        textColor = _navigationBar.titleTextAttributes[NSForegroundColorAttributeName];
+    }
+    
+    [button setTitleColor:textColor forState:UIControlStateNormal];
+    
     
     [button addTarget:self action:@selector(invokBackItem:) forControlEvents:UIControlEventTouchUpInside];
     

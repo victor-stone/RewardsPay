@@ -105,4 +105,8 @@ void * kTargetMapAssociationKey = &kTargetMapAssociationKey;
     return [UIColor colorWithRed:237.0/255.0 green:132.0/255.0 blue:22.0/255 alpha:1.0];
 }
 
++(UIColor *)argoGreen
+{
+    return [UIColor colorWithRed:0 green:117.0/255.0 blue:47.0/255.0 alpha:1.0];
+}
 @end

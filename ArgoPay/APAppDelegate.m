@@ -34,9 +34,6 @@ typedef enum _APStartupState {
 @interface APWaitForLocationService : APConcurrentStartupOperation
 @end
 
-@interface APWaitForLogin : APConcurrentStartupOperation
-@end
-
 @interface APStartMainApp : NSOperation
 -(id)initWithAppDelegate:(APAppDelegate *)delegate;
 @end
@@ -79,14 +76,12 @@ typedef enum _APStartupState {
     
     NSOperation * op1 = [[APWaitForNetwork alloc] initWithAppDelegate:self];
     NSOperation * op2 = [[APWaitForLocationService alloc] initWithAppDelegate:self];
-    NSOperation * op3 = [[APWaitForLogin alloc] initWithAppDelegate:self];
-    NSOperation * op4 = [[APStartMainApp alloc] initWithAppDelegate:self];
+    NSOperation * op3 = [[APStartMainApp alloc] initWithAppDelegate:self];
     
     [op2 addDependency:op1];
     [op3 addDependency:op2];
-    [op4 addDependency:op3];
     
-    [_startupQueue addOperations:@[op1,op2,op3,op4] waitUntilFinished:NO];
+    [_startupQueue addOperations:@[op1,op2,op3] waitUntilFinished:NO];
 
     _reachability = [Reachability reachabilityWithHostName:@VS_CONNECTIVITY_HOST_NAME];
     [_reachability startNotifier];
@@ -107,6 +102,7 @@ typedef enum _APStartupState {
              
 #ifdef ALLOW_DEBUG_SETTINGS
              ,kSettingDebugNetworkStubbed: @"dev.argopay.com"
+             ,kSettingDebugNetworkSSL: @(YES)
              ,kSettingDebugSendStubData: @(YES)
              ,kSettingDebugLocalhostAddr: @"testingargo.192.168.1.2.xip.io"
 #endif
@@ -121,8 +117,8 @@ typedef enum _APStartupState {
 
 -(void)setupAppearances:(UIApplication *)application
 {
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
-        
+    if([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+    {
         [application setStatusBarStyle:UIStatusBarStyleLightContent];
         
         // http://stackoverflow.com/questions/19029833/ios-7-navigation-bar-text-and-arrow-color/19029973#19029973
@@ -131,6 +127,10 @@ typedef enum _APStartupState {
          @{ NSForegroundColorAttributeName: [UIColor whiteColor]
             }];
         [[UINavigationBar appearance] setBarTintColor:[UIColor argoOrange]];
+    }
+    else
+    {
+        [[UINavigationBar appearance] setTintColor:[UIColor argoOrange]];
     }
 }
 
@@ -542,23 +542,6 @@ typedef enum _APStartupState {
     [GMSServices provideAPIKey:GOOGLE_MAPS_API_KEY];
     
     [self tryToGetLocation];
-}
-@end
-
-@implementation APWaitForLogin
--(void)main
-{
-    [self iAmStarting];
-#ifdef DO_AUTO_LOGIN
-    [self displayDelayedMessage:NSLocalizedString(@"Attempting to log in...",@"startup")];
-    
-    [APAccount attempLoginWithDefaults:^(id data) {
-        [self iAmDone];
-    }];
-#else
-    [self iAmDone];
-#endif
-    
 }
 @end
 

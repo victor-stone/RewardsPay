@@ -32,52 +32,64 @@
         {
             if( [challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust])
             {
-                NSString * path = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"cer"];
-                NSData * localCertData = [NSData dataWithContentsOfFile:path];
-                
                 SecTrustRef serverTrust = challenge.protectionSpace.serverTrust;
-                CFIndex certificateCount = SecTrustGetCertificateCount(serverTrust);
+#if 0
+                NSString * argoPath = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"cer"];
+                NSData * argoCertData = [NSData dataWithContentsOfFile:argoPath];
+                NSString * caPath = [[NSBundle mainBundle] pathForResource:@"ca" ofType:@"cer"];
+                NSData * caData = [NSData dataWithContentsOfFile:caPath];
                 
+                CFIndex certificateCount = SecTrustGetCertificateCount(serverTrust);
                 for (CFIndex i = 0; i < certificateCount; i++)
                 {
                     SecCertificateRef certificate = SecTrustGetCertificateAtIndex(serverTrust, i);
                     NSData * serverCertData = (__bridge_transfer NSData *)SecCertificateCopyData(certificate);
-                    if( [localCertData isEqualToData:serverCertData] )
+                    if( [argoCertData isEqualToData:serverCertData] || [caData isEqualToData:serverCertData] )
+#endif
                     {
                         NSURLCredential *credential = [NSURLCredential credentialForTrust:serverTrust];
                         [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
                         return;
                     }
-                    
+#if 0
                 }
+#endif
             }
             else if( [challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodClientCertificate])
             {
-                NSString *path = [[NSBundle mainBundle] pathForResource:@"client" ofType:@"p12"];
-
-                SecIdentityRef myIdentity;
-                SecTrustRef    myTrust;
-                [APArgoRequest extractIdentityAndTrust:(__bridge CFDataRef)[NSData dataWithContentsOfFile:path]
-                                              identity:&myIdentity
-                                                 trust:&myTrust];
+                NSString *p12Path = [[NSBundle mainBundle] pathForResource:@"client" ofType:@"p12"];
+                NSData *p12Data = [[NSData alloc] initWithContentsOfFile:p12Path];
+                CFArrayRef p12Items;
                 
-                SecCertificateRef myCertificate;
-                SecIdentityCopyCertificate(myIdentity, &myCertificate);
-                NSData * certData = (__bridge_transfer NSData *)SecCertificateCopyData(myCertificate);
+                NSDictionary * optionsDictionary = @{ (__bridge id)kSecImportExportPassphrase: @"ArgoPay" };
+                OSStatus result = SecPKCS12Import((__bridge CFDataRef)p12Data,
+                                                  (__bridge CFDictionaryRef)optionsDictionary,
+                                                  &p12Items);
                 
-                NSURLCredential *credential = [NSURLCredential credentialWithIdentity:myIdentity
-                                                                         certificates:@[certData]
-                                                                          persistence:NSURLCredentialPersistencePermanent];
                 
-                [challenge.sender useCredential:credential forAuthenticationChallenge:challenge];
-                
-                CFRelease(myIdentity);
-                CFRelease(myCertificate);
-                return;
-                
+                if(result == noErr)
+                {
+                    CFDictionaryRef identityDict = CFArrayGetValueAtIndex(p12Items, 0);
+                    SecIdentityRef identityApp =(SecIdentityRef)CFDictionaryGetValue(identityDict,kSecImportItemIdentity);
+                    
+                    SecCertificateRef certRef;
+                    SecIdentityCopyCertificate(identityApp, &certRef);
+                    
+                    SecCertificateRef certArray[1] = { certRef };
+                    CFArrayRef myCerts = CFArrayCreate(NULL, (void *)certArray, 1, NULL);
+                    CFRelease(certRef);
+                    
+                    NSURLCredential *credential = [NSURLCredential credentialWithIdentity:identityApp
+                                                                             certificates:(__bridge id)myCerts
+                                                                              persistence:NSURLCredentialPersistencePermanent];
+                    CFRelease(myCerts);
+                    
+                    [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
+                    return;
+                }
             }
             
-            [[challenge sender] continueWithoutCredentialForAuthenticationChallenge:challenge];
+            [[challenge sender] cancelAuthenticationChallenge:challenge];
             
         }];
     }
@@ -111,8 +123,8 @@
     
     return securityError;
 }
-
 @end
+
 @interface APRemoteAPI : NSObject
 
 +(id)sharedInstance;

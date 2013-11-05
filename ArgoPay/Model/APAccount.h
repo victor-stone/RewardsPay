@@ -26,12 +26,21 @@
 +(void)loginWithEmail:(NSString *)email
              andToken:(NSString *)AToken;
 
-+(void)attempLoginWithDefaults:(APRemoteAPIRequestBlock)block;
-
 -(void)logUserOut;
 
 @property (nonatomic,readonly) BOOL isLoggedIn;
 
+@end
+
+/*
+ /ConsumerChangePassword
+ >AToken, NewPassword
+ <Status, Message
+ */
+
+@interface APRequestChangePassword : APRemoteRequest
+@property (nonatomic,strong) NSString * AToken;
+@property (nonatomic,strong) NSString * NewPassword;
 @end
 
 /*
@@ -120,6 +129,21 @@
 @property (nonatomic,strong) NSString * AToken;
 @property (nonatomic,strong) NSString * PIN;
 @end
+
+/*
+ /ConsumerGetPINRequired (Gets whether a PIN is required)
+ >AToken
+ <Status, Message, PINRequired
+ */
+
+@interface APRequestGetPinRequired : APRemoteRequest
+@property (nonatomic,strong) NSString * AToken;
+@end
+
+@interface APResponseGetPinRequired : APRemoteObject
+@property (nonatomic,strong) NSString * PINRequired;
+@end
+
 
 /*
  /ConsumerSetPINRequired (Allows a user to require a PIN)

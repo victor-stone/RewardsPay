@@ -18,14 +18,9 @@ APKEYEDSTRING(kNotifyMessageFromRemotePush)
 APKEYEDSTRING(kNotifyRemotePushPickedUp)
 APKEYEDSTRING(kNotifyInactivityTimeOut)
 
-APKEYEDSTRING(kSettingUserLoginName)
 APKEYEDSTRING(kSettingUserLoginPassword)
-APKEYEDSTRING(kSettingUserPIN)
 APKEYEDSTRING(kSettingUserDevicePushToken)
-APKEYEDSTRING(kSettingUserEnablePIN)
 
-
-APKEYEDSTRING(kSettingUserArgoPoints)
 APKEYEDSTRING(kSettingUserUniqueID)
 APKEYEDSTRING(kSettingUserLastLat)
 APKEYEDSTRING(kSettingUserLastLong)

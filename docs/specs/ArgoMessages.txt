@@ -1,5 +1,5 @@
 ArgoPay API Documentation
-Version 2013-11-01 10:00:00
+Version 2013-11-04 15:30:00
 
 Security Model:
 A consumer logs in either when creating a new record with ConsumerAdd, or ConsumerLogin
@@ -37,6 +37,10 @@ The format of the following is:
     > Email, Password, InToken
     < Status, Message, AToken, AccountID
 
+   /ConsumerChangePassword
+    >AToken, NewPassword
+    <Status, Message
+
    /ConsumerSetPIN (Sets a Consumer PIN for verifying transactions)
     >AToken, PIN
     <Status, Message
@@ -44,6 +48,10 @@ The format of the following is:
    /ConsumerSetPINRequired (Allows a user to require a PIN)
     >AToken, PINRequred (Y/N)
     <Status, Message
+
+   /ConsumerGetPINRequired (Gets whether a PIN is required)
+    >AToken
+    <Status, Message, PINRequired
 
    /ConsumerSetNotificationID
     >AToken, ID
