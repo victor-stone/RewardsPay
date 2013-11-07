@@ -57,34 +57,43 @@
     _submitButton.layer.cornerRadius = 8.0;
     _username.text = @"";
     
-    if ([MFMailComposeViewController canSendMail])
-    {
-        UIBarButtonItem * bbi = [[UIBarButtonItem alloc] initWithTitle:@"Help"
-                                                                 style:UIBarButtonItemStylePlain
-                                                                target:self
-                                                                action:@selector(showContactMail:)];
-        self.navigationItem.rightBarButtonItems = @[bbi];
-    }
+    UIBarButtonItem * bbi = [[UIBarButtonItem alloc] initWithTitle:@"Help"
+                                                             style:UIBarButtonItemStylePlain
+                                                            target:self
+                                                            action:@selector(showContactMail:)];
+    self.navigationItem.rightBarButtonItems = @[bbi];
 }
 
 -(void)showContactMail:(id)sender
 {
-    MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
-    mailViewController.mailComposeDelegate = self;
-    [mailViewController setSubject:@"Support"];
-    [mailViewController setToRecipients:@[@"support@argopay.com"]];
+    if( [MFMailComposeViewController canSendMail] )
+    {
+        MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
+        mailViewController.mailComposeDelegate = self;
+        [mailViewController setSubject:@"Support"];
+        [mailViewController setToRecipients:@[@"support@argopay.com"]];
+        
+        UINavigationBar * bar = mailViewController.navigationBar;
+        bar.barStyle = UIBarStyleBlack; // mybar.barStyle;
+        bar.tintColor = [UIColor whiteColor];
+        bar.translucent = NO;
+        bar.barTintColor = [UIColor blackColor];
+        
+        [self presentViewController:mailViewController
+                           animated:YES
+                         completion:^{
+                             bar.translucent = NO;
+                         }];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:NSLocalizedString(@"Mail not configured", @"login")
+                              message:NSLocalizedString(@"This device is not configured for sending Email. Please configure the Mail settings in the Settings app.", @"login")
+                              delegate: nil
+                              cancelButtonTitle:NSLocalizedString(@"OK", @"login")
+                              otherButtonTitles:nil];
+        [alert show];
+    }
     
-    UINavigationBar * bar = mailViewController.navigationBar;
-    bar.barStyle = UIBarStyleBlack; // mybar.barStyle;
-    bar.tintColor = [UIColor whiteColor];
-    bar.translucent = NO;
-    bar.barTintColor = [UIColor blackColor];
-    
-    [self presentViewController:mailViewController
-                       animated:YES
-                     completion:^{
-                         bar.translucent = NO;
-                     }];
 }
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller
