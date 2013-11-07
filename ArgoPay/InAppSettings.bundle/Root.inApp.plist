@@ -28,29 +28,11 @@
 			<key>File</key>
 			<string>Account</string>
 			<key>Title</key>
-			<string>Sign On/PIN</string>
+			<string>Password/PIN</string>
 			<key>IASKTextAlignment</key>
 			<string>IASKUITextAlignmentCenter</string>
 			<key>kIASKStoryboardID</key>
 			<string>kAccountSettingsView</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-			<key>File</key>
-			<string>http://argopay.com/m/help</string>
-			<key>Title</key>
-			<string>Help</string>
-			<key>IASKViewControllerClass</key>
-			<string>IASKAppSettingsWebViewController</string>
-			<key>IASKViewControllerSelector</key>
-			<string>initWithFile:key:</string>
-			<key>IASKTextAlignment</key>
-			<string>IASKUITextAlignmentCenter</string>
 		</dict>
 		<dict>
 			<key>Type</key>

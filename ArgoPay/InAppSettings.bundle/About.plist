@@ -18,6 +18,46 @@
 		</dict>
 		<dict>
 			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+			<key>File</key>
+			<string>http://argopay.com/m/help</string>
+			<key>Title</key>
+			<string>Help</string>
+			<key>IASKViewControllerClass</key>
+			<string>IASKAppSettingsWebViewController</string>
+			<key>IASKViewControllerSelector</key>
+			<string>initWithFile:key:</string>
+			<key>IASKTextAlignment</key>
+			<string>IASKUITextAlignmentCenter</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+        <dict>
+            <key>Type</key>
+            <string>IASKMailComposeSpecifier</string>
+            <key>Title</key>
+            <string>Contact support</string>
+            <key>IASKMailComposeToRecipents</key>
+            <array>
+                <string>support@argopay.com</string>
+            </array>
+            <key>IASKMailComposeSubject</key>
+            <string>Support</string>
+			<key>IASKTextAlignment</key>
+			<string>IASKUITextAlignmentCenter</string>
+        </dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 			<key>File</key>
 			<string>about.html</string>

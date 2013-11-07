@@ -39,7 +39,7 @@
 @property (nonatomic,strong) NSString * loginUserName;
 @end
 
-@interface APLoginViewController : UIViewController<UITextFieldDelegate>
+@interface APLoginViewController : UIViewController<UITextFieldDelegate,MFMailComposeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *username;
 @property (weak, nonatomic) IBOutlet UITextField *password;
 @property (weak, nonatomic) IBOutlet UIButton *submitButton;
@@ -56,6 +56,71 @@
     _submitButton.layer.masksToBounds = YES;
     _submitButton.layer.cornerRadius = 8.0;
     _username.text = @"";
+    
+    if ([MFMailComposeViewController canSendMail])
+    {
+        UIBarButtonItem * bbi = [[UIBarButtonItem alloc] initWithTitle:@"Help"
+                                                                 style:UIBarButtonItemStylePlain
+                                                                target:self
+                                                                action:@selector(showContactMail:)];
+        self.navigationItem.rightBarButtonItems = @[bbi];
+    }
+}
+
+-(void)showContactMail:(id)sender
+{
+    MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
+    mailViewController.mailComposeDelegate = self;
+    [mailViewController setSubject:@"Support"];
+    [mailViewController setToRecipients:@[@"support@argopay.com"]];
+    
+    UINavigationBar * bar = mailViewController.navigationBar;
+    bar.barStyle = UIBarStyleBlack; // mybar.barStyle;
+    bar.tintColor = [UIColor whiteColor];
+    bar.translucent = NO;
+    bar.barTintColor = [UIColor blackColor];
+    
+    [self presentViewController:mailViewController
+                       animated:YES
+                     completion:^{
+                         bar.translucent = NO;
+                     }];
+}
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller
+          didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+    NSString * feedbackMsg = nil;
+    // Notifies users about errors associated with the interface
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            feedbackMsg = @"Result: Mail sending canceled";
+            break;
+        case MFMailComposeResultSaved:
+            feedbackMsg = @"Result: Mail saved as draft";
+            break;
+        case MFMailComposeResultSent:
+            feedbackMsg = @"Result: Mail sent";
+            break;
+        case MFMailComposeResultFailed:
+            feedbackMsg = @"Result: Mail sending failed";
+            break;
+        default:
+            feedbackMsg = @"Result: Mail not sent";
+            break;
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        UIAlertView * view = [[UIAlertView alloc] initWithTitle:@"Support"
+                                                        message:feedbackMsg
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [NSObject performBlock:^{
+            [view show];
+        } afterDelay:0.2];
+    }];
 }
 
 - (IBAction)submit:(id)sender
