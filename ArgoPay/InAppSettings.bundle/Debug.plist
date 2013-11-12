@@ -31,7 +31,7 @@
 				<string>localhost</string>
                 <string>file</string>
 				<string>dev.argopay.com</string>
-				<string>.argopay.com</string>
+				<string>xact.argopay.com</string>
 			</array>
 		</dict>
 		<dict>

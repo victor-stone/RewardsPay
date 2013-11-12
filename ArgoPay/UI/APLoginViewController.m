@@ -24,7 +24,7 @@
     [super viewDidLoad];
     _signInButton.layer.masksToBounds = YES;
     _signInButton.layer.cornerRadius = 8.0;
-    if([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0)
+    if( IS_LESS_THAN_IOS_7 )
         [self.vsNavigationController.navigationBar setTintColor:[UIColor argoOrange]];
 }
 
@@ -75,9 +75,12 @@
         
         UINavigationBar * bar = mailViewController.navigationBar;
         bar.barStyle = UIBarStyleBlack; // mybar.barStyle;
-        bar.tintColor = [UIColor whiteColor];
         bar.translucent = NO;
-        bar.barTintColor = [UIColor blackColor];
+        if( IS_IOS_7 )
+        {
+            bar.tintColor = [UIColor whiteColor];
+            bar.barTintColor = [UIColor blackColor];
+        }
         
         [self presentViewController:mailViewController
                            animated:YES
@@ -195,11 +198,6 @@
     NSMutableArray * _answers;
 }
 
--(void)viewDidLoad
-{
-    [super viewDidLoad];
-}
-
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -219,6 +217,7 @@
             [self.tableView reloadData];
         }];
     }
+    
 }
 
 
@@ -235,8 +234,8 @@
         UIBarButtonItem * bbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                               target:self
                                                                               action:@selector(submit:)];
-        if([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
-            bbi.tintColor = [UIColor whiteColor];
+    //    if( IS_IOS_7 )
+    //        bbi.tintColor = [UIColor whiteColor];
 
         item.rightBarButtonItems = @[bbi];
     }

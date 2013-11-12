@@ -24,7 +24,7 @@
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 			<key>File</key>
-			<string>http://argopay.com/m/help</string>
+			<string>http://argopay.com/faq/faq_index.html</string>
 			<key>Title</key>
 			<string>Help</string>
 			<key>IASKViewControllerClass</key>

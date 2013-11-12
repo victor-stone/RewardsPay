@@ -160,7 +160,13 @@ APLOGRELEASE
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    [self adjustViewForiOS7];
+    if( IS_IOS_7 )
+    {
+        [self adjustViewForiOS7];
+        UINavigationItem * item = self.navigationItem;
+        [item.rightBarButtonItem setTintColor:[UIColor whiteColor]];
+        [item.leftBarButtonItem  setTintColor:[UIColor whiteColor]];
+    }
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

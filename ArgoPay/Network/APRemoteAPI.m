@@ -16,17 +16,20 @@
 
 #import "APRemoteStrings.h"
 
+@interface AFURLConnectionOperation (notSoMuchWithTheHidden)
++ (NSArray *)pinnedCertificates;
+@end
+
 @interface APArgoRequest : AFJSONRequestOperation
 @end
 
-@implementation APArgoRequest {
-    NSURLCredential *_clientCredential;
-}
+@implementation APArgoRequest
 
 -(NSURLCredential *)clientCredentials
 {
-    if( !_clientCredential )
-    {
+    static NSURLCredential *_clientCredential;
+    static dispatch_once_t once_token;
+    dispatch_once( &once_token, ^{
         NSString *p12Path = [[NSBundle mainBundle] pathForResource:@"client" ofType:@"p12"];
         NSData *p12Data = [[NSData alloc] initWithContentsOfFile:p12Path];
         CFArrayRef p12Items;
@@ -54,42 +57,18 @@
                                                             persistence:NSURLCredentialPersistencePermanent];
             CFRelease(myCerts);            
         }
-    }
+    });
     
     return _clientCredential;
 }
 
-+(void)importCA
-{
-    static dispatch_once_t once_token;
-    dispatch_once( &once_token, ^{
-        NSString * caPath       = [[NSBundle mainBundle] pathForResource:@"ca" ofType:@"cer"];
-        NSData *   caCertData   = [NSData dataWithContentsOfFile:caPath];
-        SecCertificateRef       cert= SecCertificateCreateWithData(NULL, (__bridge CFDataRef)caCertData);
-        OSStatus                err = SecItemAdd(
-                                                 (__bridge CFDictionaryRef) [NSDictionary dictionaryWithObjectsAndKeys:
-                                                                    (__bridge id) kSecClassCertificate,  kSecClass,
-                                                                    (__bridge id) cert,                  kSecValueRef,
-                                                                    nil
-                                                                    ], 
-                                                 NULL
-                                                 );
-        if( err )
-        {
-            //
-        }
-        
-    });
-}
 -(id)initWithRequest:(NSURLRequest *)urlRequest
 {
     self = [super initWithRequest:urlRequest];
     if( self )
-    {
-        NSString * argoPath     = [[NSBundle mainBundle] pathForResource:@"server" ofType:@"cer"];
-        NSData *   argoCertData = [NSData dataWithContentsOfFile:argoPath];
-        
-        NSURLCredential * clientCredential = [self clientCredentials];
+    {        
+        // copy the auto var into the block
+        NSURLCredential * credential = [self clientCredentials];
         
         [self setWillSendRequestForAuthenticationChallengeBlock:^(NSURLConnection *connection,
                                                                   NSURLAuthenticationChallenge *challenge)
@@ -102,21 +81,26 @@
             
             if( [challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust])
             {
-                SecTrustRef serverTrust = challenge.protectionSpace.serverTrust;
-                SecCertificateRef certificate = SecTrustGetCertificateAtIndex(serverTrust, 0);
-                NSData * serverCertData = (__bridge_transfer NSData *)SecCertificateCopyData(certificate);
-                if( [argoCertData isEqualToData:serverCertData] )
+                SecTrustRef       serverTrust     = challenge.protectionSpace.serverTrust;
+                SecCertificateRef certificate     = SecTrustGetCertificateAtIndex(serverTrust, 0);
+                NSData *          serverCertData  = (__bridge_transfer NSData *)SecCertificateCopyData(certificate);
+                NSArray *         pinnedCerts     = [AFURLConnectionOperation pinnedCertificates];
+                
+                for( NSData * argoCertData in pinnedCerts )
                 {
-                    APLOG(kDebugNetwork, @"Server cert matches");
-                    NSURLCredential *credential = [NSURLCredential credentialForTrust:serverTrust];
-                    [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
-                    return;
+                    if( [argoCertData isEqualToData:serverCertData] )
+                    {
+                        APLOG(kDebugNetwork, @"Server cert matches");
+                        NSURLCredential *credential = [NSURLCredential credentialForTrust:serverTrust];
+                        [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
+                        return;
+                    }
                 }
             }
             else if( [challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodClientCertificate])
             {
                 APLOG(kDebugNetwork, @"Returning client cert");
-                [[challenge sender] useCredential:clientCredential forAuthenticationChallenge:challenge];
+                [[challenge sender] useCredential:credential forAuthenticationChallenge:challenge];
                 return;
             }
             
@@ -128,33 +112,6 @@
     return self;
 }
 
-+ (OSStatus) extractIdentityAndTrust:(CFDataRef)inpfxdata identity:(SecIdentityRef *)identity trust:(SecTrustRef *)trust
-{
-    OSStatus securityError = errSecSuccess;
-    
-    CFArrayRef items = NULL;
-
-    const void * keys[] = { kSecImportExportPassphrase };
-    const void * values[] = { (CFStringRef)@"ArgoPay" };
-    CFDictionaryRef dict = CFDictionaryCreate(NULL, keys, values,1,NULL,NULL);
-    securityError = SecPKCS12Import(inpfxdata, dict, &items);
-    if (securityError == 0)
-    {
-        CFDictionaryRef myIdentityAndTrust = CFArrayGetValueAtIndex(items, 0);
-        const void *tempIdentity           = CFDictionaryGetValue(myIdentityAndTrust, kSecImportItemIdentity);
-        const void *tempTrust              = CFDictionaryGetValue(myIdentityAndTrust, kSecImportItemTrust);
-        
-        CFRetain(tempIdentity);
-        CFRetain(tempTrust);
-        
-        *identity = (SecIdentityRef)tempIdentity;
-        *trust = (SecTrustRef)tempTrust;
-    }
-    
-    CFRelease(items);
-    
-    return securityError;
-}
 @end
 
 @interface APRemoteAPI : NSObject
@@ -193,12 +150,12 @@ static APRemoteAPI * _sharedRemoteAPI;
         protocol = @"file";
 #else
     NSString * protocol = @"https";
-    NSString * base = @".argopay.com";
+    NSString * base = @"xact.argopay.com";
     NSString * port = @":443";
 #endif
-    
-    if( [base characterAtIndex:0] == '.' )
-        base = [scope stringByAppendingString:base];
+ 
+    // scoping subdomains never happened
+    //        base = [scope stringByAppendingString:base];
     
     return [NSString stringWithFormat:@"%@://%@%@", protocol, base, port];
 }
@@ -223,10 +180,8 @@ static APRemoteAPI * _sharedRemoteAPI;
         BOOL ssl = APENABLED(kSettingDebugNetworkSSL);
         if( ssl )
         {
-//            client.defaultSSLPinningMode = AFSSLPinningModePublicKey;
             client.defaultSSLPinningMode = AFSSLPinningModeCertificate;
             client.allowsInvalidSSLCertificate = YES;
-
         }
 #else
         client.defaultSSLPinningMode = AFSSLPinningModeCertificate;        

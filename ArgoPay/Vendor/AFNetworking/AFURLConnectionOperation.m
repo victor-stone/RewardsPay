@@ -217,6 +217,7 @@ static BOOL AFSecKeyIsEqualToKey(SecKeyRef key1, SecKeyRef key2) {
         
         NSMutableArray *certificates = [NSMutableArray arrayWithCapacity:[paths count]];
         for (NSString *path in paths) {
+//            NSLog(@"Loading cert: %@", path);
             NSData *certificateData = [NSData dataWithContentsOfFile:path];
             [certificates addObject:certificateData];
         }
@@ -397,7 +398,7 @@ static BOOL AFSecKeyIsEqualToKey(SecKeyRef key1, SecKeyRef key2) {
 #ifdef _AFNETWORKING_PIN_SSL_CERTIFICATES_
 
 - (void)setWillSendRequestForAuthenticationChallengeBlock:(void (^)(NSURLConnection *connection, NSURLAuthenticationChallenge *challenge))block {
-    self.authenticationChallenge = block;
+    self.authenticationChallenge = [block copy];
 }
 
 #else

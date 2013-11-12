@@ -101,7 +101,7 @@ typedef enum _APStartupState {
              kSettingUserUseGoogleMaps: @(YES)
              
 #ifdef ALLOW_DEBUG_SETTINGS
-             ,kSettingDebugNetworkStubbed: @"dev.argopay.com"
+             ,kSettingDebugNetworkStubbed: @"xact.argopay.com"
              ,kSettingDebugNetworkSSL: @(YES)
              ,kSettingDebugSendStubData: @(YES)
              ,kSettingDebugLocalhostAddr: @"testingargo.192.168.1.2.xip.io"
@@ -117,7 +117,7 @@ typedef enum _APStartupState {
 
 -(void)setupAppearances:(UIApplication *)application
 {
-    if([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+    if( IS_IOS_7 )
     {
         [application setStatusBarStyle:UIStatusBarStyleLightContent];
         

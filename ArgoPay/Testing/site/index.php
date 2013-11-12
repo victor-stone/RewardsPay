@@ -5,9 +5,12 @@ function doMessagePump()
 
     /* Make sure this is set to the password that you set for your private key when you exported it to
         the .pem file using openssl on your OS X */
-    $privateKeyPassword = 'U44qh'; // 2st@7wK+AR
-     
+    // For enterprise:
+    // $privateKeyPassword = 'U44qh';
 
+    // For AppStore:
+    $privateKeyPassword = 'ArgoPay';
+    
     $message = 'ArgoPay reward notification';
 
     $deviceToken = $_REQUEST['devicetoken'];
@@ -16,13 +19,16 @@ function doMessagePump()
         // this is victor's iphone:
         $deviceToken = 'F0333F9CCD2547AB09B863D5E1F9AFC8869B2AD24CBE73EC3D53D1034D0AF558';
     }
-    
-    /* Replace this with the name of the file that you have placed by your PHP script file,
-     containing your private key and certificate that you generated earlier */
-    $pushCertAndKeyPemFile = 'ArgoPayDistPush.key.pem';
+
+    // For enterprise use this one:
+    // $pushCertAndKeyPemFile = 'ArgoPayDistPush.key.pem';
+
+    // For AppStore
+    $pushCertAndKeyPemFile = 'ArgoPayStore.key.pem';
     
     if( !empty($_REQUEST['sandbox'] ) )
     {
+        // For enterprise debugging:
         $apnsServer = 'ssl://gateway.sandbox.push.apple.com:2195';
         $pushCertAndKeyPemFile = 'ArgoPayDebugPush.key.pem';
     }

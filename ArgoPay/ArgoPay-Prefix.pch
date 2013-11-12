@@ -12,9 +12,13 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 
-#define ALLOW_DEBUG_SETTINGS 1
+
+#define IS_IOS_7 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7)
+#define IS_LESS_THAN_IOS_7 ([[[UIDevice currentDevice] systemVersion] floatValue] < 7)
 
 #ifdef DEBUG
+#define ALLOW_DEBUG_SETTINGS 1
+
 extern NSString *const kDebugNavigation;
 #define NAVDEBUG(...) APDebug(kDebugNavigation,__VA_ARGS__);
 #endif
