@@ -19,8 +19,6 @@
 		571D75C817EB3D0A00F0B869 /* kImageTransactionExpander.png in Resources */ = {isa = PBXBuildFile; fileRef = 571D75C517EB3D0A00F0B869 /* kImageTransactionExpander.png */; };
 		571D75C917EB3D0A00F0B869 /* kImageTransactionTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 571D75C617EB3D0A00F0B869 /* kImageTransactionTop.png */; };
 		57287ED217F8B3B000C37D2E /* NSString+APNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 57287ED117F8B3B000C37D2E /* NSString+APNetwork.m */; };
-		573DA3801822C46A00497E06 /* ArgoPayDebugPush.key.pem in Resources */ = {isa = PBXBuildFile; fileRef = 573DA37E1822C46A00497E06 /* ArgoPayDebugPush.key.pem */; };
-		573DA3811822C46A00497E06 /* ArgoPayDistPush.key.pem in Resources */ = {isa = PBXBuildFile; fileRef = 573DA37F1822C46A00497E06 /* ArgoPayDistPush.key.pem */; };
 		573DA3851822CD1A00497E06 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 573DA3841822CD1A00497E06 /* CustomBadge.m */; };
 		57431758182737F600A72E89 /* client.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 57431757182737F600A72E89 /* client.p12 */; };
 		5748E0D9181720EF00DD079E /* kImageStep2of2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5748E0D5181720EF00DD079E /* kImageStep2of2.png */; };
@@ -265,8 +263,6 @@
 		57287ED017F8B3B000C37D2E /* NSString+APNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+APNetwork.h"; sourceTree = "<group>"; };
 		57287ED117F8B3B000C37D2E /* NSString+APNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+APNetwork.m"; sourceTree = "<group>"; };
 		57287ED317F8B41700C37D2E /* DEMO presentation v.3.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DEMO presentation v.3.docx"; sourceTree = "<group>"; };
-		573DA37E1822C46A00497E06 /* ArgoPayDebugPush.key.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ArgoPayDebugPush.key.pem; sourceTree = "<group>"; };
-		573DA37F1822C46A00497E06 /* ArgoPayDistPush.key.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ArgoPayDistPush.key.pem; sourceTree = "<group>"; };
 		573DA3831822CD1A00497E06 /* CustomBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomBadge.h; sourceTree = "<group>"; };
 		573DA3841822CD1A00497E06 /* CustomBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomBadge.m; sourceTree = "<group>"; };
 		57431757182737F600A72E89 /* client.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = client.p12; sourceTree = "<group>"; };
@@ -505,10 +501,6 @@
 		57C6C9531804931D007AB199 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		57C6C95518049417007AB199 /* kImageLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "kImageLogo@2x.png"; sourceTree = "<group>"; };
 		57C6C95618049417007AB199 /* kImageLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kImageLogo.png; sourceTree = "<group>"; };
-		57CA17901822B876005285C6 /* ArgoPayDebugPush.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = ArgoPayDebugPush.cer; sourceTree = "<group>"; };
-		57CA17911822B876005285C6 /* ArgoPayDebugPush.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = ArgoPayDebugPush.p12; sourceTree = "<group>"; };
-		57CA17921822BAC2005285C6 /* ArgoPayDistPush.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = ArgoPayDistPush.cer; sourceTree = "<group>"; };
-		57CA17931822BAC2005285C6 /* ArgoPayDistPush.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = ArgoPayDistPush.p12; sourceTree = "<group>"; };
 		57CDC2DC1832B68100CD5DE9 /* xact.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = xact.cer; sourceTree = "<group>"; };
 		57DA312C17F9478400A6978A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		57DA312E17F9479000A6978A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -1194,12 +1186,6 @@
 				57A4A9271819BE480007929B /* create_cert_and_test.sh */,
 				57AFCEFC182D53B2004DA72C /* ArgoPayStore.p12 */,
 				57AFCEFD182D53B2004DA72C /* ArgoPayStore.cer */,
-				57CA17901822B876005285C6 /* ArgoPayDebugPush.cer */,
-				57CA17911822B876005285C6 /* ArgoPayDebugPush.p12 */,
-				573DA37E1822C46A00497E06 /* ArgoPayDebugPush.key.pem */,
-				57CA17921822BAC2005285C6 /* ArgoPayDistPush.cer */,
-				57CA17931822BAC2005285C6 /* ArgoPayDistPush.p12 */,
-				573DA37F1822C46A00497E06 /* ArgoPayDistPush.key.pem */,
 				57C2ED3317F3FAA2003B3CA3 /* _.htaccess */,
 				57C2ED3417F3FAA2003B3CA3 /* _appIcon.png */,
 				57C2ED3517F3FAA2003B3CA3 /* index.php */,
@@ -1384,7 +1370,6 @@
 				57C6C95B1804959C007AB199 /* Default.png in Resources */,
 				57C6C95C1804959C007AB199 /* appIcon80.png in Resources */,
 				57C6C95D1804959C007AB199 /* appIcon58.png in Resources */,
-				573DA3801822C46A00497E06 /* ArgoPayDebugPush.key.pem in Resources */,
 				57C6C95E1804959C007AB199 /* appIcon29.png in Resources */,
 				57C6C95F1804959C007AB199 /* appIcon120.png in Resources */,
 				57C6C9601804959C007AB199 /* appIcon@2x.png in Resources */,
@@ -1425,7 +1410,6 @@
 				57A223ED17E90626000B52E9 /* InfoPlist.strings in Resources */,
 				57DA317A17FA213500A6978A /* kImageAccount-selected.png in Resources */,
 				57DA317B17FA213500A6978A /* kImageAccount-selected@2x.png in Resources */,
-				573DA3811822C46A00497E06 /* ArgoPayDistPush.key.pem in Resources */,
 				57A224A117E913B3000B52E9 /* kImageAccount.png in Resources */,
 				57DA317C17FA213500A6978A /* kImageAccount@2x.png in Resources */,
 				5748E0DC181720EF00DD079E /* kImageStep1of2@2x.png in Resources */,
